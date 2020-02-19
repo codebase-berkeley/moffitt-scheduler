@@ -1,0 +1,17 @@
+.topWords{
+    font-family: 'Open Sans', sans-serif;
+    padding: 3%;
+    padding-bottom: 5%;
+}
+.header{
+    font-size: 25px;
+    padding-left: 8%;
+    float: left;
+}
+.add{
+    font-size: 18px;
+    text-align: right;
+    float: right;
+    padding-right: 10%;
+    color: #3626A7;
+}
