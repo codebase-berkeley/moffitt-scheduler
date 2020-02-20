@@ -35,10 +35,40 @@
       padding-top: 18%;
   }
   .first{
-    font-family: 'Open Sans', sans-serif;
+    background-color: #1DE0A6;
+       color: white;
+    width: 90%;
+    padding: 2%;
+    margin: 20px;
+    font-family: Open Sans;
+   font-style: normal;
+   font-weight: normal;
+   font-size: 14px;
+   line-height: 19px;
+   text-align: center;
+   border-radius: 20.5px;
+   display: flex;
+   flex-direction: column;
+   align-items:center;
   }
   .second{
-    font-family: 'Open Sans', sans-serif;
+    background-color: #F46036;
+    color: white;
+    margin-right: 60%;
+    width: 150px;
+    padding: 2%;
+    margin: 20px;
+    font-family: Open Sans;
+   font-style: normal;
+   font-weight: normal;
+   font-size: 14px;
+   line-height: 19px;
+   text-align: center;
+   border-radius: 20.5px;
+   display: flex;
+   flex-direction: column;
+   align-items:center;
+    
   }
   .name{
     font-weight: bold;
@@ -46,4 +76,9 @@
   .email{
     font-weight: normal;
   }
- 
+ .lib{
+   padding: 5%;
+   margin-left: 35%;
+   float: right;
+   display: inline-flex;
+ }
