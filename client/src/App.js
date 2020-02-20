@@ -7,14 +7,11 @@ import Calendar from './components/Calendar/Calendar';
 
 import './App.css'
 
-/*class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  render()*/ 
-  
-  function App(){
+  render(){
     return (
       <BrowserRouter>
         <Switch>
@@ -25,5 +22,5 @@ import './App.css'
       </BrowserRouter>
     )
   }
-
+}
 export default App;
