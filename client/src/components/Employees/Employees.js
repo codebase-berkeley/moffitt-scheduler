@@ -1,7 +1,32 @@
 import React from 'react';
+import "./Employees.css";
+import EachEmployee from './EachEmployee';
 
 export default function Employees(){
     return (
-        <h1>EmployeesSsssssssss</h1>
+        <div>
+        <div className="topWords">
+        <h1 className="header">Employees</h1>
+        <h2 className="add">+Add Employee</h2>
+        </div>
+        <EachEmployee
+        name="Sahil Thakur"
+        email="sahilthakur@berkeley.edu"
+        firstLibrary="Moffit"
+        secondLibrary="Doe"
+        />
+        <EachEmployee
+        name="Sahil Thakur"
+        email="sahilthakur@berkeley.edu"
+        firstLibrary="Moffit"
+        secondLibrary="Doe"
+        />
+        <EachEmployee
+        name="Sahil Thakur"
+        email="sahilthakur@berkeley.edu"
+        firstLibrary="Moffit"
+        secondLibrary="Doe"
+        />
+        </div>
     )
 }
