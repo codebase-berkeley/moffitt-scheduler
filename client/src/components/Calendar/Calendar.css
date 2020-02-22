@@ -1,53 +1,95 @@
-@import url(//fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
-/*Container for whole calendar for centering*/
-div.calendar-container {
-    text-align: center;
-}
-
-/*Space including the 'Your Shifts' and view selector*/
-div.calendar-out {
+/** Outermost div which contains everything.
+  * Width and height cover whole screen, position = absolute so elements inside can be positioned properly. 
+*/
+#calendar-container {
     background-color: #F8FAFC;
-    width: 1265px;
-    height: 765px;
-    display: inline-block;
-    position: relative;
-}
-
-/*Just the calendar*/
-div.calendar {
-    width: 985px;
-    height: 565px;
+    width: 100%;
+    height: 100%;
     position: absolute;
-    background-color: black;
-    left: 15%;
-    bottom: 10%;
 }
 
-/*Darker gray header displaying Sunday...Saturday*/
-div.day-indicator {
-    background-color: #F2F3F9;
-    width: 985px;
-    height: 50px;
-    border-radius: 8px;
-    text-align: center;
-}
-/*Text for each day within the above header*/
-h1.day {
-    color: darkslategrey;
-    font-size: 14px;
-    font-weight: bolder;
-    font-family: 'Open Sans';
-}
-
-/*White boxes representing the schedule for each day (24 hours)*/
-div.day-column { 
-    background-color: white;
-    width: 135px;
-    height: 515px;
-    margin-right: 2.75px;
-    margin-left: 2.75px;
+/** Rounded box header containing the weekdays: "Sunday, Monday....Saturday" 
+  * Width and height cover whole screen, position = absolute so elements inside can be positioned properly. 
+*/
+.weekdays {
+    position: relative;
+    width: 66%;
+    top: 2.5%;
+    left: 25%;
+    
+    margin: 0;
+    padding: 10px 0;
+    background-color:white;
     border-radius: 10px;
-    display:inline-block;
+    box-shadow: 2px 2px 5px gray;
 }
 
+/** The text for each day inside of the above class. 
+  *  ISSUES: resizing the page will cause overlap!
+*/
+.weekdays li {
+    display: inline-block;
+    width: 14.25%;
+    color: #9E9E9E;
+    text-align: center;
+    font-family: "Open Sans";
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/** Grid containing the seven columns, representing each day. 
+  *  ISSUES: resizing is a bit wack. 
+*/
+.day-grid-container {
+    position: relative;
+    top: 5%;
+    left: 25%;
+
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    display: grid;
+    grid-column-gap: 10px;
+    height: 86%;
+    width: 66%;
+    justify-items: start stretch;
+}
+
+/** The white columns representing each day. Each column is itself a grid, with cells inside being highlightable portions. 
+*/
+.day-grid-item {
+    display: grid;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px gray;
+}
+
+/** Highlightable cells inside each day column.
+ * ISSUES: what the fuck
+*/
+#hour-grid-item {
+    background-color: black;
+}
+
+/** A div containing the hours on the left of the columns.
+  *  ISSUES: Super wack when resizing window, probably because of position absolute. 
+  *  When I tried using relative position, it ends up pushing the entire calendar grid down though. 
+*/
+.hours {
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    height: 85%;
+}
+
+/** The text for each timeslot/hour inside of the above div.
+*/
+.hours li {
+    list-style: none;
+    height: 2.075%;
+    text-align: right;
+    font-family: "Open Sans";
+    font-weight: light;
+    font-size: 7.5px;
+}
+  

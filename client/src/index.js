@@ -1,7 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Calendar from "./components/Calendar/Calendar";
 
-import App from "./App.js"
+function App() {
+    return (
+      <div className="App">
+        <Calendar />
+      </div>
+    );
+  }
 
 ReactDOM.render(
     <App />, 
