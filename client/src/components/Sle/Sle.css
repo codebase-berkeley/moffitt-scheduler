@@ -1,9 +1,3 @@
-.profile{
-    float: right;
-    padding-left: 2%;
-
-}
-
 
 /* .circle {
     background: #C4C4C4;
@@ -14,16 +8,6 @@
     margin-left: 100px;
 } */
 
-.name{
-    display:inline;
-    font-family: 'Open Sans', sans-serif;
-    display: inline-block;
-    margin-left: 90%;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-}
-
 i {
     border: solid black;
     border-width: 0 3.5px 3.5px 0;
@@ -31,42 +15,31 @@ i {
     padding: 3px;
 
   }
-  
-.down {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-  }
 
+.top-right {
+    float: top;
+    float: right;
+    position: absolute;
+    margin-top: 0%;
+    
+}
+  
 .sidebar{
-    padding-top:5%;
+    padding-top:10%;
 }
 
 .rectangle{
-    background-color: #F5F5FD;
     position: absolute;
+    background-color: #F5F5FD;
     width: 1220px;
     height: 690px;
-    left: 220px;
+    left: 300px;
     top: 75px;
   }
 
-
-
-
-
-
-
-
-  
-
   body {
     height: 100%;
-    background: url(http://pickupleagues.com/images/backgrounds/CC_fence-basketball.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    font-family: Verdana, Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
   }
   
   * {
@@ -79,48 +52,42 @@ i {
   
   .user-box {
     margin: 0 auto;
-    width: 400px;
+    width: 150px;
   }
   
   .user-id {
-    height: 100px;
+    height: 60px;
     width: 100%;
     background: #fff;
     position: relative;
     cursor: pointer;
   }
   
-  .user-picture {
-    height: 100%;
-    float: left;
-  }
-  
   .user-name {
     height: 100%;
     width: 300px;
-    font-size: 1.5em;
-    line-height: 2.5em;
+    font-size: 14px;
     padding: 20px;
     float: left;
   }
-  
+
   .dropdown-arrow {
     height: 0;
     width: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 10px solid #333;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #333;
     position: relative;
-    top: 45px;
-    left: 350px;
+    top: 23px;
+    left: 100px;
   }
   
   .user-id:hover .dropdown-arrow {
-    top: 35px;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 10px solid #333;
-    border-top: 10px solid transparent;
+    top: 20px;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 7px solid #333;
+    border-top: 7px solid transparent;
   }
   
   .dropdown-menu {
@@ -139,10 +106,9 @@ i {
   .dropdown-menu ul li {
     list-style-type: none;
     display: block;
-    height: 100px;
-    width: 400px;
-    font-size: 1.5em;
-    line-height: 2.5em;
+    height: 60px;
+    width: 150px;
+    font-size: 14px;
     padding: 20px;
     color: #fff;
     border-bottom: 2px solid #333;
