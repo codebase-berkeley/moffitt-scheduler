@@ -1,0 +1,179 @@
+.wholePage {
+width: 1440px;
+height: 900px;
+background: #FFFFFF;
+}
+
+.loginBox {
+width: 423px;
+height: 458px;
+left: 508px;
+top: 239px;
+margin: auto;
+margin-top: 15%;
+/* margin-left: 37%; */
+background: #FFFFFF;
+box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+border-radius: 20px;
+
+}
+
+.loginBoxUpperPart {
+width: 423px;
+height: 92px;
+left: 508px;
+top: 239px;
+
+background: #3F3CC8;
+box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+border-radius: 19px 19px 0px 0px;
+}
+
+.login {
+width: 93px;
+height: 21px;
+left: 673px;
+top: 275px;
+margin-left: 38%;
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 25px;
+text-align: center;
+color: #FFFFFF;
+}
+
+.emailBox {
+width: 341px;
+height: 50px;
+left: 549px;
+top: 441px;
+background: #FFFFFF;
+border: 1px solid #C6C4C4;
+box-sizing: border-box;
+border-radius: 11px;
+margin-top: 12%;
+margin-left: 10%;
+}
+
+.emailBox:hover {
+    color: gray;
+
+}
+.passwordBox {
+    width: 341px;
+    height: 50px;
+    left: 549px;
+    top: 441px;
+    background: #FFFFFF;
+    border: 1px solid #C6C4C4;
+    box-sizing: border-box;
+    border-radius: 11px;
+    margin-top: 13%;
+    margin-left: 10%;
+
+}
+
+.email {
+    width: 94px;
+height: 21px;
+left: 611px;
+top: 457px;
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 25px;
+color: #828383;
+margin-left: 10%;
+margin-top: -3%;
+}
+
+.password {
+    width: 94px;
+height: 21px;
+left: 611px;
+top: 457px;
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 25px;
+color: #828383;
+margin-left: 10%;
+margin-top: -3%;
+}
+
+.logInButton {
+    width: 110px;
+height: 39px;
+left: 594px;
+top: 603px;
+margin-top: 15%;
+margin-left: 15%;
+background: #3F3CC8;
+border-radius: 6px;
+}
+
+.createAccountButton {
+    width: 133px;
+height: 39px;
+left: 712px;
+top: 603px;
+background: #FFFFFF;
+border: 1px solid #3F3CC8;
+box-sizing: border-box;
+border-radius: 6px;
+margin-top: -9.25%;
+margin-left: 55%;
+
+}
+
+.logInButtonText {
+    width: 110px;
+height: 11px;
+left: 594px;
+top: 613px;
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 19px;
+text-align: center;
+margin-top: 50%;
+color: #FFFFFF;
+
+}
+
+.logInButton {
+    margin-top: 0%;
+}
+
+.createAccountButtonText {
+    width: 110px;
+height: 11px;
+left: 724px;
+top: 613px;
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 19px;
+text-align: center;
+margin-top: -5%;
+margin-left: 7%;
+color: #3F3CC8;
+}
+
+input[type=text] {
+    width: 330%;
+    margin-left: -20%;
+    border: none;
+    font-size: 125%;
+    margin-top: 18%;
+    
+    
+  }
