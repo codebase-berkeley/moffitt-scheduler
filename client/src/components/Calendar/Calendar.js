@@ -1,15 +1,6 @@
 import React from "react";
 import "./Calendar.css"
-
-class Timeslot extends React.Component {
-    constructor(props) {
-        super(props);   
-        this.myRef = React.createRef();
-      }
-      render() {
-        return <div ref={this.myRef} />;
-      }
-}
+//import { Resizable, ResizableBox } from 'react-resizable';
 
 export default class Calendar extends React.Component {
   render() {
@@ -29,7 +20,7 @@ export default class Calendar extends React.Component {
             <li>12:30AM</li>
             <li>1:00AM</li>
             <li>1:30AM</li>
-            <li>1:00AM</li>
+            <li>2:00AM</li>
             <li>2:30AM</li>
             <li>3:00AM</li>
             <li>3:30AM</li>
@@ -76,17 +67,447 @@ export default class Calendar extends React.Component {
             <li>12:00AM</li>
         </div>
         <div class="day-grid-container">
-            <div class="day-grid-item">
-               <Timeslot/>
+            <div class="day-grid-item">      
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
             </div>
-            <div class="day-grid-item"></div>
-            <div class="day-grid-item"></div>
-            <div class="day-grid-item"></div>
-            <div class="day-grid-item"></div>
-            <div class="day-grid-item"></div>
-            <div class="day-grid-item"></div>
+            <div class="day-grid-item">
+            <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+            </div>
+            <div class="day-grid-item">
+            <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+            </div>
+            <div class="day-grid-item">
+            <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+            </div>
+            <div class="day-grid-item">
+            <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+            </div>
+            <div class="day-grid-item">
+            <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+            </div>
+            <div class="day-grid-item">
+            <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+              <div class="hour-grid-item"></div>
+            </div>
         </div>
       </div>
     );
   }
 }
+
+
+/*
+<ResizableBox 
+                className="hour-grid-item" 
+                height={0} 
+                minConstraints={[0,0]} maxConstraints={[0, 680]} axis="y"
+                handleSize={[8, 8]}
+                resizeHandles={['s']}
+              >
+              </ResizableBox>
+*/
