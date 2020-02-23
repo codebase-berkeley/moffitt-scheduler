@@ -11,13 +11,9 @@ function Sle(props) {
     
     <div>
     
-    <div class = "profile">
-      
-      {/* <div class = "circle"></div>
-        <div id="circle"></div> */}
-      </div>
-
-
+    <div class = "line">
+    </div>
+    
     <div class = "sidebar">
       <Sidebar
           title= "Your Shifts"/>

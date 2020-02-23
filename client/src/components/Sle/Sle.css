@@ -19,9 +19,22 @@ i {
 .top-right {
     float: top;
     float: right;
-    position: absolute;
-    margin-top: 0%;
+    position: relative;
+    margin-top: -260px;
+    margin-right: 20px;
+    z-index: 1;
     
+}
+
+.line{
+  position: absolute;
+  width: 1440px;
+  height: 0px;
+  left: 0px;
+  top: 86px;
+  z-index: 1;
+
+  border: 1px solid #C6C4C4;
 }
   
 .sidebar{
@@ -31,7 +44,10 @@ i {
 .rectangle{
     position: absolute;
     background-color: #F5F5FD;
-    width: 1220px;
+    margin-left: -100px;
+    margin-top: 10px;
+    padding-right: 0px;
+    width: 1240px;
     height: 690px;
     left: 300px;
     top: 75px;
