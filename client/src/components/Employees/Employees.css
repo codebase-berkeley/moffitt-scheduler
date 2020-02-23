@@ -1,7 +1,8 @@
 .topWords{
+    margin-top: 2%;
     font-family: 'Open Sans', sans-serif;
-    padding: 3%;
-    padding-bottom: 5%;
+    display: flex;
+    justify-content: space-between;
 }
 .header{
     font-size: 25px;
