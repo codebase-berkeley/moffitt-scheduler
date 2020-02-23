@@ -12,15 +12,16 @@
   margin-top: 2%;
 }
 .holder {
-  flex: 1;
-  margin: 1%;
+  background:#C4C4C4;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
+  display: inline-flex;
+  margin-top: 18%;
+  margin-left: 40px;
+  margin-right: 40px;
 }
-.holder:before {
-  content: "";
-  display: inline-block;
-  padding-top: 100%;
-}
+
 .textFormat{
     display: flex;
     flex-direction: row;
@@ -29,6 +30,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-left: 0%;
+  padding-bottom: 5%;
 }
 .name{
     font-family: 'Open Sans', sans-serif;
@@ -81,7 +84,7 @@
 .lib{
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-top: 3.5%;
   margin-right: 5%;
 }
@@ -90,4 +93,5 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
 }
