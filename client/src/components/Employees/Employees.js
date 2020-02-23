@@ -5,7 +5,7 @@ import EachEmployee from './EachEmployee';
 export default function Employees(){
     return (
         <div>
-        <div className="topWords">
+        <div className="topWordss">
         <h1 className="header">Employees</h1>
         <h2 className="add">+Add Employee</h2>
         </div>

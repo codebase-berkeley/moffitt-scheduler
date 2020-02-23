@@ -1,4 +1,4 @@
-.topWords{
+.topWordss{
     margin-top: 2%;
     font-family: 'Open Sans', sans-serif;
     display: flex;
@@ -8,6 +8,7 @@
     font-size: 25px;
     padding-left: 8%;
     float: left;
+    color: black;
 }
 .add{
     font-size: 18px;
