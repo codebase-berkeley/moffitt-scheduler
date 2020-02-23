@@ -1,0 +1,37 @@
+.topWords{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin:auto;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 13px;
+    color: #9E9E9E;
+}
+.middleWords{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin:auto;
+    background: white;
+    border-radius: 15px;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    color: #9E9E9E;
+}
+.msame1{
+    margin-left: 5%;
+}
+.msame2{
+    margin-right:5%;
+}
+.tspecial{
+    color: black;
+    text-decoration: underline;
+    text-decoration-color: #3F3CC8;
+}
