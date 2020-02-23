@@ -5,9 +5,15 @@ export default function PendingCov(props) {
     return (
         <div className="shift">
             <div className="time_loc">
-                <p className="desk">{props.desk}</p>
-                <p className="loc">{props.loc}</p>
-                <p className="date">{props.loc}</p>
+                <div className="firstrow">
+                    <div className="bold_desk">
+                        <p className="desk">{props.desk}</p>
+                    </div>
+                    <div className="colorful_box">
+                        <p className="loc">{props.loc}</p>
+                    </div>
+                </div>
+                <p className="date">{props.date}</p>
                 <p className="time">{props.time}</p>
             </div>
             <div className="need_cov">

@@ -1,7 +1,7 @@
 import React from "react";
-import "./PendingCoverage.css";
+import "./PendingSupervisor.css";
 
-export default function PendingCoverage() {
+export default function PendingSupervisor() {
     return (
         <div className="all">
             <p>hello world!</p>
