@@ -16,8 +16,6 @@ export default function Cover() {
                 <h2 className="msame">Notes</h2>
                 <h2 className="msame2"></h2>
             </div>
-            <div className="past_section">
-                <div className="past_ann">
                 <PendingCov
                     desk="Front Desk"
                     loc="Moffitt"
@@ -42,8 +40,6 @@ export default function Cover() {
                     needname="Fami Lee"
                     // message="Going home for the weekend"
                 />
-                </div>
-            </div>
         </div>
     );
 }
