@@ -6,12 +6,12 @@ import WithCheck from "../WithCheck";
 export default function RequestHistory() {
     return (
         <div>
-            <div className="topWords">
+            <div className="topWordsss">
                 <h1 className="tsame">Pending Coverage</h1>
                 <h1 className="tsame">Pending Supervisor Approval</h1>
                 <h1 className="tspecial">Request History</h1>
             </div>
-            <div className="middleWords">
+            <div className="middleWordsss">
                 <h2 className="msame1">Time and Location</h2>
                 <h2 className="msame">Needing Coverage</h2>
                 <h2 className="msame">Covered By</h2>

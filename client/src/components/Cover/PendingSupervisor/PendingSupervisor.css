@@ -2,13 +2,13 @@
     display: flex;
     justify-content: space-between;
     width: 80%;
-    /* margin:auto; */
+    margin:auto;
     padding-top: 2%;
     padding-bottom: 2%;
     font-family: 'Open Sans', sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 10px;
     color: #9E9E9E;
 }
 .middleWords{
@@ -21,7 +21,7 @@
     font-family: 'Open Sans', sans-serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 11px;
+    font-size: 10px;
     color: #9E9E9E;
 }
 .msame1{
