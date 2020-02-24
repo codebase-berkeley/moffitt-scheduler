@@ -1,8 +1,43 @@
 import React from "react";
-import "./Calendar.css"
-//import { Resizable, ResizableBox } from 'react-resizable';
+import "./Calendar.css";
+import ScheduleSelector from 'react-schedule-selector';
 
 export default class Calendar extends React.Component {
+  constructor(props) {
+    super(props);
+  } 
+  state = { schedule: [] }
+  handleChange = newSchedule => {
+    this.setState({ schedule: newSchedule })
+  }
+  render() {
+    return (
+      <div id="calendar-container">
+        <div class="schedule-container">
+          <ScheduleSelector
+            selection={this.state.schedule}
+            numDays={7}
+            minTime={0}
+            maxTime={23}
+            dateFormat="dddd MM/DD"
+            onChange={this.handleChange}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
+/*
+export default class Calendar extends React.Component {
+  constructor(props) {
+    super(props);
+  } 
+  state = { schedule: [] }
+  handleChange = newSchedule => {
+    this.setState({ schedule: newSchedule })
+  }
+  
   render() {
     return (
       <div id="calendar-container">
@@ -499,15 +534,4 @@ export default class Calendar extends React.Component {
     );
   }
 }
-
-
-/*
-<ResizableBox 
-                className="hour-grid-item" 
-                height={0} 
-                minConstraints={[0,0]} maxConstraints={[0, 680]} axis="y"
-                handleSize={[8, 8]}
-                resizeHandles={['s']}
-              >
-              </ResizableBox>
 */
