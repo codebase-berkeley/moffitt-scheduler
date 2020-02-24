@@ -1,8 +1,9 @@
 .topWordssss{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 80%;
     margin:auto;
+    margin-top: 2%;
     padding-top: 2%;
     padding-bottom: 2%;
     font-family: 'Open Sans', sans-serif;
