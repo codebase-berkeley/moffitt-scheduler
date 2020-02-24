@@ -24,8 +24,8 @@
 }
 
 .textFormat{
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 .vertical{
   display: flex;
@@ -35,28 +35,28 @@
   padding-bottom: 5%;
 }
 .name{
-    font-family: 'Open Sans', sans-serif;
-    padding-top: 18%;
-    font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  padding-top: 18%;
+  font-weight: bold;
 }
 .first{
   flex: 1;
   background-color: #1DE0A6;
-     color: white;
+  color: white;
   width: 90%;
   height: 30px;
   padding: 2%;
   margin: 20px;
   font-family: Open Sans;
- font-style: normal;
- font-weight: normal;
- font-size: 14px;
- line-height: 30px;
- text-align: center;
- border-radius: 20.5px;
- display: flex;
- flex-direction: column;
- align-items:center;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 20.5px;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
 }
 .second{
   flex: 1;
@@ -68,15 +68,15 @@
   padding: 2%;
   margin: 20px;
   font-family: Open Sans;
- font-style: normal;
- font-weight: normal;
- font-size: 14px;
- line-height: 30px;
- text-align: center;
- border-radius: 20.5px;
- display: flex;
- flex-direction: column;
- align-items:center;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 20.5px;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
   
 }
 .email{

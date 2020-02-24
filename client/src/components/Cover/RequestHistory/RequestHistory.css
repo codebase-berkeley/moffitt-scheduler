@@ -13,7 +13,6 @@
 }
 .middleWordsss{
     display: flex;
-    justify-content: space-between;
     width: 80%;
     margin:auto;
     background: white;
@@ -27,16 +26,14 @@
 .msame1{
     width: 30%;
     margin-left: 2%;
-    /* background-color: lightblue; */
 }
 .msame2{
     width: 10%;
     margin-right:2%;
-    /* background-color: lightgreen; */
 }
 .msame{
     width: 20%;
-    /* background-color: lightpink; */
+    margin-left: 2%;
 }
 .tspecial{
     color: black;

@@ -11,10 +11,10 @@ export default function PendingSupervisor() {
                 <h1 className="tsame">Request History</h1>
             </div>
             <div className="middleWords">
-                <h2 className="msame1">Time and Location</h2>
-                <h2 className="msame">Needing Coverage</h2>
-                <h2 className="msame">Covered By</h2>
-                <h2 className="msame2"></h2>
+                <h2 className="msame11">Time and Location</h2>
+                <h2 className="msame0">Needing Coverage</h2>
+                <h2 className="msame0">Covered By</h2>
+                <h2 className="msame22"></h2>
             </div>
             <div className="pendingShifts">
             <WithCheck

@@ -14,7 +14,6 @@
 }
 .middleWordssss{
     display: flex;
-    justify-content: space-between;
     width: 80%;
     margin:auto;
     background: white;
@@ -27,12 +26,19 @@
     margin-bottom: 2%;
 
 }
-.msame1{
-    margin-left: 5%;
+
+.msame01{
+    margin-left: 2%;
 }
-.msame2{
-    margin-right:5%;
+
+.msame00{
+    margin-left: 23%;
 }
+
+.msame02{
+    margin-left: 14%;
+}
+
 .tspecial{
     color: black;
     text-decoration: underline;

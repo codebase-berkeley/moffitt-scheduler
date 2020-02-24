@@ -11,10 +11,10 @@ export default function Cover() {
                 <h1 className="tsame">Request History</h1>
             </div>
             <div className="middleWordssss">
-                <h2 className="msame1">Time and Location</h2>
-                <h2 className="msame">Needing Coverage</h2>
-                <h2 className="msame">Notes</h2>
-                <h2 className="msame2"></h2>
+                <h2 className="msame01">Time and Location</h2>
+                <h2 className="msame00">Needing Coverage</h2>
+                <h2 className="msame02">Notes</h2>
+                <h2 className="msame03"></h2>
             </div>
                 <PendingCov
                     desk="Front Desk"

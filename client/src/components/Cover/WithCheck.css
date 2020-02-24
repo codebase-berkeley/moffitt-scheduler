@@ -8,7 +8,6 @@
     padding: 1%;
     display: flex;
     flex-direction: row;
-    /* justify-content: space-between; */
     padding-left: 2%;
     padding-right: 2%;
     font-weight: 300;
@@ -17,7 +16,6 @@
 }
 
 .time_loc{
-    /* background-color: lightcoral; */
     width: 45%;
 }
 
@@ -30,7 +28,6 @@
 .bold_desk{
     font-size: 16px;
     font-weight: 900;
-    /* background-color: lightblue; */
     display: flex;
     width: 50%;
 
@@ -51,22 +48,18 @@
 }
 .need_cov{
     align-self: center;
-    /* background-color: lightblue; */
-    width: 40%;
+    width: 30%;
     display: flex;
     flex-direction: column;
-    margin-left: 11%;
-    /* align-items: center; */
+    margin-left: 6%;
 }
 
 .covering{
     align-self: center;
-    /* background-color: lightpink; */
     width: 40%;
     display: flex;
     flex-direction: column;
-    margin-left: 8%;
-    /* align-items: center; */
+    margin-left: 4%;
 }
 .approval{
     display: flex;

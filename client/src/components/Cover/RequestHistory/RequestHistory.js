@@ -25,7 +25,6 @@ export default function RequestHistory() {
                 time="3:00 PM - 5:00 PM"
                 needname="Broco Lee"
                 covername="Ug Lee"
-                check=""
             />
             <WithCheck
                 desk="Front Desk"
@@ -34,7 +33,6 @@ export default function RequestHistory() {
                 time="3:00 PM - 5:00 PM"
                 needname="Broco Lee"
                 covername="Ug Lee"
-                check=""
             />
             </div>
         </div>
