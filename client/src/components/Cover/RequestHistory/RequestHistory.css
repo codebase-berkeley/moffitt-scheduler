@@ -25,10 +25,18 @@
     color: #9E9E9E;
 }
 .msame1{
-    margin-left: 5%;
+    width: 30%;
+    margin-left: 2%;
+    /* background-color: lightblue; */
 }
 .msame2{
-    margin-right:5%;
+    width: 10%;
+    margin-right:2%;
+    /* background-color: lightgreen; */
+}
+.msame{
+    width: 20%;
+    /* background-color: lightpink; */
 }
 .tspecial{
     color: black;

@@ -9,17 +9,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 4%;
-    padding-bottom: 4%;
+    padding-left: 2%;
+    padding-right: 2%;
     font-weight: 300;
     font-size: 15px;
 }
 
 .time_loc{
     /* background-color: lightcoral; */
-    width: 25%;
+    width: 45%;
 }
 
 .firstrow{
@@ -53,17 +51,36 @@
 .need_cov{
     align-self: center;
     /* background-color: lightblue; */
-    width: 20%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.notes{
+.covering{
     align-self: center;
     /* background-color: lightpink; */
     width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.approval{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+}
+
+.check{
+    height: 29%;
+    width: 18.5%;
+    margin-right: 3%;
+}
+
+.deny{
+    height: 29%;
+    width: 18%;
+    margin-left: 3%;
 }

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     width: 80%;
-    margin:auto;
+    /* margin:auto; */
     padding-top: 2%;
     padding-bottom: 2%;
     font-family: 'Open Sans', sans-serif;
@@ -34,4 +34,11 @@
     color: black;
     text-decoration: underline;
     text-decoration-color: #3F3CC8;
+}
+.pendingShifts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2%;
 }

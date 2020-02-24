@@ -1,5 +1,7 @@
 import React from "react";
 import "./WithCheck.css";
+import check from "../check.png";
+import cross from "../cross.png";
 
 export default function WithCheck(props) {
     return (
@@ -19,12 +21,12 @@ export default function WithCheck(props) {
             <div className="need_cov">
                 <p className="needname">{props.needname}</p>
             </div>
-            <div className="notes">
-                <p className="message">{props.message}</p>
+            <div className="covering">
+                <p className="covername">{props.covername}</p>
             </div>
             <div className ="approval"> 
-                <p className="check">{props.check}</p>
-                <p className="deny">{props.check}</p>
+                <img className="check" src={check} alt="check"/>
+                <img className="deny" src={cross} alt="deny"/>
             </div>
         </div>
     );
