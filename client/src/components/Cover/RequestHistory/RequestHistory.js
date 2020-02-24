@@ -27,6 +27,15 @@ export default function RequestHistory() {
                 covername="Ug Lee"
                 check=""
             />
+            <WithCheck
+                desk="Front Desk"
+                loc="Moffitt"
+                date="Wednesday, March 6, 2020"
+                time="3:00 PM - 5:00 PM"
+                needname="Broco Lee"
+                covername="Ug Lee"
+                check=""
+            />
             </div>
         </div>
     );
