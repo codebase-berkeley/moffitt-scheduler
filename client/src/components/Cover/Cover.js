@@ -5,12 +5,12 @@ import "./Cover.css";
 export default function Cover() {
     return (
         <div className="all">
-            <div className="topWords">
+            <div className="topWordssss">
                 <h1 className="tspecial">Pending Coverage</h1>
                 <h1 className="tsame">Pending Supervisor Approval</h1>
                 <h1 className="tsame">Request History</h1>
             </div>
-            <div className="middleWords">
+            <div className="middleWordssss">
                 <h2 className="msame1">Time and Location</h2>
                 <h2 className="msame">Needing Coverage</h2>
                 <h2 className="msame">Notes</h2>

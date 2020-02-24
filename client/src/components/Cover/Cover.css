@@ -1,4 +1,4 @@
-.topWords{
+.topWordssss{
     display: flex;
     justify-content: space-between;
     width: 80%;
@@ -11,7 +11,7 @@
     font-size: 13px;
     color: #9E9E9E;
 }
-.middleWords{
+.middleWordssss{
     display: flex;
     justify-content: space-between;
     width: 80%;
@@ -23,6 +23,8 @@
     font-weight: normal;
     font-size: 11px;
     color: #9E9E9E;
+    margin-bottom: 2%;
+
 }
 .msame1{
     margin-left: 5%;
