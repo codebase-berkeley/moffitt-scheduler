@@ -1,0 +1,181 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+/** Outermost div which contains everything.
+  * Width and height cover whole screen, position = absolute so elements inside can be positioned properly. 
+*/
+#calendar-container {
+    background-color: #F8FAFC;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+/** Rounded box header containing the weekdays: "Sunday, Monday....Saturday" 
+  * Width and height cover whole screen, position = absolute so elements inside can be positioned properly. 
+*/
+.weekdays {
+    position: relative;
+    width: 66%;
+    top: 7.5%;
+    left: 25%;
+    
+    margin: 0;
+    padding: 10px 0;
+    background-color:white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px gray;
+}
+
+/** The text for each day inside of the above class. 
+  *  ISSUES: resizing the page will cause overlap!
+*/
+.weekdays li {
+    display: inline-block;
+    width: 14.25%;
+    color: #9E9E9E;
+    text-align: center;
+    font-family: "Open Sans";
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/** A div containing the hours on the left of the columns.
+  *  ISSUES: Super wack when resizing window, probably because of position absolute. 
+  *  When I tried using relative position, it ends up pushing the entire calendar grid down though. 
+*/
+.hours {
+    position: absolute;
+    top: 14%;
+    left: 20%;
+    height: 100%;
+}
+
+/** The text for each timeslot/hour inside of the above div.
+*/
+.hours li {
+    list-style: none;
+    height: 1.775%;
+    text-align: right;
+    font-family: "Open Sans";
+    font-weight: light;
+    font-size: 7.5px;
+}
+
+/** Grid containing the seven columns, representing each day. 
+  *  ISSUES: resizing is a bit wack. 
+*/
+.day-grid-container {
+    position: relative;
+    top: 10%;
+    left: 25%;
+
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    display: grid;
+    grid-column-gap: 10px;
+    height: 85%;
+    width: 66%;
+    justify-items: start stretch;
+}
+
+/** The white columns representing each day. Each column is itself a grid, with cells inside being highlightable portions. 
+*/
+.day-grid-item {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px gray;
+    display: grid;
+    grid-template-rows: 
+    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 
+    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 
+    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 
+    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    ; 
+    justify-items: stretch;
+}
+
+/** Highlightable cells inside each day column.
+ * ISSUES: debating how to select availability! 
+ * Two options: 1. using the installed ResizableBox thing, which allows dragging
+ *              2. having each day column be populated with uncolored cells, representing 30-min intervals that can be clicked and highlighted 
+ * currently (2) is kinda implemented, but idk how to highlight upon clicking
+ * also don't know how to make the color of these cells vary (red, green, or blue) 
+*/
+.hour-grid-item {
+    background-color: light gray;
+}
+
+.hour-grid-item:active {
+  background-color: green;
+}
+
+/** IGNORE EVERYTHING BELOW. THIS IS CSS GARBAGE FOR THE RESIZABLEBOX THING
+*/
+.react-resizable {
+  position: relative;
+}
+.react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+');
+  background-position: bottom right;
+  padding: 0 3px 3px 0;
+}
+.react-resizable-handle-sw {
+  bottom: 0;
+  left: 0;
+  cursor: sw-resize;
+  transform: rotate(90deg);
+}
+.react-resizable-handle-se {
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+}
+.react-resizable-handle-nw {
+  top: 0;
+  left: 0;
+  cursor: nw-resize;
+  transform: rotate(180deg);
+}
+.react-resizable-handle-ne {
+  top: 0;
+  right: 0;
+  cursor: ne-resize;
+  transform: rotate(270deg);
+}
+.react-resizable-handle-w,
+.react-resizable-handle-e {
+  top: 50%;
+  margin-top: -10px;
+  cursor: ew-resize;
+}
+.react-resizable-handle-w {
+  left: 0;
+  transform: rotate(135deg);
+}
+.react-resizable-handle-e {
+  right: 0;
+  transform: rotate(315deg);
+}
+.react-resizable-handle-n,
+.react-resizable-handle-s {
+  left: 50%;
+  margin-left: -10px;
+  cursor: ns-resize;
+}
+.react-resizable-handle-n {
+  top: 0;
+  transform: rotate(225deg);
+}
+.react-resizable-handle-s {
+  bottom: 0;
+  transform: rotate(45deg);
+}
+
+  

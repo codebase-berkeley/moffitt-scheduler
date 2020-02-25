@@ -1,7 +1,7 @@
 import React from "react";
 import "./Calendar.css";
 import ScheduleSelector from "react-schedule-selector";
-import { getDay } from "date-fns";
+import { getDay, startOfWeek, weekStartsOn } from "date-fns";
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -30,6 +30,7 @@ export default class Calendar extends React.Component {
         <h1>{this.currentDate}</h1>
         <div class="schedule-container">
           <ScheduleSelector
+            startDate={startOfWeek(new Date(), { weekStartsOn: 0 })}
             selection={this.state.schedule}
             numDays={7}
             minTime={0}
