@@ -1,6 +1,6 @@
 import React from "react";
 import "./Employees.css";
-import EachEmployee from "./EachEmployee";
+import EachEmployee from "./EachEmployee.js";
 
 export default function Employees() {
   return (

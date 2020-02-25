@@ -1,5 +1,5 @@
 import React from "react";
-import WithCheck from "../WithCheck.jsx";
+import WithCheck from "../WithCheck.js";
 import "./PendingSupervisor.css";
 
 export default function PendingSupervisor() {
