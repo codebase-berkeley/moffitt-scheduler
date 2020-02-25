@@ -3,15 +3,20 @@
 /** Outermost div which contains everything.
   * Width and height cover whole screen, position = absolute so elements inside can be positioned properly. 
 */
-#calendar-container {
+#overall-container {
     background-color: #F8FAFC;
     width: 100%;
     height: 100%;
     position: absolute;
+    display: inline-block;
+}
+.calendar-container {
+  display: inline;
+  overflow: hidden;
 }
 .schedule-container {
   position: relative;
-  display: inline-flex;
+  display: inline-block;
   left: 25%;
   bottom: 5%;
   transform: scale(0.9, 0.9);
@@ -20,110 +25,38 @@
   background-color: white;
   border-radius: 10px;
   box-shadow: 1px 1px 5px gray;
+  padding-right: 15px;
+  padding-bottom: 15px;
 }
+.weekdays-row {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  justify-items: center;
 
-
-/**IGNORE STUFF BELOW WE ENDED UP USING REACT-SCHEDULER*/ 
-/** Rounded box header containing the weekdays: "Sunday, Monday....Saturday" 
-  * Width and height cover whole screen, position = absolute so elements inside can be positioned properly. 
-*/
+  height: auto;
+  width: 53%;
+  left: 35%;
+}
 .weekdays {
-    position: relative;
-    width: 60%;
-    top: 2%;
-    left: 31.25%;
-    
-    margin: 0;
-    padding: 10px 0;
-    background-color:white;
-    border-radius: 10px;
-    box-shadow: 1px 1px 5px gray;
-}
-
-/** The text for each day inside of the above class. 
-  *  ISSUES: resizing the page will cause overlap!
-*/
-.weekdays li {
-    display: inline-block;
-    width: 14.25%;
-    color: black;
-    text-align: center;
-    font-family: "Open Sans";
-    font-weight: bold;
-    font-size: 14px;
-}
-
-/** A div containing the hours on the left of the columns.
-  *  ISSUES: Super wack when resizing window, probably because of position absolute. 
-  *  When I tried using relative position, it ends up pushing the entire calendar grid down though. 
-*/
-.hours {
-    position: absolute;
-    top: 14%;
-    left: 20%;
-    height: 100%;
-}
-
-/** The text for each timeslot/hour inside of the above div.
-*/
-.hours li {
-    list-style: none;
-    height: 1.775%;
-    text-align: right;
-    font-family: "Open Sans";
-    font-weight: light;
-    font-size: 7.5px;
-}
-
-/** Grid containing the seven columns, representing each day. 
-  *  ISSUES: resizing is a bit wack. 
-*/
-.day-grid-container {
-    position: relative;
-    top: 10%;
-    left: 25%;
-
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    display: grid;
-    grid-column-gap: 10px;
-    height: 85%;
-    width: 66%;
-    justify-items: start stretch;
-}
-
-/** The white columns representing each day. Each column is itself a grid, with cells inside being highlightable portions. 
-*/
-.day-grid-item {
-    background-color: white;
-    border-radius: 0px;
-    box-shadow: 1px 1px 5px gray;
-    display: grid;
-    grid-template-rows: 
-    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 
-    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 
-    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 
-    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
-    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
-    1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
-    ; 
-    justify-items: stretch;
-}
-
-/** Highlightable cells inside each day column.
- * ISSUES: debating how to select availability! 
- * Two options: 1. using the installed ResizableBox thing, which allows dragging
- *              2. having each day column be populated with uncolored cells, representing 30-min intervals that can be clicked and highlighted 
- * currently (2) is kinda implemented, but idk how to highlight upon clicking
- * also don't know how to make the color of these cells vary (red, green, or blue) 
-*/
-.hour-grid-item {
-    background-color: light gray;
-}
-
-.hour-grid-item:active {
-  background-color: green;
-}
-
-
-
+  text-align: center;
+  width: 100%;
   
+  font-family: "Open Sans";
+  font-weight: bold;
+  font-size: 14px;
+  color: #9E9E9E;
+
+  background-color: #F8F8F8;
+  box-shadow: 0px 0px 5px gray;
+}
+
+.deselectCell {
+  background-color: #F8F8F8;
+  height: 25px;
+}
+
+.selectCell {
+  background-color: #B0E9C2;
+  height: 25px;
+}
