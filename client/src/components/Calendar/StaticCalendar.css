@@ -4,8 +4,8 @@
   display: inline-block;
   overflow: scroll;
   left: 25%;
-  bottom: 2%;
-  transform: scale(0.95, 0.95);
+  bottom: 2.5%;
+  transform: scale(0.9, 0.9);
   width: 66%;
   font-family: "Open Sans";
   background-color: white;
@@ -14,8 +14,8 @@
 }
 
 #inner-schedule {
-  width: 92.5%;
-  height: 750px;
+  width: 95%;
+  height: 800px;
   display: inline-grid;
   justify-items: stretch;
   grid-column-gap: 6px;
@@ -58,7 +58,6 @@
 .item-wday {
   grid-area: "wday";
   font-size: 19px;
-  margin-bottom: 15px;
   color: #555454;
 }
 

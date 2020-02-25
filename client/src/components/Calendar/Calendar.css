@@ -7,18 +7,19 @@
   position: absolute;
   display: inline-block;
 }
-.schedule-container {
+#schedule-container {
   position: relative;
   display: inline-block;
   left: 25%;
-  bottom: 5%;
+  bottom: 2.5%;
   transform: scale(0.9, 0.9);
   width: 66%;
   font-family: "Open Sans";
   background-color: white;
   border-radius: 10px;
   box-shadow: 1px 1px 5px gray;
-  padding-right: 15px;
+  padding-right: 32.5px;
+  padding-left: 40px;
   padding-bottom: 15px;
 }
 

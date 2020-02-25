@@ -35,7 +35,7 @@ export default class Calendar extends React.Component {
   render() {
     return (
       <div id="overall-container">
-        <div class="schedule-container">
+        <div id="schedule-container">
           <h1 id="weekString">{this.weekString}</h1>
           <ScheduleSelector
             startDate={startOfWeek(this.currentDate)}
