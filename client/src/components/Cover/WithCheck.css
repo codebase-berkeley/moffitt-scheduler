@@ -1,82 +1,80 @@
-
-.shift{
-    background-color: #FFFFFF;
-    width: 80%;
-    border-radius: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2%;
-    padding: 1%;
-    display: flex;
-    flex-direction: row;
-    padding-left: 2%;
-    padding-right: 2%;
-    font-weight: 300;
-    font-size: 15px;
-    font-family: 'Open Sans', sans-serif;
+.shift {
+  background-color: #ffffff;
+  width: 80%;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2%;
+  padding: 1%;
+  display: flex;
+  flex-direction: row;
+  padding-left: 2%;
+  padding-right: 2%;
+  font-weight: 300;
+  font-size: 15px;
+  font-family: "Open Sans", sans-serif;
 }
 
-.time_loc{
-    width: 45%;
+.time_loc {
+  width: 45%;
 }
 
-.firstrow{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+.firstrow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.bold_desk{
-    font-size: 16px;
-    font-weight: 900;
-    display: flex;
-    width: 50%;
-
+.bold_desk {
+  font-size: 16px;
+  font-weight: 900;
+  display: flex;
+  width: 50%;
 }
 
-.colorful_box{
-    background-color: #1DE0A6;
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    border-radius: 20px;
-    color: white;
-    font-weight: 400;
-    font-size: 13px;
-    letter-spacing: 1px;
-    width: 30%;
-    text-align: center;
+.colorful_box {
+  background-color: #1de0a6;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border-radius: 20px;
+  color: white;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 1px;
+  width: 30%;
+  text-align: center;
 }
-.need_cov{
-    align-self: center;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    margin-left: 6%;
-}
-
-.covering{
-    align-self: center;
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    margin-left: 4%;
-}
-.approval{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 30%;
+.need_cov {
+  align-self: center;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 6%;
 }
 
-.check{
-    height: 29%;
-    width: 21%;
-    margin-right: 3%;
+.covering {
+  align-self: center;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 4%;
+}
+.approval {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
 }
 
-.deny{
-    height: 29%;
-    width: 21%;
-    margin-left: 3%;
+.check {
+  height: 29%;
+  width: 21%;
+  margin-right: 3%;
+}
+
+.deny {
+  height: 29%;
+  width: 21%;
+  margin-left: 3%;
 }
