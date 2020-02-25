@@ -3,6 +3,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
+import Calendar from './components/Calendar/Calendar';
+import StaticCalendar from './components/Calendar/StaticCalendar';
 import Employees from './components/Employees/Employees';
 import Cover from './components/Cover/Cover';
 import PendingSupervisor from './components/Cover/PendingSupervisor/PendingSupervisor';
@@ -16,13 +18,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     return (
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/calendar" component={Calendar} />
+          <Route exact path="/staticCalendar" component={StaticCalendar} />
           <Route exact path="/employees" component={Employees} />
           <Route exact path="/cover" component={Cover} />
           <Route exact path="/cover/pendingsupervisor" component={PendingSupervisor} />
