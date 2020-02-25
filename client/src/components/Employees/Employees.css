@@ -3,6 +3,7 @@
   font-family: "Open Sans", sans-serif;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2%;
 }
 .header {
   font-size: 25px;
