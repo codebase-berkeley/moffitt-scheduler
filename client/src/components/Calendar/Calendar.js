@@ -1,7 +1,7 @@
 import React from "react";
-import "./Calendar.css";
 import ScheduleSelector from "react-schedule-selector";
-import { getDay } from "date-fns";
+import "./Calendar.css";
+import { format, startOfWeek, endOfWeek } from "date-fns";
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -10,6 +10,16 @@ export default class Calendar extends React.Component {
 
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
+
+    this.currentDate = new Date();
+    this.weekString =
+      format(this.currentDate, "MMMM") +
+      " " +
+      format(this.currentDate, "YYYY") +
+      ": " +
+      format(startOfWeek(this.currentDate), "MM/DD") +
+      " - " +
+      format(endOfWeek(this.currentDate), "MM/DD");
   }
 
   handleChange = newSchedule => {
@@ -22,14 +32,13 @@ export default class Calendar extends React.Component {
     </div>
   );
 
-  currentDate = getDay(new Date());
-
   render() {
     return (
       <div id="overall-container">
-        <h1>{this.currentDate}</h1>
         <div class="schedule-container">
+          <h1 id="weekString">{this.weekString}</h1>
           <ScheduleSelector
+            startDate={startOfWeek(this.currentDate)}
             selection={this.state.schedule}
             numDays={7}
             minTime={0}

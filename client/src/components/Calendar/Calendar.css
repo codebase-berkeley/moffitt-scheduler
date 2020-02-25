@@ -1,18 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
-
-/** Outermost div which contains everything.
-  * Width and height cover whole screen, position = absolute so elements inside can be positioned properly. 
-*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 #overall-container {
-    background-color: #F8FAFC;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: inline-block;
-}
-.calendar-container {
-  display: inline;
-  overflow: hidden;
+  background-color: #f8fafc;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: inline-block;
 }
 .schedule-container {
   position: relative;
@@ -28,35 +20,19 @@
   padding-right: 15px;
   padding-bottom: 15px;
 }
-.weekdays-row {
-  position: relative;
-  display: inline-grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  justify-items: center;
-
-  height: auto;
-  width: 53%;
-  left: 35%;
-}
-.weekdays {
-  text-align: center;
-  width: 100%;
-  
-  font-family: "Open Sans";
-  font-weight: bold;
-  font-size: 14px;
-  color: #9E9E9E;
-
-  background-color: #F8F8F8;
-  box-shadow: 0px 0px 5px gray;
-}
 
 .deselectCell {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
   height: 25px;
 }
 
 .selectCell {
-  background-color: #B0E9C2;
+  background-color: #b0e9c2;
   height: 25px;
+}
+
+#weekString {
+  text-align: center;
+  font-weight: lighter;
+  color: gray;
 }
