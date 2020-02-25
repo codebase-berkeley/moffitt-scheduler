@@ -35,9 +35,13 @@ class PendingSupervisor extends React.Component {
     return (
       <div>
         <div className="topWords">
-          <h1 className="tsame">Pending Coverage</h1>
+          <h1 className="tsame">
+            <a href="/cover">Pending Coverage</a>
+          </h1>
           <h1 className="tspecial">Pending Supervisor Approval</h1>
-          <h1 className="tsame">Request History</h1>
+          <h1 className="tsame">
+            <a href="/cover/requesthistory">Request History</a>
+          </h1>
         </div>
         <div className="middleWords">
           <h2 className="msame11">Time and Location</h2>
