@@ -1,6 +1,7 @@
 import React from "react";
 import "./PendingCov.css";
 
+
 export default function PendingCov(props) {
   return (
     <div className="shift1">
