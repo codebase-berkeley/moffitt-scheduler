@@ -1,0 +1,20 @@
+.topWordss {
+  margin-top: 2%;
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2%;
+}
+.header {
+  font-size: 25px;
+  padding-left: 8%;
+  float: left;
+  color: black;
+}
+.add {
+  font-size: 18px;
+  text-align: right;
+  float: right;
+  padding-right: 10%;
+  color: #3626a7;
+}
