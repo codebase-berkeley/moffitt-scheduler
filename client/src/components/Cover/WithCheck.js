@@ -1,7 +1,7 @@
 import React from "react";
 import "./WithCheck.css";
-import check from "../check.png";
-import cross from "../cross.png";
+import check_nofill from "../check_nofill.svg";
+import deny_nofill from "../deny_nofill.svg";
 
 class WithCheck extends React.Component {
   constructor(props) {
@@ -43,10 +43,10 @@ class WithCheck extends React.Component {
         </div>
         <div className="approval">
           <button className="checkbutton" onClick={this.approvalClick}>
-            <img className="check" src={check} alt="check" />
+            <img className="check" src={check_nofill} alt="check" />
           </button>
           <button className="denybutton" onClick={this.denialClick}>
-            <img className="deny" src={cross} alt="deny" />
+            <img className="deny" src={deny_nofill} alt="deny" />
           </button>
         </div>
       </div>

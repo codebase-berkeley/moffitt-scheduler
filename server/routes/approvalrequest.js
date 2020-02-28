@@ -1,9 +1,11 @@
-// var express = require("express");
-// var router = express.Router();
+var express = require("express");
+var router = express.Router();
 
-// router.get("/approvalrequest", res => {
-//   var approvalRequest = true;
-//   res.json({ approvalRequest: approvalRequest });
-// });
+router.get("/approvalrequest", res => {
+  console.log(res);
+  var approvalRequest = true;
+  console.log("approve2", approve);
+  res.json({ approvalRequest: approvalRequest });
+});
 
-// module.exports = router;
+module.exports = router;

@@ -95,11 +95,23 @@
   outline: none;
 }
 
+.checkbutton1 {
+  height: 75%;
+  width: 40%;
+  border-radius: 100%;
+  border-color: white;
+  margin-right: 5%;
+  outline: none;
+}
+
 .checkbutton:active {
   outline: none;
   border: none;
 }
-
+.checkbutton1:active {
+  outline: none;
+  border: none;
+}
 .denybutton {
   height: 75%;
   width: 40%;
@@ -110,7 +122,21 @@
   outline: none;
 }
 
+.denybutton1 {
+  height: 75%;
+  width: 40%;
+  border-radius: 100%;
+  border-color: white;
+  margin-left: 5%;
+  margin-right: 30%;
+  outline: none;
+}
+
 .denybutton:active {
+  outline: none;
+  border: none;
+}
+.denybutton1:active {
   outline: none;
   border: none;
 }

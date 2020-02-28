@@ -23,27 +23,17 @@ class NonClickWithCheck extends React.Component {
     };
   }
 
-  //   make function that pulls from backend (get request), set this.approved to either true or false based on JSON request (body = JSON {approval request?})
-
-  //   pullBackend() {
-  //     if (approvalRequest) {
-  //       this.approved = true;
-  //     } else {
-  //       this.approved = false;
-  //     }
-  //   }
-
   render() {
     var approvalButton;
     var denialButton;
     if (this.approved) {
-      approvalButton = <img src={check_fill} />;
-      denialButton = <img src={deny_nofill} />;
+      approvalButton = <img className="check" src={check_fill} />;
+      denialButton = <img className="deny" src={deny_nofill} />;
       console.log("approval ture");
       console.log("denial flase");
     } else {
-      approvalButton = <img src={check_nofill} />;
-      denialButton = <img src={deny_fill} />;
+      approvalButton = <img className="check" src={check_nofill} />;
+      denialButton = <img className="check" src={deny_fill} />;
       console.log("approval tuasdfkjsdfre");
       console.log("denial flaasdjfhsdse");
     }
@@ -68,8 +58,8 @@ class NonClickWithCheck extends React.Component {
           <p className="covername">{this.props.covername}</p>
         </div>
         <div className="approval">
-          <button onClick={this.approvalClick}>{approvalButton}</button>
-          <button onClick={this.denialClick}>{denialButton}</button>
+          <button className="checkbutton1">{approvalButton}</button>
+          <button className="denybutton1">{denialButton}</button>
         </div>
       </div>
     );
