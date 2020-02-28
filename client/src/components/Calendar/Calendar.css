@@ -1,0 +1,39 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+#overall-container {
+  background-color: #f8fafc;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: inline-block;
+}
+.schedule-container {
+  position: relative;
+  display: inline-block;
+  left: 25%;
+  bottom: 5%;
+  transform: scale(0.9, 0.9);
+  width: 66%;
+  font-family: "Open Sans";
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px gray;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+
+.deselectCell {
+  background-color: #f8f8f8;
+  height: 25px;
+}
+
+.selectCell {
+  background-color: #b0e9c2;
+  height: 25px;
+}
+
+#weekString {
+  text-align: center;
+  font-weight: lighter;
+  color: gray;
+}
