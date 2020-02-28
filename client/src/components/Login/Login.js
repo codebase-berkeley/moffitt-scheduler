@@ -59,8 +59,10 @@ class Login extends React.Component {
       });
   }
   createAccountClick(e) {
-    console.log("hi");
+    console.log("somethingElse");
   }
+  
 }
+
 
 export default Login;
