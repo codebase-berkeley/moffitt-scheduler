@@ -26,3 +26,23 @@ export default function PendingCov(props) {
     </div>
   );
 }
+
+loginClick(e) {
+  console.log("In click function");
+  var approve = document.getElementById("approve");
+  var deny = document.getElementById("deny");
+  fetch("/login", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ approve: approve, deny: deny })
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(jsonResponse => {
+      console.log(jsonResponse);
+    });
+}
