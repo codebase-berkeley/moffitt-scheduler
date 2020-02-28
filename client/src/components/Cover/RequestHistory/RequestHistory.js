@@ -1,6 +1,6 @@
 import React from "react";
 import "./RequestHistory.css";
-import WithCheck from "../WithCheck";
+import WithCheck from "../NonClickWithCheck";
 
 function processData(database) {
   const listItems = database.map((entry, index) => (
