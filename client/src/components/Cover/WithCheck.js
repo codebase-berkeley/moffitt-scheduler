@@ -42,10 +42,10 @@ class WithCheck extends React.Component {
           <p className="covername">{this.props.covername}</p>
         </div>
         <div className="approval">
-          <button onClick={this.approvalClick}>
+          <button className="checkbutton" onClick={this.approvalClick}>
             <img className="check" src={check} alt="check" />
           </button>
-          <button onClick={this.denialClick}>
+          <button className="denybutton" onClick={this.denialClick}>
             <img className="deny" src={cross} alt="deny" />
           </button>
         </div>

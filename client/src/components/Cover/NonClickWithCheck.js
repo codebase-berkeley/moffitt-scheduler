@@ -23,7 +23,15 @@ class NonClickWithCheck extends React.Component {
     };
   }
 
-  //   make function that pulls from backend (get request), set this.approved to either true or false based on JSON request
+  //   make function that pulls from backend (get request), set this.approved to either true or false based on JSON request (body = JSON {approval request?})
+
+  //   pullBackend() {
+  //     if (approvalRequest) {
+  //       this.approved = true;
+  //     } else {
+  //       this.approved = false;
+  //     }
+  //   }
 
   render() {
     var approvalButton;

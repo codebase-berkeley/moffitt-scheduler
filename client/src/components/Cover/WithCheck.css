@@ -69,14 +69,48 @@
   width: 30%;
 }
 
+.approval {
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
 .check {
-  height: 29%;
-  width: 21%;
-  margin-right: 3%;
+  height: 100%;
+  width: 100%;
 }
 
 .deny {
-  height: 29%;
-  width: 21%;
-  margin-left: 3%;
+  height: 100%;
+  width: 100%;
+}
+.checkbutton {
+  height: 75%;
+  width: 40%;
+  border-radius: 100%;
+  border-color: white;
+  margin-right: 5%;
+  outline: none;
+}
+
+.checkbutton:active {
+  outline: none;
+  border: none;
+}
+
+.denybutton {
+  height: 75%;
+  width: 40%;
+  border-radius: 100%;
+  border-color: white;
+  margin-left: 5%;
+  margin-right: 30%;
+  outline: none;
+}
+
+.denybutton:active {
+  outline: none;
+  border: none;
 }
