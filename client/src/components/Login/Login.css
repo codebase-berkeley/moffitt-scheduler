@@ -8,7 +8,7 @@
 }
 
 .loginBoxUpperPart {
-  width: 98%;
+  width: 100%;
   padding: 1%;
   margin-left: 0%;
   background: #3f3cc8;
@@ -23,7 +23,7 @@
   line-height: 160%;
   text-align: center;
   color: #ffffff;
-  padding: 5%;
+  padding: 6%;
 }
 
 .emailBox {
@@ -125,14 +125,17 @@
   font-size: 14px;
   text-align: center;
   color: #3f3cc8;
+  padding-top: 7%;
+  padding-bottom: 7%;
 }
+
 
 .button-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-left: 80px;
+  margin-right: 80px;
   align-items: center;
   align-content: space-between;
   margin-top: 8%;
