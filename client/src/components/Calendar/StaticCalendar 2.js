@@ -1,24 +1,12 @@
 import React from "react";
 import "./StaticCalendar.css";
-import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
-
-class Timeslot extends React.Component {
-  constructor(props) {
-    super(props);
-    this.x = props.x;
-    this.y = props.y;
-    this.selected = props.selected;
-  }
-  render() {
-    return <div class="item-cell"></div>;
-  }
-}
+import { format, startOfWeek, endOfWeek } from "date-fns";
 
 export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { schedule: [] };
-    this.groups = [];
+
     this.currentDate = new Date();
     this.weekString =
       format(this.currentDate, "MMMM") +
@@ -37,54 +25,40 @@ export default class StaticCalendar extends React.Component {
           <h1 id="weekString">{this.weekString}</h1>
           <div id="inner-schedule">
             <div></div>
-            <div class="item-wday">
-              {format(startOfWeek(this.currentDate), "dd MM/DD")}
-            </div>
-            <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 1), "dd MM/DD")}
-            </div>
-            <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 2), "dd MM/DD")}
-            </div>
-            <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 3), "dd MM/DD")}
-            </div>
-            <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 4), "dd MM/DD")}
-            </div>
-            <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 5), "dd MM/DD")}
-            </div>
-            <div class="item-wday">
-              {format(endOfWeek(this.currentDate), "dd MM/DD")}
-            </div>
+            <div class="item-wday">Su 02/23</div>
+            <div class="item-wday">Mo 02/24</div>
+            <div class="item-wday">Tu 02/25</div>
+            <div class="item-wday">We 02/26</div>
+            <div class="item-wday">Th 02/27</div>
+            <div class="item-wday">Fr 02/28</div>
+            <div class="item-wday">Sa 02/29</div>
 
             <div class="item-hours">12am</div>
-            <Timeslot x={0} y={0} />
-            <Timeslot x={0} y={1} />
-            <Timeslot x={0} y={2} />
-            <Timeslot x={0} y={3} />
-            <Timeslot x={0} y={4} />
-            <Timeslot x={0} y={5} />
-            <Timeslot x={0} y={6} />
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
 
             <div class="item-hours">1am</div>
-            <Timeslot x={1} y={0} />
-            <Timeslot x={1} y={1} />
-            <Timeslot x={1} y={2} />
-            <Timeslot x={1} y={3} />
-            <Timeslot x={1} y={4} />
-            <Timeslot x={1} y={5} />
-            <Timeslot x={1} y={6} />
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
 
             <div class="item-hours">2am</div>
-            <Timeslot x={2} y={0} />
-            <Timeslot x={2} y={1} />
-            <Timeslot x={2} y={2} />
-            <Timeslot x={2} y={3} />
-            <Timeslot x={2} y={4} />
-            <Timeslot x={2} y={5} />
-            <Timeslot x={2} y={6} />
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
+            <div class="item-cell"></div>
 
             <div class="item-hours">3am</div>
             <div class="item-cell"></div>

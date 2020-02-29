@@ -1,0 +1,72 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+#schedule-container-st {
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  overflow: scroll;
+  left: 25%;
+  bottom: 2%;
+  transform: scale(0.95, 0.95);
+  width: 66%;
+  font-family: "Open Sans";
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px gray;
+}
+
+#inner-schedule {
+  width: 92.5%;
+  height: 750px;
+  display: inline-grid;
+  justify-items: stretch;
+  grid-column-gap: 6px;
+  grid-row-gap: 6px;
+  grid-template-areas:
+    ". wday wday wday wday wday wday wday"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell";
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.item-cell {
+  grid-area: "cell";
+  background-color: #f8f8f8;
+}
+
+.item-wday {
+  grid-area: "wday";
+  font-size: 19px;
+  margin-bottom: 15px;
+  color: #3e3e3e;
+}
+
+.item-hours {
+  grid-area: "hours";
+  font-size: 14px;
+  color: grey;
+  text-align: center;
+}
