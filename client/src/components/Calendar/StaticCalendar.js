@@ -17,13 +17,13 @@ class Timeslot extends React.Component {
 export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { schedule: [], grid: new Array(7) };
+    this.state = { schedule: [], grid: new Array(24) };
     for (var i = 0; i < this.state.grid.length; i++) {
-      this.state.grid[i] = new Array(23);
+      this.state.grid[i] = new Array(7);
     }
-    for (var col = 0; col < this.state.grid.length; col++) {
-      for (var row = 0; row < this.state.grid[col].length; row++) {
-        this.state.grid[col][row] = "gray";
+    for (var row = 0; row <= 23; row++) {
+      for (var col = 0; col <= 6; col++) {
+        this.state.grid[row][col] = "gray";
       }
     }
     this.groups = [];
