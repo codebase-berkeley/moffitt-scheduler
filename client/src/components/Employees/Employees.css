@@ -18,3 +18,94 @@
   padding-right: 10%;
   color: #3626a7;
 }
+
+.AddEmployee {
+  float: right;
+  padding-right: 10%;
+  padding-top: 2%;
+}
+
+.AddEmpText {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 25px;
+  padding-top: 8%;
+}
+
+.addbutton {
+  font-style: #3626a7;
+}
+
+.FirstName,
+.LastName,
+.Email,
+.TrainedFor {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.FirstName {
+  display: flex;
+  align-items: center;
+  float: left;
+}
+
+.LastName {
+  display: flex;
+  align-items: center;
+  margin-left: 70%;
+}
+
+.FirstNameInput {
+  float: left;
+  display: flex;
+  align-items: center;
+}
+
+.LastNameInput {
+  margin-left: 70%;
+  display: flex;
+  align-items: center;
+}
+
+.FirstNameInput,
+.LastNameInput {
+  width: 50%;
+  height: 30px;
+  left: 519px;
+  top: 287px;
+  border-radius: 5px;
+}
+
+.EmailInput {
+  width: 200%;
+  height: 30px;
+  left: 519px;
+  top: 287px;
+  border-radius: 5px;
+}
+
+.EmployeeName {
+  padding-top: 5%;
+}
+
+.EmployeeEmail {
+  padding-top: 3%;
+}
+
+.TrainedFor {
+  padding-top: 3%;
+}
+
+.AllText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 10%;
+  padding-right: 10%;
+}
