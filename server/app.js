@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 
 // var exampleRoutes = require('./routes/example');
-var pendingSupervisor = require("./routes/pendingsupervisor");
+var pendingSupervisor = require("./routes/coverrequests");
 
 var cors = require("cors");
 
