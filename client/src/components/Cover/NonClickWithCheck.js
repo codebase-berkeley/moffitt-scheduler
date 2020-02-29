@@ -45,7 +45,7 @@ class NonClickWithCheck extends React.Component {
         <div className="covering">
           <p className="covername">{this.props.covername}</p>
         </div>
-        <div className="approval1">
+        <div className="approval">
           {approvalButton}
           {denialButton}
         </div>
