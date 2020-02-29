@@ -62,8 +62,20 @@ function AddEmployee() {
           </div>
           <h3 className="TrainedFor">Trained For</h3>
         </div>
-        <button onClick={closeModal}>Cancel</button>
-        <button> Submit </button>
+        <div className="button-container">
+          <div className="CancelButton">
+            <div className="CancelHover">
+              <div className="CancelText">
+                <h4>Cancel</h4>
+              </div>
+            </div>
+          </div>
+          <div className="CreateButton">
+            <div className="CreateText">
+              <h4>Create</h4>
+            </div>
+          </div>
+        </div>
       </Modal>
     </div>
   );

@@ -109,3 +109,146 @@
   padding-left: 10%;
   padding-right: 10%;
 }
+
+.loginBox {
+  width: 400px;
+  margin: auto;
+  background: #ffffff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 8%;
+  transform: translate(0%, 50%);
+}
+
+.loginBoxUpperPart {
+  width: 100%;
+  padding: 1%;
+  margin-left: 0%;
+  background: #3f3cc8;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 19px 19px 0px 0px;
+}
+
+.login {
+  height: 10%;
+  font-family: "Open Sans", sans-serif;
+  font-size: 95%;
+  line-height: 160%;
+  text-align: center;
+  color: #ffffff;
+  padding: 6%;
+}
+
+.emailBox {
+  width: 80%;
+  height: 50px;
+  background: #ffffff;
+  border: 1px solid #c6c4c4;
+  box-sizing: content-box;
+  border-radius: 11px;
+  margin-top: 12%;
+  margin-left: 10%;
+}
+
+.emailBox:hover {
+  color: gray;
+}
+.passwordBox {
+  width: 80%;
+  height: 50px;
+  background: #ffffff;
+  border: 1px solid #c6c4c4;
+  box-sizing: content-box;
+  border-radius: 11px;
+  margin-top: 7%;
+  margin-left: 10%;
+}
+
+.email {
+  width: 20%;
+  font-family: "Open Sans", sans-serif;
+  font-style: "normal";
+  font-weight: "normal";
+  font-size: 72%;
+  line-height: 25%;
+  color: #828383;
+  margin-left: 9%;
+  padding-top: 1%;
+}
+
+.password {
+  width: 20%;
+  font-family: "Open Sans", sans-serif;
+  font-style: "normal";
+  font-weight: "normal";
+  font-size: 72%;
+  line-height: 25%;
+  color: #828383;
+  margin-left: 9%;
+  margin-top: 1%;
+}
+
+.CancelButton {
+  width: 35%;
+  height: 50px;
+  background: #3f3cc8;
+  border-radius: 6px;
+  align-items: center;
+  border: 2px solid transparent;
+  vertical-align: middle;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.CancelButton:hover {
+  background-color: #ffffff;
+  border-radius: 6px;
+  color: #3f3cc8;
+  cursor: pointer;
+  border: 2px solid #3f3cc8;
+  margin: 0;
+}
+
+.CreateButton:hover {
+  background-color: #3f3cc8;
+  color: #ffffff;
+}
+
+.CancelText:hover {
+  color: #3f3cc8;
+}
+
+.CreateText:hover {
+  color: #ffffff;
+}
+
+.CreateButton {
+  background: #ffffff;
+  border: 1px solid #3f3cc8;
+  box-sizing: border-box;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 60%;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  color: #3f3cc8;
+  padding-top: 7%;
+  padding-bottom: 7%;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 80px;
+  margin-right: 80px;
+  align-items: center;
+  align-content: space-between;
+  margin-top: 8%;
+  padding-bottom: 30px;
+}
