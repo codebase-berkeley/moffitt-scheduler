@@ -46,8 +46,8 @@ class NonClickWithCheck extends React.Component {
           <p className="covername">{this.props.covername}</p>
         </div>
         <div className="approval">
-          <button className="checkbutton1">{approvalButton}</button>
-          <button className="denybutton1">{denialButton}</button>
+          {approvalButton}
+          {denialButton}
         </div>
       </div>
     );
