@@ -26,12 +26,21 @@ class Login extends React.Component {
               </div>
             </div>
             <div className="button-container">
-                <button className="logInButton" onClick={this.loginClick} >Log In</button>
-              <button className="createAccountButton" onClick={this.createAccountClick}>Create Account</button>
-              </div>  
+              <button className="logInButton" onClick={this.loginClick}>
+                Log In
+              </button>
+              <button
+                className="createAccountButton"
+                onClick={this.createAccountClick}
+              >
+                Create Account
+              </button>
             </div>
-          /</div>
-        /</div>
+          </div>
+          /
+        </div>
+        /
+      </div>
     );
   }
 
@@ -58,11 +67,9 @@ class Login extends React.Component {
         console.log(jsonResponse);
       });
   }
-  createAccountClick(e) {
+  createAccountClick() {
     console.log("somethingElse");
   }
-  
 }
-
 
 export default Login;
