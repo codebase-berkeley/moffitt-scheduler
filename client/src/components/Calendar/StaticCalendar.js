@@ -7,10 +7,10 @@ class Timeslot extends React.Component {
     super(props);
     this.x = props.x;
     this.y = props.y;
-    this.selected = props.selected;
+    this.color = props.color;
   }
   render() {
-    return <div class="item-cell"></div>;
+    return <div class="item-cell" style={{ backgroundColor: this.color }}></div>;
   }
 }
 
@@ -18,6 +18,15 @@ export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { schedule: [] };
+    this.grid = new Array(7);
+    for (var i = 0; i < this.grid.length; i++) {
+      this.grid[i] = new Array(23);
+    }
+    for (var col = 0; col < this.grid.length; col++) {
+      for (var row = 0; row < this.grid[col].length; row++) {
+        this.grid[col][row] = new Timeslot(row, col, "gray");
+      }
+    }
     this.groups = [];
     this.currentDate = new Date();
     this.weekString =
@@ -28,6 +37,12 @@ export default class StaticCalendar extends React.Component {
       format(startOfWeek(this.currentDate), "MM/DD") +
       " - " +
       format(endOfWeek(this.currentDate), "MM/DD");
+  }
+
+  randomSchedule() {
+    for (var r = 9; r <= 15; r++) {
+      this.grid[0][r].color = "pink";
+    }
   }
 
   render() {
@@ -60,13 +75,20 @@ export default class StaticCalendar extends React.Component {
             </div>
 
             <div class="item-hours">12am</div>
-            <Timeslot x={0} y={0} />
+            {this.grid[0][0]}
+            {this.grid[1][0]}
+            {this.grid[2][0]}
+            {this.grid[3][0]}
+            {this.grid[4][0]}
+            {this.grid[5][0]}
+            {this.grid[6][0]}
+            {/* <Timeslot x={0} y={0} />
             <Timeslot x={0} y={1} />
             <Timeslot x={0} y={2} />
             <Timeslot x={0} y={3} />
             <Timeslot x={0} y={4} />
             <Timeslot x={0} y={5} />
-            <Timeslot x={0} y={6} />
+            <Timeslot x={0} y={6} /> */}
 
             <div class="item-hours">1am</div>
             <Timeslot x={1} y={0} />
