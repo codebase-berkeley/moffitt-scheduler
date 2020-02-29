@@ -120,7 +120,8 @@
 }
 
 .loginBoxUpperPart {
-  width: 100%;
+  width: 50%;
+  height: 30px;
   padding: 1%;
   margin-left: 0%;
   background: #3f3cc8;
@@ -245,10 +246,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-left: 80px;
-  margin-right: 80px;
   align-items: center;
   align-content: space-between;
-  margin-top: 8%;
-  padding-bottom: 30px;
+  margin-top: 15%;
+  padding-left: 300px; /*fix this*/
 }
