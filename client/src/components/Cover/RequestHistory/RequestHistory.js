@@ -18,19 +18,28 @@ function processData(database) {
 class RequestHistory extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      items: [
-        {
-          desk: "Front Desk",
-          loc: "Moffitt",
-          date: "Wednesday, March 6, 2020",
-          time: "3:00 PM - 5:00 PM",
-          needname: "Broco Lee",
-          covername: "Ug Lee"
-        }
-      ]
-    };
+    this.state = { items: [] };
   }
+
+  componentDidMount() {
+    fetch("/requesthistory", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        this.setState({
+          items: jsonResponse.items
+        });
+        console.log(this.state.items);
+      });
+  }
+
   render() {
     return (
       <div>

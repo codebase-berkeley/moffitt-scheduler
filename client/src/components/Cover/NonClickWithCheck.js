@@ -9,18 +9,6 @@ class NonClickWithCheck extends React.Component {
   constructor(props) {
     super(props);
     this.approved = false;
-    this.state = {
-      items: [
-        {
-          desk: "Front Desk",
-          loc: "Moffitt",
-          date: "Wednesday, March 6, 2020",
-          time: "3:00 PM - 5:00 PM",
-          needname: "Broco Lee",
-          covername: "Ug Lee"
-        }
-      ]
-    };
   }
 
   render() {

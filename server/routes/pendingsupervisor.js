@@ -7,4 +7,28 @@ router.post("/pendingsupervisor", (req, res) => {
   res.json({ Successful: true });
 });
 
+router.get("/requesthistory", (req, res) => {
+  var database = {
+    items: [
+      {
+        desk: "Front Desk",
+        loc: "Moffitt",
+        date: "Wednesday, March 6, 2020",
+        time: "3:00 PM - 5:00 PM",
+        needname: "Broco Lee",
+        covername: "Ug Lee"
+      },
+      {
+        desk: "Front Desk",
+        loc: "Moffitt",
+        date: "Thursday, March 7, 2020",
+        time: "3:00 PM - 5:00 PM",
+        needname: "Broco Lee",
+        covername: "Ug Lee"
+      }
+    ]
+  };
+  res.json(database);
+});
+
 module.exports = router;
