@@ -99,7 +99,7 @@
 }
 
 .TrainedFor {
-  padding-top: 3%;
+  padding-top: 7%;
 }
 
 .AllText {
@@ -108,4 +108,34 @@
   align-items: flex-start;
   padding-left: 10%;
   padding-right: 10%;
+}
+
+.RadioButtons {
+  padding-top: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.MoffittText,
+.DoeText {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.MoffittText {
+  padding-top: 2%;
+  padding-left: 80%;
+}
+
+.DoeButton {
+  padding-left: 140%;
+}
+
+.DoeText {
+  padding-top: 2%;
+  padding-left: 210%;
 }
