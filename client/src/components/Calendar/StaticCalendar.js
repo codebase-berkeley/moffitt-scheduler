@@ -2,31 +2,18 @@ import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
-class Timeslot extends React.Component {
-  constructor(props) {
-    super(props);
-    this.x = props.x;
-    this.y = props.y;
-    this.color = props.color;
-  }
-  render() {
-    return <div class="item-cell" style={{ backgroundColor: this.color }}></div>;
-  }
+function Timeslot(props) {
+  return <div class="item-cell" style={{ backgroundColor: props.color }}></div>;
 }
 
 export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { schedule: [], grid: new Array(24) };
-    for (var i = 0; i < this.state.grid.length; i++) {
-      this.state.grid[i] = new Array(7);
+    var a = new Array(24);
+    for (var i = 0; i <= 23; i += 1) {
+      a[i] = new Array(7);
     }
-    for (var row = 0; row <= 23; row++) {
-      for (var col = 0; col <= 6; col++) {
-        this.state.grid[row][col] = "gray";
-      }
-    }
-    this.groups = [];
+    this.state = { grid: a };
     this.currentDate = new Date();
     this.weekString =
       format(this.currentDate, "MMMM") +
@@ -38,12 +25,18 @@ export default class StaticCalendar extends React.Component {
       format(endOfWeek(this.currentDate), "MM/DD");
   }
 
-  randomSchedule() {
-    for (var r = 9; r <= 15; r++) {
-      this.state.grid[0][r].color = "pink";
-    }
+  componentDidMount() {
+    console.log("mount");
+    fetch("/staticcalendar")
+      .then(response => {
+        console.log("response");
+        return response.json();
+      })
+      .then(jsonResponse => {
+        console.log("test");
+        this.setState({ grid: jsonResponse.schedule });
+      });
   }
-
   render() {
     return (
       <div id="overall-container">
@@ -293,4 +286,10 @@ export default class StaticCalendar extends React.Component {
       </div>
     );
   }
+  /*
+  render() {
+    console.log(this.state.grid);
+    return <div></div>;
+  }
+  */
 }
