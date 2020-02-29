@@ -69,33 +69,16 @@
   width: 30%;
 }
 
-.approval {
-  width: 25%;
+.approval1 {
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  width: 30%;
+  background-color: pink;
 }
 
-.check {
-  height: 100%;
-  width: 100%;
-}
-
-.deny {
-  height: 100%;
-  width: 100%;
-}
 .checkbutton {
-  height: 75%;
-  width: 40%;
-  border-radius: 100%;
-  border-color: white;
-  margin-right: 5%;
-  outline: none;
-}
-
-.checkbutton1 {
   height: 75%;
   width: 40%;
   border-radius: 100%;
@@ -108,21 +91,8 @@
   outline: none;
   border: none;
 }
-.checkbutton1:active {
-  outline: none;
-  border: none;
-}
-.denybutton {
-  height: 75%;
-  width: 40%;
-  border-radius: 100%;
-  border-color: white;
-  margin-left: 5%;
-  margin-right: 30%;
-  outline: none;
-}
 
-.denybutton1 {
+.denybutton {
   height: 75%;
   width: 40%;
   border-radius: 100%;
@@ -136,7 +106,37 @@
   outline: none;
   border: none;
 }
-.denybutton1:active {
+
+.check_nofill {
+  height: 75%;
+  width: 40%;
+  border-radius: 100%;
+  margin-left: 5%;
+  margin-right: 30%;
   outline: none;
-  border: none;
+}
+
+.check_fill {
+  height: 75%;
+  width: 40%;
+  border-radius: 100%;
+  margin-left: 5%;
+  margin-right: 30%;
+  outline: none;
+}
+
+.deny_nofill {
+  height: 75%;
+  width: 40%;
+  border-radius: 100%;
+  margin-right: 5%;
+  outline: none;
+}
+
+.deny_fill {
+  height: 75%;
+  width: 40%;
+  border-radius: 100%;
+  margin-right: 5%;
+  outline: none;
 }

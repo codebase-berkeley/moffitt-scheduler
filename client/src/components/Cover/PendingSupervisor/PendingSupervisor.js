@@ -31,10 +31,6 @@ class PendingSupervisor extends React.Component {
       ]
     };
   }
-  componentDidMount() {
-    // this.save();
-  }
-  //   make function that pulls from backend (get request), set this.approved to either true or false based on JSON request (body = JSON {approval request?})
 
   save() {
     console.log("In save");

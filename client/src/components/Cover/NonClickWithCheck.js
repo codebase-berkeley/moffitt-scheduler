@@ -15,13 +15,13 @@ class NonClickWithCheck extends React.Component {
     var approvalButton;
     var denialButton;
     if (this.approved) {
-      approvalButton = <img className="check" src={check_fill} />;
-      denialButton = <img className="deny" src={deny_nofill} />;
+      approvalButton = <img className="check_fill" src={check_fill} />;
+      denialButton = <img className="deny_nofill" src={deny_nofill} />;
       console.log("approval ture");
       console.log("denial flase");
     } else {
-      approvalButton = <img className="check" src={check_nofill} />;
-      denialButton = <img className="check" src={deny_fill} />;
+      approvalButton = <img className="check_nofill" src={check_nofill} />;
+      denialButton = <img className="deny_fill" src={deny_fill} />;
       console.log("approval tuasdfkjsdfre");
       console.log("denial flaasdjfhsdse");
     }
@@ -45,7 +45,7 @@ class NonClickWithCheck extends React.Component {
         <div className="covering">
           <p className="covername">{this.props.covername}</p>
         </div>
-        <div className="approval">
+        <div className="approval1">
           {approvalButton}
           {denialButton}
         </div>
