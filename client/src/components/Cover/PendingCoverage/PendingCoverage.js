@@ -98,10 +98,10 @@ class Cover extends React.Component {
         <div className="topWordssss">
           <h1 className="tspecial">Pending Coverage</h1>
           <h1 className="tsame">
-            <a href="/cover/pendingsupervisor">Pending Supervisor Approval</a>
+            <a href="/pendingsupervisor">Pending Supervisor Approval</a>
           </h1>
           <h1 className="tsame">
-            <a href="/cover/requesthistory">Request History</a>
+            <a href="/requesthistory">Request History</a>
           </h1>
         </div>
         <div className="middleWordssss">

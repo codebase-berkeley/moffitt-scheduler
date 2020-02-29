@@ -30,14 +30,10 @@ class App extends React.Component {
           <Route exact path="/pendingcoverage" component={PendingCoverage} />
           <Route
             exact
-            path="/cover/pendingsupervisor"
+            path="/pendingsupervisor"
             component={PendingSupervisor}
           />
-          <Route
-            exact
-            path="/cover/requesthistory"
-            component={RequestHistory}
-          />
+          <Route exact path="/requesthistory" component={RequestHistory} />
           <Route exact path="/Sle" component={Sle} />
           <Route exact path="/Supervisor" component={Supervisor} />
         </Switch>

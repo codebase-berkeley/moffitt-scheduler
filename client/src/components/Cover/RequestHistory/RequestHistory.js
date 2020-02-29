@@ -45,10 +45,10 @@ class RequestHistory extends React.Component {
       <div>
         <div className="topWordsss">
           <h1 className="tsame">
-            <a href="/cover">Pending Coverage</a>
+            <a href="/pendingcoverage">Pending Coverage</a>
           </h1>
           <h1 className="tsame">
-            <a href="/cover/pendingsupervisor">Pending Supervisor Approval</a>
+            <a href="/pendingsupervisor">Pending Supervisor Approval</a>
           </h1>
           <h1 className="tspecial">Request History</h1>
         </div>
