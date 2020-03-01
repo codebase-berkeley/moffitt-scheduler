@@ -19,35 +19,8 @@ class PendingSupervisor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [
-        {
-          desk: "Front Desk",
-          loc: "Moffitt",
-          date: "Wednesday, March 6, 2020",
-          time: "3:00 PM - 5:00 PM",
-          needname: "Broco Lee",
-          covername: "Ug Lee"
-        }
-      ]
+      items: [{}]
     };
-  }
-
-  save() {
-    console.log("In save");
-    var json = fetch("/covrequests", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }).then(jsonResponse => {
-      console.log("json response:", jsonResponse);
-      return jsonResponse;
-    });
-    console.log(json["database"]);
-    this.setState({
-      items: json["database"]
-    });
   }
 
   render() {
