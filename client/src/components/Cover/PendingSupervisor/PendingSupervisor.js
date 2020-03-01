@@ -1,5 +1,5 @@
 import React from "react";
-import WithCheck from "../WithCheck.js";
+import WithCheck from "../WithCheck";
 import "./PendingSupervisor.css";
 
 function processData(database) {

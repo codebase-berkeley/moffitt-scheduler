@@ -1,7 +1,7 @@
 import React from "react";
 import "./WithCheck.css";
-import checkNofill from "../check_nofill.svg";
-import denyNofill from "../deny_nofill.svg";
+import checkNofill from "./Images/check_nofill.svg";
+import denyNofill from "./Images/deny_nofill.svg";
 
 class WithCheck extends React.Component {
   constructor(props) {

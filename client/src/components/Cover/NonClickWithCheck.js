@@ -1,9 +1,9 @@
 import React from "react";
 import "./WithCheck.css";
-import check_fill from "../check_fill.svg";
-import check_nofill from "../check_nofill.svg";
-import deny_fill from "../deny_fill.svg";
-import deny_nofill from "../deny_nofill.svg";
+import check_fill from "./Images/check_fill.svg";
+import check_nofill from "./Images/check_nofill.svg";
+import deny_fill from "./Images/deny_fill.svg";
+import deny_nofill from "./Images/deny_nofill.svg";
 
 class NonClickWithCheck extends React.Component {
   constructor(props) {

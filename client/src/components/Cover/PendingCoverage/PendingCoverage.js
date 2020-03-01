@@ -1,27 +1,9 @@
 import React from "react";
 import "./PendingCoverage.css";
 
-const database = [
-  {
-    desk: "Front Desk",
-    loc: "Moffitt",
-    date: "Wednesday, March 6, 2020",
-    time: "3:00 PM - 5:00 PM",
-    needname: "Broco Lee",
-    message: "Going home for the weekend"
-  },
-  {
-    desk: "Front Desk",
-    loc: "Moffitt",
-    date: "Wednesday, March 6, 2020",
-    time: "3:00 PM - 5:00 PM",
-    needname: "Broco Lee",
-    message: "Going home for the weekend"
-  }
-];
 function processData(database) {
   const listItems = database.map((entry, index) => (
-    <PendingCov
+    <PendingCoverageItem
       desk={entry.desk}
       loc={entry.loc}
       date={entry.date}
@@ -33,7 +15,7 @@ function processData(database) {
   return listItems;
 }
 
-class PendingCov extends React.Component {
+class PendingCoverageItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,21 +57,29 @@ class PendingCov extends React.Component {
     );
   }
 }
-class Cover extends React.Component {
+class PendingCoverage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      items: [
-        {
-          desk: "Front Desk",
-          loc: "Moffitt",
-          date: "Wednesday, March 6, 2020",
-          time: "3:00 PM - 5:00 PM",
-          needname: "Broco Lee",
-          message: "Going home for the weekend"
-        }
-      ]
-    };
+    this.state = { items: [] };
+  }
+
+  componentDidMount() {
+    fetch("/pendingcoverage", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        this.setState({
+          items: jsonResponse.items
+        });
+        console.log(this.state.items);
+      });
   }
 
   render() {
@@ -115,4 +105,4 @@ class Cover extends React.Component {
     );
   }
 }
-export default Cover;
+export default PendingCoverage;

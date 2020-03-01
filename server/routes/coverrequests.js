@@ -31,4 +31,28 @@ router.get("/requesthistory", (req, res) => {
   res.json(database);
 });
 
+router.get("/pendingcoverage", (req, res) => {
+  var database = {
+    items: [
+      {
+        desk: "Front Desk",
+        loc: "Moffitt",
+        date: "Wednesday, March 6, 2020",
+        time: "3:00 PM - 5:00 PM",
+        needname: "Broco Lee",
+        message: "Going home for the weekend"
+      },
+      {
+        desk: "Front Desk",
+        loc: "Moffitt",
+        date: "Thursday, March 7, 2020",
+        time: "3:00 PM - 5:00 PM",
+        needname: "Broco Lee",
+        message: "Need sleep. Very tired."
+      }
+    ]
+  };
+  res.json(database);
+});
+
 module.exports = router;
