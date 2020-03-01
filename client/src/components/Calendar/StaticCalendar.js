@@ -286,10 +286,4 @@ export default class StaticCalendar extends React.Component {
       </div>
     );
   }
-  /*
-  render() {
-    console.log(this.state.grid);
-    return <div></div>;
-  }
-  */
 }
