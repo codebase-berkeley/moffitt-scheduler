@@ -96,6 +96,16 @@ function AddEmployee() {
             <input className="EmailInput" id="email" />
           </div>
           <h3 className="TrainedFor">Trained For</h3>
+          <div className="RadioButtons">
+            <h3 className="MoffittText">Moffitt</h3>
+            <div className="MoffittButton">
+              <input type="radio" id="moffitt" name="moffitt" value="moffitt" />
+            </div>
+            <h3 className="DoeText">Doe</h3>
+            <div className="DoeButton">
+              <input type="radio" id="doe" name="doe" value="doe" />
+            </div>
+          </div>
         </div>
         <div className="button-container">
           <button className="CancelButton" /*onClick={cancelClick}*/>
