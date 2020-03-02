@@ -15,12 +15,31 @@ function processData(database) {
   ));
   return listItems;
 }
+
 class PendingSupervisor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [{}]
     };
+  }
+  componentDidMount() {
+    fetch("/pendingsupervisor", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        this.setState({
+          items: jsonResponse.items
+        });
+        console.log(this.state.items);
+      });
   }
 
   render() {
