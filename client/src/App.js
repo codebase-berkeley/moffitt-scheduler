@@ -11,7 +11,6 @@ import PendingSupervisor from "./components/Cover/PendingSupervisor/PendingSuper
 import RequestHistory from "./components/Cover/RequestHistory/RequestHistory";
 import Sle from "./components/Sle/Sle";
 import Supervisor from "./components/Supervisor/Supervisor";
-import addEmployees from "./components/Employees/addEmployees";
 
 import "./App.css";
 
@@ -41,7 +40,6 @@ class App extends React.Component {
           />
           <Route exact path="/Sle" component={Sle} />
           <Route exact path="/Supervisor" component={Supervisor} />
-          <Route exact path="/addEmployees" component={addEmployees} />
         </Switch>
       </BrowserRouter>
     );
