@@ -36,9 +36,9 @@ function AddEmployee() {
 
   return (
     <div>
-      <div className="addbutton">
-        <button onClick={openModal}>+ Add Employees</button>
-      </div>
+      <button className="AddButton" onClick={openModal}>
+        + Add Employee
+      </button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -64,11 +64,16 @@ function AddEmployee() {
           <div className="RadioButtons">
             <h3 className="MoffittText">Moffitt</h3>
             <div className="MoffittButton">
-              <input type="radio" id="moffitt" name="moffitt" value="moffitt" />
+              <input
+                type="checkbox"
+                id="moffitt"
+                name="moffitt"
+                value="moffitt"
+              />
             </div>
             <h3 className="DoeText">Doe</h3>
             <div className="DoeButton">
-              <input type="radio" id="doe" name="doe" value="doe" />
+              <input type="checkbox" id="doe" name="doe" value="doe" />
             </div>
           </div>
         </div>
