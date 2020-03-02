@@ -6,6 +6,7 @@ router.post("/employees", function(req, res) {
   var lastName = req.body.lastName;
   console.log("firstName", firstName);
   console.log("lastName", lastName);
+  console.log("working");
   res.json({ Successful: true });
   // res.send("Hi!");
 });

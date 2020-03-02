@@ -38,14 +38,17 @@ function AddEmployee() {
     console.log("In click function");
     var firstName = document.getElementById("firstName");
     var firstNameText = firstName.value;
-    console.log(firstName);
+    console.log(firstNameText);
+    console.log("firstname");
     var lastName = document.getElementById("lastName");
     var lastNameText = lastName.value;
     console.log(lastNameText);
+    console.log("lastname");
     var email = document.getElementById("email");
     var emailText = email.value;
     console.log(emailText);
-    fetch("/employees", {
+    console.log("email");
+    fetch("http://localhost:8000/employees", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -61,6 +64,7 @@ function AddEmployee() {
         return response.json();
       })
       .then(jsonResponse => {
+        console.log("jsonresponse");
         console.log(jsonResponse);
       });
     function cancelClick() {
