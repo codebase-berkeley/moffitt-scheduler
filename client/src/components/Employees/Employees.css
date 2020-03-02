@@ -108,35 +108,8 @@
   align-items: flex-start;
   padding-left: 10%;
   padding-right: 10%;
-}
-
-.loginBox {
-  width: 400px;
-  margin: auto;
-  background: #ffffff;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
-  border-radius: 8%;
-  transform: translate(0%, 50%);
-}
-
-.loginBoxUpperPart {
-  width: 50%;
-  height: 30px;
-  padding: 1%;
-  margin-left: 0%;
-  background: #3f3cc8;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
-  border-radius: 19px 19px 0px 0px;
-}
-
-.login {
-  height: 10%;
-  font-family: "Open Sans", sans-serif;
-  font-size: 95%;
-  line-height: 160%;
-  text-align: center;
-  color: #ffffff;
-  padding: 6%;
+  width: 350px;
+  /* height: 1000px; */
 }
 
 .emailBox {
@@ -189,18 +162,18 @@
 }
 
 .CancelButton {
-  width: 35%;
+  width: 85px;
   height: 50px;
   background: #3f3cc8;
   border-radius: 6px;
   align-items: center;
   border: 2px solid transparent;
-  vertical-align: middle;
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
   font-size: 14px;
   color: #ffffff;
+  margin-left: 7%;
 }
 
 .CancelButton:hover {
@@ -209,10 +182,9 @@
   color: #3f3cc8;
   cursor: pointer;
   border: 2px solid #3f3cc8;
-  margin: 0;
 }
 
-.CreateButton:hover {
+.SubmitButton:hover {
   background-color: #3f3cc8;
   color: #ffffff;
 }
@@ -221,33 +193,40 @@
   color: #3f3cc8;
 }
 
-.CreateText:hover {
+.SubmitText:hover {
   color: #ffffff;
 }
 
-.CreateButton {
+.SubmitButton {
   background: #ffffff;
   border: 1px solid #3f3cc8;
   box-sizing: border-box;
   border-radius: 6px;
   cursor: pointer;
-  width: 60%;
+  width: 85px;
+  height: 50px;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   text-align: center;
   color: #3f3cc8;
-  padding-top: 7%;
-  padding-bottom: 7%;
 }
 
 .button-container {
+  width: 85%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   align-content: space-between;
   margin-top: 15%;
-  padding-left: 300px; /*fix this*/
+  padding-left: 150px; /*fix this*/
+}
+
+.modal {
+  overflow: hidden;
+}
+.modal-body {
+  overflow: auto;
 }

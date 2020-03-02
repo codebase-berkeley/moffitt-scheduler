@@ -34,12 +34,47 @@ function AddEmployee() {
     }
   };
 
+  function submitClick() {
+    console.log("In click function");
+    var firstName = document.getElementById("firstName");
+    var firstNameText = firstName.value;
+    console.log(firstName);
+    var lastName = document.getElementById("lastName");
+    var lastNameText = lastName.value;
+    console.log(lastNameText);
+    var email = document.getElementById("email");
+    var emailText = email.value;
+    console.log(emailText);
+    fetch("/employees", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        firstName: firstNameText,
+        lastName: lastNameText,
+        email: emailText
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        console.log(jsonResponse);
+      });
+    function cancelClick() {
+      console.log("doesNothingForNow");
+    }
+  }
+
   return (
     <div>
       <div className="addbutton">
         <button onClick={openModal}>+ Add Employees</button>
       </div>
       <Modal
+        // className="box"
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
@@ -53,28 +88,28 @@ function AddEmployee() {
           <div className="EmployeeName">
             <h3 className="FirstName">First Name</h3>
             <h3 className="LastName">Last Name</h3>
-            <input className="FirstNameInput" />
-            <input className="LastNameInput" />
+            <input className="FirstNameInput" id="firstName" />
+            <input className="LastNameInput" id="lastName" />
           </div>
           <div className="EmployeeEmail">
             <h3 className="Email">Email</h3>
-            <input className="EmailInput" />
+            <input className="EmailInput" id="email" />
           </div>
           <h3 className="TrainedFor">Trained For</h3>
         </div>
         <div className="button-container">
-          <div className="CancelButton">
+          <button className="CancelButton" /*onClick={cancelClick}*/>
             <div className="CancelHover">
               <div className="CancelText">
                 <h4>Cancel</h4>
               </div>
             </div>
-          </div>
-          <div className="CreateButton">
-            <div className="CreateText">
-              <h4>Create</h4>
+          </button>
+          <button className="SubmitButton" onClick={submitClick}>
+            <div className="SubmitText">
+              <h4>Submit</h4>
             </div>
-          </div>
+          </button>
         </div>
       </Modal>
     </div>
