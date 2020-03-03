@@ -23,14 +23,12 @@ function AddEmployee() {
 
   const customStyles = {
     content: {
-      top: "50%",
+      top: "400px",
       left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      height: "45%",
-      width: "32%",
-      transform: "translate(-50%, -50%)"
+      width: "450px",
+      height: "400px",
+      transform: "translate(-50%, -50%)",
+      overflow: 0
     }
   };
 
@@ -39,15 +37,12 @@ function AddEmployee() {
     var firstName = document.getElementById("firstName");
     var firstNameText = firstName.value;
     console.log(firstNameText);
-    console.log("firstname");
     var lastName = document.getElementById("lastName");
     var lastNameText = lastName.value;
     console.log(lastNameText);
-    console.log("lastname");
     var email = document.getElementById("email");
     var emailText = email.value;
     console.log(emailText);
-    console.log("email");
     fetch("http://localhost:8000/employees", {
       method: "POST",
       headers: {
@@ -64,7 +59,6 @@ function AddEmployee() {
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("jsonresponse");
         console.log(jsonResponse);
       });
     function cancelClick() {
