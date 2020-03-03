@@ -6,7 +6,7 @@ import Login from "./components/Login/Login";
 import Calendar from "./components/Calendar/Calendar";
 import StaticCalendar from "./components/Calendar/StaticCalendar";
 import Employees from "./components/Employees/Employees";
-import Cover from "./components/Cover/Cover";
+import PendingCoverage from "./components/Cover/PendingCoverage/PendingCoverage";
 import PendingSupervisor from "./components/Cover/PendingSupervisor/PendingSupervisor";
 import RequestHistory from "./components/Cover/RequestHistory/RequestHistory";
 import Sle from "./components/Sle/Sle";
@@ -27,17 +27,13 @@ class App extends React.Component {
           <Route exact path="/calendar" component={Calendar} />
           <Route exact path="/staticCalendar" component={StaticCalendar} />
           <Route exact path="/employees" component={Employees} />
-          <Route exact path="/cover" component={Cover} />
+          <Route exact path="/pendingcoverage" component={PendingCoverage} />
           <Route
             exact
-            path="/cover/pendingsupervisor"
+            path="/pendingsupervisor"
             component={PendingSupervisor}
           />
-          <Route
-            exact
-            path="/cover/requesthistory"
-            component={RequestHistory}
-          />
+          <Route exact path="/requesthistory" component={RequestHistory} />
           <Route exact path="/Sle" component={Sle} />
           <Route exact path="/Supervisor" component={Supervisor} />
         </Switch>
