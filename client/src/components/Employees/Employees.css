@@ -18,3 +18,255 @@
   padding-right: 10%;
   color: #3626a7;
 }
+
+.AddEmployee {
+  float: right;
+  padding-right: 10%;
+  padding-top: 2%;
+}
+
+.AddEmpText {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 25px;
+  padding-top: 8%;
+}
+
+.AddButton {
+  border: none;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  color: #3626a7;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.FirstName,
+.LastName,
+.Email,
+.TrainedFor {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.FirstName {
+  display: flex;
+  align-items: center;
+  float: left;
+}
+
+.LastName {
+  display: flex;
+  align-items: center;
+  margin-left: 70%;
+}
+
+.FirstNameInput {
+  float: left;
+  display: flex;
+  align-items: center;
+}
+
+.LastNameInput {
+  margin-left: 70%;
+  display: flex;
+  align-items: center;
+}
+
+.FirstNameInput,
+.LastNameInput {
+  width: 50%;
+  height: 30px;
+  left: 519px;
+  top: 287px;
+  border-radius: 5px;
+}
+
+.EmailInput {
+  width: 200%;
+  height: 30px;
+  left: 519px;
+  top: 287px;
+  border-radius: 5px;
+}
+
+.EmployeeName {
+  padding-top: 5%;
+}
+
+.EmployeeEmail {
+  padding-top: 3%;
+}
+
+.TrainedFor {
+  padding-top: 7%;
+}
+
+.AllText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 10%;
+  padding-right: 10%;
+  width: 350px;
+  /* height: 1000px; */
+}
+
+.emailBox {
+  width: 80%;
+  height: 50px;
+  background: #ffffff;
+  border: 1px solid #c6c4c4;
+  box-sizing: content-box;
+  border-radius: 11px;
+  margin-top: 12%;
+  margin-left: 10%;
+}
+
+.emailBox:hover {
+  color: gray;
+}
+.passwordBox {
+  width: 80%;
+  height: 50px;
+  background: #ffffff;
+  border: 1px solid #c6c4c4;
+  box-sizing: content-box;
+  border-radius: 11px;
+  margin-top: 7%;
+  margin-left: 10%;
+}
+
+.email {
+  width: 20%;
+  font-family: "Open Sans", sans-serif;
+  font-style: "normal";
+  font-weight: "normal";
+  font-size: 72%;
+  line-height: 25%;
+  color: #828383;
+  margin-left: 9%;
+  padding-top: 1%;
+}
+
+.password {
+  width: 20%;
+  font-family: "Open Sans", sans-serif;
+  font-style: "normal";
+  font-weight: "normal";
+  font-size: 72%;
+  line-height: 25%;
+  color: #828383;
+  margin-left: 9%;
+  margin-top: 1%;
+}
+
+.CancelButton {
+  width: 85px;
+  height: 50px;
+  background: #3f3cc8;
+  border-radius: 6px;
+  align-items: center;
+  border: 2px solid transparent;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 7%;
+}
+
+.CancelButton:hover {
+  background-color: #ffffff;
+  border-radius: 6px;
+  color: #3f3cc8;
+  cursor: pointer;
+  border: 2px solid #3f3cc8;
+}
+
+.SubmitButton:hover {
+  background-color: #3f3cc8;
+  color: #ffffff;
+}
+
+.CancelText:hover {
+  color: #3f3cc8;
+}
+
+.SubmitText:hover {
+  color: #ffffff;
+}
+
+.SubmitButton {
+  background: #ffffff;
+  border: 1px solid #3f3cc8;
+  box-sizing: border-box;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 85px;
+  height: 50px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  color: #3f3cc8;
+}
+
+.button-container {
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: space-between;
+  margin-top: 15%;
+  padding-left: 150px; /*fix this*/
+}
+
+.modal {
+  overflow: hidden;
+}
+.modal-body {
+  overflow: auto;
+}
+
+.RadioButtons {
+  padding-top: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.MoffittText,
+.DoeText {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.MoffittText {
+  padding-top: 2%;
+  padding-left: 80%;
+}
+
+.DoeButton {
+  padding-left: 140%;
+}
+
+.DoeText {
+  padding-top: 2%;
+  padding-left: 210%;
+}

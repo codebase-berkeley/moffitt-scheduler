@@ -3,6 +3,7 @@ import "./Sle.css";
 import "./SidebarElement.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
+import Calendar from "../Calendar/Calendar.js";
 
 function Sle(props) {
   return (
@@ -26,6 +27,9 @@ function Sle(props) {
         <SidebarElement title="Your Shifts" />
         <SidebarElement title="Open Shifts" />
         <SidebarElement title="Availability" />
+      </div>
+      <div class="Calendar">
+        <Calendar />
       </div>
     </div>
   );
