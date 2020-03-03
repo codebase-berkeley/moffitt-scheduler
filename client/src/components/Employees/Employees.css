@@ -118,6 +118,127 @@
   align-items: flex-start;
   padding-left: 10%;
   padding-right: 10%;
+  width: 350px;
+  /* height: 1000px; */
+}
+
+.emailBox {
+  width: 80%;
+  height: 50px;
+  background: #ffffff;
+  border: 1px solid #c6c4c4;
+  box-sizing: content-box;
+  border-radius: 11px;
+  margin-top: 12%;
+  margin-left: 10%;
+}
+
+.emailBox:hover {
+  color: gray;
+}
+.passwordBox {
+  width: 80%;
+  height: 50px;
+  background: #ffffff;
+  border: 1px solid #c6c4c4;
+  box-sizing: content-box;
+  border-radius: 11px;
+  margin-top: 7%;
+  margin-left: 10%;
+}
+
+.email {
+  width: 20%;
+  font-family: "Open Sans", sans-serif;
+  font-style: "normal";
+  font-weight: "normal";
+  font-size: 72%;
+  line-height: 25%;
+  color: #828383;
+  margin-left: 9%;
+  padding-top: 1%;
+}
+
+.password {
+  width: 20%;
+  font-family: "Open Sans", sans-serif;
+  font-style: "normal";
+  font-weight: "normal";
+  font-size: 72%;
+  line-height: 25%;
+  color: #828383;
+  margin-left: 9%;
+  margin-top: 1%;
+}
+
+.CancelButton {
+  width: 85px;
+  height: 50px;
+  background: #3f3cc8;
+  border-radius: 6px;
+  align-items: center;
+  border: 2px solid transparent;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 7%;
+}
+
+.CancelButton:hover {
+  background-color: #ffffff;
+  border-radius: 6px;
+  color: #3f3cc8;
+  cursor: pointer;
+  border: 2px solid #3f3cc8;
+}
+
+.SubmitButton:hover {
+  background-color: #3f3cc8;
+  color: #ffffff;
+}
+
+.CancelText:hover {
+  color: #3f3cc8;
+}
+
+.SubmitText:hover {
+  color: #ffffff;
+}
+
+.SubmitButton {
+  background: #ffffff;
+  border: 1px solid #3f3cc8;
+  box-sizing: border-box;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 85px;
+  height: 50px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  color: #3f3cc8;
+}
+
+.button-container {
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: space-between;
+  margin-top: 15%;
+  padding-left: 150px; /*fix this*/
+}
+
+.modal {
+  overflow: hidden;
+}
+.modal-body {
+  overflow: auto;
 }
 
 .RadioButtons {
