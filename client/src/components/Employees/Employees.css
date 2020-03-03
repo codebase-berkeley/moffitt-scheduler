@@ -34,8 +34,18 @@
   padding-top: 8%;
 }
 
-.addbutton {
-  font-style: #3626a7;
+.AddButton {
+  border: none;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  color: #3626a7;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
 .FirstName,
