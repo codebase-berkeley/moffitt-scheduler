@@ -19,14 +19,33 @@ function randomSchedule() {
 
 var schedule = randomSchedule();
 
-router.get("/staticcalendar", function(req, res) {
+router.get("/staticcalendar", function (req, res) {
   console.log("in backend");
   res.json({ schedule: schedule });
 });
 
-router.get("/age", function(req, res) {
+router.get("/age", function (req, res) {
   console.log("In /age");
   return res.json({ age: 21 });
 });
 
 module.exports = router;
+
+const Pool = require("pg").Pool;
+
+const pool = new Pool({
+  user: "postgres",
+  password: "3034538456",
+  host: "127.0.0.1",
+  database: "moffitt",
+  port: 5432
+});
+
+router.get("/shifts", function (req, res) {
+  pool.query("SELECT * FROM SHIFTS", (error, result) => {
+    if (error) {
+      throw error;
+    }
+    res.json(result.rows);
+  });
+})
