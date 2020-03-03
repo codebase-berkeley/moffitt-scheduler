@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 
 // var exampleRoutes = require('./routes/example');
 var pendingSupervisor = require("./routes/coverrequests");
+var loginRoutes = require("./routes/login");
 
 var cors = require("cors");
 
