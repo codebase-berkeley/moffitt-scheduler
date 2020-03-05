@@ -31,31 +31,6 @@ router.get("/requesthistory", (req, res) => {
   res.json(database);
 });
 
-const Pool = require("pg").Pool;
-
-const pool = new Pool({
-  user: "postgres",
-  password: "postgres",
-  host: "127.0.0.1",
-  database: "moffitt",
-  port: 5432
-});
-
-router.get("/sqlrequesthistory", (req, res) => {
-  pool.query(
-    "SELECT * FROM coverrequests WHERE supervisor_status = $1 OR supervisor_status = $2  ",
-    ["Approved", "Denied"],
-    (error, result) => {
-      if (error) {
-        throw error;
-      } else {
-        res.json(result.rows);
-      }
-      console.log(result);
-    }
-  );
-});
-
 router.get("/pendingcoverage", (req, res) => {
   var database = {
     items: [
