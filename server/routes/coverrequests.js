@@ -1,8 +1,36 @@
 var express = require("express");
 var router = express.Router();
 
+const Pool = require("pg").Pool;
+
+const pool = new Pool({
+  user: "postgres",
+  password: "postgres",
+  host: "127.0.0.1",
+  database: "moffitt",
+  port: 5432
+});
+
 router.post("/pendingsupervisor", (req, res) => {
   var approve = req.body.approve;
+  if (approve) {
+    approve = "Approved";
+  } else {
+    approve = "Denied";
+  }
+  var requestID = req.body.requestID;
+
+  pool.query(
+    "UPDATE coverrequests SET supervisor_status = $1 WHERE request_id = $2",
+    [approve, requestID],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      console.log(result.rows);
+    }
+  );
+
   console.log("approve", approve);
   res.json({ Successful: true });
 });

@@ -49,7 +49,7 @@ class WithCheck extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ approve: true })
+      body: JSON.stringify({ approve: true, requestID: 1 })
     })
       .then(response => {
         return response.json();
@@ -67,7 +67,7 @@ class WithCheck extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ approve: false })
+      body: JSON.stringify({ approve: false, requestID: 1 })
     })
       .then(response => {
         return response.json();
