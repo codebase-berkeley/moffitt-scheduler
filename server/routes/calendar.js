@@ -31,8 +31,8 @@ router.get("/age", function(req, res) {
 
 router.post("/save", (req, res) => {
   items = req.body.items;
-  res.json({ schedule: items });
-  res.json({ hi: brian });
+  console.log(items);
+  return res.json({ schedule: items });
 });
 
 module.exports = router;
