@@ -19,14 +19,20 @@ function randomSchedule() {
 
 var schedule = randomSchedule();
 
-router.get("/staticcalendar", function (req, res) {
+router.get("/staticcalendar", function(req, res) {
   console.log("in backend");
   res.json({ schedule: schedule });
 });
 
-router.get("/age", function (req, res) {
+router.get("/age", function(req, res) {
   console.log("In /age");
   return res.json({ age: 21 });
+});
+
+router.post("/save", (req, res) => {
+  items = req.body.items;
+  res.json({ schedule: items });
+  res.json({ hi: brian });
 });
 
 module.exports = router;
@@ -41,11 +47,11 @@ const pool = new Pool({
   port: 5432
 });
 
-router.get("/shifts", function (req, res) {
+router.get("/shifts", function(req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;
     }
     res.json(result.rows);
   });
-})
+});

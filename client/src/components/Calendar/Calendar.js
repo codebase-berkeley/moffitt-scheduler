@@ -22,6 +22,24 @@ export default class Calendar extends React.Component {
       format(endOfWeek(this.currentDate), "MM/DD");
   }
 
+  save() {
+    console.log("In save");
+    fetch("/save", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ items: this.state.schedule })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        console.log("json response:", jsonResponse);
+      });
+  }
+
   handleChange = newSchedule => {
     this.setState({ schedule: newSchedule });
   };
@@ -33,6 +51,9 @@ export default class Calendar extends React.Component {
   );
 
   render() {
+    if (this.state.schedule.length != 0) {
+      this.save();
+    }
     return (
       <div id="overall-container">
         <div id="schedule-container">
