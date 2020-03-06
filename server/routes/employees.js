@@ -19,7 +19,6 @@ router.post("/employees", function(req, res) {
   console.log("lastName", lastName);
   console.log("email", email);
   res.json({ Successful: true });
-
   const text =
     "INSERT INTO sle (name, training_level_doe, training_level_moffitt, email, password) VALUES ($1, $2, $3, $4, $5)";
   const values = [firstName + " " + lastName, 1, 1, email, null];
@@ -30,18 +29,7 @@ router.post("/employees", function(req, res) {
       console.log(error);
     }
     console.log(result);
-    console.log("insidequery");
   });
 });
 
-// router.get("/age", function(req, res) {
-//   console.log("In /age");
-//   return res.json({ age: 21 });
-// });
-
 module.exports = router;
-
-// pool.query("SELECT * FROM sle", (error, result) => {
-//   if (error) {
-//     throw error;
-//   }
