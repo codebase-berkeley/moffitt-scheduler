@@ -14,14 +14,15 @@ const pool = new Pool({
 router.post("/employees", function(req, res) {
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
+  var email = req.body.email;
   console.log("firstName", firstName);
   console.log("lastName", lastName);
-  console.log("working");
+  console.log("email", email);
   res.json({ Successful: true });
 
   const text =
     "INSERT INTO sle (name, training_level_doe, training_level_moffitt, email, password) VALUES ($1, $2, $3, $4, $5)";
-  const values = [firstName, 1, 1, null, null];
+  const values = [firstName + " " + lastName, 1, 1, email, null];
 
   pool.query(text, values, (error, result) => {
     if (error) {
