@@ -75,7 +75,7 @@ export default class Calendar extends React.Component {
 function SaveChanges(props) {
   return (
     <div className="save">
-      <button onClick={props.save}>Save Changes</button>
+      <button id="saveButton" onClick={props.save}>Save Changes</button>
     </div>
   );
 }
