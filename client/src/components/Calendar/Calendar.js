@@ -6,7 +6,7 @@ import { format, startOfWeek, endOfWeek, getDate, getHours } from "date-fns";
 export default class Calendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { schedule: [] };
+    this.state = { schedule: [], formattedSchedule: [] };
 
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
@@ -30,7 +30,7 @@ export default class Calendar extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ items: this.state.schedule })
+      body: JSON.stringify({ items: this.state.formattedSchedule })
     })
       .then(response => {
         return response.json();
@@ -41,11 +41,14 @@ export default class Calendar extends React.Component {
   }
 
   handleChange = newSchedule => {
-    var dateArr = [];
+    this.setState({ formattedSchedule: [] });
     for (var i = 0; i < newSchedule.length; i += 1) {
-      dateArr.push([getDate(newSchedule[i]), getHours(newSchedule[i])]);
+      this.state.formattedSchedule.push([
+        getHours(newSchedule[i]),
+        getDate(newSchedule[i])
+      ]);
     }
-    this.setState({ schedule: dateArr });
+    this.setState({ schedule: newSchedule });
   };
 
   renderCustomDateCell = (time, selected, innerRef) => (
@@ -79,7 +82,9 @@ export default class Calendar extends React.Component {
 function SaveChanges(props) {
   return (
     <div className="save">
-      <button id="saveButton" onClick={props.save}>Save Changes</button>
+      <button id="saveButton" onClick={props.save}>
+        Save Changes
+      </button>
     </div>
   );
 }
