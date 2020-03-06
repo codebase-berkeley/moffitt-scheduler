@@ -52,7 +52,6 @@ body {
 .user-box {
   float: right;
   padding-right: 5%;
-  z-index: 1;
 }
 
 .user-id {
@@ -120,4 +119,8 @@ body {
 .dropdown-menu ul li:hover {
   background: #333;
   color: #fff;
+}
+
+.Calendar {
+  padding-top: 10%;
 }
