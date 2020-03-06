@@ -1,7 +1,7 @@
 import React from "react";
 import ScheduleSelector from "react-schedule-selector";
 import "./Calendar.css";
-import { format, startOfWeek, endOfWeek } from "date-fns";
+import { format, startOfWeek, endOfWeek, getDate, getHours } from "date-fns";
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -41,7 +41,11 @@ export default class Calendar extends React.Component {
   }
 
   handleChange = newSchedule => {
-    this.setState({ schedule: newSchedule });
+    var dateArr = [];
+    for (var i = 0; i < newSchedule.length; i += 1) {
+      dateArr.push([getDate(newSchedule[i]), getHours(newSchedule[i])]);
+    }
+    this.setState({ schedule: dateArr });
   };
 
   renderCustomDateCell = (time, selected, innerRef) => (
