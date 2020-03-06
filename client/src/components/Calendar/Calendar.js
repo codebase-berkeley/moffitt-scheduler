@@ -50,12 +50,14 @@ export default class Calendar extends React.Component {
     </div>
   );
 
+
+
   render() {
-    if (this.state.schedule.length != 0) {
-      this.save();
-    }
     return (
       <div id="overall-container">
+        <button onClick={this.save()}>
+          Save changes
+        </button>
         <div id="schedule-container">
           <h1 id="weekString">{this.weekString}</h1>
           <ScheduleSelector
