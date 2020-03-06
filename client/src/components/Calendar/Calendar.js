@@ -10,6 +10,7 @@ export default class Calendar extends React.Component {
 
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
+    this.save = this.save.bind(this);
 
     this.currentDate = new Date();
     this.weekString =
@@ -23,7 +24,6 @@ export default class Calendar extends React.Component {
   }
 
   save() {
-    console.log("In save");
     fetch("/save", {
       method: "POST",
       headers: {
@@ -36,7 +36,7 @@ export default class Calendar extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("json response:", jsonResponse);
+        console.log(jsonResponse);
       });
   }
 
@@ -50,14 +50,10 @@ export default class Calendar extends React.Component {
     </div>
   );
 
-
-
   render() {
     return (
       <div id="overall-container">
-        <button onClick={this.save()}>
-          Save changes
-        </button>
+        <SaveChanges save={this.save} />
         <div id="schedule-container">
           <h1 id="weekString">{this.weekString}</h1>
           <ScheduleSelector
@@ -74,4 +70,12 @@ export default class Calendar extends React.Component {
       </div>
     );
   }
+}
+
+function SaveChanges(props) {
+  return (
+    <div className="save">
+      <button onClick={props.save}>Save Changes</button>
+    </div>
+  );
 }
