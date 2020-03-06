@@ -11,6 +11,7 @@ function processData(database) {
       time={entry.time}
       needname={entry.needname}
       covername={entry.covername}
+      approval={entry.approval}
     />
   ));
   return listItems;
@@ -33,6 +34,7 @@ class RequestHistory extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
+        console.log("jsnoResponse:", jsonResponse);
         this.setState({
           items: jsonResponse.items
         });
