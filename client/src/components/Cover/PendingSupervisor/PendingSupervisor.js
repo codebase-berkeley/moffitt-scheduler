@@ -1,5 +1,5 @@
 import React from "react";
-import WithCheck from "../WithCheck.js";
+import WithCheck from "../WithCheck";
 import "./PendingSupervisor.css";
 
 function processData(database) {
@@ -15,32 +15,43 @@ function processData(database) {
   ));
   return listItems;
 }
+
 class PendingSupervisor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [
-        {
-          desk: "Front Desk",
-          loc: "Moffitt",
-          date: "Wednesday, March 6, 2020",
-          time: "3:00 PM - 5:00 PM",
-          needname: "Broco Lee",
-          covername: "Ug Lee"
-        }
-      ]
+      items: [{}]
     };
   }
+  componentDidMount() {
+    fetch("/pendingsupervisor", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        this.setState({
+          items: jsonResponse.items
+        });
+        console.log(this.state.items);
+      });
+  }
+
   render() {
     return (
       <div>
         <div className="topWords">
           <h1 className="tsame">
-            <a href="/cover">Pending Coverage</a>
+            <a href="/pendingcoverage">Pending Coverage</a>
           </h1>
           <h1 className="tspecial">Pending Supervisor Approval</h1>
           <h1 className="tsame">
-            <a href="/cover/requesthistory">Request History</a>
+            <a href="/requesthistory">Request History</a>
           </h1>
         </div>
         <div className="middleWords">
