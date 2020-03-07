@@ -25,10 +25,10 @@ function AddEmployee() {
     content: {
       top: "400px",
       left: "50%",
-      width: "450px",
+      width: "500px",
       height: "400px",
       transform: "translate(-50%, -50%)",
-      overflow: 0
+      overflow: "0"
     }
   };
 
