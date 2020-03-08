@@ -32,27 +32,21 @@ router.post("/pendingsupervisor", (req, res) => {
 // });
 
 router.get("/requesthistory", (req, res) => {
-  var database = {
-    items: [
-      {
-        desk: "Front Desk",
-        loc: "Moffitt",
-        date: "Wednesday, March 6, 2020",
-        time: "3:00 PM - 5:00 PM",
-        needname: "Broco Lee",
-        covername: "Ug Lee"
-      },
-      {
-        desk: "Front Desk",
-        loc: "Moffitt",
-        date: "Thursday, March 7, 2020",
-        time: "3:00 PM - 5:00 PM",
-        needname: "Broco Lee",
-        covername: "Ug Lee"
+  var itemsValues = [];
+  pool.query(
+    "SELECT * FROM coverrequests WHERE supervisor_status = $1 OR supervisor_status = $2  ",
+    ["Approved", "Denied"],
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+        itemsValues.push(result.rows[0]);
+        // res.json(result.rows);
       }
-    ]
-  };
-  res.json(database);
+      var database = { items: itemsValues };
+      res.json(database);
+    }
+  );
 });
 
 const Pool = require("pg").Pool;
