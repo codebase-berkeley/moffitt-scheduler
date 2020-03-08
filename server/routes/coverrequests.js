@@ -34,7 +34,6 @@ router.get("/requesthistory", (req, res) => {
         console.log("result.rows:", result.rows);
         res.json({ items: result.rows });
       }
-      console.log(result);
     }
   );
 });

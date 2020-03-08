@@ -34,7 +34,6 @@ class App extends React.Component {
             component={PendingSupervisor}
           />
           <Route exact path="/requesthistory" component={RequestHistory} />
-          {/* <Route exact path="/sqlrequesthistory" component={RequestHistory} /> */}
           <Route exact path="/Sle" component={Sle} />
           <Route exact path="/Supervisor" component={Supervisor} />
         </Switch>

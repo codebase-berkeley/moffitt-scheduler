@@ -34,7 +34,6 @@ class RequestHistory extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("jsnoResponse:", jsonResponse);
         this.setState({
           items: jsonResponse.items
         });
