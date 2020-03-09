@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 
 var exampleRoutes = require("./routes/example");
 var calendarRoutes = require("./routes/calendar");
+var employeesRoutes = require("./routes/employees");
 
 var cors = require("cors");
 
@@ -13,6 +14,7 @@ app.use(cors());
 
 app.use("/example", exampleRoutes);
 app.use("/", calendarRoutes);
+app.use("/", employeesRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
