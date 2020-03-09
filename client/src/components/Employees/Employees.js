@@ -131,11 +131,11 @@ function AddEmployee() {
 export default function Employees() {
   return (
     <div>
-      <div className="AddEmployee">
-        <AddEmployee />
-      </div>
       <div className="topWordss">
         <h1 className="header">Employees</h1>
+        <div className="AddEmployee">
+          <AddEmployee />
+        </div>
       </div>
       <EachEmployee
         name="Sahil Thakur"

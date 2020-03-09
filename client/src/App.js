@@ -26,24 +26,10 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/calendar" component={Calendar} />
           <Route exact path="/staticCalendar" component={StaticCalendar} />
-          <Route exact path="/employees" component={Employees} />
-          <Route exact path="/pendingcoverage" component={PendingCoverage} />
-          <Route
-            exact
-            path="/pendingsupervisor"
-            component={PendingSupervisor}
-          />
-          <Route exact path="/requesthistory" component={RequestHistory} />
-          <Route exact path="/SleCalendar" component={SleCalendar} />
-          <Route
-            exact
-            path="/SupervisorEmployees"
-            component={SupervisorEmployees}
-          />
-          <Route exact path="/SupervisorCover" component={SupervisorCover} />
-          <Route exact path="/cover" component={Cover} />
+          <Route exact path="/calendar" component={SleCalendar} />
+          <Route exact path="/employees" component={SupervisorEmployees} />
+          <Route exact path="/cover" component={SupervisorCover} />
         </Switch>
       </BrowserRouter>
     );
