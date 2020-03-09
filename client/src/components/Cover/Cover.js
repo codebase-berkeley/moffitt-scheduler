@@ -18,7 +18,6 @@ export default class Cover extends React.Component {
 
   showPendingCoverage() {
     this.setState({ typeOfPending: "coverage" });
-    console.log(this.state.typeOfPending);
   }
 
   showSupervisorApproval() {
@@ -27,17 +26,14 @@ export default class Cover extends React.Component {
 
   showHistory() {
     this.setState({ typeOfPending: "history" });
-    console.log(this.state.typeOfPending);
   }
 
   render() {
     let typeOfPending = this.state.typeOfPending;
-    console.log(typeOfPending);
     let pending;
     if (typeOfPending == "supervisor approval") {
       pending = <PendingSupervisor />;
     } else if (typeOfPending == "coverage") {
-      console.log("GOT HERE");
       pending = <PendingCoverage />;
     } else if (typeOfPending == "history") {
       pending = <RequestHistory />;
