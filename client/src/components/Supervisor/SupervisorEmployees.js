@@ -1,11 +1,11 @@
 import React from "react";
-import "./Sle.css";
+import "./SupervisorEmployees.css";
 import "./SidebarElement.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
-import Calendar from "../Calendar/Calendar.js";
+import Employees from "../Employees/Employees";
 
-function Sle(props) {
+export default function SupervisorEmployees(props) {
   return (
     <div class="everything">
       <div class="line"></div>
@@ -24,15 +24,14 @@ function Sle(props) {
         </div>
       </div>
       <div class="sidebar">
-        <SidebarElement title="Your Shifts" />
-        <SidebarElement title="Open Shifts" />
-        <SidebarElement title="Availability" />
+        <SidebarElement title="Master Schedule" />
+        <SidebarElement title="Cover Requests" />
+        <SidebarElement title="Employees" />
+        <SidebarElement title="Schedule Requests" />
       </div>
-      <div class="Calendar">
-        <Calendar />
+      <div class="employees">
+        <Employees />
       </div>
     </div>
   );
 }
-
-export default Sle;

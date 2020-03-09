@@ -1,10 +1,11 @@
 import React from "react";
-import "./Supervisor.css";
+import "./SupervisorCover.css";
 import "./SidebarElement.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
+import Cover from "../Cover/Cover";
 
-function Supervisor(props) {
+export default function SupervisorCover(props) {
   return (
     <div class="everything">
       <div class="line"></div>
@@ -23,14 +24,14 @@ function Supervisor(props) {
         </div>
       </div>
       <div class="sidebar">
-        <SidebarElement title="Schedule" />
+        <SidebarElement title="Master Schedule" />
         <SidebarElement title="Cover Requests" />
-        <SidebarElement title="Announcements" />
         <SidebarElement title="Employees" />
         <SidebarElement title="Schedule Requests" />
+      </div>
+      <div class="cover">
+        <Cover />
       </div>
     </div>
   );
 }
-
-export default Supervisor;

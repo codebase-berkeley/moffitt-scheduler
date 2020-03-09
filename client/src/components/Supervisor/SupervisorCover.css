@@ -14,6 +14,7 @@ i {
   width: 100%;
   height: 90px;
   position: fixed;
+  z-index: 1;
 }
 
 .line {
@@ -120,4 +121,9 @@ body {
 .dropdown-menu ul li:hover {
   background: #333;
   color: #fff;
+}
+
+.cover {
+  padding-top: 10%;
+  padding-left: 15%;
 }

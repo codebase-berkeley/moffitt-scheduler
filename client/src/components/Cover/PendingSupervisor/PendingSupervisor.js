@@ -45,7 +45,8 @@ class PendingSupervisor extends React.Component {
   render() {
     return (
       <div>
-        <div className="topWords">
+        {/* <Supervisor /> */}
+        {/* <div className="topWords">
           <h1 className="tsame">
             <a href="/pendingcoverage">Pending Coverage</a>
           </h1>
@@ -53,7 +54,7 @@ class PendingSupervisor extends React.Component {
           <h1 className="tsame">
             <a href="/requesthistory">Request History</a>
           </h1>
-        </div>
+        </div> */}
         <div className="middleWords">
           <h2 className="msame11">Time and Location</h2>
           <h2 className="msame0">Needing Coverage</h2>
@@ -62,6 +63,7 @@ class PendingSupervisor extends React.Component {
         </div>
         <div className="pendingShifts"></div>
         {processData(this.state.items)}
+        <div class="Supervisor"></div>
       </div>
     );
   }

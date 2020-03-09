@@ -9,8 +9,10 @@ import Employees from "./components/Employees/Employees";
 import PendingCoverage from "./components/Cover/PendingCoverage/PendingCoverage";
 import PendingSupervisor from "./components/Cover/PendingSupervisor/PendingSupervisor";
 import RequestHistory from "./components/Cover/RequestHistory/RequestHistory";
-import Sle from "./components/Sle/Sle";
-import Supervisor from "./components/Supervisor/Supervisor";
+import SleCalendar from "./components/Sle/SleCalendar";
+import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
+import SupervisorCover from "./components/Supervisor/SupervisorCover";
+import Cover from "./components/Cover/Cover";
 
 import "./App.css";
 
@@ -34,8 +36,14 @@ class App extends React.Component {
             component={PendingSupervisor}
           />
           <Route exact path="/requesthistory" component={RequestHistory} />
-          <Route exact path="/Sle" component={Sle} />
-          <Route exact path="/Supervisor" component={Supervisor} />
+          <Route exact path="/SleCalendar" component={SleCalendar} />
+          <Route
+            exact
+            path="/SupervisorEmployees"
+            component={SupervisorEmployees}
+          />
+          <Route exact path="/SupervisorCover" component={SupervisorCover} />
+          <Route exact path="/cover" component={Cover} />
         </Switch>
       </BrowserRouter>
     );
