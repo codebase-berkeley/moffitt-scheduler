@@ -37,22 +37,19 @@ class Login extends React.Component {
               </button>
             </div>
           </div>
-          /
         </div>
-        /
       </div>
     );
   }
 
   loginClick() {
-    console.log("In click function");
     var email = document.getElementById("email");
     var emailText = email.value;
     console.log(emailText);
     var password = document.getElementById("password");
     var passwordText = password.value;
     console.log(passwordText);
-    fetch("/login", {
+    fetch("http://localhost:8000/login", {
       method: "POST",
       headers: {
         Accept: "application/json",

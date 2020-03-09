@@ -33,7 +33,6 @@ function AddEmployee() {
   };
 
   function submitClick() {
-    console.log("In click function");
     var firstName = document.getElementById("firstName");
     var firstNameText = firstName.value;
     console.log(firstNameText);
