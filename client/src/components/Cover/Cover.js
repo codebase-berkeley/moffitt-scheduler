@@ -1,6 +1,5 @@
 import React from "react";
 import "./Cover.css";
-// import Supervisor from "../../Supervisor/Supervisor.js/index.js.js";
 import PendingCoverage from "./PendingCoverage/PendingCoverage";
 import PendingSupervisor from "./PendingSupervisor/PendingSupervisor";
 import RequestHistory from "./RequestHistory/RequestHistory";
@@ -18,25 +17,28 @@ export default class Cover extends React.Component {
   }
 
   showPendingCoverage() {
-    this.setState({ typeofPending: "coverage" });
+    this.setState({ typeOfPending: "coverage" });
+    console.log(this.state.typeOfPending);
   }
 
   showSupervisorApproval() {
     this.setState({ typeOfPending: "supervisor approval" });
-    console.log(this.state.typeOfPending);
   }
 
   showHistory() {
     this.setState({ typeOfPending: "history" });
+    console.log(this.state.typeOfPending);
   }
 
   render() {
     let typeOfPending = this.state.typeOfPending;
+    console.log(typeOfPending);
     let pending;
-    if (typeOfPending == "coverage") {
-      pending = <PendingCoverage />;
-    } else if (typeOfPending == "supervisor approval") {
+    if (typeOfPending == "supervisor approval") {
       pending = <PendingSupervisor />;
+    } else if (typeOfPending == "coverage") {
+      console.log("GOT HERE");
+      pending = <PendingCoverage />;
     } else if (typeOfPending == "history") {
       pending = <RequestHistory />;
     } else {
@@ -45,7 +47,6 @@ export default class Cover extends React.Component {
 
     return (
       <div>
-        {/* <Supervisor /> */}
         <div className="topWords">
           <button onClick={this.showPendingCoverage}>
             <h1 className="tsame">Pending Coverage</h1>

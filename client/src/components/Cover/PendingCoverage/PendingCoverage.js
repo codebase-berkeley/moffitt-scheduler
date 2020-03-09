@@ -76,15 +76,6 @@ class PendingCoverage extends React.Component {
   render() {
     return (
       <div className="all">
-        <div className="topWordssss">
-          <h1 className="tspecial">Pending Coverage</h1>
-          <h1 className="tsame">
-            <a href="/pendingsupervisor">Pending Supervisor Approval</a>
-          </h1>
-          <h1 className="tsame">
-            <a href="/requesthistory">Request History</a>
-          </h1>
-        </div>
         <div className="middleWordssss">
           <h2 className="msame01">Time and Location</h2>
           <h2 className="msame00">Needing Coverage</h2>

@@ -11,6 +11,7 @@ import PendingSupervisor from "./components/Cover/PendingSupervisor/PendingSuper
 import RequestHistory from "./components/Cover/RequestHistory/RequestHistory";
 import SleCalendar from "./components/Sle/SleCalendar";
 import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
+import SupervisorCover from "./components/Supervisor/SupervisorCover";
 import Cover from "./components/Cover/Cover";
 
 import "./App.css";
@@ -41,7 +42,8 @@ class App extends React.Component {
             path="/SupervisorEmployees"
             component={SupervisorEmployees}
           />
-          <Route exact path="/coverrequest" component={Cover} />
+          <Route exact path="/SupervisorCover" component={SupervisorCover} />
+          <Route exact path="/cover" component={Cover} />
         </Switch>
       </BrowserRouter>
     );
