@@ -8,13 +8,12 @@ import deny_nofill from "./Images/deny_nofill.svg";
 class NonClickWithCheck extends React.Component {
   constructor(props) {
     super(props);
-    this.approved = false;
   }
 
   render() {
     var approvalButton;
     var denialButton;
-    if (this.approved) {
+    if (this.props.approval == "Approved") {
       approvalButton = <img className="check_fill" src={check_fill} />;
       denialButton = <img className="deny_nofill" src={deny_nofill} />;
       console.log("approval ture");
