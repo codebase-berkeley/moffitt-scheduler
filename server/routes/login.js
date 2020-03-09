@@ -1,15 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const Pool = require("pg").Pool;
-
-const pool = new Pool({
-  user: "postgres",
-  password: "miW478facabbghy78",
-  host: "127.0.0.1",
-  database: "moffitt",
-  port: 5432
-});
+var pool = require("../db/db");
 
 router.post("/login", function(req, res) {
   var email = req.body.email;

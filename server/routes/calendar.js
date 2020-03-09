@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
+var pool = require("../db/db");
+
 router.post("/save", (req, res) => {
   items = req.body.items;
   console.log(items);
@@ -58,18 +60,6 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-module.exports = router;
-
-const Pool = require("pg").Pool;
-
-const pool = new Pool({
-  user: "postgres",
-  password: "3034538456",
-  host: "127.0.0.1",
-  database: "moffitt",
-  port: 5432
-});
-
 router.get("/shifts", function(req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
@@ -78,3 +68,5 @@ router.get("/shifts", function(req, res) {
     res.json(result.rows);
   });
 });
+
+module.exports = router;

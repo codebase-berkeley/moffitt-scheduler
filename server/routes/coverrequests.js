@@ -1,15 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const Pool = require("pg").Pool;
-
-const pool = new Pool({
-  user: "postgres",
-  password: "postgres",
-  host: "127.0.0.1",
-  database: "moffitt",
-  port: 5432
-});
+var pool = require("../db/db");
 
 router.post("/pendingsupervisor", (req, res) => {
   var approve = req.body.approve;
@@ -33,16 +25,6 @@ router.post("/pendingsupervisor", (req, res) => {
 
   console.log("approve", approve);
   res.json({ Successful: true });
-});
-
-const Pool = require("pg").Pool;
-
-const pool = new Pool({
-  user: "postgres",
-  password: "postgres",
-  host: "127.0.0.1",
-  database: "moffitt",
-  port: 5432
 });
 
 router.get("/requesthistory", (req, res) => {
