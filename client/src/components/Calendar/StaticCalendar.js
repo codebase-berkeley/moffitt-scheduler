@@ -1,9 +1,97 @@
 import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import Modal from "react-modal";
 
 function Timeslot(props) {
-  return <div class="item-cell" style={{ backgroundColor: props.color }}></div>;
+  return <div style={{ backgroundColor: props.color }}></div>;
+}
+
+function RequestChange(props) {
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = "#black";
+  }
+
+  function openModal() {
+    // console.log("aasdfasdfadfasdf");
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  var subtitle;
+  console.log(props);
+
+  const customStyles = {
+    content: {
+      top: "350px",
+      left: "50%",
+      width: "400px",
+      height: "200px",
+      transform: "translate(-50%, -50%)",
+      overflow: 0
+    }
+  };
+
+  function submitClick() {
+    console.log("In click function");
+    var notes = document.getElementById("NotesInput1");
+    var notesText = notes.value;
+    fetch("/submitRequest", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        notes: notesText
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        console.log(jsonResponse);
+      });
+  }
+
+  return (
+    <React.Fragment>
+      <button onClick={openModal}>
+        <Timeslot x={0} y={0} color={props.grid[0][0]} onClick={openModal} />
+      </button>
+      <Modal
+        // className="box"
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div className="AllText1">
+          <h1 className="RequestTitle">Request Shift Coverage</h1>
+          <div className="NotesContainer">
+            <h3 className="ReasonsTitle">
+              Reason(s) for Needed Shift Coverage
+            </h3>
+            <input className="NotesInput1" id="NotesInput1" />
+          </div>
+        </div>
+        <div className="button-container1">
+          <button className="SubmitButton1" onClick={submitClick}>
+            <div className="SubmitText1">
+              <h4>Submit</h4>
+            </div>
+          </button>
+        </div>
+      </Modal>
+    </React.Fragment>
+  );
 }
 
 export default class StaticCalendar extends React.Component {
@@ -67,7 +155,7 @@ export default class StaticCalendar extends React.Component {
             </div>
 
             <div class="item-hours">12am</div>
-            <Timeslot x={0} y={0} color={this.state.grid[0][0]} />
+            <RequestChange grid={this.state.grid} />
             <Timeslot x={0} y={1} color={this.state.grid[0][1]} />
             <Timeslot x={0} y={2} color={this.state.grid[0][2]} />
             <Timeslot x={0} y={3} color={this.state.grid[0][3]} />

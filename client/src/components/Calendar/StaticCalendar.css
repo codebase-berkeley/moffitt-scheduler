@@ -67,3 +67,69 @@
   color: #696969;
   text-align: center;
 }
+
+.AllText1 {
+  font-family: "Open Sans", sans-serif;
+}
+
+.SubmitButton1:hover {
+  background-color: #3f3cc8;
+  color: #ffffff;
+}
+
+.CancelText1:hover {
+  color: #3f3cc8;
+}
+
+.SubmitText1 {
+  font-size: 11px;
+}
+
+.SubmitText1:hover {
+  color: #ffffff;
+}
+
+.SubmitButton1 {
+  background: #ffffff;
+  border: 1px solid #3f3cc8;
+  box-sizing: border-box;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 20%;
+  height: 30px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  color: #3f3cc8;
+  margin-left: 40%;
+  margin-right: 40%;
+  margin-top: 2%;
+}
+
+.modal1 {
+  overflow: hidden;
+}
+.modal-body1 {
+  overflow: auto;
+  display: flex;
+}
+
+.NotesInput1 {
+  width: 100%;
+  height: 60px;
+  align-self: center;
+}
+
+.RequestTitle {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 3%;
+}
+
+.ReasonsTitle {
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 3%;
+}

@@ -20,8 +20,14 @@ function randomSchedule() {
 var schedule = randomSchedule();
 
 router.get("/staticcalendar", function(req, res) {
-  console.log("in backend");
+  console.log("in backend!");
   res.json({ schedule: schedule });
+});
+
+router.post("/staticcalendar", function(req, res) {
+  var click = req.body.click;
+  console.log("in backend");
+  res.json({ Successful: true });
 });
 
 router.get("/age", function(req, res) {
@@ -54,4 +60,9 @@ router.get("/shifts", function(req, res) {
     }
     res.json(result.rows);
   });
+});
+
+router.post("/submitRequest", (req, res) => {
+  console.log("omg it works what");
+  res.json({ Successful: true });
 });
