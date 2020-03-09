@@ -28,9 +28,6 @@ function Supervisor(props) {
         <SidebarElement title="Announcements" />
         <SidebarElement title="Employees" />
         <SidebarElement title="Schedule Requests" />
-        <NavLink to="/cover" activeStyle={{ fontWeight: "bold" }}>
-          Cover Requests
-        </NavLink>
       </div>
     </div>
   );
