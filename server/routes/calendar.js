@@ -1,6 +1,29 @@
 var express = require("express");
 var router = express.Router();
 
+router.post("/save", (req, res) => {
+  items = req.body.items;
+  console.log(items);
+  pool.query("DELETE FROM AVAILABILITY", (error, result) => {
+    if (error) {
+      throw error;
+    }
+  });
+  for (var i = 0; i < items.length; i += 1) {
+    pool.query(
+      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${1}, ${
+        items[i][0]
+      }, ${items[i][1]})`,
+      (error, result) => {
+        if (error) {
+          throw error;
+        }
+      }
+    );
+  }
+  return res.json({ schedule: items });
+});
+
 function randomSchedule() {
   var a = new Array(24);
   for (var i = 0; i <= 23; i += 1) {
@@ -21,7 +44,7 @@ var schedule = randomSchedule();
 
 router.get("/staticcalendar", function(req, res) {
   console.log("in backend");
-  res.json({ schedule: schedule });
+  return res.json({ schedule: schedule });
 });
 
 router.get("/age", function(req, res) {
