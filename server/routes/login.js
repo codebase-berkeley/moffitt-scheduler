@@ -23,14 +23,14 @@ router.post("/login", function(req, res) {
       console.log("nothing");
       //throw error;
     } else if (result.rows.length == 0) {
-      res.json({ Successful: false });
+      res.json({ successful: false });
       console.log("email doesnt exist");
     } else if (result.rows[0]["password"] == password) {
       console.log("true");
-      res.json({ Successful: true });
+      res.json({ successful: true });
     } else {
       console.log("false");
-      res.json({ Successful: false });
+      res.json({ successful: false });
     }
   });
 });

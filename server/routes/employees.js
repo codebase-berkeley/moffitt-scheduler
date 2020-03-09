@@ -18,14 +18,14 @@ router.post("/employees", function(req, res) {
   console.log("firstName", firstName);
   console.log("lastName", lastName);
   console.log("email", email);
-  res.json({ Successful: true });
+  res.json({ successful: true });
   const text =
     "INSERT INTO sle (name, training_level_doe, training_level_moffitt, email, password) VALUES ($1, $2, $3, $4, $5)";
   const values = [firstName + " " + lastName, 1, 1, email, null];
 
   pool.query(text, values, (error, result) => {
     if (error) {
-      // throw error;
+      //throw error;
       console.log(error);
     }
     console.log(result);
