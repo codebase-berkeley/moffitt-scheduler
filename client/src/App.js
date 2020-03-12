@@ -12,6 +12,7 @@ import RequestHistory from "./components/Cover/RequestHistory/RequestHistory";
 import SleCalendar from "./components/Sle/SleCalendar";
 import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
 import SupervisorCover from "./components/Supervisor/SupervisorCover";
+import Supervisor from "./components/Supervisor/Supervisor";
 import Cover from "./components/Cover/Cover";
 
 import "./App.css";
@@ -30,6 +31,7 @@ class App extends React.Component {
           <Route exact path="/calendar" component={SleCalendar} />
           <Route exact path="/employees" component={SupervisorEmployees} />
           <Route exact path="/cover" component={SupervisorCover} />
+          <Route exact path="/supervisor" component={Supervisor} />
         </Switch>
       </BrowserRouter>
     );

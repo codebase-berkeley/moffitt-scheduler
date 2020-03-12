@@ -4,7 +4,9 @@ import "./SidebarElement.css";
 export default function SidebarElement(props) {
   return (
     <div className="SidebarElement">
-      <p className="title">{props.title}</p>
+      <a className="title" href={props.link}>
+        {props.title}
+      </a>
     </div>
   );
 }

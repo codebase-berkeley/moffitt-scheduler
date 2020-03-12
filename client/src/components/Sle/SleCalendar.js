@@ -26,7 +26,7 @@ function SleCalendar(props) {
       <div class="sidebar">
         <SidebarElement title="Your Shifts" />
         <SidebarElement title="Open Shifts" />
-        <SidebarElement title="Availability" />
+        <SidebarElement title="Availability" link="/calendar" />
       </div>
       <div class="Calendar">
         <Calendar />

@@ -24,9 +24,9 @@ export default function SupervisorCover(props) {
         </div>
       </div>
       <div class="sidebar">
-        <SidebarElement title="Master Schedule" />
-        <SidebarElement title="Cover Requests" />
-        <SidebarElement title="Employees" />
+        <SidebarElement title="Schedule" />
+        <SidebarElement title="Cover Requests" link="/cover" />
+        <SidebarElement title="Employees" link="/employees" />
         <SidebarElement title="Schedule Requests" />
       </div>
       <div class="cover">
