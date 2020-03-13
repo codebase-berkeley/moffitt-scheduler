@@ -53,6 +53,7 @@
 .item-cell {
   grid-area: "cell";
   background-color: #f8f8f8;
+  cursor: pointer;
 }
 
 .item-wday {
