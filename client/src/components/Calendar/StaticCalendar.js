@@ -6,281 +6,312 @@ function Timeslot(props) {
   return <div class="item-cell" style={{ backgroundColor: props.color }}></div>;
 }
 
+class Shift {
+  constructor(color, id, start, end, day) {
+    this.color = color;
+    this.id = id;
+    this.start = start;
+    this.end = end;
+    this.day = day;
+  }
+}
+
+function initialShifts() {
+  let a = [];
+  for (var i = 0; i < 168; i += 1) {
+    a.push(new Shift("#f8f8f8", null, null, null, null));
+  }
+  let count = 0;
+  for (var i = 0; i <= 23; i += 1) {
+    for (var j = 0; j <= 6; j += 1) {
+      a[count].start = i;
+      a[count].end = i + 1;
+      a[count].day = j;
+      count += 1;
+    }
+  }
+  return a;
+}
+
+var currentDate = new Date();
+var weekString =
+  format(currentDate, "MMMM") +
+  " " +
+  format(currentDate, "YYYY") +
+  ": " +
+  format(startOfWeek(currentDate), "MM/DD") +
+  " - " +
+  format(endOfWeek(currentDate), "MM/DD");
+
 export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
-    var a = new Array(24);
-    for (var i = 0; i <= 23; i += 1) {
-      a[i] = new Array(7);
-    }
-    this.state = { grid: a };
-    this.currentDate = new Date();
-    this.weekString =
-      format(this.currentDate, "MMMM") +
-      " " +
-      format(this.currentDate, "YYYY") +
-      ": " +
-      format(startOfWeek(this.currentDate), "MM/DD") +
-      " - " +
-      format(endOfWeek(this.currentDate), "MM/DD");
+    this.state = { shifts: initialShifts() };
   }
 
   componentDidMount() {
-    console.log("mount");
-    fetch("/staticcalendar")
+    fetch("/staticcalendar", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ items: this.state.shifts })
+    })
       .then(response => {
         console.log("response");
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("test");
-        this.setState({ grid: jsonResponse.schedule });
+        console.log(jsonResponse.shifts);
+        this.setState({ shifts: jsonResponse.shifts });
       });
   }
+
   render() {
     return (
       <div id="overall-container">
         <div id="schedule-container-st">
-          <h1 id="weekString">{this.weekString}</h1>
+          <h1 id="weekString">{weekString}</h1>
           <div id="inner-schedule">
             <div></div>
             <div class="item-wday">
-              {format(startOfWeek(this.currentDate), "dd MM/DD")}
+              {format(startOfWeek(currentDate), "dd MM/DD")}
             </div>
             <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 1), "dd MM/DD")}
+              {format(addDays(startOfWeek(currentDate), 1), "dd MM/DD")}
             </div>
             <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 2), "dd MM/DD")}
+              {format(addDays(startOfWeek(currentDate), 2), "dd MM/DD")}
             </div>
             <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 3), "dd MM/DD")}
+              {format(addDays(startOfWeek(currentDate), 3), "dd MM/DD")}
             </div>
             <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 4), "dd MM/DD")}
+              {format(addDays(startOfWeek(currentDate), 4), "dd MM/DD")}
             </div>
             <div class="item-wday">
-              {format(addDays(startOfWeek(this.currentDate), 5), "dd MM/DD")}
+              {format(addDays(startOfWeek(currentDate), 5), "dd MM/DD")}
             </div>
             <div class="item-wday">
-              {format(endOfWeek(this.currentDate), "dd MM/DD")}
+              {format(endOfWeek(currentDate), "dd MM/DD")}
             </div>
 
             <div class="item-hours">12am</div>
-            <Timeslot x={0} y={0} color={this.state.grid[0][0]} />
-            <Timeslot x={0} y={1} color={this.state.grid[0][1]} />
-            <Timeslot x={0} y={2} color={this.state.grid[0][2]} />
-            <Timeslot x={0} y={3} color={this.state.grid[0][3]} />
-            <Timeslot x={0} y={4} color={this.state.grid[0][4]} />
-            <Timeslot x={0} y={5} color={this.state.grid[0][5]} />
-            <Timeslot x={0} y={6} color={this.state.grid[0][6]} />
+            <Timeslot color={this.state.shifts[0].color} />
+            <Timeslot color={this.state.shifts[1].color} />
+            <Timeslot color={this.state.shifts[2].color} />
+            <Timeslot color={this.state.shifts[3].color} />
+            <Timeslot color={this.state.shifts[4].color} />
+            <Timeslot color={this.state.shifts[5].color} />
+            <Timeslot color={this.state.shifts[6].color} />
 
             <div class="item-hours">1am</div>
-            <Timeslot x={1} y={0} color={this.state.grid[1][0]} />
-            <Timeslot x={1} y={1} color={this.state.grid[1][1]} />
-            <Timeslot x={1} y={2} color={this.state.grid[1][2]} />
-            <Timeslot x={1} y={3} color={this.state.grid[1][3]} />
-            <Timeslot x={1} y={4} color={this.state.grid[1][4]} />
-            <Timeslot x={1} y={5} color={this.state.grid[1][5]} />
-            <Timeslot x={1} y={6} color={this.state.grid[1][6]} />
+            <Timeslot color={this.state.shifts[7].color} />
+            <Timeslot color={this.state.shifts[8].color} />
+            <Timeslot color={this.state.shifts[9].color} />
+            <Timeslot color={this.state.shifts[10].color} />
+            <Timeslot color={this.state.shifts[11].color} />
+            <Timeslot color={this.state.shifts[12].color} />
+            <Timeslot color={this.state.shifts[13].color} />
 
             <div class="item-hours">2am</div>
-            <Timeslot x={2} y={0} color={this.state.grid[2][0]} />
-            <Timeslot x={2} y={1} color={this.state.grid[2][1]} />
-            <Timeslot x={2} y={2} color={this.state.grid[2][2]} />
-            <Timeslot x={2} y={3} color={this.state.grid[2][3]} />
-            <Timeslot x={2} y={4} color={this.state.grid[2][4]} />
-            <Timeslot x={2} y={5} color={this.state.grid[2][5]} />
-            <Timeslot x={2} y={6} color={this.state.grid[2][6]} />
+            <Timeslot color={this.state.shifts[14].color} />
+            <Timeslot color={this.state.shifts[15].color} />
+            <Timeslot color={this.state.shifts[16].color} />
+            <Timeslot color={this.state.shifts[17].color} />
+            <Timeslot color={this.state.shifts[18].color} />
+            <Timeslot color={this.state.shifts[19].color} />
+            <Timeslot color={this.state.shifts[20].color} />
 
             <div class="item-hours">3am</div>
-            <Timeslot x={3} y={0} color={this.state.grid[3][0]} />
-            <Timeslot x={3} y={1} color={this.state.grid[3][1]} />
-            <Timeslot x={3} y={2} color={this.state.grid[3][2]} />
-            <Timeslot x={3} y={3} color={this.state.grid[3][3]} />
-            <Timeslot x={3} y={4} color={this.state.grid[3][4]} />
-            <Timeslot x={3} y={5} color={this.state.grid[3][5]} />
-            <Timeslot x={3} y={6} color={this.state.grid[3][6]} />
+            <Timeslot color={this.state.shifts[21].color} />
+            <Timeslot color={this.state.shifts[22].color} />
+            <Timeslot color={this.state.shifts[23].color} />
+            <Timeslot color={this.state.shifts[24].color} />
+            <Timeslot color={this.state.shifts[25].color} />
+            <Timeslot color={this.state.shifts[26].color} />
+            <Timeslot color={this.state.shifts[27].color} />
 
             <div class="item-hours">4am</div>
-            <Timeslot x={4} y={0} color={this.state.grid[4][0]} />
-            <Timeslot x={4} y={1} color={this.state.grid[4][1]} />
-            <Timeslot x={4} y={2} color={this.state.grid[4][2]} />
-            <Timeslot x={4} y={3} color={this.state.grid[4][3]} />
-            <Timeslot x={4} y={4} color={this.state.grid[4][4]} />
-            <Timeslot x={4} y={5} color={this.state.grid[4][5]} />
-            <Timeslot x={4} y={6} color={this.state.grid[4][6]} />
+            <Timeslot color={this.state.shifts[28].color} />
+            <Timeslot color={this.state.shifts[29].color} />
+            <Timeslot color={this.state.shifts[30].color} />
+            <Timeslot color={this.state.shifts[31].color} />
+            <Timeslot color={this.state.shifts[32].color} />
+            <Timeslot color={this.state.shifts[33].color} />
+            <Timeslot color={this.state.shifts[34].color} />
 
             <div class="item-hours">5am</div>
-            <Timeslot x={5} y={0} color={this.state.grid[5][0]} />
-            <Timeslot x={5} y={1} color={this.state.grid[5][1]} />
-            <Timeslot x={5} y={2} color={this.state.grid[5][2]} />
-            <Timeslot x={5} y={3} color={this.state.grid[5][3]} />
-            <Timeslot x={5} y={4} color={this.state.grid[5][4]} />
-            <Timeslot x={5} y={5} color={this.state.grid[5][5]} />
-            <Timeslot x={5} y={6} color={this.state.grid[5][6]} />
+            <Timeslot color={this.state.shifts[35].color} />
+            <Timeslot color={this.state.shifts[36].color} />
+            <Timeslot color={this.state.shifts[37].color} />
+            <Timeslot color={this.state.shifts[38].color} />
+            <Timeslot color={this.state.shifts[39].color} />
+            <Timeslot color={this.state.shifts[40].color} />
+            <Timeslot color={this.state.shifts[41].color} />
 
             <div class="item-hours">6am</div>
-            <Timeslot x={6} y={0} color={this.state.grid[6][0]} />
-            <Timeslot x={6} y={1} color={this.state.grid[6][1]} />
-            <Timeslot x={6} y={2} color={this.state.grid[6][2]} />
-            <Timeslot x={6} y={3} color={this.state.grid[6][3]} />
-            <Timeslot x={6} y={4} color={this.state.grid[6][4]} />
-            <Timeslot x={6} y={5} color={this.state.grid[6][5]} />
-            <Timeslot x={6} y={6} color={this.state.grid[6][6]} />
+            <Timeslot color={this.state.shifts[42].color} />
+            <Timeslot color={this.state.shifts[43].color} />
+            <Timeslot color={this.state.shifts[44].color} />
+            <Timeslot color={this.state.shifts[45].color} />
+            <Timeslot color={this.state.shifts[46].color} />
+            <Timeslot color={this.state.shifts[47].color} />
+            <Timeslot color={this.state.shifts[48].color} />
 
             <div class="item-hours">7am</div>
-            <Timeslot x={7} y={0} color={this.state.grid[7][0]} />
-            <Timeslot x={7} y={1} color={this.state.grid[7][1]} />
-            <Timeslot x={7} y={2} color={this.state.grid[7][2]} />
-            <Timeslot x={7} y={3} color={this.state.grid[7][3]} />
-            <Timeslot x={7} y={4} color={this.state.grid[7][4]} />
-            <Timeslot x={7} y={5} color={this.state.grid[7][5]} />
-            <Timeslot x={7} y={6} color={this.state.grid[7][6]} />
+            <Timeslot color={this.state.shifts[49].color} />
+            <Timeslot color={this.state.shifts[50].color} />
+            <Timeslot color={this.state.shifts[51].color} />
+            <Timeslot color={this.state.shifts[52].color} />
+            <Timeslot color={this.state.shifts[53].color} />
+            <Timeslot color={this.state.shifts[54].color} />
+            <Timeslot color={this.state.shifts[55].color} />
 
             <div class="item-hours">8am</div>
-            <Timeslot x={8} y={0} color={this.state.grid[8][0]} />
-            <Timeslot x={8} y={1} color={this.state.grid[8][1]} />
-            <Timeslot x={8} y={2} color={this.state.grid[8][2]} />
-            <Timeslot x={8} y={3} color={this.state.grid[8][3]} />
-            <Timeslot x={8} y={4} color={this.state.grid[8][4]} />
-            <Timeslot x={8} y={5} color={this.state.grid[8][5]} />
-            <Timeslot x={8} y={6} color={this.state.grid[8][6]} />
+            <Timeslot color={this.state.shifts[56].color} />
+            <Timeslot color={this.state.shifts[57].color} />
+            <Timeslot color={this.state.shifts[58].color} />
+            <Timeslot color={this.state.shifts[59].color} />
+            <Timeslot color={this.state.shifts[60].color} />
+            <Timeslot color={this.state.shifts[61].color} />
+            <Timeslot color={this.state.shifts[62].color} />
 
             <div class="item-hours">9am</div>
-            <Timeslot x={9} y={0} color={this.state.grid[9][0]} />
-            <Timeslot x={9} y={1} color={this.state.grid[9][1]} />
-            <Timeslot x={9} y={2} color={this.state.grid[9][2]} />
-            <Timeslot x={9} y={3} color={this.state.grid[9][3]} />
-            <Timeslot x={9} y={4} color={this.state.grid[9][4]} />
-            <Timeslot x={9} y={5} color={this.state.grid[9][5]} />
-            <Timeslot x={9} y={6} color={this.state.grid[9][6]} />
+            <Timeslot color={this.state.shifts[63].color} />
+            <Timeslot color={this.state.shifts[64].color} />
+            <Timeslot color={this.state.shifts[65].color} />
+            <Timeslot color={this.state.shifts[66].color} />
+            <Timeslot color={this.state.shifts[67].color} />
+            <Timeslot color={this.state.shifts[68].color} />
+            <Timeslot color={this.state.shifts[69].color} />
 
             <div class="item-hours">10am</div>
-            <Timeslot x={10} y={0} color={this.state.grid[10][0]} />
-            <Timeslot x={10} y={1} color={this.state.grid[10][1]} />
-            <Timeslot x={10} y={2} color={this.state.grid[10][2]} />
-            <Timeslot x={10} y={3} color={this.state.grid[10][3]} />
-            <Timeslot x={10} y={4} color={this.state.grid[10][4]} />
-            <Timeslot x={10} y={5} color={this.state.grid[10][5]} />
-            <Timeslot x={10} y={6} color={this.state.grid[10][6]} />
+            <Timeslot color={this.state.shifts[70].color} />
+            <Timeslot color={this.state.shifts[71].color} />
+            <Timeslot color={this.state.shifts[72].color} />
+            <Timeslot color={this.state.shifts[73].color} />
+            <Timeslot color={this.state.shifts[74].color} />
+            <Timeslot color={this.state.shifts[75].color} />
+            <Timeslot color={this.state.shifts[76].color} />
 
             <div class="item-hours">11am</div>
-            <Timeslot x={11} y={0} color={this.state.grid[11][0]} />
-            <Timeslot x={11} y={1} color={this.state.grid[11][1]} />
-            <Timeslot x={11} y={2} color={this.state.grid[11][2]} />
-            <Timeslot x={11} y={3} color={this.state.grid[11][3]} />
-            <Timeslot x={11} y={4} color={this.state.grid[11][4]} />
-            <Timeslot x={11} y={5} color={this.state.grid[11][5]} />
-            <Timeslot x={11} y={6} color={this.state.grid[11][6]} />
+            <Timeslot color={this.state.shifts[77].color} />
+            <Timeslot color={this.state.shifts[78].color} />
+            <Timeslot color={this.state.shifts[79].color} />
+            <Timeslot color={this.state.shifts[80].color} />
+            <Timeslot color={this.state.shifts[81].color} />
+            <Timeslot color={this.state.shifts[82].color} />
+            <Timeslot color={this.state.shifts[83].color} />
 
             <div class="item-hours">12pm</div>
-            <Timeslot x={12} y={0} color={this.state.grid[12][0]} />
-            <Timeslot x={12} y={1} color={this.state.grid[12][1]} />
-            <Timeslot x={12} y={2} color={this.state.grid[12][2]} />
-            <Timeslot x={12} y={3} color={this.state.grid[12][3]} />
-            <Timeslot x={12} y={4} color={this.state.grid[12][4]} />
-            <Timeslot x={12} y={5} color={this.state.grid[12][5]} />
-            <Timeslot x={12} y={6} color={this.state.grid[12][6]} />
+            <Timeslot color={this.state.shifts[84].color} />
+            <Timeslot color={this.state.shifts[85].color} />
+            <Timeslot color={this.state.shifts[86].color} />
+            <Timeslot color={this.state.shifts[87].color} />
+            <Timeslot color={this.state.shifts[88].color} />
+            <Timeslot color={this.state.shifts[89].color} />
+            <Timeslot color={this.state.shifts[90].color} />
 
             <div class="item-hours">1pm</div>
-            <Timeslot x={13} y={0} color={this.state.grid[13][0]} />
-            <Timeslot x={13} y={1} color={this.state.grid[13][1]} />
-            <Timeslot x={13} y={2} color={this.state.grid[13][2]} />
-            <Timeslot x={13} y={3} color={this.state.grid[13][3]} />
-            <Timeslot x={13} y={4} color={this.state.grid[13][4]} />
-            <Timeslot x={13} y={5} color={this.state.grid[13][5]} />
-            <Timeslot x={13} y={6} color={this.state.grid[13][6]} />
+            <Timeslot color={this.state.shifts[91].color} />
+            <Timeslot color={this.state.shifts[92].color} />
+            <Timeslot color={this.state.shifts[93].color} />
+            <Timeslot color={this.state.shifts[94].color} />
+            <Timeslot color={this.state.shifts[95].color} />
+            <Timeslot color={this.state.shifts[96].color} />
+            <Timeslot color={this.state.shifts[97].color} />
 
             <div class="item-hours">2pm</div>
-            <Timeslot x={14} y={0} color={this.state.grid[14][0]} />
-            <Timeslot x={14} y={1} color={this.state.grid[14][1]} />
-            <Timeslot x={14} y={2} color={this.state.grid[14][2]} />
-            <Timeslot x={14} y={3} color={this.state.grid[14][3]} />
-            <Timeslot x={14} y={4} color={this.state.grid[14][4]} />
-            <Timeslot x={14} y={5} color={this.state.grid[14][5]} />
-            <Timeslot x={14} y={6} color={this.state.grid[14][6]} />
+            <Timeslot color={this.state.shifts[98].color} />
+            <Timeslot color={this.state.shifts[99].color} />
+            <Timeslot color={this.state.shifts[100].color} />
+            <Timeslot color={this.state.shifts[101].color} />
+            <Timeslot color={this.state.shifts[102].color} />
+            <Timeslot color={this.state.shifts[103].color} />
+            <Timeslot color={this.state.shifts[104].color} />
 
             <div class="item-hours">3pm</div>
-            <Timeslot x={15} y={0} color={this.state.grid[15][0]} />
-            <Timeslot x={15} y={1} color={this.state.grid[15][1]} />
-            <Timeslot x={15} y={2} color={this.state.grid[15][2]} />
-            <Timeslot x={15} y={3} color={this.state.grid[15][3]} />
-            <Timeslot x={15} y={4} color={this.state.grid[15][4]} />
-            <Timeslot x={15} y={5} color={this.state.grid[15][5]} />
-            <Timeslot x={15} y={6} color={this.state.grid[15][6]} />
+            <Timeslot color={this.state.shifts[105].color} />
+            <Timeslot color={this.state.shifts[106].color} />
+            <Timeslot color={this.state.shifts[107].color} />
+            <Timeslot color={this.state.shifts[108].color} />
+            <Timeslot color={this.state.shifts[109].color} />
+            <Timeslot color={this.state.shifts[110].color} />
+            <Timeslot color={this.state.shifts[111].color} />
 
             <div class="item-hours">4pm</div>
-            <Timeslot x={16} y={0} color={this.state.grid[16][0]} />
-            <Timeslot x={16} y={1} color={this.state.grid[16][1]} />
-            <Timeslot x={16} y={2} color={this.state.grid[16][2]} />
-            <Timeslot x={16} y={3} color={this.state.grid[16][3]} />
-            <Timeslot x={16} y={4} color={this.state.grid[16][4]} />
-            <Timeslot x={16} y={5} color={this.state.grid[16][5]} />
-            <Timeslot x={16} y={6} color={this.state.grid[16][6]} />
+            <Timeslot color={this.state.shifts[112].color} />
+            <Timeslot color={this.state.shifts[113].color} />
+            <Timeslot color={this.state.shifts[114].color} />
+            <Timeslot color={this.state.shifts[115].color} />
+            <Timeslot color={this.state.shifts[116].color} />
+            <Timeslot color={this.state.shifts[117].color} />
+            <Timeslot color={this.state.shifts[118].color} />
 
             <div class="item-hours">5pm</div>
-            <Timeslot x={17} y={0} color={this.state.grid[17][0]} />
-            <Timeslot x={17} y={1} color={this.state.grid[17][1]} />
-            <Timeslot x={17} y={2} color={this.state.grid[17][2]} />
-            <Timeslot x={17} y={3} color={this.state.grid[17][3]} />
-            <Timeslot x={17} y={4} color={this.state.grid[17][4]} />
-            <Timeslot x={17} y={5} color={this.state.grid[17][5]} />
-            <Timeslot x={17} y={6} color={this.state.grid[17][6]} />
+            <Timeslot color={this.state.shifts[119].color} />
+            <Timeslot color={this.state.shifts[120].color} />
+            <Timeslot color={this.state.shifts[121].color} />
+            <Timeslot color={this.state.shifts[122].color} />
+            <Timeslot color={this.state.shifts[123].color} />
+            <Timeslot color={this.state.shifts[124].color} />
+            <Timeslot color={this.state.shifts[125].color} />
 
             <div class="item-hours">6pm</div>
-            <Timeslot x={18} y={0} color={this.state.grid[18][0]} />
-            <Timeslot x={18} y={1} color={this.state.grid[18][1]} />
-            <Timeslot x={18} y={2} color={this.state.grid[18][2]} />
-            <Timeslot x={18} y={3} color={this.state.grid[18][3]} />
-            <Timeslot x={18} y={4} color={this.state.grid[18][4]} />
-            <Timeslot x={18} y={5} color={this.state.grid[18][5]} />
-            <Timeslot x={18} y={6} color={this.state.grid[18][6]} />
+            <Timeslot color={this.state.shifts[126].color} />
+            <Timeslot color={this.state.shifts[127].color} />
+            <Timeslot color={this.state.shifts[128].color} />
+            <Timeslot color={this.state.shifts[129].color} />
+            <Timeslot color={this.state.shifts[130].color} />
+            <Timeslot color={this.state.shifts[131].color} />
+            <Timeslot color={this.state.shifts[132].color} />
 
             <div class="item-hours">7pm</div>
-            <Timeslot x={19} y={0} color={this.state.grid[19][0]} />
-            <Timeslot x={19} y={1} color={this.state.grid[19][1]} />
-            <Timeslot x={19} y={2} color={this.state.grid[19][2]} />
-            <Timeslot x={19} y={3} color={this.state.grid[19][3]} />
-            <Timeslot x={19} y={4} color={this.state.grid[19][4]} />
-            <Timeslot x={19} y={5} color={this.state.grid[19][5]} />
-            <Timeslot x={19} y={6} color={this.state.grid[19][6]} />
+            <Timeslot color={this.state.shifts[133].color} />
+            <Timeslot color={this.state.shifts[134].color} />
+            <Timeslot color={this.state.shifts[135].color} />
+            <Timeslot color={this.state.shifts[136].color} />
+            <Timeslot color={this.state.shifts[137].color} />
+            <Timeslot color={this.state.shifts[138].color} />
+            <Timeslot color={this.state.shifts[139].color} />
 
             <div class="item-hours">8pm</div>
-            <Timeslot x={20} y={0} color={this.state.grid[20][0]} />
-            <Timeslot x={20} y={1} color={this.state.grid[20][1]} />
-            <Timeslot x={20} y={2} color={this.state.grid[20][2]} />
-            <Timeslot x={20} y={3} color={this.state.grid[20][3]} />
-            <Timeslot x={20} y={4} color={this.state.grid[20][4]} />
-            <Timeslot x={20} y={5} color={this.state.grid[20][5]} />
-            <Timeslot x={20} y={6} color={this.state.grid[20][6]} />
+            <Timeslot color={this.state.shifts[140].color} />
+            <Timeslot color={this.state.shifts[141].color} />
+            <Timeslot color={this.state.shifts[142].color} />
+            <Timeslot color={this.state.shifts[143].color} />
+            <Timeslot color={this.state.shifts[144].color} />
+            <Timeslot color={this.state.shifts[145].color} />
+            <Timeslot color={this.state.shifts[146].color} />
 
             <div class="item-hours">9pm</div>
-            <Timeslot x={21} y={0} color={this.state.grid[21][0]} />
-            <Timeslot x={21} y={1} color={this.state.grid[21][1]} />
-            <Timeslot x={21} y={2} color={this.state.grid[21][2]} />
-            <Timeslot x={21} y={3} color={this.state.grid[21][3]} />
-            <Timeslot x={21} y={4} color={this.state.grid[21][4]} />
-            <Timeslot x={21} y={5} color={this.state.grid[21][5]} />
-            <Timeslot x={21} y={6} color={this.state.grid[21][6]} />
+            <Timeslot color={this.state.shifts[147].color} />
+            <Timeslot color={this.state.shifts[148].color} />
+            <Timeslot color={this.state.shifts[149].color} />
+            <Timeslot color={this.state.shifts[150].color} />
+            <Timeslot color={this.state.shifts[151].color} />
+            <Timeslot color={this.state.shifts[152].color} />
+            <Timeslot color={this.state.shifts[153].color} />
 
             <div class="item-hours">10pm</div>
-            <Timeslot x={22} y={0} color={this.state.grid[22][0]} />
-            <Timeslot x={22} y={1} color={this.state.grid[22][1]} />
-            <Timeslot x={22} y={2} color={this.state.grid[22][2]} />
-            <Timeslot x={22} y={3} color={this.state.grid[22][3]} />
-            <Timeslot x={22} y={4} color={this.state.grid[22][4]} />
-            <Timeslot x={22} y={5} color={this.state.grid[22][5]} />
-            <Timeslot x={22} y={6} color={this.state.grid[22][6]} />
+            <Timeslot color={this.state.shifts[154].color} />
+            <Timeslot color={this.state.shifts[155].color} />
+            <Timeslot color={this.state.shifts[156].color} />
+            <Timeslot color={this.state.shifts[157].color} />
+            <Timeslot color={this.state.shifts[158].color} />
+            <Timeslot color={this.state.shifts[159].color} />
+            <Timeslot color={this.state.shifts[160].color} />
 
             <div class="item-hours">11pm</div>
-            <Timeslot x={23} y={0} color={this.state.grid[23][0]} />
-            <Timeslot x={23} y={1} color={this.state.grid[23][1]} />
-            <Timeslot x={23} y={2} color={this.state.grid[23][2]} />
-            <Timeslot x={23} y={3} color={this.state.grid[23][3]} />
-            <Timeslot x={23} y={4} color={this.state.grid[23][4]} />
-            <Timeslot x={23} y={5} color={this.state.grid[23][5]} />
-            <Timeslot x={23} y={6} color={this.state.grid[23][6]} />
+            <Timeslot color={this.state.shifts[161].color} />
+            <Timeslot color={this.state.shifts[162].color} />
+            <Timeslot color={this.state.shifts[163].color} />
+            <Timeslot color={this.state.shifts[164].color} />
+            <Timeslot color={this.state.shifts[165].color} />
+            <Timeslot color={this.state.shifts[166].color} />
+            <Timeslot color={this.state.shifts[167].color} />
           </div>
         </div>
       </div>

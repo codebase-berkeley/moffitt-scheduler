@@ -26,32 +26,46 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-function randomSchedule() {
-  var a = new Array(24);
-  for (var i = 0; i <= 23; i += 1) {
-    a[i] = new Array(7);
+class Shift {
+  constructor(color, id, start, end) {
+    this.color = color;
+    this.id = id;
+    this.start = start;
+    this.end = end;
   }
-  for (var row = 0; row <= 23; row++) {
-    for (var col = 0; col <= 6; col++) {
-      a[row][col] = "#f8f8f8";
-    }
-  }
-  for (var r = 0; r <= 5; r++) {
-    a[r][0] = "pink";
-  }
-  return a;
 }
 
-var schedule = randomSchedule();
-
-router.get("/staticcalendar", function(req, res) {
-  console.log("in backend");
-  return res.json({ schedule: schedule });
-});
-
-router.get("/age", function(req, res) {
-  console.log("In /age");
-  return res.json({ age: 21 });
+router.post("/staticcalendar", function(req, res) {
+  let shifts = req.body.items;
+  pool.query("SELECT * FROM SHIFTS", (error, result) => {
+    if (error) {
+      throw error;
+    }
+    for (var i = 0; i < 168; i += 1) {
+      for (var j = 0; j < result.rows.length; j += 1) {
+        let currentRow = result.rows[j];
+        let sameStartEndValid =
+          shifts[i].day == currentRow.start_time.getDay() &&
+          shifts[i].start >= currentRow.start_time.getHours() &&
+          shifts[i].end <= currentRow.end_time.getHours();
+        let diffStartEndValid =
+          currentRow.start_time.getDay() != currentRow.end_time.getDay() &&
+          ((shifts[i].day == currentRow.start_time.getDay() &&
+            shifts[i].start >= currentRow.start_time.getHours()) ||
+            (shifts[i].day == currentRow.end_time.getDay() &&
+              shifts[i].end <= currentRow.end_time.getHours()));
+        if (sameStartEndValid || diffStartEndValid) {
+          shifts[i].id = currentRow.shift_id;
+          if (currentRow.location == "Moffitt") {
+            shifts[i].color = "red";
+          } else if (currentRow.location == "Doe") {
+            shifts[i].color = "green";
+          }
+        }
+      }
+    }
+    return res.json({ shifts: shifts });
+  });
 });
 
 router.post("/save", (req, res) => {
