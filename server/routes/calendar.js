@@ -26,15 +26,6 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-class Shift {
-  constructor(color, id, start, end) {
-    this.color = color;
-    this.id = id;
-    this.start = start;
-    this.end = end;
-  }
-}
-
 router.post("/staticcalendar", function(req, res) {
   let shifts = req.body.items;
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
