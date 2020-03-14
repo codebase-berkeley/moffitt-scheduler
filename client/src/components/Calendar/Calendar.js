@@ -59,18 +59,34 @@ export default class Calendar extends React.Component {
 
   componentDidMount() {
     console.log("mount");
-    fetch("/test")
+    console.log(this.props.userId);
+    fetch("/test/" + this.props.userId)
       .then(response => {
-        console.log("response");
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("test");
+        console.log("test", jsonResponse);
         this.setState({ grid: jsonResponse.schedule });
+        console.log(this.state.grid);
       });
   }
 
+  // componentDidMount() {
+  //   console.log("mount");
+  //   fetch("/calendar")
+  //     .then(response => {
+  //       console.log("response");
+  //       return response.json();
+  //     })
+  //     .then(jsonResponse => {
+  //       console.log("test");
+  //       this.setState({ grid: jsonResponse.schedule });
+  //     });
+  // }
+
   render() {
+    // let userId = useParams();
+    // console.log(userId);
     return (
       <div id="overall-container">
         <SaveChanges save={this.save} />
