@@ -69,4 +69,46 @@ router.get("/shifts", function(req, res) {
   });
 });
 
+// function pullAvail() {
+//   var a = new Array(24);
+//   for (var i = 0; i <= 23; i += 1) {
+//     a[i] = new Array(7);
+//   }
+//   for (var row = 0; row <= 23; row++) {
+//     for (var col = 0; col <= 6; col++) {
+//       if
+//         a[row][col] = "#f8f8f8";
+//     }
+//   }
+//   for (var r = 0; r <= 5; r++) {
+//     a[r][0] = "pink";
+//   }
+//   return a;
+// }
+
+var a = new Array(24);
+for (var i = 0; i <= 23; i += 1) {
+  a[i] = new Array(7);
+}
+
+router.get("/test", (req, res) => {
+  // items = req.body.items;
+  console.log(items);
+  pool.query(
+    `SELECT * FROM AVAILABILITY 
+     WHERE sle_id = 1`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+        for (var r = 0; r < result.rows.length; r++) {
+          `SELECT start_time AS t, day_of_week AS d`;
+          a[t][d] = "pink";
+        }
+      }
+    }
+  );
+  return res.json({ schedule: a });
+});
+
 module.exports = router;

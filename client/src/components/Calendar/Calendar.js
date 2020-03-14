@@ -57,6 +57,19 @@ export default class Calendar extends React.Component {
     </div>
   );
 
+  componentDidMount() {
+    console.log("mount");
+    fetch("/test")
+      .then(response => {
+        console.log("response");
+        return response.json();
+      })
+      .then(jsonResponse => {
+        console.log("test");
+        this.setState({ grid: jsonResponse.schedule });
+      });
+  }
+
   render() {
     return (
       <div id="overall-container">
