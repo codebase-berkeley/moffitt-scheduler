@@ -71,14 +71,11 @@ router.get("/shifts", function(req, res) {
   });
 });
 
-var a = new Array(24);
-for (var i = 0; i <= 23; i += 1) {
-  a[i] = new Array(7);
-}
-
 router.get("/test/:userId", (req, res) => {
-  console.log("hgjgjhg");
-  console.log("Original a:", a);
+  // console.log("Original a:", a);
+  var selected = [];
+  var curr_day = new Date();
+  var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
   pool.query(
     `SELECT start_time AS t, day_of_week AS d FROM AVAILABILITY 
      WHERE sle_id = $1`,
@@ -90,20 +87,25 @@ router.get("/test/:userId", (req, res) => {
         console.log("result.rows:", result.rows);
         for (var r = 0; r < result.rows.length; r++) {
           var row = result.rows[r];
-          // console.log(row);
-          // console.log(row.t);
-          // console.log(row.d);
           var t = result.rows[r].t;
           var d = result.rows[r].d;
-          // console.log(t);
-          // console.log(d);
           console.log("d", d);
-          a[t][d] = "pink";
+          selected.push(
+            new Date(
+              curr_day.getFullYear(),
+              curr_day.getMonth(),
+              d + curr_week_sunday,
+              t,
+              0,
+              0,
+              0
+            )
+          );
           //console.log(a);
         }
       }
-      console.log("a:", a);
-      return res.json({ schedule: a });
+      console.log("selected_dates: ", selected);
+      return res.json({ schedule: selected });
     }
   );
 });

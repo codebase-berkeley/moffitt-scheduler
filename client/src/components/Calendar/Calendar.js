@@ -1,7 +1,7 @@
 import React from "react";
 import ScheduleSelector from "react-schedule-selector";
 import "./Calendar.css";
-import { format, startOfWeek, endOfWeek, getDate, getHours } from "date-fns";
+import { format, startOfWeek, endOfWeek, getDay, getHours } from "date-fns";
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -41,21 +41,24 @@ export default class Calendar extends React.Component {
   }
 
   handleChange = newSchedule => {
+    this.setState({ schedule: newSchedule });
     this.setState({ formattedSchedule: [] });
     for (var i = 0; i < newSchedule.length; i += 1) {
       this.state.formattedSchedule.push([
         getHours(newSchedule[i]),
-        getDate(newSchedule[i])
+        getDay(newSchedule[i])
       ]);
     }
-    this.setState({ schedule: newSchedule });
+    console.log(this.state.formattedSchedule);
   };
 
-  renderCustomDateCell = (time, selected, innerRef) => (
-    <div style={{ textAlign: "center" }} ref={innerRef}>
-      {selected ? this.selectCell : this.deselectCell}
-    </div>
-  );
+  renderCustomDateCell = (time, selected, innerRef) => {
+    return (
+      <div style={{ textAlign: "center" }} ref={innerRef}>
+        {selected ? this.selectCell : this.deselectCell}
+      </div>
+    );
+  };
 
   componentDidMount() {
     console.log("mount");
@@ -66,8 +69,7 @@ export default class Calendar extends React.Component {
       })
       .then(jsonResponse => {
         console.log("test", jsonResponse);
-        this.setState({ grid: jsonResponse.schedule });
-        console.log(this.state.grid);
+        this.setState({ schedule: jsonResponse.schedule });
       });
   }
 
