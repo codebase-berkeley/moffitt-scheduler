@@ -25,10 +25,16 @@ export default class MSRenderer extends React.Component {
   render() {
     let typeOfLibrary = this.state.typeOfLibrary;
     let pending;
+    let clicked;
+    let nonClicked;
     if (typeOfLibrary == "moffitt") {
       pending = <Moffitt />;
+      clicked = "moffittButton";
+      nonClicked = "doeButton";
     } else if (typeOfLibrary == "doe") {
       pending = <Doe />;
+      clicked = "doeButton";
+      nonClicked = "moffittButton";
     } else {
       pending = null;
     }
@@ -37,10 +43,10 @@ export default class MSRenderer extends React.Component {
         <div classname="masterScheduleAndButtons">
           <div className="masterScheduleText">Master Schedule</div>
           <div className="buttons">
-            <button className="moffittButton" onClick={this.showMoffit}>
+            <button className={clicked} onClick={this.showMoffit}>
               <h1>Moffitt</h1>
             </button>
-            <button className="doeButton" onClick={this.showDoe}>
+            <button className={nonClicked} onClick={this.showDoe}>
               <h1>Doe</h1>
             </button>
           </div>
