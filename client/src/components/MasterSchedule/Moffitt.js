@@ -1,45 +1,48 @@
 import React from "react";
 import "./Moffitt.css";
 
-export default function Moffitt(props) {
-  var [
-    sundayArray,
-    mondayArray,
-    tuesdayArray,
-    wednesdayArray,
-    thursdayArray,
-    fridayArray,
-    saturdayArray
-  ] = [[], [], [], [], [], [], []];
-  var allDaysOfWeek = [
-    sundayArray,
-    mondayArray,
-    tuesdayArray,
-    wednesdayArray,
-    thursdayArray,
-    fridayArray,
-    saturdayArray
-  ];
-  for (var i = 0; i < 6; i++) {
-    allDaysOfWeek[0].push(<Box text="Sahil Thakur" />);
-    allDaysOfWeek[1].push(<Box text="Sahil Thakur" />);
-    allDaysOfWeek[2].push(<Box text="Sahil Thakur" />);
-    allDaysOfWeek[3].push(<Box text="Sahil Thakur" />);
-    allDaysOfWeek[4].push(<Box text="Sahil Thakur" />);
-    allDaysOfWeek[5].push(<Box text="Sahil Thakur" />);
-    allDaysOfWeek[6].push(<Box text="Sahil Thakur" />);
+export default class Moffitt extends React.Component {
+  constructor(props) {
+    super(props);
+    let [
+      sundayArray,
+      mondayArray,
+      tuesdayArray,
+      wednesdayArray,
+      thursdayArray,
+      fridayArray,
+      saturdayArray
+    ] = [[], [], [], [], [], [], []];
+    this.state = {
+      allDaysOfWeek: [
+        sundayArray,
+        mondayArray,
+        tuesdayArray,
+        wednesdayArray,
+        thursdayArray,
+        fridayArray,
+        saturdayArray
+      ]
+    };
+    for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
+      for (let j = 0; j < 23; j++) {
+        this.state.allDaysOfWeek[i].push(<Box text="Sahil Thakur" />);
+      }
+    }
   }
-  return (
-    <div className="weekdayColumns">
-      <div className="sundayColumn">{sundayArray}</div>
-      <div className="mondayColumn">{mondayArray}</div>
-      <div className="tuesdayColumn">{tuesdayArray}</div>
-      <div className="wednesdayColumn">{wednesdayArray}</div>
-      <div className="thursdayColumn">{thursdayArray}</div>
-      <div className="fridayColumn">{fridayArray}</div>
-      <div className="saturdayColumn">{saturdayArray}</div>
-    </div>
-  );
+  render() {
+    return (
+      <div className="weekdayColumns">
+        <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
+        <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
+        <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>
+        <div className="wednesdayColumn">{this.state.allDaysOfWeek[3]}</div>
+        <div className="thursdayColumn">{this.state.allDaysOfWeek[4]}</div>
+        <div className="fridayColumn">{this.state.allDaysOfWeek[5]}</div>
+        <div className="saturdayColumn">{this.state.allDaysOfWeek[6]}</div>
+      </div>
+    );
+  }
 }
 
 function Box(props) {
