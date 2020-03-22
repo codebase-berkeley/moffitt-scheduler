@@ -2,3 +2,33 @@
   padding-top: 20%;
   padding-left: 30%;
 }
+.moffittButton {
+  background: #3f3cc8;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 8px;
+  color: #ffffff;
+  width: 101px;
+  top: 200px;
+  line-height: 19px;
+  text-align: center;
+}
+
+.doeButton {
+  width: 101px;
+  height: 34px;
+  left: 1136px;
+  top: 200px;
+  background: #ffffff;
+  border: 1px solid #3f3cc8;
+  box-sizing: border-box;
+  border-radius: 6px;
+  color: #3f3cc8;
+  font-size: 8px;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+}

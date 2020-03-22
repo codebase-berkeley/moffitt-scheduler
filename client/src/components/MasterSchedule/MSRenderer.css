@@ -12,3 +12,106 @@
   align-content: space-between;
   margin-top: 8%;
 }
+.msmoffitt {
+  padding-top: 20%;
+  padding-left: 30%;
+}
+.weekdayBox {
+  margin-left: 15%;
+  width: 75%;
+  height: 44px;
+  left: 380px;
+  top: 276px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  color: #9e9e9e;
+  padding-top: 8px;
+  margin-bottom: 1%;
+}
+.masterScheduleText {
+  margin-left: 15%;
+  padding-top: 5%;
+  width: 215px;
+  height: 25px;
+  left: 392px;
+  top: 203px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 25px;
+  color: #000000;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 70%;
+  margin-right: 13%;
+  padding-bottom: 2%;
+}
+
+.weekdayText {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5%;
+  margin-right: 5%;
+  overflow: scroll;
+}
+.masterScheduleAndButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.box {
+  display: flex;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 80%;
+  height: 90px;
+  margin-bottom: 9%;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-size: 70%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.sundayColumn {
+  width: 250px;
+  height: 60%;
+}
+.mondayColumn {
+  width: 250px;
+  height: 60%;
+}
+.tuesdayColumn {
+  width: 250px;
+  height: 60%;
+}
+
+.wednesdayColumn {
+  width: 250px;
+  height: 60%;
+}
+.thursdayColumn {
+  width: 250px;
+  height: 60%;
+}
+.fridayColumn {
+  width: 250px;
+  height: 60%;
+}
+.saturdayColumn {
+  width: 250px;
+  height: 60%;
+}
+.weekdayColumns {
+  display: flex;
+  justify-content: space-between;
+  width: 73.5%;
+  margin-left: 17%;
+  flex-direction: row;
+}

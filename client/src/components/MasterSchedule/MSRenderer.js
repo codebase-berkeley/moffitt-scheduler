@@ -45,10 +45,6 @@ export default class MSRenderer extends React.Component {
             </button>
           </div>
         </div>
-        {/* <p className="msrenderer">
-          Permanent Render stuff goes  here --> master schedule text, Buttons,
-          days of weeks
-        </p> */}
         <div className="weekdayBox">
           <div className="weekdayText">
             <div className="sunday">Sunday</div>
