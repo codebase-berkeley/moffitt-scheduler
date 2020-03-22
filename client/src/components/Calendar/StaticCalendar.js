@@ -96,11 +96,20 @@ export default class StaticCalendar extends React.Component {
       "10pm",
       "11pm"
     ];
+
+    /*Every 8th element should be an "item-hours" header,
+      while every 1-7th element should be a shift cell.
+    */
     for (var i = 0, ti = 0; i < 192; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
       } else {
-        timeslots.push(<Timeslot color={this.state.shifts[ti].color} />);
+        timeslots.push(
+          <Timeslot
+            color={this.state.shifts[ti].color}
+            id={this.state.shifts[ti].id}
+          />
+        );
         ti += 1;
       }
     }
