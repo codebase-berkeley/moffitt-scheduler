@@ -41,7 +41,6 @@ class Login extends React.Component {
       </div>
     );
   }
-
   loginClick() {
     var email = document.getElementById("email");
     var emailText = email.value;

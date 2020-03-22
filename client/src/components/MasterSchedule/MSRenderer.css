@@ -2,3 +2,13 @@
   padding-top: 20%;
   padding-left: 30%;
 }
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 1000px;
+  margin-right: 150px;
+  align-items: center;
+  align-content: space-between;
+  margin-top: 8%;
+}

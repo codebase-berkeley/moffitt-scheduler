@@ -34,20 +34,40 @@ export default class MSRenderer extends React.Component {
     }
     return (
       <div>
-        <div>
-          <button onClick={this.showMoffit}>
-            <h1>Moffitt</h1>
-          </button>
-          <button onClick={this.showDoe}>
-            <h1>Doe</h1>
-          </button>
+        <div classname="masterScheduleAndButtons">
+          <div className="masterScheduleText">Master Schedule</div>
+          <div className="buttons">
+            <button className="moffittButton" onClick={this.showMoffit}>
+              <h1>Moffitt</h1>
+            </button>
+            <button className="doeButton" onClick={this.showDoe}>
+              <h1>Doe</h1>
+            </button>
+          </div>
         </div>
-        <p className="msrenderer">
-          Permanent Render stuff goes here --> master schedule text, Buttons,
+        {/* <p className="msrenderer">
+          Permanent Render stuff goes  here --> master schedule text, Buttons,
           days of weeks
-        </p>
+        </p> */}
+        <div className="weekdayBox">
+          <div className="weekdayText">
+            <div className="sunday">Sunday</div>
+            <div className="monday">Monday</div>
+            <div className="tuesday">Tuesday</div>
+            <div className="wednesday">Wednesday</div>
+            <div className="thursday">Thursday</div>
+            <div className="friday">Friday</div>
+            <div className="saturday">Saturday</div>
+          </div>
+          {/* <Box text="something" /> */}
+        </div>
         {pending}
+        {/* <Box text="something" /> */}
       </div>
     );
   }
+}
+
+function Box(props) {
+  return <div>{props.text}</div>;
 }
