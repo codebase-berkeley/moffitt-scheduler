@@ -7,6 +7,7 @@
   position: absolute;
   display: inline-block;
   z-index: 0;
+  margin-top: 0px;
 }
 
 #schedule-container {
@@ -30,7 +31,7 @@
   position: center;
   width: 10%;
   margin-left: 50%;
-  margin-top: 1%;
+  margin-top: 1.5%;
   height: 40px;
   font-family: "Open Sans";
   border-radius: 10px;
