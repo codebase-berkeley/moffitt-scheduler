@@ -16,7 +16,7 @@ router.post("/save", (req, res) => {
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
       `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${1}, ${
-        items[i][0]
+      items[i][0]
       }, ${items[i][1]})`,
       (error, result) => {
         if (error) {
@@ -46,12 +46,12 @@ function randomSchedule() {
 
 var schedule = randomSchedule();
 
-router.get("/staticcalendar", function(req, res) {
+router.get("/staticcalendar", function (req, res) {
   console.log("in backend");
   return res.json({ schedule: schedule });
 });
 
-router.get("/age", function(req, res) {
+router.get("/age", function (req, res) {
   console.log("In /age");
   return res.json({ age: 21 });
 });
@@ -62,7 +62,7 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.get("/shifts", function(req, res) {
+router.get("/shifts", function (req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;

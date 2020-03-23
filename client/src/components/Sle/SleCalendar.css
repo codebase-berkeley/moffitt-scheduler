@@ -5,7 +5,7 @@ i {
 }
 
 .everything {
-  background-color: #f5f5fd;
+  background-color: #f8fafc;
   height: 790px;
 }
 
@@ -122,5 +122,6 @@ body {
 }
 
 .Calendar {
-  padding-top: 10%;
+  padding-top: 5.5%;
+  background-color: #f8fafc;
 }
