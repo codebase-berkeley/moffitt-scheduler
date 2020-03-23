@@ -48,9 +48,9 @@ router.post("/staticcalendar", function(req, res) {
         if (sameStartEndValid || diffStartEndValid) {
           shifts[i].id = currentRow.shift_id;
           if (currentRow.location == "Moffitt") {
-            shifts[i].color = "red";
+            shifts[i].color = "#FFA1A1";
           } else if (currentRow.location == "Doe") {
-            shifts[i].color = "green";
+            shifts[i].color = "#b0e9c2";
           }
         }
       }
