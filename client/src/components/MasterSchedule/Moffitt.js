@@ -29,6 +29,9 @@ export default class Moffitt extends React.Component {
         this.state.allDaysOfWeek[i].push(<Box text="Sahil Thakur" />);
       }
     }
+    let newAllDaysOfWeek = this.state.allDaysOfWeek;
+    newAllDaysOfWeek[0][0] = <Box text="Change Name Test" />;
+    this.setState({ allDaysOfWeek: newAllDaysOfWeek });
   }
   render() {
     return (
