@@ -5,8 +5,7 @@ var pool = require("../db/db");
 
 router.post("/save", (req, res) => {
   items = req.body.items;
-
-  console.log(items);
+  var userId = req.body.userId;
   pool.query("DELETE FROM AVAILABILITY", (error, result) => {
     if (error) {
       throw error;
@@ -14,9 +13,7 @@ router.post("/save", (req, res) => {
   });
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
-      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${1}, ${
-        items[i][0]
-      }, ${items[i][1]})`,
+      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i][0]}, ${items[i][1]})`,
       (error, result) => {
         if (error) {
           throw error;
@@ -46,18 +43,15 @@ function randomSchedule() {
 var schedule = randomSchedule();
 
 router.get("/staticcalendar", function(req, res) {
-  console.log("in backend");
   return res.json({ schedule: schedule });
 });
 
 router.get("/age", function(req, res) {
-  console.log("In /age");
   return res.json({ age: 21 });
 });
 
 router.post("/save", (req, res) => {
   items = req.body.items;
-  console.log(items);
   return res.json({ schedule: items });
 });
 
@@ -70,7 +64,7 @@ router.get("/shifts", function(req, res) {
   });
 });
 
-router.get("/test/:userId", (req, res) => {
+router.get("/availability/:userId", (req, res) => {
   var selected = [];
   var curr_day = new Date();
   var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
@@ -82,12 +76,10 @@ router.get("/test/:userId", (req, res) => {
       if (error) {
         throw error;
       } else {
-        console.log("result.rows:", result.rows);
         for (var r = 0; r < result.rows.length; r++) {
           var row = result.rows[r];
           var t = result.rows[r].t;
           var d = result.rows[r].d;
-          console.log("d", d);
           selected.push(
             new Date(
               curr_day.getFullYear(),
@@ -101,7 +93,6 @@ router.get("/test/:userId", (req, res) => {
           );
         }
       }
-      console.log("selected_dates: ", selected);
       return res.json({ schedule: selected });
     }
   );
