@@ -49,7 +49,6 @@ export default class Calendar extends React.Component {
         getDay(newSchedule[i])
       ]);
     }
-    console.log(this.state.formattedSchedule);
   };
 
   renderCustomDateCell = (time, selected, innerRef) => {
@@ -61,34 +60,16 @@ export default class Calendar extends React.Component {
   };
 
   componentDidMount() {
-    console.log("mount");
-    console.log(this.props.userId);
     fetch("/test/" + this.props.userId)
       .then(response => {
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("test", jsonResponse);
         this.setState({ schedule: jsonResponse.schedule });
       });
   }
 
-  // componentDidMount() {
-  //   console.log("mount");
-  //   fetch("/calendar")
-  //     .then(response => {
-  //       console.log("response");
-  //       return response.json();
-  //     })
-  //     .then(jsonResponse => {
-  //       console.log("test");
-  //       this.setState({ grid: jsonResponse.schedule });
-  //     });
-  // }
-
   render() {
-    // let userId = useParams();
-    // console.log(userId);
     return (
       <div id="overall-container">
         <SaveChanges save={this.save} />

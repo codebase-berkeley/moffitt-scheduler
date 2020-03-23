@@ -6,7 +6,6 @@ var pool = require("../db/db");
 router.post("/save", (req, res) => {
   items = req.body.items;
 
-  // console.log(userId);
   console.log(items);
   pool.query("DELETE FROM AVAILABILITY", (error, result) => {
     if (error) {
@@ -72,7 +71,6 @@ router.get("/shifts", function(req, res) {
 });
 
 router.get("/test/:userId", (req, res) => {
-  // console.log("Original a:", a);
   var selected = [];
   var curr_day = new Date();
   var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
@@ -101,7 +99,6 @@ router.get("/test/:userId", (req, res) => {
               0
             )
           );
-          //console.log(a);
         }
       }
       console.log("selected_dates: ", selected);
