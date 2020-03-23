@@ -41,14 +41,14 @@ export default class Calendar extends React.Component {
   }
 
   handleChange = newSchedule => {
-    this.setState({ schedule: newSchedule });
-    this.setState({ formattedSchedule: [] });
+    var schedule2 = [];
     for (var i = 0; i < newSchedule.length; i += 1) {
-      this.state.formattedSchedule.push([
-        getHours(newSchedule[i]),
-        getDay(newSchedule[i])
-      ]);
+      console.log("hours:", getHours(newSchedule[i]));
+      console.log("days:", getDay(newSchedule[i]));
+      schedule2.push([getHours(newSchedule[i]), getDay(newSchedule[i])]);
     }
+    console.log("schedule2:", schedule2);
+    this.setState({ schedule: newSchedule, formattedSchedule: schedule2 });
   };
 
   renderCustomDateCell = (time, selected, innerRef) => {
