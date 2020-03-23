@@ -1,11 +1,11 @@
 import React from "react";
-import "./SleCalendar.css";
+import "./SleAvailability.css";
 import "./SidebarElement.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
 import Calendar from "../Calendar/Calendar.js";
 
-function SleCalendar(props) {
+function SleAvailability(props) {
   return (
     <div class="everything">
       <div class="line"></div>
@@ -24,9 +24,9 @@ function SleCalendar(props) {
         </div>
       </div>
       <div class="sidebar">
-        <SidebarElement title="Your Shifts" />
+        <SidebarElement title="Your Shifts" link="/yourshifts" />
         <SidebarElement title="Open Shifts" />
-        <SidebarElement title="Availability" link="/calendar" />
+        <SidebarElement title="Availability" link="/availability" />
       </div>
       <div class="Calendar">
         <Calendar />
@@ -35,4 +35,4 @@ function SleCalendar(props) {
   );
 }
 
-export default SleCalendar;
+export default SleAvailability;
