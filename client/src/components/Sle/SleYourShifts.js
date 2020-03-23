@@ -1,11 +1,11 @@
 import React from "react";
-import "./SupervisorCover.css";
+import "./SleYourShifts.css";
 import "./SidebarElement.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
-import Cover from "../Cover/Cover";
+import StaticCalendar from "../Calendar/StaticCalendar.js";
 
-export default function SupervisorCover(props) {
+function SleYourShifts(props) {
   return (
     <div class="everything">
       <div class="line"></div>
@@ -24,14 +24,15 @@ export default function SupervisorCover(props) {
         </div>
       </div>
       <div class="sidebar">
-        <SidebarElement title="Schedule" />
-        <SidebarElement title="Cover Requests" link="/cover" />
-        <SidebarElement title="Employees" link="/employees" />
-        <SidebarElement title="Schedule Requests" />
+        <SidebarElement title="Your Shifts" link="/yourshifts" />
+        <SidebarElement title="Open Shifts" />
+        <SidebarElement title="Availability" link="/availability" />
       </div>
-      <div class="cover">
-        <Cover />
+      <div class="StaticCalendar">
+        <StaticCalendar />
       </div>
     </div>
   );
 }
+
+export default SleYourShifts;
