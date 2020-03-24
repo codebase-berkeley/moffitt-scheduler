@@ -1,7 +1,7 @@
 import React from "react";
 import ScheduleSelector from "react-schedule-selector";
 import "./Calendar.css";
-import { format, startOfWeek, endOfWeek, getDate, getHours } from "date-fns";
+import { format, startOfWeek, endOfWeek, getDay, getHours } from "date-fns";
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -30,36 +30,47 @@ export default class Calendar extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ items: this.state.formattedSchedule })
-    })
+      body: JSON.stringify({
+        userId: this.props.userId,
+        items: this.state.formattedSchedule
+      })
+    }).then(response => {
+      return response.json();
+    });
+  }
+
+  handleChange = newSchedule => {
+    var schedule2 = [];
+    for (var i = 0; i < newSchedule.length; i += 1) {
+      schedule2.push([getHours(newSchedule[i]), getDay(newSchedule[i])]);
+    }
+    this.setState({ schedule: newSchedule, formattedSchedule: schedule2 });
+  };
+
+  renderCustomDateCell = (time, selected, innerRef) => {
+    return (
+      <div style={{ textAlign: "center" }} ref={innerRef}>
+        {selected ? this.selectCell : this.deselectCell}
+      </div>
+    );
+  };
+
+  componentDidMount() {
+    fetch("/availability/" + this.props.userId)
       .then(response => {
         return response.json();
       })
       .then(jsonResponse => {
-        console.log(jsonResponse);
+        this.setState({ schedule: jsonResponse.schedule });
       });
   }
-
-  handleChange = newSchedule => {
-    this.setState({ formattedSchedule: [] });
-    for (var i = 0; i < newSchedule.length; i += 1) {
-      this.state.formattedSchedule.push([
-        getHours(newSchedule[i]),
-        getDate(newSchedule[i])
-      ]);
-    }
-    this.setState({ schedule: newSchedule });
-  };
-
-  renderCustomDateCell = (time, selected, innerRef) => (
-    <div style={{ textAlign: "center" }} ref={innerRef}>
-      {selected ? this.selectCell : this.deselectCell}
-    </div>
-  );
 
   render() {
     return (
       <div id="overall-container">
+        <h1 id="selectavail" >
+          Availability
+        </h1>
         <SaveChanges save={this.save} />
         <div id="schedule-container">
           <h1 id="weekString">{this.weekString}</h1>

@@ -23,9 +23,9 @@ function Sle(props) {
         </div>
       </div>
       <div class="sidebar">
-        <SidebarElement title="Your Shifts" />
+        <SidebarElement title="Your Shifts" link="/yourshifts" />
         <SidebarElement title="Open Shifts" />
-        <SidebarElement title="Availability" />
+        <SidebarElement title="Availability" link="/availability" />
       </div>
     </div>
   );

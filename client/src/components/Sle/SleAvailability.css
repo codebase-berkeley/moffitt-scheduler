@@ -14,7 +14,6 @@ i {
   width: 100%;
   height: 90px;
   position: fixed;
-  z-index: 1;
 }
 
 .line {
@@ -53,7 +52,6 @@ body {
 .user-box {
   float: right;
   padding-right: 5%;
-  z-index: 1;
 }
 
 .user-id {
@@ -123,7 +121,6 @@ body {
   color: #fff;
 }
 
-.employees {
-  padding-top: 10%;
-  padding-left: 20%;
+.Calendar {
+  padding-top: 5.5%;
 }

@@ -225,14 +225,14 @@ ALTER TABLE ONLY public.supervisor ALTER COLUMN id SET DEFAULT nextval('public.s
 --
 
 COPY public.availability (availability_id, sle_id, start_time, day_of_week) FROM stdin;
-1	1	9.5	1
+1	1	9	1
 2	1	10	1
-3	1	10.5	1
-4	1	11	1
+3	1	11	1
+4	1	12	1
 5	1	8	2
-6	1	8.5	2
+6	1	9	2
 7	2	14	3
-8	2	14.5	3
+8	2	15	3
 \.
 
 

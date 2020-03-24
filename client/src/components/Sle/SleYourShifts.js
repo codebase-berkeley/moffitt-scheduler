@@ -1,11 +1,11 @@
 import React from "react";
-import "./SleCalendar.css";
+import "./SleYourShifts.css";
 import "./SidebarElement.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
-import Calendar from "../Calendar/Calendar.js";
+import StaticCalendar from "../Calendar/StaticCalendar.js";
 
-function SleCalendar(props) {
+function SleYourShifts(props) {
   return (
     <div class="everything">
       <div class="line"></div>
@@ -24,15 +24,15 @@ function SleCalendar(props) {
         </div>
       </div>
       <div class="sidebar">
-        <SidebarElement title="Your Shifts" />
+        <SidebarElement title="Your Shifts" link="/yourshifts" />
         <SidebarElement title="Open Shifts" />
-        <SidebarElement title="Availability" />
+        <SidebarElement title="Availability" link="/availability" />
       </div>
-      <div class="Calendar">
-        <Calendar />
+      <div class="StaticCalendar">
+        <StaticCalendar />
       </div>
     </div>
   );
 }
 
-export default SleCalendar;
+export default SleYourShifts;
