@@ -6,7 +6,7 @@ var pool = require("../db/db");
 router.post("/save", (req, res) => {
   items = req.body.items;
   var userId = req.body.userId;
-  pool.query("DELETE FROM AVAILABILITY", (error, result) => {
+  pool.query("DELETE FROM AVAILABILITY WHERE sle_id=$1", [userId], (error, result) => {
     if (error) {
       throw error;
     }
@@ -42,11 +42,11 @@ function randomSchedule() {
 
 var schedule = randomSchedule();
 
-router.get("/staticcalendar", function(req, res) {
+router.get("/staticcalendar", function (req, res) {
   return res.json({ schedule: schedule });
 });
 
-router.get("/age", function(req, res) {
+router.get("/age", function (req, res) {
   return res.json({ age: 21 });
 });
 
@@ -55,7 +55,7 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.get("/shifts", function(req, res) {
+router.get("/shifts", function (req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;
