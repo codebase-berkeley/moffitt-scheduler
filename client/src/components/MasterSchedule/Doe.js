@@ -26,7 +26,7 @@ export default class Doe extends React.Component {
       ]
     };
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
-      for (let j = 0; j < 23; j++) {
+      for (let j = 0; j < 24; j++) {
         this.state.allDaysOfWeek[i].push(<Box />);
       }
     }
