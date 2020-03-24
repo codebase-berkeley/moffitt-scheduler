@@ -14,6 +14,7 @@ export default class Moffitt extends React.Component {
       saturdayArray
     ] = [[], [], [], [], [], [], []];
     this.state = {
+      items: [{}],
       allDaysOfWeek: [
         sundayArray,
         mondayArray,
@@ -26,12 +27,54 @@ export default class Moffitt extends React.Component {
     };
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 23; j++) {
-        this.state.allDaysOfWeek[i].push(<Box text="Sahil Thakur" />);
+        this.state.allDaysOfWeek[i].push(<Box />);
       }
     }
-    let newAllDaysOfWeek = this.state.allDaysOfWeek;
-    newAllDaysOfWeek[0][0] = <Box text="Change Name Test" />;
-    this.setState({ allDaysOfWeek: newAllDaysOfWeek });
+  }
+  componentDidMount() {
+    fetch("/masterschedule", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        this.setState({
+          items: jsonResponse.items
+        });
+        let newAllDaysOfWeek = this.state.allDaysOfWeek;
+        for (let i = 0; i < this.state.items.length; i++) {
+          let location = this.state.items[i]["location"];
+          if (location == "Moffitt") {
+            let name = this.state.items[i]["name"];
+            let start_time = new Date(this.state.items[i]["start_time"]);
+            let end_time = new Date(this.state.items[i]["end_time"]);
+            let start_time_date = start_time.getDay();
+            let end_time_date = start_time.getDay();
+            let start_hour = start_time.getHours();
+            let end_hour = end_time.getHours();
+            if (start_time_date == end_time_date) {
+              //If shifts runs across the same day
+              for (let i = start_hour; i < end_hour; i++) {
+                newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
+              }
+            } else {
+              //In case days are not the same (i.e. Sunday-Monday shift)
+              for (let i = start_hour; i < 24; i++) {
+                newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
+              }
+              for (let i = 0; i < end_hour; i++) {
+                newAllDaysOfWeek[end_time_date][i] = <Box text={name} />;
+              }
+            }
+          }
+        }
+        this.setState({ allDaysOfWeek: newAllDaysOfWeek });
+      });
   }
   render() {
     return (
