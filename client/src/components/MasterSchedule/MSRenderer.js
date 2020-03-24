@@ -66,30 +66,30 @@ export default class MSRenderer extends React.Component {
         </div>
         <div className="boxesAndDates">
           <div className="hours">
-            <div className="12am">12 AM</div>
-            <div className="1am">1 AM</div>
-            <div className="2am">2 AM</div>
-            <div className="3am">3 AM</div>
-            <div className="4am">4 AM</div>
-            <div className="5am">5 AM</div>
-            <div className="6am">6 AM</div>
-            <div className="7am">7 AM</div>
-            <div className="8am">8 AM</div>
-            <div className="9am">9 AM</div>
-            <div className="10am">10 AM</div>
-            <div className="11am">11 AM</div>
-            <div className="12pm">12 PM</div>
-            <div className="1pm">1 PM</div>
-            <div className="2pm">2 PM</div>
-            <div className="3pm">3 PM</div>
-            <div className="4pm">4 PM</div>
-            <div className="5pm">5 PM</div>
-            <div className="6pm">6 PM</div>
-            <div className="7pm">7 PM</div>
-            <div className="8pm">8 PM</div>
-            <div className="9pm">9 PM</div>
-            <div className="10pm">10 PM</div>
-            <div className="11pm">11 PM</div>
+            <div className="hour">12 AM</div>
+            <div className="hour">1 AM</div>
+            <div className="hour">2 AM</div>
+            <div className="hour">3 AM</div>
+            <div className="hour">4 AM</div>
+            <div className="hour">5 AM</div>
+            <div className="hour">6 AM</div>
+            <div className="hour">7 AM</div>
+            <div className="hour">8 AM</div>
+            <div className="hour">9 AM</div>
+            <div className="hour">10 AM</div>
+            <div className="hour">11 AM</div>
+            <div className="hour">12 PM</div>
+            <div className="hour">1 PM</div>
+            <div className="hour">2 PM</div>
+            <div className="hour">3 PM</div>
+            <div className="hour">4 PM</div>
+            <div className="hour">5 PM</div>
+            <div className="hour">6 PM</div>
+            <div className="hour">7 PM</div>
+            <div className="hour">8 PM</div>
+            <div className="hour">9 PM</div>
+            <div className="hour">10 PM</div>
+            <div className="hour">11 PM</div>
           </div>
           {pending}
         </div>
