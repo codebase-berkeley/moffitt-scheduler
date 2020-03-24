@@ -5,15 +5,19 @@ var pool = require("../db/db");
 
 router.post("/save", (req, res) => {
   items = req.body.items;
-  console.log(items);
-  pool.query("DELETE FROM AVAILABILITY", (error, result) => {
-    if (error) {
-      throw error;
+  var userId = req.body.userId;
+  pool.query(
+    "DELETE FROM AVAILABILITY WHERE sle_id=$1",
+    [userId],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
     }
-  });
+  );
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
-      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${1}, ${
+      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${
         items[i][0]
       }, ${items[i][1]})`,
       (error, result) => {
@@ -61,7 +65,6 @@ router.post("/staticcalendar", function(req, res) {
 
 router.post("/save", (req, res) => {
   items = req.body.items;
-  console.log(items);
   return res.json({ schedule: items });
 });
 
@@ -72,6 +75,40 @@ router.get("/shifts", function(req, res) {
     }
     res.json(result.rows);
   });
+});
+
+router.get("/availability/:userId", (req, res) => {
+  var selected = [];
+  var curr_day = new Date();
+  var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
+  pool.query(
+    `SELECT start_time AS t, day_of_week AS d FROM AVAILABILITY 
+     WHERE sle_id = $1`,
+    [req.params.userId],
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+        for (var r = 0; r < result.rows.length; r++) {
+          var row = result.rows[r];
+          var t = result.rows[r].t;
+          var d = result.rows[r].d;
+          selected.push(
+            new Date(
+              curr_day.getFullYear(),
+              curr_day.getMonth(),
+              d + curr_week_sunday,
+              t,
+              0,
+              0,
+              0
+            )
+          );
+        }
+      }
+      return res.json({ schedule: selected });
+    }
+  );
 });
 
 module.exports = router;
