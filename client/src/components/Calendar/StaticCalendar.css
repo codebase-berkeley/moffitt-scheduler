@@ -1,24 +1,25 @@
 #schedule-container-st {
   position: relative;
-  text-align: center;
-  display: inline-block;
-  overflow: scroll;
+  overflow: hidden;
   left: 25%;
   bottom: 2.5%;
-  transform: scale(0.9, 0.9);
+  transform: scale(0.8, 0.8);
   width: 66%;
   font-family: "Open Sans";
   background-color: white;
   border-radius: 10px;
   box-shadow: 1px 1px 5px gray;
+  padding-right: 30px;
+  padding-left: 30px;
 }
 
 #inner-schedule {
-  width: 95%;
+  background-color: white;
+  width: 100%;
   height: 800px;
   display: inline-grid;
   justify-items: stretch;
-  grid-column-gap: 6px;
+  grid-column-gap: 10px;
   grid-row-gap: 6px;
   grid-template-areas:
     ". wday wday wday wday wday wday wday"
@@ -48,6 +49,7 @@
     "hours cell cell cell cell cell cell cell";
   padding-bottom: 20px;
   padding-top: 17.5px;
+  border-radius: 10px;
 }
 
 .item-cell {
