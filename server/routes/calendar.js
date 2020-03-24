@@ -13,13 +13,7 @@ router.post("/save", (req, res) => {
   });
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
-<<<<<<< HEAD
       `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i][0]}, ${items[i][1]})`,
-=======
-      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${1}, ${
-      items[i][0]
-      }, ${items[i][1]})`,
->>>>>>> 8218f11c3d45dba30b39023f7274fed122829ac3
       (error, result) => {
         if (error) {
           throw error;
@@ -48,21 +42,11 @@ function randomSchedule() {
 
 var schedule = randomSchedule();
 
-<<<<<<< HEAD
 router.get("/staticcalendar", function(req, res) {
   return res.json({ schedule: schedule });
 });
 
 router.get("/age", function(req, res) {
-=======
-router.get("/staticcalendar", function (req, res) {
-  console.log("in backend");
-  return res.json({ schedule: schedule });
-});
-
-router.get("/age", function (req, res) {
-  console.log("In /age");
->>>>>>> 8218f11c3d45dba30b39023f7274fed122829ac3
   return res.json({ age: 21 });
 });
 
@@ -71,7 +55,7 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.get("/shifts", function (req, res) {
+router.get("/shifts", function(req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;
