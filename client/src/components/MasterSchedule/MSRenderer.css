@@ -46,7 +46,7 @@
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-left: 70%;
   margin-right: 13%;
   padding-bottom: 2%;
@@ -111,6 +111,6 @@
   display: flex;
   justify-content: space-between;
   width: 73.5%;
-  margin-left: 17%;
+  margin-left: 7%;
   flex-direction: row;
 }
