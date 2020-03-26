@@ -60,20 +60,45 @@ export default class Moffitt extends React.Component {
             if (start_time_date == end_time_date) {
               //If shifts runs across the same day
               for (let i = start_hour; i < end_hour; i++) {
-                newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
+                let previousState = this.state.allDaysOfWeek[start_time_date][i]
+                  .props.text;
+                if (previousState == null) {
+                  newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
+                } else {
+                  newAllDaysOfWeek[start_time_date][i] = (
+                    <Box text={previousState + "," + "\n" + name} />
+                  );
+                }
               }
             } else {
               //In case days are not the same (i.e. Sunday-Monday shift)
               for (let i = start_hour; i < 24; i++) {
-                newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
+                let previousState = this.state.allDaysOfWeek[start_time_date][i]
+                  .props.text;
+                if (previousState == null) {
+                  newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
+                } else {
+                  newAllDaysOfWeek[start_time_date][i] = (
+                    <Box text={previousState + "," + "\n" + name} />
+                  );
+                }
               }
               for (let i = 0; i < end_hour; i++) {
-                newAllDaysOfWeek[end_time_date][i] = <Box text={name} />;
+                let previousState = this.state.allDaysOfWeek[end_time_date][i]
+                  .props.text;
+                if (previousState == null) {
+                  newAllDaysOfWeek[end_time_date][i] = <Box text={name} />;
+                } else {
+                  newAllDaysOfWeek[end_time_date][i] = (
+                    <Box text={previousState + "," + "\n" + name} />
+                  );
+                }
               }
             }
           }
+          this.setState({ allDaysOfWeek: newAllDaysOfWeek });
         }
-        this.setState({ allDaysOfWeek: newAllDaysOfWeek });
+        // this.setState({ allDaysOfWeek: newAllDaysOfWeek });
       });
   }
   render() {
