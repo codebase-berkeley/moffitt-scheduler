@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import "./Login.css";
 
 class Login extends React.Component {
@@ -6,38 +7,26 @@ class Login extends React.Component {
     super(props);
     this.handleIsSle = this.handleIsSle.bind(this);
     this.handleIsSupervisor = this.handleIsSupervisor.bind(this);
-    this.state = { isSle: false, isSupervisor: false };
+    this.loginClick = this.loginClick.bind(this);
+    this.state = { redirect: null };
   }
 
   handleIsSle = resp => {
-    this.setState({ isSle: resp });
+    if (resp) {
+      this.setState({ redirect: <Redirect push to="/availability" /> });
+    }
   };
 
   handleIsSupervisor = resp => {
-    this.setState({ isSupervisor: resp });
+    if (resp) {
+      this.setState({ redirect: <Redirect push to="/employees" /> });
+    }
   };
 
   render() {
-    let button;
-    if (this.isSle) {
-      button = (
-        <a href="/yourshifts">
-          <button className="logInButton" onClick={this.loginClick}>
-            Log In
-          </button>
-        </a>
-      );
-    } else if (this.isSupervisor) {
-      button = (
-        <a href="/employees">
-          <button className="logInButton" onClick={this.loginClick}>
-            Log In
-          </button>
-        </a>
-      );
-    }
     return (
       <div className="wholePage">
+        {this.state.redirect}
         <div className="loginBox">
           <div className="loginBoxUpperPart">
             <div className="login">
@@ -56,11 +45,9 @@ class Login extends React.Component {
               </div>
             </div>
             <div className="button-container">
-              <a href={this.state.loginLink}>
-                <button className="logInButton" onClick={this.loginClick}>
-                  Log In
-                </button>
-              </a>
+              <button className="logInButton" onClick={this.loginClick}>
+                Log In
+              </button>
               <button
                 className="createAccountButton"
                 onClick={this.createAccountClick}
@@ -93,8 +80,8 @@ class Login extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        this.state.handleIsSle(jsonResponse.isSle);
-        this.state.handleIsSupervisor(jsonResponse.isSupervisor);
+        this.handleIsSle(jsonResponse.isSle);
+        this.handleIsSupervisor(jsonResponse.isSupervisor);
         console.log(jsonResponse);
       });
   }
