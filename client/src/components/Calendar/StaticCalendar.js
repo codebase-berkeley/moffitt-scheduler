@@ -50,23 +50,52 @@ export default class StaticCalendar extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/staticcalendar", {
+    // fetch("/staticcalendar", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({ items: this.state.shifts })
+    // })
+    //   .then(response => {
+    //     console.log("response");
+    //     return response.json();
+    //   })
+    //   .then(jsonResponse => {
+    //     console.log(jsonResponse.shifts);
+    //     this.setState({ shifts: jsonResponse.shifts });
+    //   });
+
+    fetch("/shifts/" + this.props.userId, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ items: this.state.shifts })
+      // body: JSON.stringify({
+      //   //userId: this.props.userId,
+      //   // items: this.state.formattedSchedule
+      // })
+    }).then(response => {
+      console.log("shifts response");
+      console.log("userId: " + userId);
+      return response.json();
     })
-      .then(response => {
-        console.log("response");
-        return response.json();
-      })
       .then(jsonResponse => {
-        console.log(jsonResponse.shifts);
         this.setState({ shifts: jsonResponse.shifts });
       });
   }
+
+  // componentDidMount() {
+  //   fetch("/shifts/" + this.props.userId)
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(jsonResponse => {
+  //       this.setState({ shifts: jsonResponse.shifts });
+  //     });
+  // }
 
   render() {
     const timeslots = [];

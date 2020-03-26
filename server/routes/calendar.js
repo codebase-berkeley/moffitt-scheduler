@@ -18,7 +18,7 @@ router.post("/save", (req, res) => {
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
       `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${
-        items[i][0]
+      items[i][0]
       }, ${items[i][1]})`,
       (error, result) => {
         if (error) {
@@ -30,12 +30,13 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.post("/staticcalendar", function(req, res) {
+router.post("/staticcalendar", function (req, res) {
   let shifts = req.body.items;
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;
     }
+    console.log("router.post staticcalendar");
     for (var i = 0; i < 168; i += 1) {
       for (var j = 0; j < result.rows.length; j += 1) {
         let currentRow = result.rows[j];
@@ -68,13 +69,53 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.get("/shifts", function(req, res) {
+router.get("/shifts", function (req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;
     }
     res.json(result.rows);
   });
+});
+
+router.post("/shifts/:userId", (req, res) => {
+  console.log("userId: " + userId);
+  var selected = [];
+  console.log(selected);
+  var curr_day = new Date();
+  var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
+  pool.query(
+    `SELECT start_time AS start, end_time AS end FROM SHIFTS 
+     WHERE sle_id = $1`,
+    [req.params.userId],
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+        for (var r = 0; r < result.rows.length; r++) {
+          var diff = result.rows[r].end.getHours() - result.rows[r].start.getHours();
+          console.log()
+          console.log("diff: " + diff);
+          //for (var c = 0; c < end_time; c++)
+          var row = result.rows[r];
+          var t = result.rows[r].t;
+          var d = result.rows[r].d;
+          selected.push(
+            new Date(
+              curr_day.getFullYear(),
+              curr_day.getMonth(),
+              d + curr_week_sunday,
+              t,
+              0,
+              0,
+              0
+            )
+          );
+        }
+      }
+      return res.json({ schedule: selected });
+    }
+  );
 });
 
 router.get("/availability/:userId", (req, res) => {
@@ -110,5 +151,7 @@ router.get("/availability/:userId", (req, res) => {
     }
   );
 });
+
+
 
 module.exports = router;
