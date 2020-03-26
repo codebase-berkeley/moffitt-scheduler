@@ -4,8 +4,38 @@ import "./Login.css";
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.handleIsSle = this.handleIsSle.bind(this);
+    this.handleIsSupervisor = this.handleIsSupervisor.bind(this);
+    this.state = { isSle: false, isSupervisor: false };
   }
+
+  handleIsSle = resp => {
+    this.setState({ isSle: resp });
+  };
+
+  handleIsSupervisor = resp => {
+    this.setState({ isSupervisor: resp });
+  };
+
   render() {
+    let button;
+    if (this.isSle) {
+      button = (
+        <a href="/yourshifts">
+          <button className="logInButton" onClick={this.loginClick}>
+            Log In
+          </button>
+        </a>
+      );
+    } else if (this.isSupervisor) {
+      button = (
+        <a href="/employees">
+          <button className="logInButton" onClick={this.loginClick}>
+            Log In
+          </button>
+        </a>
+      );
+    }
     return (
       <div className="wholePage">
         <div className="loginBox">
@@ -26,9 +56,11 @@ class Login extends React.Component {
               </div>
             </div>
             <div className="button-container">
-              <button className="logInButton" onClick={this.loginClick}>
-                Log In
-              </button>
+              <a href={this.state.loginLink}>
+                <button className="logInButton" onClick={this.loginClick}>
+                  Log In
+                </button>
+              </a>
               <button
                 className="createAccountButton"
                 onClick={this.createAccountClick}
@@ -61,6 +93,8 @@ class Login extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
+        this.state.handleIsSle(jsonResponse.isSle);
+        this.state.handleIsSupervisor(jsonResponse.isSupervisor);
         console.log(jsonResponse);
       });
   }
@@ -68,5 +102,4 @@ class Login extends React.Component {
     console.log("somethingElse");
   }
 }
-
 export default Login;
