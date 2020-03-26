@@ -12,8 +12,9 @@ class Login extends React.Component {
   }
 
   handleIsSle = resp => {
-    if (resp) {
-      this.setState({ redirect: <Redirect push to="/availability" /> });
+    if (resp != null && resp != undefined) {
+      var linkString = `/calendar/${resp}`;
+      this.setState({ redirect: <Redirect push to={linkString} /> });
     }
   };
 

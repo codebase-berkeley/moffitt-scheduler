@@ -37,8 +37,8 @@ router.post("/login", function(req, res) {
       });
     } else if (result.rows[0]["password"] == password) {
       console.log("sle true");
-      res.json({ isSle: true });
       sleID = result.rows[0]["id"];
+      res.json({ isSle: sleID });
     } else {
       console.log("sle false");
       pool.query(supSelect, values2, (error, result) => {
