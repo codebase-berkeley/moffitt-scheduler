@@ -22,16 +22,18 @@ export default class SleCalendar extends React.Component {
               <div class="dropdown-menu">
                 <ul>
                   <li>View Profile</li>
-                  <li>Log Out</li>
+                  <a href="/login">
+                    <li>Log Out </li>
+                  </a>
                 </ul>
               </div>
             </div>
           </div>
         </div>
         <div class="sidebar">
-          <SidebarElement title="Your Shifts" />
+          <SidebarElement title="Your Shifts" link="/yourshifts" />
           <SidebarElement title="Open Shifts" />
-          <SidebarElement title="Availability" />
+          <SidebarElement title="Availability" link="/availability" />
         </div>
         <div class="Calendar">
           <Calendar userId={this.props.match.params.userId} />

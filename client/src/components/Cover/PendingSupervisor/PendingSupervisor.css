@@ -25,11 +25,7 @@
   width: 15%;
   margin-left: 7%;
 }
-.tspecial {
-  color: black;
-  text-decoration: underline;
-  text-decoration-color: #3f3cc8;
-}
+
 .pendingShifts {
   display: flex;
   flex-direction: column;
