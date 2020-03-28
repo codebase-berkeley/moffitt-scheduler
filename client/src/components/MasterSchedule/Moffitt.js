@@ -98,7 +98,6 @@ export default class Moffitt extends React.Component {
           }
           this.setState({ allDaysOfWeek: newAllDaysOfWeek });
         }
-        // this.setState({ allDaysOfWeek: newAllDaysOfWeek });
       });
   }
   render() {
