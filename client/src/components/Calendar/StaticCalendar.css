@@ -69,3 +69,33 @@
   color: #696969;
   text-align: center;
 }
+#frontWords {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#moffittag {
+  display: flex;
+  font-weight: lighter;
+  color: gray;
+  padding-top: 2%;
+}
+#doetag {
+  display: flex;
+  font-weight: lighter;
+  color: gray;
+  padding-top: 2%;
+}
+#moffittcolor {
+  height: 25px;
+  width: 25px;
+  background-color: #ffa1a1;
+}
+#doecolor {
+  height: 25px;
+  width: 25px;
+  background-color: #b0e9c2;
+}
+#findingspace {
+  padding-right: 10%;
+}
