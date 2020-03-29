@@ -4,7 +4,7 @@ var router = express.Router();
 var pool = require("../db/db");
 
 router.post("/login", function(req, res) {
-  var email = req.body.email;
+  var email = req.body.email.trim();
   var password = req.body.password;
   var sleID;
 
@@ -15,15 +15,13 @@ router.post("/login", function(req, res) {
   pool.query(sleSelect, values2, (error, result) => {
     if (error) {
       console.log(error);
-      console.log("nothing");
-      //throw error;
+      throw error;
     } else if (result.rows.length == 0) {
       console.log("sle email doesnt exist");
       pool.query(supSelect, values2, (error, result) => {
         if (error) {
           console.log(error);
-          console.log("nothing");
-          //throw error;
+          throw error;
         } else if (result.rows.length == 0) {
           res.json({ isSupervisor: false });
           console.log("sup email doesnt exist");
@@ -44,8 +42,7 @@ router.post("/login", function(req, res) {
       pool.query(supSelect, values2, (error, result) => {
         if (error) {
           console.log(error);
-          console.log("nothing");
-          //throw error;
+          throw error;
         } else if (result.rows.length == 0) {
           res.json({ isSupervisor: false });
           console.log("sup email doesnt exist");
