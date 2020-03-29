@@ -128,3 +128,7 @@
 .hour {
   margin-bottom: 80px;
 }
+
+.hours {
+  min-width: 120px;
+}
