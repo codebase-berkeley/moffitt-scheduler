@@ -1,6 +1,7 @@
 import React from "react";
 import "./SupervisorCover.css";
 import "./SidebarElement.css";
+import "./SupervisorMS.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
 import MSRenderer from "../MasterSchedule/MSRenderer";
@@ -29,7 +30,7 @@ export default function SupervisorMS(props) {
         <SidebarElement title="Employees" />
         <SidebarElement title="Schedule Requests" />
       </div>
-      <div class="cover">
+      <div class="coverz">
         <MSRenderer />
       </div>
     </div>
