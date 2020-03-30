@@ -6,6 +6,7 @@ var calendarRoutes = require("./routes/calendar");
 var coverRequestRoutes = require("./routes/coverrequests");
 var employeesRoutes = require("./routes/employees");
 var loginRoutes = require("./routes/login");
+var masterScheduleRoutes = require("./routes/masterschedule");
 
 var cors = require("cors");
 
@@ -17,6 +18,7 @@ app.use("/", calendarRoutes);
 app.use("/", coverRequestRoutes);
 app.use("/", employeesRoutes);
 app.use("/", loginRoutes);
+app.use("/", masterScheduleRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
