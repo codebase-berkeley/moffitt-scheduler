@@ -42,7 +42,7 @@
 #saveButton {
   position: center;
   width: 10%;
-  margin-left: 50%;
+  margin-left: 52%;
   margin-top: -5%;
   height: 40px;
   font-family: "Open Sans";
@@ -78,4 +78,7 @@
   text-align: center;
   font-weight: lighter;
   color: gray;
+}
+.availabilityHeader {
+  margin-left: 27.2%;
 }
