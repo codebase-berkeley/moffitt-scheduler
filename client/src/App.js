@@ -25,7 +25,11 @@ class App extends React.Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/staticCalendar" component={StaticCalendar} />
           <Route exact path="/yourshifts/:userId" component={SleYourShifts} />
-          <Route exact path="/calendar/:userId" component={SleAvailability} />
+          <Route
+            exact
+            path="/availability/:userId"
+            component={SleAvailability}
+          />
           <Route exact path="/employees" component={SupervisorEmployees} />
           <Route exact path="/cover" component={SupervisorCover} />
           <Route exact path="/masterschedule" component={MasterSchedule} />
