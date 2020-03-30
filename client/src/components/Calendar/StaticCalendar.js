@@ -127,6 +127,9 @@ export default class StaticCalendar extends React.Component {
 
     return (
       <div id="overall-container">
+        <h1 id="yourshifts" >
+          Your Shifts
+        </h1>
         <div id="schedule-container-st">
           <h1 id="weekString">{weekString}</h1>
           <div id="inner-schedule">
