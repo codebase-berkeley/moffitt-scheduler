@@ -1,14 +1,15 @@
 .topWordss {
   margin-top: 2%;
-  font-family: "Open Sans", sans-serif;
   display: flex;
   justify-content: space-between;
   margin-bottom: 2%;
   z-index: 100;
 }
 .header {
-  font-size: 25px;
-  padding-left: 8%;
+  font-size: 18px;
+  font-weight: 900;
+  padding-top: 2%;
+  padding-left: 12%;
   float: left;
   color: black;
 }
@@ -33,6 +34,7 @@
   font-size: 18px;
   line-height: 25px;
   padding-top: 8%;
+  background-color: transparent;
 }
 
 .AddButton {
@@ -47,6 +49,7 @@
   font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
+  background-color: transparent;
 }
 
 .FirstName,
