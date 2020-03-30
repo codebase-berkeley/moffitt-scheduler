@@ -1,13 +1,33 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import "./Login.css";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.handleIsSle = this.handleIsSle.bind(this);
+    this.handleIsSupervisor = this.handleIsSupervisor.bind(this);
+    this.loginClick = this.loginClick.bind(this);
+    this.state = { redirect: null };
   }
+
+  handleIsSle = resp => {
+    if (resp != null && resp != undefined) {
+      var linkString = `/calendar/${resp}`;
+      this.setState({ redirect: <Redirect push to={linkString} /> });
+    }
+  };
+
+  handleIsSupervisor = resp => {
+    if (resp) {
+      this.setState({ redirect: <Redirect push to="/employees" /> });
+    }
+  };
+
   render() {
     return (
       <div className="wholePage">
+        {this.state.redirect}
         <div className="loginBox">
           <div className="loginBoxUpperPart">
             <div className="login">
@@ -61,6 +81,8 @@ class Login extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
+        this.handleIsSle(jsonResponse.isSle);
+        this.handleIsSupervisor(jsonResponse.isSupervisor);
         console.log(jsonResponse);
       });
   }
@@ -68,5 +90,4 @@ class Login extends React.Component {
     console.log("somethingElse");
   }
 }
-
 export default Login;

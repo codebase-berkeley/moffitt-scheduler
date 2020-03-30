@@ -8,6 +8,8 @@ import SleAvailability from "./components/Sle/SleAvailability";
 import SleYourShifts from "./components/Sle/SleYourShifts";
 import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
 import SupervisorCover from "./components/Supervisor/SupervisorCover";
+import Cover from "./components/Cover/Cover";
+import MasterSchedule from "./components/Supervisor/SupervisorMS";
 
 import "./App.css";
 
@@ -22,10 +24,11 @@ class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/staticCalendar" component={StaticCalendar} />
-          <Route exact path="/yourshifts" component={SleYourShifts} />
+          <Route exact path="/yourshifts/:userId" component={SleYourShifts} />
           <Route exact path="/calendar/:userId" component={SleAvailability} />
           <Route exact path="/employees" component={SupervisorEmployees} />
           <Route exact path="/cover" component={SupervisorCover} />
+          <Route exact path="/masterschedule" component={MasterSchedule} />
         </Switch>
       </BrowserRouter>
     );
