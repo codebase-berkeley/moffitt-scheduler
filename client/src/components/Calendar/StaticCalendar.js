@@ -50,13 +50,15 @@ export default class StaticCalendar extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/staticcalendar", {
+    fetch("/staticcalendar/" + this.props.userId, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ items: this.state.shifts })
+      body: JSON.stringify({
+        items: this.state.shifts, userId: this.props.userId
+      })
     })
       .then(response => {
         console.log("response");

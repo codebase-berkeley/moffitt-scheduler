@@ -253,7 +253,8 @@ COPY public.coverrequests (request_id, coverer_id, coveree_id, shift_id, supervi
 COPY public.shifts (shift_id, sle_id, location, start_time, end_time) FROM stdin;
 1	1	Moffitt	2019-03-03 10:00:00	2019-03-03 12:00:00
 2	1	Moffitt	2019-03-03 14:00:00	2019-03-03 17:00:00
-3	2	Doe	2019-03-04 13:00:00	2019-03-04 14:00:00
+3   1   Moffitt 2020-03-26 10:00:00 2020-03-26 15:00:00
+4	2	Doe	2019-03-04 13:00:00	2019-03-04 14:00:00
 \.
 
 
