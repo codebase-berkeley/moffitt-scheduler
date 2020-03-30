@@ -35,6 +35,7 @@
   line-height: 25px;
   padding-top: 8%;
   background-color: transparent;
+  padding-bottom: 2%;
 }
 
 .AddButton {
@@ -50,6 +51,12 @@
   margin: 4px 2px;
   cursor: pointer;
   background-color: transparent;
+}
+
+.AddButton:focus,
+.CancelButton:focus,
+.SubmitButton:focus {
+  outline: none;
 }
 
 .FirstName,
@@ -112,10 +119,6 @@
   padding-top: 3%;
 }
 
-.TrainedFor {
-  padding-top: 7%;
-}
-
 .AllText {
   display: flex;
   flex-direction: column;
@@ -123,7 +126,8 @@
   padding-left: 10%;
   padding-right: 10%;
   width: 350px;
-  /* height: 1000px; */
+  padding-top: 0%;
+  padding-bottom: 0%;
 }
 
 .emailBox {
@@ -177,7 +181,8 @@
 
 .CancelButton {
   width: 85px;
-  height: 50px;
+  height: 44px;
+  border: 1px solid #3f3cc8;
   background: #3f3cc8;
   border-radius: 6px;
   align-items: center;
@@ -188,27 +193,8 @@
   font-size: 14px;
   color: #ffffff;
   margin-left: 7%;
-}
-
-.CancelButton:hover {
-  background-color: #ffffff;
-  border-radius: 6px;
-  color: #3f3cc8;
   cursor: pointer;
-  border: 2px solid #3f3cc8;
-}
-
-.SubmitButton:hover {
-  background-color: #3f3cc8;
-  color: #ffffff;
-}
-
-.CancelText:hover {
-  color: #3f3cc8;
-}
-
-.SubmitText:hover {
-  color: #ffffff;
+  padding-top: 0%;
 }
 
 .SubmitButton {
@@ -218,13 +204,14 @@
   border-radius: 6px;
   cursor: pointer;
   width: 85px;
-  height: 50px;
+  height: 45px;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   text-align: center;
   color: #3f3cc8;
+  padding-top: 0%;
 }
 
 .button-container {
@@ -234,8 +221,8 @@
   justify-content: space-between;
   align-items: center;
   align-content: space-between;
+  padding-left: 150px;
   margin-top: 15%;
-  padding-left: 150px; /*fix this*/
 }
 
 .modal {
@@ -245,11 +232,16 @@
   overflow: auto;
 }
 
+.TrainedFor {
+  padding-top: 7%;
+}
+
 .RadioButtons {
   padding-top: 5%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  padding-bottom: 0%;
 }
 
 .MoffittText,
