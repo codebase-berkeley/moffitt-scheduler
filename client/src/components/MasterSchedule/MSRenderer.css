@@ -132,3 +132,20 @@
 .hours {
   min-width: 120px;
 }
+.monday {
+  padding-left: 25px;
+}
+.thursday {
+  padding-right: 20px;
+}
+.tuesday {
+  padding-left: 14px;
+}
+.wednesday {
+  padding-left: 7px;
+}
+.friday {
+  padding-right: 10px;
+}
+.saturday {
+}
