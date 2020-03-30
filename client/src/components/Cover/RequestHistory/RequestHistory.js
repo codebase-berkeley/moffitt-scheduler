@@ -47,7 +47,7 @@ class RequestHistory extends React.Component {
         <div className="middleWordsss">
           <h2 className="msame1">Time and Location</h2>
           <h2 className="msame">Needing Coverage</h2>
-          <h2 className="msame">Covered By</h2>
+          <h2 className="msame15">Covered By</h2>
           <h2 className="msame2"></h2>
         </div>
         <div className="shiftHistory"></div>

@@ -41,9 +41,11 @@ class Login extends React.Component {
               </div>
             </div>
             <div className="passwordBox">
-              <div className="password">
-                <input type="text" placeholder="Password" id="password"></input>
-              </div>
+              <input
+                type="password"
+                placeholder="Password"
+                id="password"
+              ></input>
             </div>
             <div className="button-container">
               <button className="logInButton" onClick={this.loginClick}>
