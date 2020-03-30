@@ -48,7 +48,7 @@ class PendingSupervisor extends React.Component {
         <div className="middleWords">
           <h2 className="msame11">Time and Location</h2>
           <h2 className="msame0">Needing Coverage</h2>
-          <h2 className="msame0">Covered By</h2>
+          <h2 className="msame08">Covered By</h2>
           <h2 className="msame22"></h2>
         </div>
         <div className="pendingShifts"></div>
