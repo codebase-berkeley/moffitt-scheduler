@@ -47,7 +47,7 @@ class Login extends React.Component {
                 id="password"
               ></input>
             </div>
-            <div className="button-container">
+            <div className="loginButtons">
               <button className="logInButton" onClick={this.loginClick}>
                 Log In
               </button>
