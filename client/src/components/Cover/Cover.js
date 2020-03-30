@@ -44,14 +44,14 @@ export default class Cover extends React.Component {
     return (
       <div>
         <div className="topWords">
-          <button onClick={this.showPendingCoverage}>
-            <h1 className="tsame">Pending Coverage</h1>
+          <button className="button" onClick={this.showPendingCoverage}>
+            <h1> Pending Coverage</h1>
           </button>
-          <button onClick={this.showSupervisorApproval}>
-            <h1 className="tspecial">Pending Supervisor Approval</h1>
+          <button className="button" onClick={this.showSupervisorApproval}>
+            <h1> Pending Supervisor Approval</h1>
           </button>
-          <button onClick={this.showHistory}>
-            <h1 className="tsame">Request History</h1>
+          <button className="button" onClick={this.showHistory}>
+            <h1> Request History</h1>
           </button>
         </div>
         {pending}

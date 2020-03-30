@@ -17,7 +17,9 @@ export default function SupervisorEmployees(props) {
             <div class="dropdown-menu">
               <ul>
                 <li>View Profile</li>
-                <li>Log Out</li>
+                <a href="/login">
+                  <li>Log Out </li>
+                </a>
               </ul>
             </div>
           </div>
