@@ -92,7 +92,7 @@ function AddEmployee() {
             <h3 className="Email">Email</h3>
             <input className="EmailInput" id="email" />
           </div>
-          <h3 className="TrainedFor">Trained For</h3>
+          <h3 className="TrainedFor">Trained For:</h3>
           <div className="RadioButtons">
             <h3 className="MoffittText">Moffitt</h3>
             <div className="MoffittButton">
@@ -110,13 +110,15 @@ function AddEmployee() {
           </div>
         </div>
         <div className="button-container">
-          <button className="CancelButton" /*onClick={cancelClick}*/>
-            <div className="CancelHover">
-              <div className="CancelText">
-                <h4>Cancel</h4>
+          <a href="/employees">
+            <button className="CancelButton">
+              <div className="CancelHover">
+                <div className="CancelText">
+                  <h4> Cancel</h4>
+                </div>
               </div>
-            </div>
-          </button>
+            </button>
+          </a>
           <button className="SubmitButton" onClick={submitClick}>
             <div className="SubmitText">
               <h4>Submit</h4>
