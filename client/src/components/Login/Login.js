@@ -20,7 +20,7 @@ class Login extends React.Component {
 
   handleIsSupervisor = resp => {
     if (resp) {
-      this.setState({ redirect: <Redirect push to="/employees" /> });
+      this.setState({ redirect: <Redirect push to="/masterschedule" /> });
     }
   };
 
