@@ -48,6 +48,7 @@
   margin-left: 70%;
   margin-right: 100px;
   padding-bottom: 25px;
+  /* cursor: pointer; */
 }
 
 .weekdayText {
@@ -114,12 +115,14 @@
 }
 .moffittButton {
   margin-right: 20px;
+  cursor: pointer;
 }
 .moffittButton:focus {
   outline: 0;
 }
 .doeButton {
   margin-right: 20px;
+  cursor: pointer;
 }
 .doeButton:focus {
   outline: 0;
