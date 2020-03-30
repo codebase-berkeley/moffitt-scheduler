@@ -131,16 +131,12 @@ export default class StaticCalendar extends React.Component {
           </div>
           <div id="legend">
             <div id="libtag">
-              <h3 id="findingspace">Moffitt: </h3>
+              <h3 id="findingspace">Moffitt&nbsp;&nbsp;</h3>
               <div id="moffittcolor"></div>
             </div>
             <div id="libtag">
-              <h3 id="findingspace">Doe:</h3>
+              <h3 id="findingspace">Doe&nbsp;&nbsp;</h3>
               <div id="doecolor"></div>
-            </div>
-            <div id="libtag">
-              <h3 id="findingspace">No shift: </h3>
-              <div id="defaultcolor"></div>
             </div>
           </div>
           <div id="inner-schedule">

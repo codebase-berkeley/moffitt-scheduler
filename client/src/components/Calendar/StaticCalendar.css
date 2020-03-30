@@ -8,9 +8,14 @@
   font-family: "Open Sans";
   background-color: white;
   border-radius: 10px;
-  box-shadow: 1px 1px 5px gray;
+  box-shadow: 1px 1px 5px rgb(232, 232, 232);
+  padding-top: 30px;
   padding-right: 30px;
   padding-left: 30px;
+}
+
+#weekString {
+  color: black;
 }
 
 #inner-schedule {
@@ -60,13 +65,13 @@
 .item-wday {
   grid-area: "wday";
   font-size: 19px;
-  color: #555454;
+  color: black;
 }
 
 .item-hours {
   grid-area: "hours";
   font-size: 14px;
-  color: #696969;
+  color: black;
   text-align: center;
 }
 /* #frontWords {
@@ -77,10 +82,12 @@
 #libtag {
   display: flex;
   font-weight: lighter;
-  color: gray;
+  color: black;
   padding-top: 2%;
   text-align: justify;
   white-space: nowrap;
+  margin-right: 40px;
+  margin-bottom: 20px;
 }
 #moffittcolor {
   height: 24px;
@@ -102,5 +109,5 @@
 }
 #legend {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
