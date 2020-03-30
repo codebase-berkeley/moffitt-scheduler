@@ -48,13 +48,14 @@
   margin-left: 70%;
   margin-right: 100px;
   padding-bottom: 25px;
+  /* cursor: pointer; */
 }
 
 .weekdayText {
   display: flex;
   justify-content: space-between;
   margin-left: 5%;
-  margin-right: 5%;
+  margin-right: 4%;
   overflow: hidden;
 }
 .masterScheduleAndButtons {
@@ -114,12 +115,14 @@
 }
 .moffittButton {
   margin-right: 20px;
+  cursor: pointer;
 }
 .moffittButton:focus {
   outline: 0;
 }
 .doeButton {
   margin-right: 20px;
+  cursor: pointer;
 }
 .doeButton:focus {
   outline: 0;
@@ -131,4 +134,19 @@
 
 .hours {
   min-width: 120px;
+}
+.monday {
+  padding-left: 25px;
+}
+.thursday {
+  padding-right: 22px;
+}
+.tuesday {
+  padding-left: 14px;
+}
+.wednesday {
+  padding-left: 7px;
+}
+.friday {
+  padding-right: 20px;
 }
