@@ -242,7 +242,7 @@ COPY public.availability (availability_id, sle_id, start_time, day_of_week) FROM
 
 COPY public.coverrequests (request_id, coverer_id, coveree_id, shift_id, supervisor_status, notes) FROM stdin;
 1	1	2	1	Approved	Sick
-2	2	1	3	null	Going
+2	2	1	2	null	Going
 \.
 
 
@@ -251,10 +251,22 @@ COPY public.coverrequests (request_id, coverer_id, coveree_id, shift_id, supervi
 --
 
 COPY public.shifts (shift_id, sle_id, location, start_time, end_time) FROM stdin;
-1	1	Moffitt	2019-03-03 10:00:00	2019-03-03 12:00:00
-2	1	Moffitt	2019-03-03 14:00:00	2019-03-03 17:00:00
-3   1   Moffitt 2020-03-26 10:00:00 2020-03-26 15:00:00
-4	2	Doe	2019-03-04 13:00:00	2019-03-04 14:00:00
+4	1	Doe	2019-03-05 02:00:00	2019-03-05 04:00:00
+5	1	Doe	2019-03-06 02:00:00	2019-03-06 12:00:00
+6	1	Doe	2019-03-07 02:00:00	2019-03-07 12:00:00
+7	2	Moffitt	2019-03-03 00:00:00	2019-03-07 10:00:00
+8	2	Moffitt	2019-03-05 00:00:00	2019-03-05 10:00:00
+9	2	Moffitt	2019-03-07 00:00:00	2019-03-07 10:00:00
+10	3	Moffitt	2019-03-04 00:00:00	2019-03-04 10:00:00
+11	3	Moffitt	2019-03-06 00:00:00	2019-03-06 10:00:00
+12	3	Moffitt	2019-03-08 00:00:00	2019-03-08 14:00:00
+13	4	Moffitt	2019-03-03 03:00:00	2019-03-08 14:00:00
+14	4	Moffitt	2019-03-04 03:00:00	2019-03-04 14:00:00
+15	5	Moffitt	2019-03-05 03:00:00	2019-03-05 14:00:00
+16	5	Moffitt	2019-03-06 03:00:00	2019-03-06 14:00:00
+17	2	Doe	2019-03-03 00:00:00	2019-03-03 10:00:00
+18	4	Moffitt	2019-03-03 00:00:00	2019-03-03 10:00:00
+20	1	Moffitt	2019-03-04 04:00:00	2019-03-04 06:00:00
 \.
 
 
@@ -265,6 +277,9 @@ COPY public.shifts (shift_id, sle_id, location, start_time, end_time) FROM stdin
 COPY public.sle (id, name, training_level_doe, training_level_moffitt, email, password) FROM stdin;
 1	brian	3	3	bdeleonardis@berkeley.edu	bripass
 2	bianca	1	1	biancalee@berkeley.edu	biapass
+3	Sahil	3	2	sahil@berkeley.edu	sahil
+4	Kat	3	2	Kat@berkeley.edu	Kat
+5	Kerry	2	2	Kerry@berkeley.edu	Kerry
 \.
 
 
@@ -296,14 +311,14 @@ SELECT pg_catalog.setval('public.coverrequests_request_id_seq', 2, true);
 -- Name: shifts_shift_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.shifts_shift_id_seq', 3, true);
+SELECT pg_catalog.setval('public.shifts_shift_id_seq', 20, true);
 
 
 --
 -- Name: sle_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sle_id_seq', 2, true);
+SELECT pg_catalog.setval('public.sle_id_seq', 5, true);
 
 
 --
@@ -375,14 +390,6 @@ ALTER TABLE ONLY public.coverrequests
 
 ALTER TABLE ONLY public.coverrequests
     ADD CONSTRAINT coverrequests_coverer_id_fkey FOREIGN KEY (coverer_id) REFERENCES public.sle(id);
-
-
---
--- Name: coverrequests coverrequests_shift_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.coverrequests
-    ADD CONSTRAINT coverrequests_shift_id_fkey FOREIGN KEY (shift_id) REFERENCES public.shifts(shift_id);
 
 
 --
