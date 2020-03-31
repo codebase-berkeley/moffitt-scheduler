@@ -68,8 +68,8 @@ export default class Calendar extends React.Component {
   render() {
     return (
       <div id="overall-container">
-        <h1 className="availabilityHeader" id="selectavail" >
-          Availability
+        <h1 className="availabilityHeader" id="selectavail">
+          Select Availabilities
         </h1>
         <SaveChanges save={this.save} />
         <div id="schedule-container">
