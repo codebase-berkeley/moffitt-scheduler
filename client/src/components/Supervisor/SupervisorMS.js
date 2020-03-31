@@ -13,8 +13,10 @@ export default function SupervisorMS(props) {
       <div className="top-bar">
         <div class="user-box">
           <div class="user-id">
-            <div class="user-name">Bianca Lee</div>
-            <div class="dropdown-arrow"></div>
+            <div class="user-name">
+              <a href="/login">Log Out</a>
+            </div>
+            {/* <div class="dropdown-arrow"></div>
             <div class="dropdown-menu">
               <ul>
                 <li>View Profile</li>
@@ -22,7 +24,7 @@ export default function SupervisorMS(props) {
                   <li>Log Out</li>
                 </a>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
