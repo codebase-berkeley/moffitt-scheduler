@@ -37,8 +37,14 @@
 }
 .msame {
   width: 20%;
+  margin-left: 3%;
+}
+
+.msame15 {
+  width: 20%;
   margin-left: 2%;
 }
+
 .tspecial {
   color: black;
   text-decoration: underline;

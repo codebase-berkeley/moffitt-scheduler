@@ -17,13 +17,14 @@
   justify-content: space-between;
   overflow: hidden;
 }
+
 .holder {
   background: #c4c4c4;
   width: 60px;
   height: 60px;
   border-radius: 50%;
   display: inline-flex;
-  margin-top: 18%;
+  margin-top: 7%;
   margin-left: 40px;
   margin-right: 40px;
 }
@@ -39,11 +40,7 @@
   padding-left: 0%;
   padding-bottom: 5%;
 }
-.name {
-  font-family: "Open Sans", sans-serif;
-  padding-top: 18%;
-  font-weight: bold;
-}
+
 .first {
   flex: 1;
   background-color: #1de0a6;
@@ -63,6 +60,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 0%;
+  padding-bottom: 0%;
 }
 .second {
   flex: 1;
@@ -84,15 +83,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 0%;
+  padding-bottom: 0%;
 }
 .email {
   font-weight: normal;
+  margin-left: 0%;
 }
+
+.name {
+  font-family: "Open Sans";
+  padding-top: 18%;
+  font-weight: 900;
+  margin-top: 5px;
+  margin-left: 0%;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
 .lib {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 3.5%;
+  margin-top: 1%;
+  margin-bottom: 2%;
   margin-right: 5%;
 }
 
