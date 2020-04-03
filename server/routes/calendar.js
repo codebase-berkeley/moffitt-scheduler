@@ -113,19 +113,7 @@ router.get("/availability/:userId", (req, res) => {
   );
 });
 
-function getRandomColor() {
-  var letters = "0123456789ABCDEF";
-  var color = "#";
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
-const coverColors = [];
-for (var i = 0; i < 100; i += 1) {
-  coverColors.push(getRandomColor());
-}
+const coverColors = ["#ffff42", "#ffaf0f", "#ffc34d", "#4eb548"];
 
 router.post("/openshifts/:userId", (req, res) => {
   let shifts = req.body.items;
@@ -141,7 +129,7 @@ router.post("/openshifts/:userId", (req, res) => {
       for (var j = 0; j < result.rows.length; j += 1) {
         let currentRow1 = result.rows[j];
         if (!(currentRow1.shift_id in shiftid_to_color)) {
-          shiftid_to_color[currentRow1.shift_id] = coverColors[j];
+          shiftid_to_color[currentRow1.shift_id] = coverColors[j % 4];
         }
         for (var i = 0; i < 168; i += 1) {
           let sameStartEndValid =
@@ -161,6 +149,22 @@ router.post("/openshifts/:userId", (req, res) => {
         }
       }
       return res.json({ shifts: shifts });
+    }
+  );
+});
+
+router.post("/updateopenshifts", (req, res) => {
+  let sleID = req.body.sleID;
+  let shiftID = req.body.shiftID;
+  pool.query(
+    "update coverrequests set coverer_id = $1 where shift_id = $2",
+    [sleID],
+    [shiftID],
+    (error, result) => {
+      if (error) {
+        console.log(error);
+        throw error;
+      }
     }
   );
 });
