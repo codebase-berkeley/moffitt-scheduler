@@ -28,8 +28,8 @@ function AddEmployee() {
       width: "450px",
       height: "400px",
       transform: "translate(-50%, -50%)",
-      overflow: 0
-    }
+      overflow: 0,
+    },
   };
 
   function submitClick() {
@@ -46,18 +46,18 @@ function AddEmployee() {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         firstName: firstNameText,
         lastName: lastNameText,
-        email: emailText
-      })
+        email: emailText,
+      }),
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         console.log(jsonResponse);
       });
     function cancelClick() {
@@ -79,7 +79,10 @@ function AddEmployee() {
         contentLabel="Example Modal"
       >
         <div className="AllText">
-          <h1 className="AddEmpText" ref={_subtitle => (subtitle = _subtitle)}>
+          <h1
+            className="AddEmpText"
+            ref={(_subtitle) => (subtitle = _subtitle)}
+          >
             Add Employee
           </h1>
           <div className="EmployeeName">
