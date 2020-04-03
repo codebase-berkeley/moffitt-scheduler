@@ -80,10 +80,16 @@
   border-radius: 10px;
 }
 
-.item-cell1 {
+.open-shift {
   grid-area: "cell";
   background-color: #f8f8f8;
   cursor: pointer;
+  border-color: none;
+}
+
+.not-open-shift {
+  grid-area: "cell";
+  background-color: #f8f8f8;
 }
 
 .item-wday1 {
@@ -144,4 +150,36 @@
   text-align: center;
   font-weight: lighter;
   color: gray;
+}
+
+.YesButton {
+  width: 85px;
+  height: 44px;
+  border: 1px solid #3f3cc8;
+  background: #3f3cc8;
+  border-radius: 6px;
+  align-items: center;
+  border: 2px solid transparent;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.NoButton {
+  background: #ffffff;
+  border: 1px solid #3f3cc8;
+  box-sizing: border-box;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 85px;
+  height: 45px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  color: #3f3cc8;
 }

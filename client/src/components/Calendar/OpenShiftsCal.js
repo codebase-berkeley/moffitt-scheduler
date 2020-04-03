@@ -1,18 +1,91 @@
 import React from "react";
 import "./OpenShiftsCal.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import Modal from "react-modal";
 
 function Timeslot(props) {
+  function AddEmployee() {
+    function afterOpenModal() {
+      // references are now sync'd and can be accessed.
+      subtitle.style.color = "#black";
+    }
+
+    function openModal() {
+      setIsOpen(true);
+    }
+
+    function closeModal() {
+      setIsOpen(false);
+    }
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    var subtitle;
+
+    const customStyles = {
+      content: {
+        top: "40%",
+        left: "50%",
+        width: "25%",
+        height: "25%",
+        transform: "translate(-50%, -50%)",
+        overflow: 0,
+      },
+    };
+    return (
+      <div>
+        <button className="AddButton" onClick={openModal}>
+          + Add Employee
+        </button>
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          {" "}
+          <div>
+            <h1
+              className="AddEmpText"
+              ref={(_subtitle) => (subtitle = _subtitle)}
+            ></h1>
+            Would you like to cover this shift?
+          </div>
+          <div className="button-container">
+            <a href="/openshifts/:userId">
+              <button className="YesButton">
+                <div className="YesHover">
+                  <div className="YesText">
+                    <h4> Yes</h4>
+                  </div>
+                </div>
+              </button>
+            </a>
+            <a href="/openshifts/:userId">
+              <button className="NoButton">
+                <div className="NoText">
+                  <h4>No</h4>
+                </div>
+              </button>
+            </a>
+          </div>
+        </Modal>
+      </div>
+    );
+  }
   if (props.id != null) {
     return (
-      <button
-        class="item-cell1"
-        style={{ backgroundColor: props.color }}
-      ></button>
+      <div class="open-shift" style={{ backgroundColor: props.color }}>
+        <AddEmployee />
+      </div>
     );
   } else {
     return (
-      <div class="item-cell1" style={{ backgroundColor: props.color }}></div>
+      <div
+        class="not-open-shift"
+        style={{ backgroundColor: props.color }}
+      ></div>
     );
   }
 }
