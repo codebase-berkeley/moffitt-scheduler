@@ -12,6 +12,7 @@ import Cover from "./components/Cover/Cover";
 import MasterSchedule from "./components/Supervisor/SupervisorMS";
 
 import "./App.css";
+import SleOpenShifts from "./components/Sle/SleOpenShifts";
 
 class App extends React.Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class App extends React.Component {
             path="/availability/:userId"
             component={SleAvailability}
           />
+          <Route exact path="/openshifts/:userId" component={SleOpenShifts} />
           <Route exact path="/employees" component={SupervisorEmployees} />
           <Route exact path="/cover" component={SupervisorCover} />
           <Route exact path="/masterschedule" component={MasterSchedule} />

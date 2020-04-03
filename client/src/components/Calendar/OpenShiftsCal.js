@@ -1,9 +1,20 @@
 import React from "react";
-import "./StaticCalendar.css";
+import "./OpenShiftsCal.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
 function Timeslot(props) {
-  return <div class="item-cell" style={{ backgroundColor: props.color }}></div>;
+  if (props.id != null) {
+    return (
+      <button
+        class="item-cell1"
+        style={{ backgroundColor: props.color }}
+      ></button>
+    );
+  } else {
+    return (
+      <div class="item-cell1" style={{ backgroundColor: props.color }}></div>
+    );
+  }
 }
 
 class Shift {
@@ -43,36 +54,35 @@ var weekString =
   " - " +
   format(endOfWeek(currentDate), "MM/DD");
 
-export default class StaticCalendar extends React.Component {
+export default class OpenShiftsCal extends React.Component {
   constructor(props) {
     super(props);
     this.state = { shifts: initialShifts() };
   }
 
   componentDidMount() {
-    fetch("/staticcalendar/" + this.props.userId, {
+    fetch("/openshifts/" + this.props.userId, {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         items: this.state.shifts,
-        userId: this.props.userId
-      })
+        userId: this.props.userId,
+      }),
     })
-      .then(response => {
+      .then((response) => {
         console.log("response");
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         console.log(jsonResponse.shifts);
         this.setState({ shifts: jsonResponse.shifts });
       });
   }
 
   render() {
-    const timeslots = [];
     const hours = [
       "12am",
       "1am",
@@ -97,12 +107,24 @@ export default class StaticCalendar extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm"
+      "11pm",
     ];
 
-    /*Every 8th element should be an "item-hours" header,
+    /* Displays the wkdays header.
+     */
+    const wkdays = [];
+    for (var i = 0; i < 7; i += 1) {
+      wkdays.push(
+        <div class="item-wday1">
+          {format(addDays(startOfWeek(currentDate), i), "dd MM/DD")}
+        </div>
+      );
+    }
+
+    /*Every 8th element should be an "item-hours1" header,
       while every 1-7th element should be a shift cell.
     */
+    const timeslots = [];
     for (var i = 0, ti = 0; i < 192; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
@@ -117,33 +139,24 @@ export default class StaticCalendar extends React.Component {
       }
     }
 
-    const wkdays = [];
-    for (var i = 0; i < 7; i += 1) {
-      wkdays.push(
-        <div class="item-wday">
-          {format(addDays(startOfWeek(currentDate), i), "dd MM/DD")}
-        </div>
-      );
-    }
-
     return (
-      <div id="overall-container">
-        <h1 id="yourshifts">Your Shifts</h1>
-        <div id="schedule-container-st">
-          <div id="frontWords">
-            <h1 id="weekString">{weekString}</h1>
+      <div id="overall-container1">
+        <h1 id="yourshifts1">Open Shifts</h1>
+        <div id="schedule-container-st1">
+          <div id="frontWords1">
+            <h1 id="weekString1">{weekString}</h1>
           </div>
-          <div id="legend">
-            <div id="libtag">
-              <h3 id="findingspace">Moffitt&nbsp;&nbsp;</h3>
-              <div id="moffittcolor"></div>
+          <div id="legend1">
+            <div id="libtag1">
+              <h3 id="findingspace1">Moffitt&nbsp;&nbsp;</h3>
+              <div id="moffittcolor1"></div>
             </div>
-            <div id="libtag">
-              <h3 id="findingspace">Doe&nbsp;&nbsp;</h3>
-              <div id="doecolor"></div>
+            <div id="libtag1">
+              <h3 id="findingspace1">Doe&nbsp;&nbsp;</h3>
+              <div id="doecolor1"></div>
             </div>
           </div>
-          <div id="inner-schedule">
+          <div id="inner-schedule1">
             <div></div>
             {wkdays}
             {timeslots}

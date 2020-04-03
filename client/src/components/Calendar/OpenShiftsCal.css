@@ -1,4 +1,14 @@
-#schedule-container-st {
+#overall-container1 {
+  background-color: #f5f5fd;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: inline-block;
+  z-index: 0;
+  margin-top: -2%;
+}
+
+#schedule-container-st1 {
   position: relative;
   display: inline-block;
   left: 24.7%;
@@ -17,7 +27,7 @@
   margin-top: -1.05%;
 }
 
-#yourshifts {
+#yourshifts1 {
   margin-top: 3.3%;
   padding-top: 2%;
   padding-left: 29.75%;
@@ -31,7 +41,7 @@
   color: black;
 }
 
-#inner-schedule {
+#inner-schedule1 {
   background-color: white;
   width: 100%;
   height: 800px;
@@ -70,19 +80,26 @@
   border-radius: 10px;
 }
 
-.item-cell {
+.item-cell1 {
   grid-area: "cell";
   background-color: #f8f8f8;
   cursor: pointer;
 }
 
-.item-wday {
+.item-wday1 {
   grid-area: "wday";
   font-size: 19px;
   color: black;
 }
 
-.item-hours {
+#tsgroup {
+  position: absolute;
+  background: transparent;
+  border: none;
+  font-size: 0;
+}
+
+.item-hours1 {
   grid-area: "hours";
   font-size: 14px;
   color: black;
@@ -93,7 +110,7 @@
   flex-direction: row;
   justify-content: space-between;
 } */
-#libtag {
+#libtag1 {
   display: flex;
   font-weight: lighter;
   color: black;
@@ -101,25 +118,30 @@
   text-align: justify;
   white-space: nowrap;
 }
-#moffittcolor {
+#moffittcolor1 {
   height: 24px;
   width: 24px;
   background-color: #ffa1a1;
 }
-#doecolor {
+#doecolor1 {
   height: 24px;
   width: 24px;
   background-color: #b0e9c2;
 }
-#findingspace {
+#findingspace1 {
   padding-right: 5%;
 }
-#defaultcolor {
+#defaultcolor1 {
   height: 24px;
   width: 24px;
   background-color: rgb(248, 248, 248);
 }
-#legend {
+#legend1 {
   display: flex;
   justify-content: center;
+}
+#weekString1 {
+  text-align: center;
+  font-weight: lighter;
+  color: gray;
 }
