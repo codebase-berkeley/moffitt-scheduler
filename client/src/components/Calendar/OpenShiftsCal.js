@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
-  function AddEmployee() {
+  function CovererRequest() {
     function refreshPage() {
       window.location.reload();
       return;
@@ -77,60 +77,62 @@ function Timeslot(props) {
         return num + ":00AM";
       }
     }
-
-    return (
-      <div>
-        <button className="AddButton" onClick={openModal}>
-          <div className="a">aaaaaaaaaaa</div>
-        </button>
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          {" "}
-          <div>
-            <h1
-              className="AddEmpText"
-              ref={(_subtitle) => (subtitle = _subtitle)}
-            ></h1>
-          </div>
-          <div className="question">Would you like to cover this shift?</div>
-          <div className="location">Location: {props.location}</div>
-          <div className="startTime">
-            Start Time: {timeStringify(props.start)}
-          </div>
-          <div className="endTime">End Time: {timeStringify(props.end)} </div>
-          <div className="buttonContainer">
-            <button className="YesButton" onClick={yesClick}>
-              <div className="YesText">
-                <h4> Yes</h4>
-              </div>
-            </button>
-            <button className="NoButton" onClick={refreshPage}>
-              <div className="NoText">
-                <h4>No</h4>
-              </div>
-            </button>
-          </div>
-        </Modal>
-      </div>
-    );
+    if (props.valid) {
+      return (
+        <div>
+          <button className="AddButton" onClick={openModal}>
+            <div className="a">aaaaaaaaaaa</div>
+          </button>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            {" "}
+            <div>
+              <h1
+                className="AddEmpText"
+                ref={(_subtitle) => (subtitle = _subtitle)}
+              ></h1>
+            </div>
+            <div className="question">Would you like to cover this shift?</div>
+            <div className="location">Location: {props.location}</div>
+            <div className="startTime">
+              Start Time: {timeStringify(props.start)}
+            </div>
+            <div className="endTime">End Time: {timeStringify(props.end)} </div>
+            <div className="buttonContainer">
+              <button className="YesButton" onClick={yesClick}>
+                <div className="YesText">
+                  <h4> Yes</h4>
+                </div>
+              </button>
+              <button className="NoButton" onClick={refreshPage}>
+                <div className="NoText">
+                  <h4>No</h4>
+                </div>
+              </button>
+            </div>
+          </Modal>
+        </div>
+      );
+    } else {
+      return <div className="AddButton"></div>;
+    }
   }
   if (props.valid) {
     return (
       <div class="open-shift" style={{ backgroundColor: props.color }}>
-        <AddEmployee />
+        <CovererRequest />
       </div>
     );
   } else {
     return (
-      <div
-        class="not-open-shift"
-        style={{ backgroundColor: props.color }}
-      ></div>
+      <div class="not-open-shift" style={{ backgroundColor: props.color }}>
+        <CovererRequest />
+      </div>
     );
   }
 }
