@@ -6,21 +6,12 @@ import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
   function AddEmployee() {
-    var redirect = <Redirect push to={`/openshifts/${props.userid}`} />;
-    function afterOpenModal() {
-      // references are now sync'd and can be accessed.
-      subtitle.style.color = "#black";
+    function refreshPage() {
+      window.location.reload();
+      return;
     }
 
-    function openModal() {
-      setIsOpen(true);
-    }
-
-    function closeModal() {
-      setIsOpen(false);
-    }
-
-    function submitClick() {
+    function yesClick() {
       if (props.valid) {
         fetch("http://localhost:8000/updateopenshifts", {
           method: "POST",
@@ -43,6 +34,21 @@ function Timeslot(props) {
           console.log("doesNothingForNow");
         }
       }
+      window.location.reload();
+      return;
+    }
+
+    function afterOpenModal() {
+      // references are now sync'd and can be accessed.
+      subtitle.style.color = "#black";
+    }
+
+    function openModal() {
+      setIsOpen(true);
+    }
+
+    function closeModal() {
+      setIsOpen(false);
     }
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -54,15 +60,16 @@ function Timeslot(props) {
         top: "40%",
         left: "50%",
         width: "25%",
-        height: "25%",
+        height: "35%",
         transform: "translate(-50%, -50%)",
         overflow: 0,
       },
     };
+
     return (
       <div>
         <button className="AddButton" onClick={openModal}>
-          + Add Employee
+          <div className="a">aaaaaaaaaaa</div>
         </button>
         <Modal
           isOpen={modalIsOpen}
@@ -77,17 +84,19 @@ function Timeslot(props) {
               className="AddEmpText"
               ref={(_subtitle) => (subtitle = _subtitle)}
             ></h1>
-            Would you like to cover this shift?
           </div>
-          <div className="button-container">
-            <button className="YesButton" onClick={submitClick}>
-              <div className="YesHover">
-                <div className="YesText">
-                  <h4> Yes</h4>
-                </div>
+          <div className="question">Would you like to cover this shift?</div>
+          <div className="location">Location: Moffitt</div>
+          <div className="startTime">Start Time: 1:00PM </div>
+          <div className="endTime">End Time: 3:00PM</div>
+          {/* need to pull the location, start time, and end time from database */}
+          <div className="buttonContainer">
+            <button className="YesButton" onClick={yesClick}>
+              <div className="YesText">
+                <h4> Yes</h4>
               </div>
             </button>
-            <button className="NoButton">
+            <button className="NoButton" onClick={refreshPage}>
               <div className="NoText">
                 <h4>No</h4>
               </div>
@@ -97,7 +106,7 @@ function Timeslot(props) {
       </div>
     );
   }
-  if (props.id != null) {
+  if (props.valid) {
     return (
       <div class="open-shift" style={{ backgroundColor: props.color }}>
         <AddEmployee />
