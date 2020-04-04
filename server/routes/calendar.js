@@ -146,6 +146,7 @@ router.post("/openshifts/:userId", (req, res) => {
             shifts[i].id = currentRow1.shift_id;
             shifts[i].color = shiftid_to_color[shifts[i].id];
             shifts[i].sleid = currentRow1.sle_id;
+            shifts[i].location = currentRow1.location;
           }
         }
       }
