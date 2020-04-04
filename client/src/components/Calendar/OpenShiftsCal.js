@@ -2,9 +2,11 @@ import React from "react";
 import "./OpenShiftsCal.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
+import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
   function AddEmployee() {
+    var redirect = <Redirect push to={`/openshifts/${props.userid}`} />;
     function afterOpenModal() {
       // references are now sync'd and can be accessed.
       subtitle.style.color = "#black";
@@ -16,6 +18,31 @@ function Timeslot(props) {
 
     function closeModal() {
       setIsOpen(false);
+    }
+
+    function submitClick() {
+      if (props.valid) {
+        fetch("http://localhost:8000/updateopenshifts", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            sleID: props.userid,
+            shiftID: props.id,
+          }),
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((jsonResponse) => {
+            console.log(jsonResponse);
+          });
+        function cancelClick() {
+          console.log("doesNothingForNow");
+        }
+      }
     }
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -53,22 +80,18 @@ function Timeslot(props) {
             Would you like to cover this shift?
           </div>
           <div className="button-container">
-            <a href="/openshifts/:userId">
-              <button className="YesButton">
-                <div className="YesHover">
-                  <div className="YesText">
-                    <h4> Yes</h4>
-                  </div>
+            <button className="YesButton" onClick={submitClick}>
+              <div className="YesHover">
+                <div className="YesText">
+                  <h4> Yes</h4>
                 </div>
-              </button>
-            </a>
-            <a href="/openshifts/:userId">
-              <button className="NoButton">
-                <div className="NoText">
-                  <h4>No</h4>
-                </div>
-              </button>
-            </a>
+              </div>
+            </button>
+            <button className="NoButton">
+              <div className="NoText">
+                <h4>No</h4>
+              </div>
+            </button>
           </div>
         </Modal>
       </div>
@@ -91,19 +114,20 @@ function Timeslot(props) {
 }
 
 class Shift {
-  constructor(color, id, start, end, day) {
+  constructor(color, id, start, end, day, sleid) {
     this.color = color;
     this.id = id;
     this.start = start;
     this.end = end;
     this.day = day;
+    this.sleid = sleid;
   }
 }
 
 function initialShifts() {
   let a = [];
   for (var i = 0; i < 168; i += 1) {
-    a.push(new Shift("#f8f8f8", null, null, null, null));
+    a.push(new Shift("#f8f8f8", null, null, null, null, null));
   }
   let count = 0;
   for (var i = 0; i <= 23; i += 1) {
@@ -127,10 +151,12 @@ var weekString =
   " - " +
   format(endOfWeek(currentDate), "MM/DD");
 
+var emptyShifts = initialShifts();
+
 export default class OpenShiftsCal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { shifts: initialShifts() };
+    this.state = { shifts: emptyShifts };
   }
 
   componentDidMount() {
@@ -201,11 +227,23 @@ export default class OpenShiftsCal extends React.Component {
     for (var i = 0, ti = 0; i < 192; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
+      } else if (this.state.shifts[ti].sleid == this.props.userId) {
+        timeslots.push(
+          <Timeslot
+            color={this.state.shifts[ti].color}
+            id={this.state.shifts[ti].id}
+            userid={this.props.userId}
+            valid={false}
+          />
+        );
+        ti += 1;
       } else {
         timeslots.push(
           <Timeslot
             color={this.state.shifts[ti].color}
             id={this.state.shifts[ti].id}
+            userid={this.props.userId}
+            valid={true}
           />
         );
         ti += 1;

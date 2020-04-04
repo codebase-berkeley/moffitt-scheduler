@@ -145,6 +145,7 @@ router.post("/openshifts/:userId", (req, res) => {
           if (sameStartEndValid || diffStartEndValid) {
             shifts[i].id = currentRow1.shift_id;
             shifts[i].color = shiftid_to_color[shifts[i].id];
+            shifts[i].sleid = currentRow1.sle_id;
           }
         }
       }
@@ -153,13 +154,12 @@ router.post("/openshifts/:userId", (req, res) => {
   );
 });
 
-router.post("/updateopenshifts", (req, res) => {
+router.post("/updateopenshifts", function (req, res) {
   let sleID = req.body.sleID;
   let shiftID = req.body.shiftID;
   pool.query(
     "update coverrequests set coverer_id = $1 where shift_id = $2",
-    [sleID],
-    [shiftID],
+    [sleID, shiftID],
     (error, result) => {
       if (error) {
         console.log(error);
@@ -167,6 +167,7 @@ router.post("/updateopenshifts", (req, res) => {
       }
     }
   );
+  return res.json({ successful: true });
 });
 
 module.exports = router;
