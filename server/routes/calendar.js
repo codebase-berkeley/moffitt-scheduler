@@ -117,7 +117,6 @@ const coverColors = ["#ffff42", "#ffaf0f", "#ffc34d", "#4eb548"];
 
 router.post("/openshifts/:userId", (req, res) => {
   let shifts = req.body.items;
-  console.log(shifts);
   pool.query(
     "select * from coverrequests full join shifts on coverrequests.shift_id = shifts.shift_id where coverer_id is not distinct from $1 and request_id is distinct from $1",
     [null],

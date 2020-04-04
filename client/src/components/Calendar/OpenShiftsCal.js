@@ -12,27 +12,25 @@ function Timeslot(props) {
     }
 
     function yesClick() {
-      if (props.valid) {
-        fetch("http://localhost:8000/updateopenshifts", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            sleID: props.userid,
-            shiftID: props.id,
-          }),
+      fetch("http://localhost:8000/updateopenshifts", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sleID: props.userid,
+          shiftID: props.id,
+        }),
+      })
+        .then((response) => {
+          return response.json();
         })
-          .then((response) => {
-            return response.json();
-          })
-          .then((jsonResponse) => {
-            console.log(jsonResponse);
-          });
-        function cancelClick() {
-          console.log("doesNothingForNow");
-        }
+        .then((jsonResponse) => {
+          console.log(jsonResponse);
+        });
+      function cancelClick() {
+        console.log("doesNothingForNow");
       }
       window.location.reload();
       return;
@@ -245,6 +243,8 @@ export default class OpenShiftsCal extends React.Component {
       );
     }
 
+    /* Maps shift ids to their collective starttimes, endtimes, and locations
+     */
     const shiftGrouper = {};
     for (var i = 0; i < 168; i += 1) {
       if (this.state.shifts[i] != null && this.state.shifts[i].id != null) {
