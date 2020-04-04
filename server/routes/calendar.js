@@ -117,6 +117,7 @@ const coverColors = ["#ffff42", "#ffaf0f", "#ffc34d", "#4eb548"];
 
 router.post("/openshifts/:userId", (req, res) => {
   let shifts = req.body.items;
+  console.log(shifts);
   pool.query(
     "select * from coverrequests full join shifts on coverrequests.shift_id = shifts.shift_id where coverer_id is not distinct from $1 and request_id is distinct from $1",
     [null],
@@ -142,7 +143,10 @@ router.post("/openshifts/:userId", (req, res) => {
               shifts[i].start >= currentRow1.start_time.getHours()) ||
               (shifts[i].day == currentRow1.end_time.getDay() &&
                 shifts[i].end <= currentRow1.end_time.getHours()));
-          if (sameStartEndValid || diffStartEndValid) {
+          if (
+            (sameStartEndValid || diffStartEndValid) &&
+            currentRow1.sle_id != req.body.userId
+          ) {
             shifts[i].id = currentRow1.shift_id;
             shifts[i].color = shiftid_to_color[shifts[i].id];
             shifts[i].sleid = currentRow1.sle_id;
