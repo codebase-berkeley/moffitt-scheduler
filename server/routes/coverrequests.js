@@ -5,6 +5,7 @@ var pool = require("../db/db");
 
 router.post("/pendingsupervisor", (req, res) => {
   var approve = req.body.approve;
+  console.log("initial", approve);
   if (approve) {
     approve = "Approved";
   } else {
@@ -96,6 +97,30 @@ router.get("/requesthistory", (req, res) => {
   );
 });
 
+router.get("/pendingsupervisor", (req, res) => {
+  pool.query(
+    `SELECT s1.name AS covername, s2.name AS needname, supervisor_status AS approval, shifts.start_time AS time, shifts.location AS loc
+    FROM coverrequests, sle AS s1, sle AS s2, shifts
+    WHERE coverer_id = s1.id AND coveree_id = s2.id AND coverrequests.shift_id = shifts.shift_id AND supervisor_status = 'null'`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+        console.log("dfgasg");
+        console.log("pend super row length:", result.rows.length);
+        console.log("pend super result.rows:", result.rows);
+        for (var i = 0; i < result.rows.length; i++) {
+          console.log("time", result.rows[i].time);
+          result.rows[i].desk = "Fourth Floor";
+          result.rows[i].date = result.rows[i].time.toDateString();
+          result.rows[i].time = result.rows[i].time.toTimeString();
+        }
+        res.json({ items: result.rows });
+      }
+    }
+  );
+});
+
 router.get("/pendingcoverage", (req, res) => {
   var database = {
     items: [
@@ -119,28 +144,28 @@ router.get("/pendingcoverage", (req, res) => {
   };
   res.json(database);
 });
-router.get("/pendingsupervisor", (req, res) => {
-  var database = {
-    items: [
-      {
-        desk: "Fourth Floor",
-        loc: "Moffitt",
-        date: "Wednesday, March 6, 2020",
-        time: "3:00 PM - 5:00 PM",
-        needname: "Broco Lee",
-        covername: "Ug Lee"
-      },
-      {
-        desk: "Fourth Floor",
-        loc: "Moffitt",
-        date: "Thursday, March 7, 2020",
-        time: "3:00 PM - 5:00 PM",
-        needname: "Broco Lee",
-        covername: "Ug Lee"
-      }
-    ]
-  };
-  res.json(database);
-});
+// router.get("/pendingsupervisor", (req, res) => {
+//   var database = {
+//     items: [
+//       {
+//         desk: "Fourth Floor",
+//         loc: "Moffitt",
+//         date: "Wednesday, March 6, 2020",
+//         time: "3:00 PM - 5:00 PM",
+//         needname: "Broco Lee",
+//         covername: "Ug Lee"
+//       },
+//       {
+//         desk: "Fourth Floor",
+//         loc: "Moffitt",
+//         date: "Thursday, March 7, 2020",
+//         time: "3:00 PM - 5:00 PM",
+//         needname: "Broco Lee",
+//         covername: "Ug Lee"
+//       }
+//     ]
+//   };
+//   res.json(database);
+// });
 
 module.exports = router;

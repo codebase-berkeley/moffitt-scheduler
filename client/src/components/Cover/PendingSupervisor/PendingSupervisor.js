@@ -11,6 +11,7 @@ function processData(database) {
       time={entry.time}
       needname={entry.needname}
       covername={entry.covername}
+      approval={entry.approval}
     />
   ));
   return listItems;
