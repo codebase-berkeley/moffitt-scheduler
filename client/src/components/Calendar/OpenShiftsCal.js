@@ -4,76 +4,6 @@ import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
 
 function Timeslot(props) {
-  function AddEmployee() {
-    function afterOpenModal() {
-      // references are now sync'd and can be accessed.
-      subtitle.style.color = "#black";
-    }
-
-    function openModal() {
-      setIsOpen(true);
-    }
-
-    function closeModal() {
-      setIsOpen(false);
-    }
-
-    const [modalIsOpen, setIsOpen] = React.useState(false);
-
-    var subtitle;
-
-    const customStyles = {
-      content: {
-        top: "40%",
-        left: "50%",
-        width: "25%",
-        height: "25%",
-        transform: "translate(-50%, -50%)",
-        overflow: 0,
-      },
-    };
-    return (
-      <div>
-        <button className="AddButton" onClick={openModal}>
-          + Add Employee
-        </button>
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          {" "}
-          <div>
-            <h1
-              className="AddEmpText"
-              ref={(_subtitle) => (subtitle = _subtitle)}
-            ></h1>
-            Would you like to cover this shift?
-          </div>
-          <div className="button-container">
-            <a href="/openshifts/:userId">
-              <button className="YesButton">
-                <div className="YesHover">
-                  <div className="YesText">
-                    <h4> Yes</h4>
-                  </div>
-                </div>
-              </button>
-            </a>
-            <a href="/openshifts/:userId">
-              <button className="NoButton">
-                <div className="NoText">
-                  <h4>No</h4>
-                </div>
-              </button>
-            </a>
-          </div>
-        </Modal>
-      </div>
-    );
-  }
   if (props.id != null) {
     return (
       <div class="open-shift" style={{ backgroundColor: props.color }}>
@@ -88,6 +18,81 @@ function Timeslot(props) {
       ></div>
     );
   }
+}
+
+function refreshPage() {
+  window.location.reload();
+  return;
+}
+
+function AddEmployee() {
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#black";
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  var subtitle;
+
+  const customStyles = {
+    content: {
+      top: "40%",
+      left: "50%",
+      width: "25%",
+      height: "35%",
+      transform: "translate(-50%, -50%)",
+      overflow: 0,
+    },
+  };
+
+  return (
+    <div>
+      <button className="AddButton" onClick={openModal}>
+        <div className="a">aaaaaaaaaaa</div>
+      </button>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        {" "}
+        <div>
+          <h1
+            className="AddEmpText"
+            ref={(_subtitle) => (subtitle = _subtitle)}
+          ></h1>
+        </div>
+        <div className="question">Would you like to cover this shift?</div>
+        <div className="location">Location: Moffitt</div>
+        <div className="startTime">Start Time: 1:00PM </div>
+        <div className="endTime">End Time: 3:00PM</div>
+        {/* need to pull the location, start time, and end time from database */}
+        <div className="buttonContainer">
+          <button className="YesButton" onClick={refreshPage}>
+            <div className="YesText">
+              <h4> Yes</h4>
+            </div>
+          </button>
+          <button className="NoButton" onClick={refreshPage}>
+            <div className="NoText">
+              <h4>No</h4>
+            </div>
+          </button>
+        </div>
+      </Modal>
+    </div>
+  );
 }
 
 class Shift {
