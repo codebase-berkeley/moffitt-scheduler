@@ -79,7 +79,7 @@ function Timeslot(props) {
       return (
         <div>
           <button className="AddButton" onClick={openModal}>
-            <div className="a">aaaaaaaaaaa</div>
+            <div className="a"></div>
           </button>
           <Modal
             isOpen={modalIsOpen}
