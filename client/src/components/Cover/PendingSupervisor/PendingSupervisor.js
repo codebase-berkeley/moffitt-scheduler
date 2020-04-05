@@ -2,26 +2,6 @@ import React from "react";
 import WithCheck from "../WithCheck";
 import "./PendingSupervisor.css";
 
-// function processData(database) {
-//   const listItems = database.map((entry, index) => {
-//     console.log("request", entry.requestId);
-//     return (
-//       <WithCheck
-//         desk={entry.desk}
-//         loc={entry.loc}
-//         date={entry.date}
-//         time={entry.time}
-//         needname={entry.needname}
-//         covername={entry.covername}
-//         approval={entry.approval}
-//         requestId={entry.requestId}
-//         fixState={PendingSupervisor.removeFromState}
-//       />
-//     );
-//   });
-//   return listItems;
-// }
-
 class PendingSupervisor extends React.Component {
   constructor(props) {
     super(props);
@@ -46,13 +26,11 @@ class PendingSupervisor extends React.Component {
         this.setState({
           items: jsonResponse.items
         });
-        console.log("componentDidMount items:", this.state.items);
       });
   }
 
   processData(database) {
     const listItems = database.map((entry, index) => {
-      console.log("request", entry.requestId);
       return (
         <WithCheck
           desk={entry.desk}

@@ -5,14 +5,12 @@ var pool = require("../db/db");
 
 router.post("/pendingsupervisor", (req, res) => {
   var approve = req.body.approve;
-  console.log("initial", approve);
   if (approve) {
     approve = "Approved";
   } else {
     approve = "Denied";
   }
   var requestID = req.body.requestID;
-  console.log("requestID", requestID);
   pool.query(
     "UPDATE coverrequests SET supervisor_status = $1 WHERE request_id = $2",
     [approve, requestID],
@@ -33,9 +31,18 @@ router.post("/pendingsupervisor", (req, res) => {
         }
       }
     );
+  } else {
+    pool.query(
+      `DELETE FROM coverrequests 
+      WHERE shift`,
+      (error, result) => {
+        if (error) {
+          throw error;
+        }
+      }
+    );
   }
 
-  console.log("approve", approve);
   res.json({ Successful: true });
 });
 
@@ -101,7 +108,6 @@ router.get("/requesthistory", (req, res) => {
           result.rows[i].date = day + month + date + ", " + year;
           result.rows[i].time = hour + ":" + min + "0" + " AM"; //hardcoded for msd
         }
-        console.log("result.rows:", result.rows);
         res.json({ items: result.rows });
       }
     }
@@ -118,16 +124,12 @@ router.get("/pendingsupervisor", (req, res) => {
       if (error) {
         throw error;
       } else {
-        console.log("pend super row length:", result.rows.length);
-        console.log("pend super result.rows:", result.rows);
         for (var i = 0; i < result.rows.length; i++) {
-          console.log("time", result.rows[i].time);
           result.rows[i].desk = "Fourth Floor";
           result.rows[i].date = result.rows[i].time.toDateString();
           result.rows[i].time = result.rows[i].time.toTimeString();
           result.rows[i].requestId = result.rows[i].requestid;
         }
-        console.log("rows", result.rows);
         res.json({ items: result.rows });
       }
     }
