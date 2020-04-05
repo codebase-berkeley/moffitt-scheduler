@@ -1,9 +1,22 @@
 import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
-
 function Timeslot(props) {
-  return <div class="item-cell" style={{ backgroundColor: props.color }}></div>;
+  return (
+    <div
+      class="item-cell"
+      style={{ backgroundColor: props.color }}
+      id={props.id}
+      onClick={handleCheck.bind(this)}
+    ></div>
+  );
+  function handleCheck(e) {
+    if (e.target.id != "") {
+      console.log("yay im clicked!");
+      e.target.style = { backgroundColor: props.color };
+      e.target.id = "";
+    }
+  }
 }
 
 class Shift {
@@ -54,24 +67,26 @@ export default class StaticCalendar extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        items: this.state.shifts, userId: this.props.userId
-      })
+        items: this.state.shifts,
+        userId: this.props.userId,
+      }),
     })
-      .then(response => {
+      .then((response) => {
         console.log("response");
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         console.log(jsonResponse.shifts);
         this.setState({ shifts: jsonResponse.shifts });
       });
   }
 
   render() {
-    const timeslots = [];
+    // const timeslots = [];
+    let timeslots = [];
     const hours = [
       "12am",
       "1am",
@@ -96,7 +111,7 @@ export default class StaticCalendar extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm"
+      "11pm",
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -127,9 +142,7 @@ export default class StaticCalendar extends React.Component {
 
     return (
       <div id="overall-container">
-        <h1 id="yourshifts" >
-          Your Shifts
-        </h1>
+        <h1 id="yourshifts">Your Shifts</h1>
         <div id="schedule-container-st">
           <div id="frontWords">
             <h1 id="weekString">{weekString}</h1>
