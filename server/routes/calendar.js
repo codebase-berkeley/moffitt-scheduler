@@ -10,7 +10,7 @@ router.post("/changecoverage", (req, res) => {
     approve = "false";
   }
   var shiftID = req.body.shiftID;
-
+  var notes = req.body.sentNotes;
   pool.query(
     "UPDATE shifts SET cover_requested = $1 WHERE sle_id = $2",
     [approve, shiftID],
@@ -21,9 +21,27 @@ router.post("/changecoverage", (req, res) => {
       console.log(result.rows);
     }
   );
-
-  console.log("approve", approve);
-  res.json({ Successful: true });
+  // pool.query(
+  //   "INSERT INTO coverrequests (coverer_id, coveree_id, shift_id, supervisor_status, notes) VALUES (-1, null, $1, null, $2)",
+  //   [shiftID, notes],
+  //   (error, result) => {
+  //     if (error) {
+  //       throw error;
+  //     }
+  //     console.log(result.rows);
+  //   }
+  // );
+  // pool.query(
+  //   "UPDATE coverrequests AS a FROM shifts AS b SET coverer_id = sle_id WHERE a.shift_id = b.shift_id",
+  //   (error, result) => {
+  //     if (error) {
+  //       throw error;
+  //     }
+  //     console.log(result.rows);
+  //   }
+  // );
+  // console.log("approve", approve);
+  // res.json({ Successful: true });
 });
 router.post("/save", (req, res) => {
   items = req.body.items;

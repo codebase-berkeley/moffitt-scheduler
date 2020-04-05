@@ -85,6 +85,7 @@ export default class StaticCalendar extends React.Component {
 
       //Start running here if person from modal agrees to get shift covereed
       let newShifts = this.state.shifts;
+      let notes = "testNotes";
       for (let i = 0; i < newShifts.length; i++) {
         if (newShifts[i].id == e.target.id) {
           newShifts[i].color = "#C187D3";
@@ -96,7 +97,11 @@ export default class StaticCalendar extends React.Component {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ coverage: true, shiftID: e.target.id }),
+        body: JSON.stringify({
+          coverage: true,
+          shiftID: e.target.id,
+          sentNotes: notes,
+        }),
       })
         .then((response) => {
           return response.json();
