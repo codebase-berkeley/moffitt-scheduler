@@ -2,7 +2,29 @@ var express = require("express");
 var router = express.Router();
 
 var pool = require("../db/db");
+router.post("/changecoverage", (req, res) => {
+  var coverage = req.body.coverage;
+  if (coverage) {
+    approve = "true";
+  } else {
+    approve = "false";
+  }
+  var shiftID = req.body.shiftID;
 
+  pool.query(
+    "UPDATE shifts SET cover_requested = $1 WHERE sle_id = $2",
+    [approve, shiftID],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      console.log(result.rows);
+    }
+  );
+
+  console.log("approve", approve);
+  res.json({ Successful: true });
+});
 router.post("/save", (req, res) => {
   items = req.body.items;
   var userId = req.body.userId;
@@ -17,9 +39,7 @@ router.post("/save", (req, res) => {
   );
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
-      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${
-      items[i][0]
-      }, ${items[i][1]})`,
+      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i][0]}, ${items[i][1]})`,
       (error, result) => {
         if (error) {
           throw error;
@@ -33,7 +53,9 @@ router.post("/save", (req, res) => {
 router.post("/staticcalendar/:userId", (req, res) => {
   let shifts = req.body.items;
   pool.query(
-    'SELECT * FROM SHIFTS WHERE sle_id = $1', [req.params.userId], (error, result) => {
+    "SELECT * FROM SHIFTS WHERE sle_id = $1",
+    [req.params.userId],
+    (error, result) => {
       if (error) {
         throw error;
       }
@@ -61,7 +83,8 @@ router.post("/staticcalendar/:userId", (req, res) => {
         }
       }
       return res.json({ shifts: shifts });
-    });
+    }
+  );
 });
 
 router.post("/save", (req, res) => {

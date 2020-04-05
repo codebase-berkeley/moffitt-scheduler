@@ -88,6 +88,20 @@ export default class StaticCalendar extends React.Component {
           newShifts[i].color = "#C187D3";
         }
       }
+      fetch("/changecoverage", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ coverage: true, shiftID: e.target.id }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((jsonResponse) => {
+          console.log(jsonResponse);
+        });
       this.setState({ shifts: newShifts });
     }
   }
