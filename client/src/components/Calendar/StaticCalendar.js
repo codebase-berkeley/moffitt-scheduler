@@ -7,16 +7,9 @@ function Timeslot(props) {
       class="item-cell"
       style={{ backgroundColor: props.color }}
       id={props.id}
-      onClick={handleCheck.bind(this)}
+      onClick={props.onClick}
     ></div>
   );
-  function handleCheck(e) {
-    if (e.target.id != "") {
-      console.log("yay im clicked!");
-      e.target.style = { backgroundColor: props.color };
-      e.target.id = "";
-    }
-  }
 }
 
 class Shift {
@@ -60,6 +53,7 @@ export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { shifts: initialShifts() };
+    this.stateFixer = this.stateFixer.bind(this);
   }
 
   componentDidMount() {
@@ -84,9 +78,22 @@ export default class StaticCalendar extends React.Component {
       });
   }
 
+  stateFixer(e) {
+    if (e.target.id != "") {
+      //Open Modal here --> if they agree to get shift covered then run below.
+      // If they hit cancel do not run below (need if else clause for below)
+      let newShifts = this.state.shifts;
+      for (let i = 0; i < newShifts.length; i++) {
+        if (newShifts[i].id == e.target.id) {
+          newShifts[i].color = "#C187D3";
+        }
+      }
+      this.setState({ shifts: newShifts });
+    }
+  }
+
   render() {
-    // const timeslots = [];
-    let timeslots = [];
+    const timeslots = [];
     const hours = [
       "12am",
       "1am",
@@ -125,6 +132,7 @@ export default class StaticCalendar extends React.Component {
           <Timeslot
             color={this.state.shifts[ti].color}
             id={this.state.shifts[ti].id}
+            onClick={this.stateFixer}
           />
         );
         ti += 1;
