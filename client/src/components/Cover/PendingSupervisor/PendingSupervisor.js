@@ -2,20 +2,25 @@ import React from "react";
 import WithCheck from "../WithCheck";
 import "./PendingSupervisor.css";
 
-function processData(database) {
-  const listItems = database.map((entry, index) => (
-    <WithCheck
-      desk={entry.desk}
-      loc={entry.loc}
-      date={entry.date}
-      time={entry.time}
-      needname={entry.needname}
-      covername={entry.covername}
-      approval={entry.approval}
-    />
-  ));
-  return listItems;
-}
+// function processData(database) {
+//   const listItems = database.map((entry, index) => {
+//     console.log("request", entry.requestId);
+//     return (
+//       <WithCheck
+//         desk={entry.desk}
+//         loc={entry.loc}
+//         date={entry.date}
+//         time={entry.time}
+//         needname={entry.needname}
+//         covername={entry.covername}
+//         approval={entry.approval}
+//         requestId={entry.requestId}
+//         fixState={PendingSupervisor.removeFromState}
+//       />
+//     );
+//   });
+//   return listItems;
+// }
 
 class PendingSupervisor extends React.Component {
   constructor(props) {
@@ -23,6 +28,8 @@ class PendingSupervisor extends React.Component {
     this.state = {
       items: [{}]
     };
+    this.processData = this.processData.bind(this);
+    this.removeFromState = this.removeFromState.bind(this);
   }
   componentDidMount() {
     fetch("/pendingsupervisor", {
@@ -39,8 +46,38 @@ class PendingSupervisor extends React.Component {
         this.setState({
           items: jsonResponse.items
         });
-        console.log(this.state.items);
+        console.log("componentDidMount items:", this.state.items);
       });
+  }
+
+  processData(database) {
+    const listItems = database.map((entry, index) => {
+      console.log("request", entry.requestId);
+      return (
+        <WithCheck
+          desk={entry.desk}
+          loc={entry.loc}
+          date={entry.date}
+          time={entry.time}
+          needname={entry.needname}
+          covername={entry.covername}
+          approval={entry.approval}
+          requestId={entry.requestId}
+          fixState={this.removeFromState}
+        />
+      );
+    });
+    return listItems;
+  }
+
+  removeFromState(requestIndex) {
+    var newItems = [{}];
+    for (var i = 0; i < this.state.items.length; i++) {
+      if (requestIndex !== this.state.items[i].requestId) {
+        newItems.push(this.state.items[i]);
+      }
+    }
+    this.setState({ items: newItems });
   }
 
   render() {
@@ -53,7 +90,7 @@ class PendingSupervisor extends React.Component {
           <h2 className="msame22"></h2>
         </div>
         <div className="pendingShifts"></div>
-        {processData(this.state.items)}
+        {this.processData(this.state.items)}
         <div class="Supervisor"></div>
       </div>
     );

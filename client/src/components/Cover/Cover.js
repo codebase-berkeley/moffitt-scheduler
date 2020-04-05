@@ -49,7 +49,7 @@ export default class Cover extends React.Component {
             className="button"
             onClick={this.showPendingCoverage}
           >
-            <h1> Pending Coverage</h1>;
+            <h1> Pending Coverage</h1>
           </button>
           <button className="button" onClick={this.showSupervisorApproval}>
             <h1> Pending Supervisor Approval</h1>
