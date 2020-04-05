@@ -82,6 +82,8 @@ export default class StaticCalendar extends React.Component {
     if (e.target.id != "") {
       //Open Modal here --> if they agree to get shift covered then run below.
       // If they hit cancel do not run below (need if else clause for below)
+
+      //Start running here if person from modal agrees to get shift covereed
       let newShifts = this.state.shifts;
       for (let i = 0; i < newShifts.length; i++) {
         if (newShifts[i].id == e.target.id) {
@@ -103,6 +105,9 @@ export default class StaticCalendar extends React.Component {
           console.log(jsonResponse);
         });
       this.setState({ shifts: newShifts });
+      //End here
+
+      //Otherwise do nothing
     }
   }
 
