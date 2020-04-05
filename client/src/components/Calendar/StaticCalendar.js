@@ -57,7 +57,8 @@ export default class StaticCalendar extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        items: this.state.shifts, userId: this.props.userId
+        items: this.state.shifts,
+        userId: this.props.userId
       })
     })
       .then(response => {
@@ -110,6 +111,10 @@ export default class StaticCalendar extends React.Component {
           <Timeslot
             color={this.state.shifts[ti].color}
             id={this.state.shifts[ti].id}
+            type="button"
+            class="btn btn-info btn-lg"
+            data-toggle="modal"
+            data-target="#myModal"
           />
         );
         ti += 1;
@@ -127,9 +132,7 @@ export default class StaticCalendar extends React.Component {
 
     return (
       <div id="overall-container">
-        <h1 id="yourshifts" >
-          Your Shifts
-        </h1>
+        <h1 id="yourshifts">Your Shifts</h1>
         <div id="schedule-container-st">
           <div id="frontWords">
             <h1 id="weekString">{weekString}</h1>
@@ -146,10 +149,36 @@ export default class StaticCalendar extends React.Component {
           </div>
           <div id="inner-schedule">
             <div></div>
+
             {wkdays}
+
             {timeslots}
           </div>
         </div>
+        {/* <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                  &times;
+                </button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div> */}
       </div>
     );
   }
