@@ -195,11 +195,9 @@ export default class OpenShiftsCal extends React.Component {
       }),
     })
       .then((response) => {
-        console.log("response");
         return response.json();
       })
       .then((jsonResponse) => {
-        console.log(jsonResponse.shifts);
         this.setState({ shifts: jsonResponse.shifts });
       });
   }
@@ -262,6 +260,7 @@ export default class OpenShiftsCal extends React.Component {
 
     /*Every 8th element should be an "item-hours1" header,
       while every 1-7th element should be a shift cell.
+      The valid prop tracks if the Timeslot is a clickable, colored cell belonging to a shift or not.
     */
     const timeslots = [];
     for (var i = 0, ti = 0; i < 192; i += 1) {
@@ -303,16 +302,6 @@ export default class OpenShiftsCal extends React.Component {
         <div id="schedule-container-st1">
           <div id="frontWords1">
             <h1 id="weekString1">{weekString}</h1>
-          </div>
-          <div id="legend1">
-            <div id="libtag1">
-              <h3 id="findingspace1">Moffitt&nbsp;&nbsp;</h3>
-              <div id="moffittcolor1"></div>
-            </div>
-            <div id="libtag1">
-              <h3 id="findingspace1">Doe&nbsp;&nbsp;</h3>
-              <div id="doecolor1"></div>
-            </div>
           </div>
           <div id="inner-schedule1">
             <div></div>
