@@ -94,7 +94,14 @@ export default class StaticCalendar extends React.Component {
   }
 
   stateFixer(e) {
-    if (e.target.id != "") {
+    if (
+      e.target.id != "" &&
+      e.target.style.backgroundColor != "rgb(193, 135, 211)"
+    ) {
+      /*The point of the background color check is to make sure that once a shift is requested to be covered,
+       * this can't happen again for the same shift.
+       */
+      console.log(e.target.style.backgroundColor);
       currentClicked = e;
       currentClickedID = e.target.id;
       this.openModal();
