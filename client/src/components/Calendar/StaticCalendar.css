@@ -8,7 +8,7 @@
   font-family: "Open Sans";
   background-color: white;
   border-radius: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);  
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding-left: 2%;
   padding-right: 2%;
   padding-top: 1%;
@@ -122,4 +122,19 @@
 #legend {
   display: flex;
   justify-content: center;
+}
+
+.requestCoverHeader {
+  text-align: center;
+  padding-bottom: 10%;
+}
+
+.reasonInput {
+  width: 95%;
+  padding: 2%;
+  border-radius: 5px;
+}
+
+.Reason {
+  padding-bottom: 5%;
 }

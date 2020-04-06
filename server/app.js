@@ -7,6 +7,7 @@ var coverRequestRoutes = require("./routes/coverrequests");
 var employeesRoutes = require("./routes/employees");
 var loginRoutes = require("./routes/login");
 var masterScheduleRoutes = require("./routes/masterschedule");
+var yourshiftsRoutes = require("./routes/yourshifts");
 
 var cors = require("cors");
 
@@ -19,6 +20,7 @@ app.use("/", coverRequestRoutes);
 app.use("/", employeesRoutes);
 app.use("/", loginRoutes);
 app.use("/", masterScheduleRoutes);
+app.use("/", yourshiftsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello world");

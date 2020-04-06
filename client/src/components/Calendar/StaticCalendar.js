@@ -1,6 +1,8 @@
 import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import Modal from "react-modal";
+
 function Timeslot(props) {
   return (
     <div
@@ -52,8 +54,18 @@ var weekString =
 export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { shifts: initialShifts() };
+    this.state = { shifts: initialShifts(), modalIsOpen: false };
     this.stateFixer = this.stateFixer.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
   }
 
   componentDidMount() {
@@ -61,23 +73,18 @@ export default class StaticCalendar extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         items: this.state.shifts,
-<<<<<<< HEAD
         userId: this.props.userId
       })
-=======
-        userId: this.props.userId,
-      }),
->>>>>>> 1284d59e40fdda5eb7c89738614265276efb5de6
     })
-      .then((response) => {
+      .then(response => {
         console.log("response");
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         console.log(jsonResponse.shifts);
         this.setState({ shifts: jsonResponse.shifts });
       });
@@ -86,9 +93,12 @@ export default class StaticCalendar extends React.Component {
   stateFixer(e) {
     if (e.target.id != "") {
       //Open Modal here --> if they agree to get shift covered then run below.
+      this.openModal();
+
       // If they hit cancel do not run below (need if else clause for below)
 
       //Start running here if person from modal agrees to get shift covereed
+
       let newShifts = this.state.shifts;
       let notes = "testNotes";
       for (let i = 0; i < newShifts.length; i++) {
@@ -100,18 +110,18 @@ export default class StaticCalendar extends React.Component {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           coverage: true,
           shiftID: e.target.id,
-          sentNotes: notes,
-        }),
+          sentNotes: notes
+        })
       })
-        .then((response) => {
+        .then(response => {
           return response.json();
         })
-        .then((jsonResponse) => {
+        .then(jsonResponse => {
           console.log(jsonResponse);
         });
       this.setState({ shifts: newShifts });
@@ -147,7 +157,7 @@ export default class StaticCalendar extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm",
+      "11pm"
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -161,14 +171,7 @@ export default class StaticCalendar extends React.Component {
           <Timeslot
             color={this.state.shifts[ti].color}
             id={this.state.shifts[ti].id}
-<<<<<<< HEAD
-            type="button"
-            class="btn btn-info btn-lg"
-            data-toggle="modal"
-            data-target="#myModal"
-=======
             onClick={this.stateFixer}
->>>>>>> 1284d59e40fdda5eb7c89738614265276efb5de6
           />
         );
         ti += 1;
@@ -184,9 +187,50 @@ export default class StaticCalendar extends React.Component {
       );
     }
 
+    const customStyles = {
+      content: {
+        top: "400px",
+        left: "50%",
+        width: "450px",
+        height: "400px",
+        transform: "translate(-50%, -50%)",
+        overflow: 0
+      }
+    };
+
     return (
       <div id="overall-container">
         <h1 id="yourshifts">Your Shifts</h1>
+        <Modal
+          // className="box"
+          isOpen={this.state.modalIsOpen}
+          // onAfterOpen={afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h1 className="requestCoverHeader">Request Cover</h1>
+          <div className="reasonForCover">
+            <h3 className="Reason">Reason:</h3>
+            <input className="reasonInput" id="reason" />
+          </div>
+          <div className="button-container">
+            {/* <a href="/staticcalendar/1"> */}
+            <button className="CancelButton">
+              <div className="CancelHover">
+                <div className="CancelText">
+                  <h4> Cancel</h4>
+                </div>
+              </div>
+            </button>
+            {/* </a> */}
+            <button className="SubmitButton" onClick={submitClick}>
+              <div className="SubmitText">
+                <h4>Submit</h4>
+              </div>
+            </button>
+          </div>
+        </Modal>
         <div id="schedule-container-st">
           <div id="frontWords">
             <h1 id="weekString">{weekString}</h1>
@@ -209,31 +253,33 @@ export default class StaticCalendar extends React.Component {
             {timeslots}
           </div>
         </div>
-        {/* <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                  &times;
-                </button>
-                <h4 class="modal-title">Modal Header</h4>
-              </div>
-              <div class="modal-body">
-                <p>Some text in the modal.</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-default"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     );
+  }
+}
+
+function submitClick() {
+  var reason = document.getElementById("reason");
+  var reasonText = reason.value;
+  console.log(reasonText);
+
+  fetch("http://localhost:8000/yourshifts/1", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      firstName: reasonText
+    })
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(jsonResponse => {
+      console.log(jsonResponse);
+    });
+  function cancelClick() {
+    console.log("doesNothingForNow");
   }
 }
