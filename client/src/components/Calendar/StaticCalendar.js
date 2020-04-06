@@ -1,9 +1,15 @@
 import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
-
 function Timeslot(props) {
-  return <div class="item-cell" style={{ backgroundColor: props.color }}></div>;
+  return (
+    <div
+      class="item-cell"
+      style={{ backgroundColor: props.color }}
+      id={props.id}
+      onClick={props.onClick}
+    ></div>
+  );
 }
 
 class Shift {
@@ -47,6 +53,7 @@ export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { shifts: initialShifts() };
+    this.stateFixer = this.stateFixer.bind(this);
   }
 
   componentDidMount() {
@@ -54,21 +61,64 @@ export default class StaticCalendar extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         items: this.state.shifts,
+<<<<<<< HEAD
         userId: this.props.userId
       })
+=======
+        userId: this.props.userId,
+      }),
+>>>>>>> 1284d59e40fdda5eb7c89738614265276efb5de6
     })
-      .then(response => {
+      .then((response) => {
         console.log("response");
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         console.log(jsonResponse.shifts);
         this.setState({ shifts: jsonResponse.shifts });
       });
+  }
+
+  stateFixer(e) {
+    if (e.target.id != "") {
+      //Open Modal here --> if they agree to get shift covered then run below.
+      // If they hit cancel do not run below (need if else clause for below)
+
+      //Start running here if person from modal agrees to get shift covereed
+      let newShifts = this.state.shifts;
+      let notes = "testNotes";
+      for (let i = 0; i < newShifts.length; i++) {
+        if (newShifts[i].id == e.target.id) {
+          newShifts[i].color = "#C187D3";
+        }
+      }
+      fetch("/changecoverage", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          coverage: true,
+          shiftID: e.target.id,
+          sentNotes: notes,
+        }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((jsonResponse) => {
+          console.log(jsonResponse);
+        });
+      this.setState({ shifts: newShifts });
+      //End here
+
+      //Otherwise do nothing
+    }
   }
 
   render() {
@@ -97,7 +147,7 @@ export default class StaticCalendar extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm"
+      "11pm",
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -111,10 +161,14 @@ export default class StaticCalendar extends React.Component {
           <Timeslot
             color={this.state.shifts[ti].color}
             id={this.state.shifts[ti].id}
+<<<<<<< HEAD
             type="button"
             class="btn btn-info btn-lg"
             data-toggle="modal"
             data-target="#myModal"
+=======
+            onClick={this.stateFixer}
+>>>>>>> 1284d59e40fdda5eb7c89738614265276efb5de6
           />
         );
         ti += 1;
