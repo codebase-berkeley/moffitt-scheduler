@@ -73,18 +73,18 @@ export default class StaticCalendar extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         items: this.state.shifts,
-        userId: this.props.userId
-      })
+        userId: this.props.userId,
+      }),
     })
-      .then(response => {
+      .then((response) => {
         console.log("response");
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         console.log(jsonResponse.shifts);
         this.setState({ shifts: jsonResponse.shifts });
       });
@@ -93,14 +93,13 @@ export default class StaticCalendar extends React.Component {
   stateFixer(e) {
     if (e.target.id != "") {
       //Open Modal here --> if they agree to get shift covered then run below.
-      this.openModal();
+      let notes = this.openModal();
 
       // If they hit cancel do not run below (need if else clause for below)
 
       //Start running here if person from modal agrees to get shift covereed
 
       let newShifts = this.state.shifts;
-      let notes = "testNotes";
       for (let i = 0; i < newShifts.length; i++) {
         if (newShifts[i].id == e.target.id) {
           newShifts[i].color = "#C187D3";
@@ -110,18 +109,18 @@ export default class StaticCalendar extends React.Component {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           coverage: true,
           shiftID: e.target.id,
-          sentNotes: notes
-        })
+          sentNotes: notes,
+        }),
       })
-        .then(response => {
+        .then((response) => {
           return response.json();
         })
-        .then(jsonResponse => {
+        .then((jsonResponse) => {
           console.log(jsonResponse);
         });
       this.setState({ shifts: newShifts });
@@ -157,7 +156,7 @@ export default class StaticCalendar extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm"
+      "11pm",
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -194,8 +193,8 @@ export default class StaticCalendar extends React.Component {
         width: "450px",
         height: "400px",
         transform: "translate(-50%, -50%)",
-        overflow: 0
-      }
+        overflow: 0,
+      },
     };
 
     return (
@@ -261,25 +260,8 @@ export default class StaticCalendar extends React.Component {
 function submitClick() {
   var reason = document.getElementById("reason");
   var reasonText = reason.value;
-  console.log(reasonText);
-
-  fetch("http://localhost:8000/yourshifts/1", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      firstName: reasonText
-    })
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(jsonResponse => {
-      console.log(jsonResponse);
-    });
-  function cancelClick() {
-    console.log("doesNothingForNow");
-  }
+  return reasonText;
+}
+function cancelClick() {
+  console.log("doesNothingForNow");
 }
