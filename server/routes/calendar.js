@@ -18,7 +18,6 @@ router.post("/changecoverage", (req, res) => {
       if (error) {
         //  throw error;
       }
-      console.log(result.rows);
     }
   );
   pool.query(
@@ -110,7 +109,7 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.get("/shifts", function(req, res) {
+router.get("/shifts", function (req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;

@@ -2,7 +2,7 @@ import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
-
+let currentClicked = null;
 function Timeslot(props) {
   return (
     <div
@@ -58,6 +58,8 @@ export default class StaticCalendar extends React.Component {
     this.stateFixer = this.stateFixer.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.submitClick = this.submitClick.bind(this);
+    this.cancelClick = this.cancelClick.bind(this);
   }
 
   closeModal() {
@@ -92,44 +94,43 @@ export default class StaticCalendar extends React.Component {
 
   stateFixer(e) {
     if (e.target.id != "") {
-      //Open Modal here --> if they agree to get shift covered then run below.
-      let notes = this.openModal();
-
-      // If they hit cancel do not run below (need if else clause for below)
-
-      //Start running here if person from modal agrees to get shift covereed
-
-      let newShifts = this.state.shifts;
-      for (let i = 0; i < newShifts.length; i++) {
-        if (newShifts[i].id == e.target.id) {
-          newShifts[i].color = "#C187D3";
-        }
-      }
-      fetch("/changecoverage", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          coverage: true,
-          shiftID: e.target.id,
-          sentNotes: notes,
-        }),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((jsonResponse) => {
-          console.log(jsonResponse);
-        });
-      this.setState({ shifts: newShifts });
-      //End here
-
-      //Otherwise do nothing
+      currentClicked = e;
+      this.openModal();
     }
   }
-
+  submitClick() {
+    var reason = document.getElementById("reason");
+    var notes = reason.value;
+    let newShifts = this.state.shifts;
+    for (let i = 0; i < newShifts.length; i++) {
+      if (newShifts[i].id == currentClicked.target.id) {
+        newShifts[i].color = "#C187D3";
+      }
+    }
+    fetch("/changecoverage", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        coverage: true,
+        shiftID: currentClicked.target.id,
+        sentNotes: notes,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log(jsonResponse);
+      });
+    this.setState({ shifts: newShifts });
+    this.closeModal();
+  }
+  cancelClick() {
+    this.closeModal();
+  }
   render() {
     const timeslots = [];
     const hours = [
@@ -215,7 +216,7 @@ export default class StaticCalendar extends React.Component {
           </div>
           <div className="button-container">
             {/* <a href="/staticcalendar/1"> */}
-            <button className="CancelButton">
+            <button className="CancelButton" onClick={this.cancelClick}>
               <div className="CancelHover">
                 <div className="CancelText">
                   <h4> Cancel</h4>
@@ -223,7 +224,7 @@ export default class StaticCalendar extends React.Component {
               </div>
             </button>
             {/* </a> */}
-            <button className="SubmitButton" onClick={submitClick}>
+            <button className="SubmitButton" onClick={this.submitClick}>
               <div className="SubmitText">
                 <h4>Submit</h4>
               </div>
@@ -255,13 +256,4 @@ export default class StaticCalendar extends React.Component {
       </div>
     );
   }
-}
-
-function submitClick() {
-  var reason = document.getElementById("reason");
-  var reasonText = reason.value;
-  return reasonText;
-}
-function cancelClick() {
-  console.log("doesNothingForNow");
 }
