@@ -4,11 +4,7 @@ var router = express.Router();
 var pool = require("../db/db");
 router.post("/changecoverage", (req, res) => {
   var coverage = req.body.coverage;
-  if (coverage) {
-    approve = "true";
-  } else {
-    approve = "false";
-  }
+  approve = true;
   var shiftID = req.body.shiftID;
   var notes = req.body.sentNotes;
   pool.query(

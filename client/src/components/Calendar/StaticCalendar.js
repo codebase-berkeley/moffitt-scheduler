@@ -3,6 +3,7 @@ import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
 let currentClicked = null;
+let currentClickedID = null;
 function Timeslot(props) {
   return (
     <div
@@ -95,6 +96,7 @@ export default class StaticCalendar extends React.Component {
   stateFixer(e) {
     if (e.target.id != "") {
       currentClicked = e;
+      currentClickedID = e.target.id;
       this.openModal();
     }
   }
@@ -103,7 +105,7 @@ export default class StaticCalendar extends React.Component {
     var notes = reason.value;
     let newShifts = this.state.shifts;
     for (let i = 0; i < newShifts.length; i++) {
-      if (newShifts[i].id == currentClicked.target.id) {
+      if (newShifts[i].id == currentClickedID) {
         newShifts[i].color = "#C187D3";
       }
     }
@@ -115,7 +117,7 @@ export default class StaticCalendar extends React.Component {
       },
       body: JSON.stringify({
         coverage: true,
-        shiftID: currentClicked.target.id,
+        shiftID: currentClickedID,
         sentNotes: notes,
       }),
     })
