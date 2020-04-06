@@ -17,9 +17,7 @@ router.post("/save", (req, res) => {
   );
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
-      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${
-      items[i][0]
-      }, ${items[i][1]})`,
+      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i][0]}, ${items[i][1]})`,
       (error, result) => {
         if (error) {
           throw error;
@@ -33,7 +31,9 @@ router.post("/save", (req, res) => {
 router.post("/staticcalendar/:userId", (req, res) => {
   let shifts = req.body.items;
   pool.query(
-    'SELECT * FROM SHIFTS WHERE sle_id = $1', [req.params.userId], (error, result) => {
+    "SELECT * FROM SHIFTS WHERE sle_id = $1",
+    [req.params.userId],
+    (error, result) => {
       if (error) {
         throw error;
       }
@@ -61,7 +61,8 @@ router.post("/staticcalendar/:userId", (req, res) => {
         }
       }
       return res.json({ shifts: shifts });
-    });
+    }
+  );
 });
 
 router.post("/save", (req, res) => {
@@ -110,6 +111,64 @@ router.get("/availability/:userId", (req, res) => {
       return res.json({ schedule: selected });
     }
   );
+});
+
+const coverColors = ["#ffff42", "#ffaf0f", "#ffc34d", "#4eb548"];
+
+router.post("/openshifts/:userId", (req, res) => {
+  let shifts = req.body.items;
+  pool.query(
+    "select * from coverrequests inner join shifts on coverrequests.shift_id = shifts.shift_id where coverer_id is not distinct from null and sle_id != $1",
+    [req.body.userId],
+    (error, result) => {
+      if (error) {
+        console.log(error);
+        throw error;
+      }
+      let shiftid_to_color = {};
+      for (var j = 0; j < result.rows.length; j += 1) {
+        let currentRow1 = result.rows[j];
+        if (!(currentRow1.shift_id in shiftid_to_color)) {
+          shiftid_to_color[currentRow1.shift_id] = coverColors[j % 4];
+        }
+        for (var i = 0; i < 168; i += 1) {
+          let sameStartEndValid =
+            shifts[i].day == currentRow1.start_time.getDay() &&
+            shifts[i].start >= currentRow1.start_time.getHours() &&
+            shifts[i].end <= currentRow1.end_time.getHours();
+          let diffStartEndValid =
+            currentRow1.start_time.getDay() != currentRow1.end_time.getDay() &&
+            ((shifts[i].day == currentRow1.start_time.getDay() &&
+              shifts[i].start >= currentRow1.start_time.getHours()) ||
+              (shifts[i].day == currentRow1.end_time.getDay() &&
+                shifts[i].end <= currentRow1.end_time.getHours()));
+          if (sameStartEndValid || diffStartEndValid) {
+            shifts[i].id = currentRow1.shift_id;
+            shifts[i].color = shiftid_to_color[shifts[i].id];
+            shifts[i].sleid = currentRow1.sle_id;
+            shifts[i].location = currentRow1.location;
+          }
+        }
+      }
+      return res.json({ shifts: shifts });
+    }
+  );
+});
+
+router.post("/updateopenshifts", function (req, res) {
+  let sleID = req.body.sleID;
+  let shiftID = req.body.shiftID;
+  pool.query(
+    "update coverrequests set coverer_id = $1 where shift_id = $2",
+    [sleID, shiftID],
+    (error, result) => {
+      if (error) {
+        console.log(error);
+        throw error;
+      }
+    }
+  );
+  return res.json({ successful: true });
 });
 
 module.exports = router;

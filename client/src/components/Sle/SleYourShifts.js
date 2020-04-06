@@ -13,6 +13,7 @@ export default class SleShifts extends React.Component {
   render() {
     var shiftsLink = "/yourshifts/" + this.props.match.params.userId;
     var availabilityLink = "/availability/" + this.props.match.params.userId;
+    var openshiftsLink = "/openshifts/" + this.props.match.params.userId;
 
     return (
       <div class="everything">
@@ -37,7 +38,7 @@ export default class SleShifts extends React.Component {
         </div>
         <div class="sidebar">
           <SidebarElement title="Your Shifts" link={shiftsLink} />
-          <SidebarElement title="Open Shifts" />
+          <SidebarElement title="Open Shifts" link={openshiftsLink} />
           <SidebarElement title="Availability" link={availabilityLink} />
         </div>
         <div class="StaticCalendar">
