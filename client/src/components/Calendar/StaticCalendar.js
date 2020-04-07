@@ -101,21 +101,14 @@ export default class StaticCalendar extends React.Component {
       /*The point of the background color check is to make sure that once a shift is requested to be covered,
        * this can't happen again for the same shift.
        */
-      console.log(e.target.style.backgroundColor);
       currentClicked = e;
       currentClickedID = e.target.id;
       this.openModal();
     }
   }
   submitClick() {
-    var reason = document.getElementById("reason");
-    var notes = reason.value;
-    let newShifts = this.state.shifts;
-    for (let i = 0; i < newShifts.length; i++) {
-      if (newShifts[i].id == currentClickedID) {
-        newShifts[i].color = "#C187D3";
-      }
-    }
+    let reason = document.getElementById("reason");
+    let notes = reason.value;
     fetch("/changecoverage", {
       method: "POST",
       headers: {
@@ -132,9 +125,15 @@ export default class StaticCalendar extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
+        let newShifts = this.state.shifts;
         console.log(jsonResponse);
+        for (let i = 0; i < newShifts.length; i++) {
+          if (newShifts[i].id == currentClickedID) {
+            newShifts[i].color = "#C187D3";
+          }
+        }
+        this.setState({ shifts: newShifts });
       });
-    this.setState({ shifts: newShifts });
     this.closeModal();
   }
   cancelClick() {
