@@ -126,7 +126,6 @@ export default class StaticCalendar extends React.Component {
       })
       .then((jsonResponse) => {
         let newShifts = this.state.shifts;
-        console.log(jsonResponse);
         for (let i = 0; i < newShifts.length; i++) {
           if (newShifts[i].id == currentClickedID) {
             newShifts[i].color = "#C187D3";
