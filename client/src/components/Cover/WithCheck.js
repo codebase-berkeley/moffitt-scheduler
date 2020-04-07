@@ -30,10 +30,16 @@ class WithCheck extends React.Component {
           <p className="covername">{this.props.covername}</p>
         </div>
         <div className="approval">
-          <button className="checkbutton" onClick={this.approvalClick}>
+          <button
+            className="checkbutton"
+            onClick={() => this.approvalClick(this.props.requestId)}
+          >
             <img className="check_nofill" src={checkNofill} alt="check" />
           </button>
-          <button className="denybutton" onClick={this.denialClick}>
+          <button
+            className="denybutton"
+            onClick={() => this.denialClick(this.props.requestId)}
+          >
             <img className="deny_nofill" src={denyNofill} alt="deny" />
           </button>
         </div>
@@ -41,17 +47,17 @@ class WithCheck extends React.Component {
     );
   }
 
-  approvalClick(e) {
-    console.log("In click function");
+  approvalClick(reqID) {
     fetch("/pendingsupervisor", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ approve: true, requestID: 1 })
+      body: JSON.stringify({ approve: true, requestID: reqID })
     })
       .then(response => {
+        this.props.fixState(reqID);
         return response.json();
       })
       .then(jsonResponse => {
@@ -59,7 +65,7 @@ class WithCheck extends React.Component {
       });
   }
 
-  denialClick(e) {
+  denialClick(reqID) {
     console.log("In click function");
     fetch("/pendingsupervisor", {
       method: "POST",
@@ -67,9 +73,10 @@ class WithCheck extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ approve: false, requestID: 1 })
+      body: JSON.stringify({ approve: false, requestID: reqID })
     })
       .then(response => {
+        this.props.fixState(reqID);
         return response.json();
       })
       .then(jsonResponse => {

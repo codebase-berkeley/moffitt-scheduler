@@ -11,7 +11,6 @@ router.post("/pendingsupervisor", (req, res) => {
     approve = "Denied";
   }
   var requestID = req.body.requestID;
-
   pool.query(
     "UPDATE coverrequests SET supervisor_status = $1 WHERE request_id = $2",
     [approve, requestID],
@@ -19,11 +18,20 @@ router.post("/pendingsupervisor", (req, res) => {
       if (error) {
         throw error;
       }
-      console.log(result.rows);
     }
   );
-
-  console.log("approve", approve);
+  if (approve === "Approved") {
+    pool.query(
+      `UPDATE shifts SET sle_id = coverer_id
+    FROM coverrequests
+    WHERE coverrequests.shift_id = shifts.shift_id`,
+      (error, result) => {
+        if (error) {
+          throw error;
+        }
+      }
+    );
+  }
   res.json({ Successful: true });
 });
 
@@ -89,7 +97,28 @@ router.get("/requesthistory", (req, res) => {
           result.rows[i].date = day + month + date + ", " + year;
           result.rows[i].time = hour + ":" + min + "0" + " AM"; //hardcoded for msd
         }
-        console.log("result.rows:", result.rows);
+        res.json({ items: result.rows });
+      }
+    }
+  );
+});
+
+router.get("/pendingsupervisor", (req, res) => {
+  pool.query(
+    `SELECT s1.name AS covername, s2.name AS needname, supervisor_status AS approval, shifts.start_time AS time, 
+    shifts.location AS loc, request_id AS requestid
+    FROM coverrequests, sle AS s1, sle AS s2, shifts
+    WHERE coverer_id = s1.id AND coveree_id = s2.id AND coverrequests.shift_id = shifts.shift_id AND supervisor_status = 'null'`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+        for (var i = 0; i < result.rows.length; i++) {
+          result.rows[i].desk = "Fourth Floor";
+          result.rows[i].date = result.rows[i].time.toDateString();
+          result.rows[i].time = result.rows[i].time.toTimeString();
+          result.rows[i].requestId = result.rows[i].requestid;
+        }
         res.json({ items: result.rows });
       }
     }
@@ -105,7 +134,7 @@ router.get("/pendingcoverage", (req, res) => {
         date: "Wednesday, March 6, 2020",
         time: "3:00 PM - 5:00 PM",
         needname: "Broco Lee",
-        message: "Going home for the weekend"
+        message: "Going home for the weekend",
       },
       {
         desk: "Fourth Floor",
@@ -113,32 +142,9 @@ router.get("/pendingcoverage", (req, res) => {
         date: "Thursday, March 7, 2020",
         time: "3:00 PM - 5:00 PM",
         needname: "Broco Lee",
-        message: "Need sleep. Very tired."
-      }
-    ]
-  };
-  res.json(database);
-});
-router.get("/pendingsupervisor", (req, res) => {
-  var database = {
-    items: [
-      {
-        desk: "Fourth Floor",
-        loc: "Moffitt",
-        date: "Wednesday, March 6, 2020",
-        time: "3:00 PM - 5:00 PM",
-        needname: "Broco Lee",
-        covername: "Ug Lee"
+        message: "Need sleep. Very tired.",
       },
-      {
-        desk: "Fourth Floor",
-        loc: "Moffitt",
-        date: "Thursday, March 7, 2020",
-        time: "3:00 PM - 5:00 PM",
-        needname: "Broco Lee",
-        covername: "Ug Lee"
-      }
-    ]
+    ],
   };
   res.json(database);
 });

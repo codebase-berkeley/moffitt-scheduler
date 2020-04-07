@@ -45,7 +45,7 @@ export default class Cover extends React.Component {
       <div>
         <div className="topWords">
           <button className="button" onClick={this.showPendingCoverage}>
-            <h1> Pending Coverage</h1>;
+            <h1> Pending Coverage</h1>
           </button>
           <button
             autoFocus
