@@ -1,11 +1,11 @@
 import React from "react";
-import "./SleAvailability.css";
+import "./SleOpenShifts.css";
 import "./SidebarElement.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
-import Calendar from "../Calendar/Calendar.js";
+import OpenShiftsCal from "../Calendar/OpenShiftsCal.js";
 
-export default class SleCalendar extends React.Component {
+export default class SleOpenShifts extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -24,12 +24,12 @@ export default class SleCalendar extends React.Component {
               <div class="user-name">
                 <a href="/login">Log Out</a>
               </div>
-              {/* <div class="dropdown-arrow"></div> */}
-              {/* <div class="dropdown-menu">
+              {/* <div class="dropdown-arrow"></div>
+              <div class="dropdown-menu">
                 <ul>
                   <li>View Profile</li>
                   <a href="/login">
-                    <li>Log Out</li>
+                    <li>Log Out </li>
                   </a>
                 </ul>
               </div> */}
@@ -41,8 +41,8 @@ export default class SleCalendar extends React.Component {
           <SidebarElement title="Open Shifts" link={openshiftsLink} />
           <SidebarElement title="Availability" link={availabilityLink} />
         </div>
-        <div class="Calendar">
-          <Calendar userId={this.props.match.params.userId} />
+        <div class="OpenShiftsCal">
+          <OpenShiftsCal userId={this.props.match.params.userId} />
         </div>
       </div>
     );
