@@ -31,18 +31,7 @@ router.post("/pendingsupervisor", (req, res) => {
         }
       }
     );
-  } else {
-    pool.query(
-      `DELETE FROM coverrequests 
-      WHERE shift`,
-      (error, result) => {
-        if (error) {
-          throw error;
-        }
-      }
-    );
   }
-
   res.json({ Successful: true });
 });
 
@@ -145,7 +134,7 @@ router.get("/pendingcoverage", (req, res) => {
         date: "Wednesday, March 6, 2020",
         time: "3:00 PM - 5:00 PM",
         needname: "Broco Lee",
-        message: "Going home for the weekend"
+        message: "Going home for the weekend",
       },
       {
         desk: "Fourth Floor",
@@ -153,9 +142,9 @@ router.get("/pendingcoverage", (req, res) => {
         date: "Thursday, March 7, 2020",
         time: "3:00 PM - 5:00 PM",
         needname: "Broco Lee",
-        message: "Need sleep. Very tired."
-      }
-    ]
+        message: "Need sleep. Very tired.",
+      },
+    ],
   };
   res.json(database);
 });

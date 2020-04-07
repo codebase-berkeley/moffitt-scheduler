@@ -6,7 +6,7 @@ class PendingSupervisor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [{}]
+      items: [],
     };
     this.processData = this.processData.bind(this);
     this.removeFromState = this.removeFromState.bind(this);
@@ -16,15 +16,15 @@ class PendingSupervisor extends React.Component {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         this.setState({
-          items: jsonResponse.items
+          items: jsonResponse.items,
         });
       });
   }
@@ -49,7 +49,7 @@ class PendingSupervisor extends React.Component {
   }
 
   removeFromState(requestIndex) {
-    var newItems = [{}];
+    var newItems = [];
     for (var i = 0; i < this.state.items.length; i++) {
       if (requestIndex !== this.state.items[i].requestId) {
         newItems.push(this.state.items[i]);
