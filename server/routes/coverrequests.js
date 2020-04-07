@@ -108,7 +108,7 @@ router.get("/pendingsupervisor", (req, res) => {
     `SELECT s1.name AS covername, s2.name AS needname, supervisor_status AS approval, shifts.start_time AS time, 
     shifts.location AS loc, request_id AS requestid
     FROM coverrequests, sle AS s1, sle AS s2, shifts
-    WHERE coverer_id = s1.id AND coveree_id = s2.id AND coverrequests.shift_id = shifts.shift_id AND supervisor_status = 'null'`,
+    WHERE coverer_id = s1.id AND coveree_id = s2.id AND coverrequests.shift_id = shifts.shift_id AND supervisor_status is null`,
     (error, result) => {
       if (error) {
         throw error;
@@ -134,7 +134,7 @@ router.get("/pendingcoverage", (req, res) => {
         date: "Wednesday, March 6, 2020",
         time: "3:00 PM - 5:00 PM",
         needname: "Broco Lee",
-        message: "Going home for the weekend",
+        message: "Going home for the weekend"
       },
       {
         desk: "Fourth Floor",
@@ -142,9 +142,9 @@ router.get("/pendingcoverage", (req, res) => {
         date: "Thursday, March 7, 2020",
         time: "3:00 PM - 5:00 PM",
         needname: "Broco Lee",
-        message: "Need sleep. Very tired.",
-      },
-    ],
+        message: "Need sleep. Very tired."
+      }
+    ]
   };
   res.json(database);
 });
