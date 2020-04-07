@@ -80,8 +80,8 @@ export default class StaticCalendar extends React.Component {
       },
       body: JSON.stringify({
         items: this.state.shifts,
-        userId: this.props.userId,
-      }),
+        userId: this.props.userId
+      })
     })
       .then((response) => {
         console.log("response");
