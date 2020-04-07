@@ -123,3 +123,18 @@
   display: flex;
   justify-content: center;
 }
+
+.requestCoverHeader {
+  text-align: center;
+  padding-bottom: 10%;
+}
+
+.reasonInput {
+  width: 95%;
+  padding: 2%;
+  border-radius: 5px;
+}
+
+.Reason {
+  padding-bottom: 5%;
+}

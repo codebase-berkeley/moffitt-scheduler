@@ -2,7 +2,40 @@ var express = require("express");
 var router = express.Router();
 
 var pool = require("../db/db");
-
+router.post("/changecoverage", (req, res) => {
+  var coverage = req.body.coverage;
+  approve = true;
+  var shiftID = req.body.shiftID;
+  var notes = req.body.sentNotes;
+  pool.query(
+    "UPDATE shifts SET cover_requested = $1 WHERE shift_id = $2",
+    [approve, shiftID],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+    }
+  );
+  pool.query(
+    "SELECT sle_id FROM shifts WHERE shift_id = $1",
+    [shiftID],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      pool.query(
+        "INSERT INTO coverrequests (coverer_id, coveree_id, shift_id, supervisor_status, notes) VALUES (null, $3, $1, null, $2)",
+        [shiftID, notes, result.rows[0].sle_id],
+        (error, result) => {
+          if (error) {
+            throw error;
+          }
+        }
+      );
+    }
+  );
+  return res.json({ Successful: true });
+});
 router.post("/save", (req, res) => {
   items = req.body.items;
   var userId = req.body.userId;

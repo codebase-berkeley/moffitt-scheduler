@@ -1,9 +1,18 @@
 import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
-
+import Modal from "react-modal";
+let currentClicked = null;
+let currentClickedID = null;
 function Timeslot(props) {
-  return <div class="item-cell" style={{ backgroundColor: props.color }}></div>;
+  return (
+    <div
+      class="item-cell"
+      style={{ backgroundColor: props.color }}
+      id={props.id}
+      onClick={props.onClick}
+    ></div>
+  );
 }
 
 class Shift {
@@ -46,7 +55,20 @@ var weekString =
 export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { shifts: initialShifts() };
+    this.state = { shifts: initialShifts(), modalIsOpen: false };
+    this.stateFixer = this.stateFixer.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.submitClick = this.submitClick.bind(this);
+    this.cancelClick = this.cancelClick.bind(this);
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
   }
 
   componentDidMount() {
@@ -54,23 +76,68 @@ export default class StaticCalendar extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         items: this.state.shifts,
         userId: this.props.userId
       })
     })
-      .then(response => {
+      .then((response) => {
         console.log("response");
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         console.log(jsonResponse.shifts);
         this.setState({ shifts: jsonResponse.shifts });
       });
   }
 
+  stateFixer(e) {
+    if (
+      e.target.id != "" &&
+      e.target.style.backgroundColor != "rgb(193, 135, 211)"
+    ) {
+      /*The point of the background color check is to make sure that once a shift is requested to be covered,
+       * this can't happen again for the same shift.
+       */
+      currentClicked = e;
+      currentClickedID = e.target.id;
+      this.openModal();
+    }
+  }
+  submitClick() {
+    let reason = document.getElementById("reason");
+    let notes = reason.value;
+    fetch("/changecoverage", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        coverage: true,
+        shiftID: currentClickedID,
+        sentNotes: notes,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        let newShifts = this.state.shifts;
+        for (let i = 0; i < newShifts.length; i++) {
+          if (newShifts[i].id == currentClickedID) {
+            newShifts[i].color = "#C187D3";
+          }
+        }
+        this.setState({ shifts: newShifts });
+      });
+    this.closeModal();
+  }
+  cancelClick() {
+    this.closeModal();
+  }
   render() {
     const timeslots = [];
     const hours = [
@@ -97,7 +164,7 @@ export default class StaticCalendar extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm"
+      "11pm",
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -111,6 +178,7 @@ export default class StaticCalendar extends React.Component {
           <Timeslot
             color={this.state.shifts[ti].color}
             id={this.state.shifts[ti].id}
+            onClick={this.stateFixer}
           />
         );
         ti += 1;
@@ -126,9 +194,50 @@ export default class StaticCalendar extends React.Component {
       );
     }
 
+    const customStyles = {
+      content: {
+        top: "400px",
+        left: "50%",
+        width: "450px",
+        height: "400px",
+        transform: "translate(-50%, -50%)",
+        overflow: 0,
+      },
+    };
+
     return (
       <div id="overall-container">
         <h1 id="yourshifts">Your Shifts</h1>
+        <Modal
+          // className="box"
+          isOpen={this.state.modalIsOpen}
+          // onAfterOpen={afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h1 className="requestCoverHeader">Request Cover</h1>
+          <div className="reasonForCover">
+            <h3 className="Reason">Reason:</h3>
+            <input className="reasonInput" id="reason" />
+          </div>
+          <div className="button-container">
+            {/* <a href="/staticcalendar/1"> */}
+            <button className="CancelButton" onClick={this.cancelClick}>
+              <div className="CancelHover">
+                <div className="CancelText">
+                  <h4> Cancel</h4>
+                </div>
+              </div>
+            </button>
+            {/* </a> */}
+            <button className="SubmitButton" onClick={this.submitClick}>
+              <div className="SubmitText">
+                <h4>Submit</h4>
+              </div>
+            </button>
+          </div>
+        </Modal>
         <div id="schedule-container-st">
           <div id="frontWords">
             <h1 id="weekString">{weekString}</h1>
@@ -145,7 +254,9 @@ export default class StaticCalendar extends React.Component {
           </div>
           <div id="inner-schedule">
             <div></div>
+
             {wkdays}
+
             {timeslots}
           </div>
         </div>
