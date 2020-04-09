@@ -43,7 +43,7 @@
 
 .moffitt3Display {
   flex: 1;
-  background-color: #1de0a6;
+  background-color: #ff8d06;
   color: white;
   margin-right: 60%;
   height: 30px;
@@ -89,7 +89,7 @@
 }
 .moffitt4Display {
   flex: 1;
-  background-color: #159e75;
+  background-color: #04b17e;
   color: white;
   margin-right: 60%;
   height: 30px;
@@ -135,7 +135,7 @@
 }
 .doeDisplay {
   flex: 1;
-  background-color: #f46036;
+  background-color: #d7269b;
   color: white;
   margin-right: 60%;
   height: 30px;
