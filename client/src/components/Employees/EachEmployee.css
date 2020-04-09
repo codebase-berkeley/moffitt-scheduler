@@ -41,12 +41,13 @@
   padding-bottom: 5%;
 }
 
-.first {
+.moffitt3Display {
   flex: 1;
   background-color: #1de0a6;
   color: white;
-  width: 90%;
+  margin-right: 60%;
   height: 30px;
+  width: 140px;
   padding: 2%;
   margin: 20px;
   font-family: "Open Sans", sans-serif;
@@ -63,13 +64,105 @@
   padding-top: 0%;
   padding-bottom: 0%;
 }
-.second {
+.moffitt3NoDisplay {
+  flex: 1;
+  background-color: white;
+  color: white;
+  margin-right: 60%;
+  height: 30px;
+  width: 140px;
+  padding: 2%;
+  margin: 20px;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 20.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+.moffitt4Display {
+  flex: 1;
+  background-color: #159e75;
+  color: white;
+  margin-right: 60%;
+  height: 30px;
+  width: 140px;
+  padding: 2%;
+  margin: 20px;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 20.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+.moffitt4NoDisplay {
+  flex: 1;
+  background-color: white;
+  color: white;
+  margin-right: 60%;
+  height: 30px;
+  width: 140px;
+  padding: 2%;
+  margin: 20px;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 20.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+.doeDisplay {
   flex: 1;
   background-color: #f46036;
   color: white;
   margin-right: 60%;
   height: 30px;
-  width: 150px;
+  width: 100px;
+  padding: 2%;
+  margin: 20px;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 20.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+.doeNoDisplay {
+  flex: 1;
+  background-color: white;
+  color: white;
+  margin-right: 60%;
+  height: 30px;
+  width: 100px;
   padding: 2%;
   margin: 20px;
   font-family: "Open Sans", sans-serif;

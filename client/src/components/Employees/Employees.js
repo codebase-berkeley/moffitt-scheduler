@@ -145,32 +145,23 @@ export default function Employees() {
       <EachEmployee
         name="Sahil Thakur"
         email="sahilthakur@berkeley.edu"
-        firstLibrary="Moffitt"
-        secondLibrary="Doe"
+        moffitt3TrainingLevel="1"
+        moffitt4TrainingLevel="2"
+        doeTrainingLevel="3"
       />
       <EachEmployee
         name="Brian DeLeonardis"
         email="bdeleonardis@berkeley.edu"
-        firstLibrary="Moffitt"
-        secondLibrary="Doe"
+        moffitt3TrainingLevel="1"
+        moffitt4TrainingLevel="2"
+        doeTrainingLevel="3"
       />
       <EachEmployee
         name="Bianca Lee"
         email="biancalee@berkeley.edu"
-        firstLibrary="Moffitt"
-        secondLibrary="Doe"
-      />
-      <EachEmployee
-        name="Kat Maucec"
-        email="Kat@berkeley.edu"
-        firstLibrary="Doe"
-        secondLibrary="Moffitt"
-      />
-      <EachEmployee
-        name="Kerry Huang"
-        email="kerry@berkeley.edu"
-        firstLibrary="Doe"
-        secondLibrary="Moffitt"
+        moffitt3TrainingLevel="1"
+        moffitt4TrainingLevel="2"
+        doeTrainingLevel="3"
       />
     </div>
   );
