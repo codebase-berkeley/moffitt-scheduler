@@ -7,7 +7,7 @@ var avails = require("./availabilities");
 // want to make the problem even smaller when you're starting out
 // (i.e only schedule one day) to make it easier to get started.
 var moffitt3Hours = [
-  { day: "sun", start: 13, end: 16 },
+  { day: "sun", start: 13, end: 16, location: "Moffitt 3" },
   { day: "mon", start: 10, end: 14 },
   { day: "tue", start: 10, end: 14 },
 ];
@@ -57,13 +57,28 @@ class Sle {
 
 /** Initialize a list of all SLEs using the info from imported avails.
  */
+
 function initSles(availInfo) {
-  return 1; //FIXME;
+  var retSLEs = [];
+  for (let k in availInfo) {
+    const sleJSON = JSON.stringify(availInfo[k]);
+    var sleObj = JSON.parse(sleJSON);
+    var individualSle = {
+      id: sleObj.id,
+      tMoffitt3: sleObj.tMoffitt3,
+      tMoffitt4: sleObj.tMoffitt4,
+      tMain: sleObj.tMain,
+      avails: sleObj.avails,
+      hoursLeft: maxWeeklyShifts,
+    };
+    retSLEs.push(individualSle);
+  }
+  return retSLEs;
 }
 
-console.log(avails);
+allSles = initSles(avails);
 
-var allSles = initSles(avails);
+console.log(allSles);
 
 function initShifts() {}
 
