@@ -9,13 +9,13 @@ var avails = require("./availabilities");
 var moffitt3Hours = [
   { day: "sun", start: 13, end: 16, location: "Moffitt 3" },
   { day: "mon", start: 10, end: 14 },
-  { day: "tue", start: 10, end: 14 },
+  { day: "tue", start: 10, end: 14 }
 ];
 
 var mainHours = [
   { day: "sun", start: 14, end: 17 },
   { day: "mon", start: 9, end: 13 },
-  { day: "tue", start: 9, end: 12 },
+  { day: "tue", start: 9, end: 12 }
 ];
 
 // In my opinion the first step is to covert those arrays
@@ -27,6 +27,7 @@ var minEmployeesMain = 3;
 var minShiftLength = 2; // 1 hour because two half hour shifts is equal to one hour
 var maxShiftLength = 8; // 4 hours
 var maxWeeklyShifts = 10; // 5 hours
+<<<<<<< HEAD
 var maxHoleLength = 2; //1 hour
 
 /** Data structure for each 30-minute shift
@@ -81,6 +82,8 @@ allSles = initSles(avails);
 console.log(allSles);
 
 function initShifts() {}
+=======
+>>>>>>> parent of d67cd730... skeleton complete
 
 // Next you need to count how many people can work
 // each of those half hour time slots
