@@ -9,13 +9,13 @@ var avails = require("./availabilities");
 var moffitt3Hours = [
   { day: "sun", start: 13, end: 16 },
   { day: "mon", start: 10, end: 14 },
-  { day: "tue", start: 10, end: 14 }
+  { day: "tue", start: 10, end: 14 },
 ];
 
 var mainHours = [
   { day: "sun", start: 14, end: 17 },
   { day: "mon", start: 9, end: 13 },
-  { day: "tue", start: 9, end: 12 }
+  { day: "tue", start: 9, end: 12 },
 ];
 
 // In my opinion the first step is to covert those arrays
@@ -27,6 +27,45 @@ var minEmployeesMain = 3;
 var minShiftLength = 2; // 1 hour because two half hour shifts is equal to one hour
 var maxShiftLength = 8; // 4 hours
 var maxWeeklyShifts = 10; // 5 hours
+var maxHoleLength = 2; //1 hour
+
+/** Data structure for each 30-minute shift
+ */
+class Shift {
+  constructor(start, end, weekday, location, availSles, assignSles) {
+    this.start = start;
+    this.end = end;
+    this.weekday = weekday;
+    this.location = location;
+    this.availSles = availSles;
+    this.assignSles = assignSles;
+  }
+}
+
+/** Data structure for each employee
+ */
+class Sle {
+  constructor(id, tMoffitt3, tMoffitt4, tMain, avails, hoursLeft) {
+    this.id = id;
+    this.tMoffitt3 = tMoffitt3;
+    this.tMoffitt4 = tMoffitt4;
+    this.tMain = tMain;
+    this.avails = avails;
+    this.hoursLeft = hoursLeft;
+  }
+}
+
+/** Initialize a list of all SLEs using the info from imported avails.
+ */
+function initSles(availInfo) {
+  return 1; //FIXME;
+}
+
+console.log(avails);
+
+var allSles = initSles(avails);
+
+function initShifts() {}
 
 // Next you need to count how many people can work
 // each of those half hour time slots
