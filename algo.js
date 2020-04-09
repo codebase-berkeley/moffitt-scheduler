@@ -8,14 +8,14 @@ var avails = require("./availabilities");
 // (i.e only schedule one day) to make it easier to get started.
 var moffitt3Hours = [
   { day: "sun", start: 13, end: 16, location: "Moffitt 3" },
-  { day: "mon", start: 10, end: 14 },
-  { day: "tue", start: 10, end: 14 }
+  { day: "mon", start: 10, end: 14, location: "Moffitt 3" },
+  { day: "tue", start: 10, end: 14, location: "Moffitt 3" },
 ];
 
 var mainHours = [
-  { day: "sun", start: 14, end: 17 },
-  { day: "mon", start: 9, end: 13 },
-  { day: "tue", start: 9, end: 12 }
+  { day: "sun", start: 14, end: 17, location: "Main" },
+  { day: "mon", start: 9, end: 13, location: "Main" },
+  { day: "tue", start: 9, end: 12, location: "Main" },
 ];
 
 // In my opinion the first step is to covert those arrays
@@ -27,23 +27,23 @@ var minEmployeesMain = 3;
 var minShiftLength = 2; // 1 hour because two half hour shifts is equal to one hour
 var maxShiftLength = 8; // 4 hours
 var maxWeeklyShifts = 10; // 5 hours
-<<<<<<< HEAD
 var maxHoleLength = 2; //1 hour
 
 /** Data structure for each 30-minute shift
  */
 class Shift {
-  constructor(start, end, weekday, location, availSles, assignSles) {
+  constructor(start, end, weekday, location) {
     this.start = start;
     this.end = end;
     this.weekday = weekday;
     this.location = location;
-    this.availSles = availSles;
-    this.assignSles = assignSles;
+    this.assignSles = [];
   }
 }
 
-/** Data structure for each employee
+/** Data structure for each employee.
+ *  availShifts keeps track of each 30min Shift object this Sle can be assigned to.
+ *  availShifts will contain concurrent shifts at different locations
  */
 class Sle {
   constructor(id, tMoffitt3, tMoffitt4, tMain, avails, hoursLeft) {
@@ -53,37 +53,83 @@ class Sle {
     this.tMain = tMain;
     this.avails = avails;
     this.hoursLeft = hoursLeft;
+    this.availShifts = [];
   }
 }
 
-/** Initialize a list of all SLEs using the info from imported avails.
- */
+/** Return a list of all 30min Shift objects using a list of libraries. */
+function initShifts(libraries) {
+  retShifts = [];
+  for (let i = 0; i < libraries.length; i += 1) {
+    library = libraries[i];
+    for (let j = 0; j < library.length; j += 1) {
+      currentDay = library[j];
+      for (let s = currentDay.start; s < currentDay.end; s += 0.5) {
+        newShift = new Shift(s, s + 0.5, currentDay.day, currentDay.location);
+        retShifts.push(newShift);
+      }
+    }
+  }
+  return retShifts;
+}
 
+allShifts = initShifts([mainHours, moffitt3Hours]);
+
+/** Initialize a list of all SLEs using the info from imported avails. */
 function initSles(availInfo) {
   var retSLEs = [];
   for (let k in availInfo) {
     const sleJSON = JSON.stringify(availInfo[k]);
     var sleObj = JSON.parse(sleJSON);
-    var individualSle = {
-      id: sleObj.id,
-      tMoffitt3: sleObj.tMoffitt3,
-      tMoffitt4: sleObj.tMoffitt4,
-      tMain: sleObj.tMain,
-      avails: sleObj.avails,
-      hoursLeft: maxWeeklyShifts,
-    };
+    var individualSle = new Sle(
+      sleObj.id,
+      sleObj.tMoffitt3,
+      sleObj.tMoffitt4,
+      sleObj.tMain,
+      sleObj.avails,
+      maxWeeklyShifts
+    );
     retSLEs.push(individualSle);
+  }
+  for (let i = 0; i < retSLEs.length; i += 1) {
+    currentSle = retSLEs[i];
+    for (let j = 0; j < allShifts.length; j += 1) {
+      currentShift = allShifts[j];
+      switch (currentShift.location) {
+        case "Moffitt 3":
+          trained = currentSle.tMoffitt3;
+          break;
+        case "Moffitt 4":
+          trained = currentSle.tMoffitt4;
+          break;
+        case "Main":
+          trained = currentSle.tMain;
+          break;
+      }
+      if (trained) {
+        for (let k = 0; k < currentSle.avails.length; k += 1) {
+          if (
+            currentSle.avails[k].day == currentShift.weekday &&
+            currentSle.avails[k].slot == currentShift.start
+          ) {
+            currentSle.availShifts.push(currentShift);
+          }
+        }
+      }
+    }
   }
   return retSLEs;
 }
 
 allSles = initSles(avails);
 
-console.log(allSles);
-
-function initShifts() {}
-=======
->>>>>>> parent of d67cd730... skeleton complete
+/** Using the availShifts property of each Sle inside allSles,
+ *  return a list of each Shift object in order of rarity.
+ *  Index 0 would have the rarest shift.
+ */
+function rareShifts() {
+  return []; //FIXME
+}
 
 // Next you need to count how many people can work
 // each of those half hour time slots
