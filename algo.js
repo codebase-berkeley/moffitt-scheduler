@@ -57,7 +57,6 @@ class Sle {
 
 /** Initialize a list of all SLEs using the info from imported avails.
  */
-
 function initSles(availInfo) {
   var retSLEs = [];
   for (let k in availInfo) {
