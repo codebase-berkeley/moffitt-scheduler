@@ -2,6 +2,22 @@
   /* padding-top: 20%; */
   padding-left: 30%;
 }
+
+.editButton {
+  display: flex;
+  flex-direction: row;
+  width: 10%;
+  margin-left: 81%;
+  margin-bottom: 20px;
+  align-items: center;
+  align-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: #330c9c;
+}
+
 .buttons-container {
   display: flex;
   flex-direction: row;
