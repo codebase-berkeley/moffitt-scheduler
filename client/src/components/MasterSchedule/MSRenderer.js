@@ -146,7 +146,7 @@ function EditSchedule() {
     var email = document.getElementById("email");
     var emailText = email.value;
     console.log(emailText);
-    fetch("http://localhost:8000/employees", {
+    fetch("http://localhost:8000/masterschedule", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -175,7 +175,6 @@ function EditSchedule() {
         Edit Schedule
       </button>
       <Modal
-        // className="box"
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
