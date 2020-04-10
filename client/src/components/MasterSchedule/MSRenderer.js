@@ -52,7 +52,7 @@ export default class MSRenderer extends React.Component {
             </button>
           </div>
           <div className="editButtonCont">
-            <AddEmployee />
+            <EditSchedule />
           </div>
         </div>
 
@@ -107,7 +107,7 @@ function Box(props) {
   return <div>{props.text}</div>;
 }
 
-function AddEmployee() {
+function EditSchedule() {
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#black";
@@ -187,33 +187,25 @@ function AddEmployee() {
             className="AddEmpText"
             ref={(_subtitle) => (subtitle = _subtitle)}
           >
-            Add Employee
+            Edit Master Schedule Shift
           </h1>
-          <div className="EmployeeName">
-            <h3 className="FirstName">First Name</h3>
-            <h3 className="LastName">Last Name</h3>
-            <input className="FirstNameInput" id="firstName" />
-            <input className="LastNameInput" id="lastName" />
-          </div>
-          <div className="EmployeeEmail">
-            <h3 className="Email">Email</h3>
-            <input className="EmailInput" id="email" />
-          </div>
-          <h3 className="TrainedFor">Trained For:</h3>
-          <div className="RadioButtons">
-            <h3 className="MoffittText">Moffitt</h3>
-            <div className="MoffittButton">
-              <input
-                type="checkbox"
-                id="moffitt"
-                name="moffitt"
-                value="moffitt"
-              />
+          <div className="shiftInfo">
+            <div className="locationTag">
+              <h3 className="locTag">Moffitt Floor 4</h3>
             </div>
-            <h3 className="DoeText">Doe</h3>
-            <div className="DoeButton">
-              <input type="checkbox" id="doe" name="doe" value="doe" />
+            <div className="timeTag">
+              <h3 className="tTag">Sunday, 12AM</h3>
             </div>
+          </div>
+          <div className="dd-wrapper">
+            <div className="dd-header">
+              <div className="dd-header-title">Select Employees</div>
+            </div>
+            <ul className="dd-list">
+              <li className="dd-list-item">Kathleen Kong</li>
+              <li className="dd-list-item">Kerry Huang</li>
+              <li className="dd-list-item">Sahil Thakur</li>
+            </ul>
           </div>
         </div>
         <div className="button-container">
