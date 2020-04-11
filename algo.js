@@ -32,7 +32,8 @@ var maxHoleLength = 2; //1 hour
 /** Data structure for each 30-minute shift
  */
 class Shift {
-  constructor(start, end, weekday, location) {
+  constructor(id, start, end, weekday, location) {
+    this.id = id;
     this.start = start;
     this.end = end;
     this.weekday = weekday;
@@ -67,10 +68,19 @@ function initShifts(libraries) {
     for (let j = 0; j < library.length; j += 1) {
       currentDay = library[j];
       for (let s = currentDay.start; s < currentDay.end; s += 0.5) {
-        newShift = new Shift(s, s + 0.5, currentDay.day, currentDay.location);
+        newShift = new Shift(
+          0,
+          s,
+          s + 0.5,
+          currentDay.day,
+          currentDay.location
+        );
         retShifts.push(newShift);
       }
     }
+  }
+  for (let i = 0; i < retShifts.length; i += 1) {
+    retShifts[i].id = i;
   }
   return retShifts;
 }
@@ -130,9 +140,41 @@ allSles = initSles(avails);
  *  Index 0 would have the rarest shift.
  */
 function rareShifts() {
-  return []; //FIXME
+  var shiftsDict = new Object();
+  for (let i = 0; i < allSles.length; i += 1) {
+    currentSle = allSles[i];
+    for (let i = 0; i < currentSle.availShifts.length; i += 1) {
+      if (currentSle.availShifts[i].id in shiftsDict) {
+        shiftsDict[currentSle.availShifts[i].id] += 1;
+      } else {
+        shiftsDict[currentSle.availShifts[i].id] = 1;
+      }
+    }
+  }
+  var values = Object.values(shiftsDict);
+  values.sort();
+  sortedKeys = [];
+  for (let i = 0; i < values.length; i += 1) {
+    let value = values[i];
+    let key = Object.keys(shiftsDict)[Object.values(shiftsDict).indexOf(value)];
+    sortedKeys.push(key);
+    delete shiftsDict[key];
+  }
+  // console.log(shiftsDict);
+  sortedShifts = [];
+  for (let i = 0; i < sortedKeys.length; i += 1) {
+    for (let j = 0; j < allShifts.length; j += 1) {
+      if (sortedKeys[i] == allShifts[j].id) {
+        sortedShifts.push(allShifts[j]);
+        break;
+      }
+    }
+  }
+  return sortedShifts;
 }
 
+// rareShifts();
+console.log(rareShifts());
 // Next you need to count how many people can work
 // each of those half hour time slots
 

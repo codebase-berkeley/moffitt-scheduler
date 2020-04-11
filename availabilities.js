@@ -36,8 +36,8 @@ e1 = {
     { day: "sun", slot: 13 },
     { day: "sun", slot: 13.5 },
     { day: "sun", slot: 14 },
-    { day: "sun", slot: 14.5 }
-  ]
+    { day: "sun", slot: 14.5 },
+  ],
 };
 
 // Free from Sun 13-17
@@ -54,8 +54,8 @@ e2 = {
     { day: "sun", slot: 15 },
     { day: "sun", slot: 15.5 },
     { day: "sun", slot: 16 },
-    { day: "sun", slot: 16.5 }
-  ]
+    { day: "sun", slot: 16.5 },
+  ],
 };
 
 // Sun 14-17
@@ -81,8 +81,8 @@ e3 = {
     { day: "mon", slot: 12 },
     { day: "mon", slot: 12.5 },
     { day: "mon", slot: 13 },
-    { day: "mon", slot: 13.5 }
-  ]
+    { day: "mon", slot: 13.5 },
+  ],
 };
 
 // Sun 14-17
@@ -108,8 +108,8 @@ e4 = {
     { day: "mon", slot: 12 },
     { day: "mon", slot: 12.5 },
     { day: "mon", slot: 13 },
-    { day: "mon", slot: 13.5 }
-  ]
+    { day: "mon", slot: 13.5 },
+  ],
 };
 
 // Sun 14-17
@@ -135,8 +135,8 @@ e5 = {
     { day: "mon", slot: 12 },
     { day: "mon", slot: 12.5 },
     { day: "mon", slot: 13 },
-    { day: "mon", slot: 13.5 }
-  ]
+    { day: "mon", slot: 13.5 },
+  ],
 };
 
 // Sun 14-17
@@ -162,8 +162,8 @@ e6 = {
     { day: "mon", slot: 12 },
     { day: "mon", slot: 12.5 },
     { day: "mon", slot: 13 },
-    { day: "mon", slot: 13.5 }
-  ]
+    { day: "mon", slot: 13.5 },
+  ],
 };
 
 // Sun 14-17
@@ -189,8 +189,8 @@ e7 = {
     { day: "mon", slot: 12 },
     { day: "mon", slot: 12.5 },
     { day: "mon", slot: 13 },
-    { day: "mon", slot: 13.5 }
-  ]
+    { day: "mon", slot: 13.5 },
+  ],
 };
 
 // Sun 14-17
@@ -216,8 +216,8 @@ e7 = {
     { day: "mon", slot: 12 },
     { day: "mon", slot: 12.5 },
     { day: "mon", slot: 13 },
-    { day: "mon", slot: 13.5 }
-  ]
+    { day: "mon", slot: 13.5 },
+  ],
 };
 
 // Sun 15-17
@@ -245,8 +245,8 @@ e8 = {
     { day: "tue", slot: 10 },
     { day: "tue", slot: 10.5 },
     { day: "tue", slot: 11 },
-    { day: "tue", slot: 11.5 }
-  ]
+    { day: "tue", slot: 11.5 },
+  ],
 };
 
 // Sun 15-17
@@ -274,8 +274,8 @@ e9 = {
     { day: "tue", slot: 10 },
     { day: "tue", slot: 10.5 },
     { day: "tue", slot: 11 },
-    { day: "tue", slot: 11.5 }
-  ]
+    { day: "tue", slot: 11.5 },
+  ],
 };
 
 // Sun 15-17
@@ -303,8 +303,8 @@ e10 = {
     { day: "tue", slot: 10 },
     { day: "tue", slot: 10.5 },
     { day: "tue", slot: 11 },
-    { day: "tue", slot: 11.5 }
-  ]
+    { day: "tue", slot: 11.5 },
+  ],
 };
 
 // Sun 15-17
@@ -332,8 +332,8 @@ e11 = {
     { day: "tue", slot: 10 },
     { day: "tue", slot: 10.5 },
     { day: "tue", slot: 11 },
-    { day: "tue", slot: 11.5 }
-  ]
+    { day: "tue", slot: 11.5 },
+  ],
 };
 
 // Sun 15-17
@@ -361,8 +361,8 @@ e12 = {
     { day: "tue", slot: 10 },
     { day: "tue", slot: 10.5 },
     { day: "tue", slot: 11 },
-    { day: "tue", slot: 11.5 }
-  ]
+    { day: "tue", slot: 11.5 },
+  ],
 };
 
 // Tue 11-14
@@ -377,8 +377,8 @@ e12 = {
     { day: "tue", slot: 12 },
     { day: "tue", slot: 12.5 },
     { day: "tue", slot: 13 },
-    { day: "tue", slot: 13.5 }
-  ]
+    { day: "tue", slot: 13.5 },
+  ],
 };
 
 // Tue 11-14
@@ -393,8 +393,8 @@ e13 = {
     { day: "tue", slot: 12 },
     { day: "tue", slot: 12.5 },
     { day: "tue", slot: 13 },
-    { day: "tue", slot: 13.5 }
-  ]
+    { day: "tue", slot: 13.5 },
+  ],
 };
 
 // Tue 11-14
@@ -409,8 +409,8 @@ e14 = {
     { day: "tue", slot: 12 },
     { day: "tue", slot: 12.5 },
     { day: "tue", slot: 13 },
-    { day: "tue", slot: 13.5 }
-  ]
+    { day: "tue", slot: 13.5 },
+  ],
 };
 
 // Tue 11-14
@@ -425,8 +425,8 @@ e15 = {
     { day: "tue", slot: 12 },
     { day: "tue", slot: 12.5 },
     { day: "tue", slot: 13 },
-    { day: "tue", slot: 13.5 }
-  ]
+    { day: "tue", slot: 13.5 },
+  ],
 };
 
 // Tue 11-14
@@ -441,8 +441,8 @@ e16 = {
     { day: "tue", slot: 12 },
     { day: "tue", slot: 12.5 },
     { day: "tue", slot: 13 },
-    { day: "tue", slot: 13.5 }
-  ]
+    { day: "tue", slot: 13.5 },
+  ],
 };
 
 // Tue 11-14
@@ -457,8 +457,8 @@ e17 = {
     { day: "tue", slot: 12 },
     { day: "tue", slot: 12.5 },
     { day: "tue", slot: 13 },
-    { day: "tue", slot: 13.5 }
-  ]
+    { day: "tue", slot: 13.5 },
+  ],
 };
 
 // Tue 11-14
@@ -473,8 +473,8 @@ e18 = {
     { day: "tue", slot: 12 },
     { day: "tue", slot: 12.5 },
     { day: "tue", slot: 13 },
-    { day: "tue", slot: 13.5 }
-  ]
+    { day: "tue", slot: 13.5 },
+  ],
 };
 
 module.exports = [
@@ -495,5 +495,5 @@ module.exports = [
   e15,
   e16,
   e17,
-  e18
+  e18,
 ];
