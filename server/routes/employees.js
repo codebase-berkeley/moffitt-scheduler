@@ -34,7 +34,30 @@ router.get("/allemployees", (req, res) => {
       throw error;
     } else {
       for (var i = 0; i < result.rows.length; i++) {
-        //Do stuff
+        result.rows[i].moffitt3TrainingLevel = result.rows[
+          i
+        ].training_level_moffitt3.toString();
+        result.rows[i].moffitt4TrainingLevel = result.rows[
+          i
+        ].training_level_moffitt4.toString();
+        result.rows[i].doeTrainingLevel = result.rows[
+          i
+        ].training_level_doe.toString();
+        if (result.rows[i].training_level_moffitt3 != 0) {
+          result.rows[i].currentDisplayMoffitt3 = "moffitt3Display";
+        } else {
+          result.rows[i].currentDisplayMoffitt3 = "moffitt3NoDisplay";
+        }
+        if (result.rows[i].training_level_moffitt4 != 0) {
+          result.rows[i].currentDisplayMoffitt4 = "moffitt4Display";
+        } else {
+          result.rows[i].currentDisplayMoffitt4 = "moffitt4NoDisplay";
+        }
+        if (result.rows[i].training_level_doe != 0) {
+          result.rows[i].currentDisplayDoe = "doeDisplay";
+        } else {
+          result.rows[i].currentDisplayDoe = "doeNoDisplay";
+        }
       }
     }
     res.json({ items: result.rows });

@@ -13,25 +13,43 @@ export default class Employees extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.submitClick = this.submitClick.bind(this);
+    this.processData = this.processData.bind(this);
   }
 
   componentDidMount() {
-    // fetch("/allemployees", {
-    //   method: "GET",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((jsonResponse) => {
-    //     this.setState({
-    //       items: jsonResponse.items,
-    //     });
-    //     console.log(this.state.items);
-    //   });
+    fetch("/allemployees", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({
+          items: jsonResponse.items,
+        });
+        console.log(this.state.items);
+      });
+  }
+  processData(database) {
+    const listItems = database.map((entry, index) => {
+      return (
+        <EachEmployee
+          name={entry.name}
+          email={entry.email}
+          moffitt3TrainingLevel={entry.moffitt3TrainingLevel}
+          moffitt4TrainingLevel={entry.moffitt4TrainingLevel}
+          doeTrainingLevel={entry.doeTrainingLevel}
+          currentDisplayMoffitt3={entry.currentDisplayMoffitt3}
+          currentDisplayMoffitt4={entry.currentDisplayMoffitt4}
+          currentDisplayDoe={entry.currentDisplayDoe}
+        />
+      );
+    });
+    return listItems;
   }
 
   openModal() {
@@ -174,26 +192,7 @@ export default class Employees extends React.Component {
             </div>
           </div>
         </div>
-        <EachEmployee
-          name="Sahil Thakur"
-          email="sahilthakur@berkeley.edu"
-          moffitt3TrainingLevel="1"
-          moffitt4TrainingLevel="2"
-          doeTrainingLevel="3"
-          currentDisplayMoffitt3="moffitt3Display"
-          currentDisplayMoffitt4="moffitt4Display"
-          currentDisplayDoe="doeDisplay"
-        />
-        <EachEmployee
-          name="Brian DeLeonardis"
-          email="bdeleonardis@berkeley.edu"
-          moffitt3TrainingLevel="1"
-          moffitt4TrainingLevel="2"
-          doeTrainingLevel="3"
-          currentDisplayMoffitt3="moffitt3Display"
-          currentDisplayMoffitt4="moffitt4Display"
-          currentDisplayDoe="doeDisplay"
-        />
+        {this.processData(this.state.items)}
       </div>
     );
   }
