@@ -176,6 +176,9 @@ export default class Employees extends React.Component {
           moffitt3TrainingLevel="1"
           moffitt4TrainingLevel="2"
           doeTrainingLevel="3"
+          currentDisplayMoffitt3="moffitt3Display"
+          currentDisplayMoffitt4="moffitt4Display"
+          currentDisplayDoe="doeDisplay"
         />
         <EachEmployee
           name="Brian DeLeonardis"
@@ -183,13 +186,9 @@ export default class Employees extends React.Component {
           moffitt3TrainingLevel="1"
           moffitt4TrainingLevel="2"
           doeTrainingLevel="3"
-        />
-        <EachEmployee
-          name="Bianca Lee"
-          email="biancalee@berkeley.edu"
-          moffitt3TrainingLevel="1"
-          moffitt4TrainingLevel="2"
-          doeTrainingLevel="4"
+          currentDisplayMoffitt3="moffitt3Display"
+          currentDisplayMoffitt4="moffitt4Display"
+          currentDisplayDoe="doeDisplay"
         />
       </div>
     );
