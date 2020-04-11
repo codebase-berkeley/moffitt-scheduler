@@ -1,7 +1,6 @@
 import React from "react";
 import "./Employees.css";
 import EachEmployee from "./EachEmployee.js";
-import AddEmployee from "./AddEmployee.js";
 import Modal from "react-modal";
 
 export default class Employees extends React.Component {
@@ -39,6 +38,13 @@ export default class Employees extends React.Component {
     var email = document.getElementById("email");
     var emailText = email.value;
     console.log(emailText);
+    var moffitt3LevelNumber = parseInt(
+      document.getElementById("moffitt3level").value
+    );
+    var moffitt4LevelNumber = parseInt(
+      document.getElementById("moffitt4level").value
+    );
+    var doeLevelNumber = parseInt(document.getElementById("doelevel").value);
     fetch("http://localhost:8000/employees", {
       method: "POST",
       headers: {
@@ -49,6 +55,9 @@ export default class Employees extends React.Component {
         firstName: firstNameText,
         lastName: lastNameText,
         email: emailText,
+        moffitt3Level: moffitt3LevelNumber,
+        moffitt4Level: moffitt4LevelNumber,
+        doeLevel: doeLevelNumber,
       }),
     })
       .then((response) => {
@@ -69,7 +78,7 @@ export default class Employees extends React.Component {
       content: {
         top: "400px",
         left: "50%",
-        width: "450px",
+        width: "500px",
         height: "400px",
         transform: "translate(-50%, -50%)",
         overflow: 0,
@@ -108,20 +117,36 @@ export default class Employees extends React.Component {
                     <h3 className="Email">Email</h3>
                     <input className="EmailInput" id="email" />
                   </div>
-                  <h3 className="TrainedFor">Trained For:</h3>
-                  <div className="RadioButtons">
-                    <h3 className="MoffittText">Moffitt</h3>
-                    <div className="MoffittButton">
-                      <input
-                        type="checkbox"
-                        id="moffitt"
-                        name="moffitt"
-                        value="moffitt"
-                      />
-                    </div>
-                    <h3 className="DoeText">Doe</h3>
-                    <div className="DoeButton">
-                      <input type="checkbox" id="doe" name="doe" value="doe" />
+                  <h3 className="TrainedFor">Training Levels</h3>
+                  <div className="EmployeeName">
+                    <div className="libleveltext">
+                      <div className="vertalign">
+                        <h3 className="FirstName">Moffitt 3</h3>
+                        <select id="moffitt3level">
+                          <option value="0">0 - No Training</option>
+                          <option value="1">1 - Training</option>
+                          <option value="2">2 - Desk (Fully Trained) </option>
+                          <option value="3">3 - Workleader</option>
+                        </select>
+                      </div>
+                      <div className="vertalign">
+                        <h3 className="FirstName">Moffitt 4</h3>
+                        <select id="moffitt4level">
+                          <option value="0">0 - No Training</option>
+                          <option value="1">1 - Training</option>
+                          <option value="2">2 - Desk (Fully Trained) </option>
+                          <option value="3">3 - Workleader</option>
+                        </select>
+                      </div>
+                      <div className="vertalign">
+                        <h3 className="FirstName">Doe</h3>
+                        <select id="doelevel">
+                          <option value="0">0 - No Training</option>
+                          <option value="1">1 - Training</option>
+                          <option value="2">2 - Desk (Fully Trained) </option>
+                          <option value="3">3 - Workleader</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>

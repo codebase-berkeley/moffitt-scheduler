@@ -3,17 +3,20 @@ var router = express.Router();
 
 var pool = require("../db/db");
 
-router.post("/employees", function(req, res) {
+router.post("/employees", function (req, res) {
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
   var email = req.body.email;
+  var m3lev = req.body.moffitt3Level;
+  var m4lev = req.body.moffitt4Level;
+  var dlev = req.body.doeLevel;
   console.log("firstName", firstName);
   console.log("lastName", lastName);
   console.log("email", email);
   res.json({ successful: true });
   const text =
-    "INSERT INTO sle (name, training_level_doe, training_level_moffitt, email, password) VALUES ($1, $2, $3, $4, $5)";
-  const values = [firstName + " " + lastName, 1, 1, email, null];
+    "INSERT INTO sle (name, training_level_doe, training_level_moffitt3, email, password, training_level_moffitt4) VALUES ($1, $2, $3, $4, $5, $6)";
+  const values = [firstName + " " + lastName, dlev, m3lev, email, null, m4lev];
 
   pool.query(text, values, (error, result) => {
     if (error) {
