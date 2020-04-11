@@ -13,11 +13,25 @@ export default class Employees extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.submitClick = this.submitClick.bind(this);
-    // this.cancelClick = this.cancelClick.bind(this);
   }
 
   componentDidMount() {
-    //Do this
+    // fetch("/allemployees", {
+    //   method: "GET",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((jsonResponse) => {
+    //     this.setState({
+    //       items: jsonResponse.items,
+    //     });
+    //     console.log(this.state.items);
+    //   });
   }
 
   openModal() {
@@ -69,10 +83,6 @@ export default class Employees extends React.Component {
     this.closeModal();
   }
 
-  // cancelClick() {
-  //   console.log("doesNothingForNow");
-  // }
-
   render() {
     var customStyles = {
       content: {
@@ -95,18 +105,12 @@ export default class Employees extends React.Component {
             </button>
             <div>
               <Modal
-                // className="box"
                 isOpen={this.state.modalOpen}
                 onRequestClose={this.closeModal}
                 style={customStyles}
               >
                 <div className="AllText">
-                  <h1
-                    className="AddEmpText"
-                    //   ref={(_subtitle) => (subtitle = _subtitle)}
-                  >
-                    Add Employee
-                  </h1>
+                  <h1 className="AddEmpText">Add Employee</h1>
                   <div className="EmployeeName">
                     <h3 className="FirstName">First Name</h3>
                     <h3 className="LastName">Last Name</h3>

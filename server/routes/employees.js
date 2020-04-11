@@ -20,7 +20,6 @@ router.post("/employees", function (req, res) {
 
   pool.query(text, values, (error, result) => {
     if (error) {
-      //throw error;
       console.log(error);
     }
     console.log(result);
@@ -28,3 +27,16 @@ router.post("/employees", function (req, res) {
 });
 
 module.exports = router;
+
+router.get("/allemployees", (req, res) => {
+  pool.query(`SELECT * FROM SLE;`, (error, result) => {
+    if (error) {
+      throw error;
+    } else {
+      for (var i = 0; i < result.rows.length; i++) {
+        //Do stuff
+      }
+    }
+    res.json({ items: result.rows });
+  });
+});
