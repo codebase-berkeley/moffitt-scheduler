@@ -196,19 +196,19 @@ function EditSchedule() {
               <h3 className="tTag">Sunday, 12AM</h3>
             </div>
           </div>
-          <div className="dd-wrapper">
-            <div className="dd-header">
-              <div className="dd-header-title">Select Employees</div>
-            </div>
-            <ul className="dd-list">
-              <li className="dd-list-item">Kathleen Kong</li>
-              <li className="dd-list-item">Kerry Huang</li>
-              <li className="dd-list-item">Sahil Thakur</li>
-            </ul>
-          </div>
+          <html>
+            <label for="cars">Select Employees:</label>
+
+            <select id="cars">
+              <option value="volvo">Kathleen</option>
+              <option value="saab">Tetsu</option>
+              <option value="opel">Kat</option>
+              <option value="audi">Stephanie</option>
+            </select>
+          </html>
         </div>
         <div className="button-container">
-          <a href="/employees">
+          <a href="/masterschedule">
             <button className="CancelButton">
               <div className="CancelHover">
                 <div className="CancelText">
@@ -218,8 +218,8 @@ function EditSchedule() {
             </button>
           </a>
           <button className="SubmitButton" onClick={submitClick}>
-            <div className="SubmitText">
-              <h4>Submit</h4>
+            <div className="saveText">
+              <h4>Save Changes</h4>
             </div>
           </button>
         </div>
