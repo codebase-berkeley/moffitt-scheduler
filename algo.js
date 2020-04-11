@@ -55,6 +55,52 @@ class Sle {
     this.avails = avails;
     this.hoursLeft = hoursLeft;
     this.availShifts = [];
+    this.availScore = 0;
+  }
+
+  /* Copy "constructor"*/
+  copy() {
+    var copySle = new Sle(null, null, null, null, null, null);
+    copySle.id = this.id;
+    copySle.tMoffitt3 = this.tMoffitt3;
+    copySle.tMoffitt4 = this.tMoffitt4;
+    copySle.tMain = this.tMain;
+    copySle.avails = this.avails;
+    copySle.hoursLeft = this.hoursLeft;
+    for (let i = 0; i < this.availShifts.length; i += 1) {
+      copySle.availShifts.push(this.availShifts[i]);
+    }
+    copySle.availScore = this.availScore;
+    return copySle;
+  }
+
+  /** Change my availScore to be how many availShifts I have */
+  updateScore() {
+    this.availScore = this.availShifts.length;
+  }
+
+  /**Remove SHIFT from my availShifts. */
+  removeShift(shift) {
+    const index = this.availShifts.indexOf(shift);
+    if (index > -1) {
+      this.availShifts.splice(index, 1);
+    }
+  }
+
+  /** Return a list of all shifts in availShifts that are concurrent with SHIFT.
+   */
+  concurrents(shift) {
+    var concurrents = [];
+    for (let i = 0; i < allShifts.length; i += 1) {
+      if (
+        allShifts[i].start == shift.start &&
+        allShifts[i].end == shift.end &&
+        allShifts[i].weekday == shift.weekday
+      ) {
+        concurrents.push(allShifts[i]);
+      }
+    }
+    return concurrents;
   }
 }
 
@@ -130,6 +176,9 @@ function initSles(availInfo) {
       }
     }
   }
+  for (let i = 0; i < retSLEs.length; i += 1) {
+    retSLEs[i].updateScore();
+  }
   return retSLEs;
 }
 
@@ -160,7 +209,6 @@ function rareShifts() {
     sortedKeys.push(key);
     delete shiftsDict[key];
   }
-  // console.log(shiftsDict);
   sortedShifts = [];
   for (let i = 0; i < sortedKeys.length; i += 1) {
     for (let j = 0; j < allShifts.length; j += 1) {
@@ -173,8 +221,61 @@ function rareShifts() {
   return sortedShifts;
 }
 
-// rareShifts();
-console.log(rareShifts());
+orderedShifts = rareShifts();
+
+/** Returns a shallow copy of allSles in order of ascending availScore. */
+function orderSles() {
+  //make a copy first
+  let copy = [];
+  for (let i = 0; i < allSles.length; i += 1) {
+    copy.push(allSles[i]);
+  }
+  for (let i = 0; i < copy.length - 1; i += 1) {
+    for (let j = 0; j < copy.length - 1 - i; j += 1) {
+      if (copy[j].availScore > copy[j + 1].availScore) {
+        let temp = copy[j];
+        copy[j] = copy[j + 1];
+        copy[j + 1] = temp;
+      }
+    }
+  }
+  return copy;
+}
+
+orderedSles = orderSles();
+
+/** Loop through each SLE in allSles and assign each to a proper shift.
+ *  Start the loop on the rarest shift. Keeping track of the first 30-minute interval,
+ *  expand later, then earlier, then checking for holes. Ties are determined by SLE's availScore property;
+ *  SLE's with lower availScores get priority for Shifts.
+ *
+ *  Uses a bunch of helper functions!
+ */
+function assignAllShifts() {
+  for (let i = 0; i < orderedShifts.length; i += 1) {
+    currentShift = orderedShifts[i];
+    for (let j = 0; j < orderedSles.length; j += 1) {
+      currentSle = orderedSles[j];
+      if (currentSle.availShifts.includes(currentShift)) {
+        //DO SOMETHING
+      }
+    }
+  }
+
+  function assignShift(sle, shift) {}
+
+  function unassignShift() {}
+
+  /** Expand the initial 30-minute interval later. */
+  function expandLater() {}
+
+  /** Expand the initial 30-minute interval earlier. */
+  function expandEarly() {}
+
+  /** Make sure there's no holes for DAY at LOCATION */
+  function checkHoles(day, location) {}
+}
+
 // Next you need to count how many people can work
 // each of those half hour time slots
 
