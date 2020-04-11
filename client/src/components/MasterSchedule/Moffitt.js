@@ -1,5 +1,7 @@
 import React from "react";
 import "./Moffitt.css";
+import pencil from "./MasterImages/pencil.svg";
+import Modal from "react-modal";
 
 export default class Moffitt extends React.Component {
   constructor(props) {
@@ -11,7 +13,7 @@ export default class Moffitt extends React.Component {
       wednesdayArray,
       thursdayArray,
       fridayArray,
-      saturdayArray
+      saturdayArray,
     ] = [[], [], [], [], [], [], []];
     this.state = {
       items: [{}],
@@ -22,8 +24,8 @@ export default class Moffitt extends React.Component {
         wednesdayArray,
         thursdayArray,
         fridayArray,
-        saturdayArray
-      ]
+        saturdayArray,
+      ],
     };
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 24; j++) {
@@ -36,15 +38,15 @@ export default class Moffitt extends React.Component {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         this.setState({
-          items: jsonResponse.items
+          items: jsonResponse.items,
         });
         let newAllDaysOfWeek = this.state.allDaysOfWeek;
         for (let i = 0; i < this.state.items.length; i++) {
@@ -116,5 +118,133 @@ export default class Moffitt extends React.Component {
 }
 
 function Box(props) {
-  return <div className="box">{props.text}</div>;
+  return (
+    <div>
+      <div className="box">
+        {props.text}
+        <EditSchedule />
+      </div>
+    </div>
+  );
+}
+
+function EditSchedule() {
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#black";
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  var subtitle;
+
+  const customStyles = {
+    content: {
+      top: "400px",
+      left: "50%",
+      width: "450px",
+      height: "400px",
+      transform: "translate(-50%, -50%)",
+      overflow: 0,
+    },
+  };
+
+  function submitClick() {
+    var firstName = document.getElementById("firstName");
+    var firstNameText = firstName.value;
+    console.log(firstNameText);
+    var lastName = document.getElementById("lastName");
+    var lastNameText = lastName.value;
+    console.log(lastNameText);
+    var email = document.getElementById("email");
+    var emailText = email.value;
+    console.log(emailText);
+    fetch("http://localhost:8000/masterschedule", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: firstNameText,
+        lastName: lastNameText,
+        email: emailText,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log(jsonResponse);
+      });
+    function cancelClick() {
+      console.log("doesNothingForNow");
+    }
+  }
+
+  return (
+    <div>
+      <button className="pencilIcon" onClick={openModal}>
+        <img className="pencilImage" src={pencil} alt="pencil" />
+      </button>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div className="AllText">
+          <h1
+            className="AddEmpText"
+            ref={(_subtitle) => (subtitle = _subtitle)}
+          >
+            Edit Master Schedule Shift
+          </h1>
+          <div className="shiftInfo">
+            <div className="locationTag">
+              <h3 className="locTag">Moffitt Floor 4</h3>
+            </div>
+            <div className="timeTag">
+              <h3 className="tTag">Sunday, 12AM</h3>
+            </div>
+          </div>
+          <html>
+            <label for="cars">Select Employees:</label>
+
+            <select id="cars">
+              <option value="volvo">Kathleen</option>
+              <option value="saab">Tetsu</option>
+              <option value="opel">Kat</option>
+              <option value="audi">Stephanie</option>
+            </select>
+          </html>
+        </div>
+        <div className="button-container">
+          <a href="/masterschedule">
+            <button className="CancelButton">
+              <div className="CancelHover">
+                <div className="CancelText">
+                  <h4> Cancel</h4>
+                </div>
+              </div>
+            </button>
+          </a>
+          <button className="SubmitButton" onClick={submitClick}>
+            <div className="saveText">
+              <h4>Save Changes</h4>
+            </div>
+          </button>
+        </div>
+      </Modal>
+    </div>
+  );
 }

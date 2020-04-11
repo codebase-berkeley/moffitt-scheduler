@@ -46,3 +46,11 @@
   display: flex;
   flex-direction: row;
 }
+
+.pencilIcon {
+  border: none;
+  display: flex;
+  align-self: flex-end;
+  cursor: pointer;
+  /* margin-left: 100%; */
+}
