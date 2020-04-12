@@ -56,6 +56,7 @@ class Sle {
     this.shiftsLeft = shiftsLeft;
     this.availShifts = [];
     this.availScore = 0;
+    this.assignedShifts = [];
   }
 
   /* Copy "constructor"*/
@@ -232,6 +233,7 @@ function orderSles() {
   for (let i = 0; i < allSles.length; i += 1) {
     copy.push(allSles[i]);
   }
+
   for (let i = 0; i < copy.length - 1; i += 1) {
     for (let j = 0; j < copy.length - 1 - i; j += 1) {
       if (copy[j].availScore > copy[j + 1].availScore) {
@@ -260,12 +262,14 @@ function assignAllShifts() {
       currentSle = orderedSles[j];
       if (currentSle.availShifts.includes(currentShift)) {
         assignShift(currentSle, currentShift);
+
         shiftToExpand = currentShift;
         while (expandLater(currentSle, shiftToExpand)) {
           nextShiftIndex = allShifts.indexOf(currentShift) + 1;
           nextShift = allShifts[nextShiftIndex];
           shiftToExpand = nextShift;
         }
+
         shiftToExpand = currentShift;
         while (expandEarly(currentSle, shiftToExpand)) {
           previousShiftIndex = allShifts.indexOf(currentShift) - 1;
@@ -273,54 +277,60 @@ function assignAllShifts() {
           shiftToExpand = previousShift;
         }
       }
-      console.log(j);
     }
   }
 }
 
 /** Assigns a half hour shift to an SLE. */
 function assignShift(sle, shift) {
-  if (
-    shiftsLeft(sle) &&
-    !locationFull(shift) &&
-    !workingConcurrent(sle, shift)
-  ) {
+  if (valid(sle, shift)) {
     shift.assignedSles.push(sle);
     sle.shiftsLeft -= 1;
     sle.removeShift(shift);
+    sle.assignedShifts.push(shift);
     //FIX ME: unassignshift
   }
 }
 
-/** Checks whether the SLE can work any more shifts this week. */
-function shiftsLeft(sle) {
-  return sle.shiftsLeft != 0;
-}
-
-/** Checks whether the shift is full. */
-function locationFull(shift) {
-  if (shift.location == "Moffitt 3") {
-    return shift.assignedSles.length > minEmployeesMoffitt3;
-  } else {
-    return shift.assignedSles.length > minEmployeesMain;
+/** Check if this SLE/Shift assignment is valid using multiple helpers */
+function valid(sle, shift) {
+  /** Checks whether the SLE can work any more shifts this week. */
+  function shiftsLeft(sle) {
+    return sle.shiftsLeft != 0;
   }
-}
 
-/** Checks whether the SLE is already working another shift at the same time. */
-function workingConcurrent(sle, shift) {
-  var concurrent = sle.concurrents(shift);
-  for (i = 0; i < concurrent.length; i += 1) {
-    if (concurrent[i].assignedSles.includes(sle)) {
-      return true;
+  /** Checks whether the shift is full. */
+  function locationFull(shift) {
+    if (shift.location == "Moffitt 3") {
+      return shift.assignedSles.length >= minEmployeesMoffitt3;
+    } else {
+      return shift.assignedSles.length >= minEmployeesMain;
     }
   }
-  return false;
+
+  /** Checks whether the SLE is already working another shift at the same time. */
+  function workingConcurrent(sle, shift) {
+    var concurrent = sle.concurrents(shift);
+    for (i = 0; i < concurrent.length; i += 1) {
+      if (concurrent[i].assignedSles.includes(sle)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  return (
+    shiftsLeft(sle) && !locationFull(shift) && !workingConcurrent(sle, shift)
+  );
 }
 
 function unassignShift() {}
 
 /** Expand the 30-minute interval to the next 30-minute interval. */
 function expandLater(sle, currentShift) {
+  if (!valid(sle, currentShift)) {
+    return false;
+  }
   nextShiftIndex = allShifts.indexOf(currentShift) + 1;
   nextShift = allShifts[nextShiftIndex];
   if (
@@ -336,11 +346,14 @@ function expandLater(sle, currentShift) {
 
 /** Expand the 30-minute interval to the previous 30-minute interval. */
 function expandEarly(sle, currentShift) {
+  if (!valid(sle, currentShift)) {
+    return false;
+  }
   previousShiftIndex = allShifts.indexOf(currentShift) - 1;
   previousShift = allShifts[previousShiftIndex];
   if (
     currentShift.location == previousShift.location &&
-    currentShift.weekday == nextShift.weekday &&
+    currentShift.weekday == previousShift.weekday &&
     sle.availShifts.includes(previousShift)
   ) {
     assignShift(sle, previousShift);
@@ -350,6 +363,20 @@ function expandEarly(sle, currentShift) {
 }
 
 assignAllShifts();
+
+for (let i = 0; i < orderedSles.length; i++) {
+  console.log("id: " + orderedSles[i].id);
+  for (let j = 0; j < orderedSles[i].assignedShifts.length; j++) {
+    console.log(
+      orderedSles[i].assignedShifts[j].location +
+        " " +
+        orderedSles[i].assignedShifts[j].weekday +
+        " " +
+        orderedSles[i].assignedShifts[j].start
+    );
+  }
+  console.log("\n");
+}
 
 /** Make sure there's no holes for DAY at LOCATION */
 function checkHoles(day, location) {}
@@ -366,7 +393,7 @@ function checkHoles(day, location) {}
 //   {
 //     sle_id: 1,
 //     day_of_week: "sun",
-//     location: "Moffit 3",
+//     location: "Moffitt 3",
 //     start_time: "5:00",
 //     end_time: "8:00",
 //     coverrequested: false

@@ -196,7 +196,7 @@ e7 = {
 // Sun 14-17
 // Mon 9-14
 e7 = {
-  id: 8,
+  id: 7,
   tMoffitt3: true,
   tMoffitt4: true,
   tMain: true,
@@ -366,7 +366,7 @@ e12 = {
 };
 
 // Tue 11-14
-e12 = {
+/*e12 = {
   id: 12,
   tMoffitt3: true,
   tMoffitt4: true,
@@ -379,7 +379,7 @@ e12 = {
     { day: "tue", slot: 13 },
     { day: "tue", slot: 13.5 },
   ],
-};
+};*/
 
 // Tue 11-14
 e13 = {
