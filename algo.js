@@ -385,19 +385,56 @@ function expandEarly(sle, currentShift) {
 
 assignAllShifts();
 
-for (let i = 0; i < orderedSles.length; i++) {
-  console.log("id: " + orderedSles[i].id);
-  for (let j = 0; j < orderedSles[i].assignedShifts.length; j++) {
-    console.log(
-      orderedSles[i].assignedShifts[j].location +
-        " " +
-        orderedSles[i].assignedShifts[j].weekday +
-        " " +
-        orderedSles[i].assignedShifts[j].start
-    );
+/*
+for (let i = 0; i < allShifts.length; i += 1) {
+  console.log(
+    allShifts[i].location +
+      " " +
+      allShifts[i].weekday +
+      " " +
+      allShifts[i].start
+  );
+  for (let j = 0; j < allShifts[i].assignedSles.length; j++) {
+    console.log(allShifts[i].assignedSles[j].id);
   }
   console.log("\n");
+}*/
+
+function blah() {
+  arr = [];
+  for (let i = 0; i < allShifts.length; i += 1) {
+    curShift = allShifts[i];
+    for (let j = 0; j < curShift.assignedSles.length; j += 1) {
+      curSle = curShift.assignedSles[j];
+      nextShift = allShifts[i + 1];
+      prevShift = allShifts[i - 1];
+      nextContainsSle = false;
+      prevContainsSle = false;
+      if (
+        nextShift != null &&
+        nextShift.location == curShift.location &&
+        nextShift.weekday == curShift.weekday &&
+        nextShift.assignedSles.includes(curSle)
+      ) {
+        nextContainsSle = true;
+      }
+      if (
+        prevShift != null &&
+        prevShift.location == curShift.location &&
+        prevShift.weekday == curShift.weekday &&
+        prevShift.assignedSles.includes(curSle)
+      ) {
+        prevContainsSle = true;
+      }
+      if (!nextContainsSle && !prevContainsSle) {
+        arr.push(curSle);
+      }
+    }
+  }
+  return arr;
 }
+
+console.log(blah());
 
 /** Make sure there's no holes for DAY at LOCATION */
 function checkHoles(day, location) {}
