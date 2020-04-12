@@ -270,9 +270,10 @@ function assignAllShifts() {
         while (expandEarly(currentSle, shiftToExpand)) {
           previousShiftIndex = allShifts.indexOf(currentShift) - 1;
           previousShift = allShifts[previousShiftIndex];
-          shiftToExpand = nextShift;
+          shiftToExpand = previousShift;
         }
       }
+      console.log(j);
     }
   }
 }
@@ -285,7 +286,7 @@ function assignShift(sle, shift) {
     !workingConcurrent(sle, shift)
   ) {
     shift.assignedSles.push(sle);
-    sle.hoursLeft = sle.shiftsLeft - 1;
+    sle.shiftsLeft -= 1;
     sle.removeShift(shift);
     //FIX ME: unassignshift
   }
@@ -327,7 +328,7 @@ function expandLater(sle, currentShift) {
     currentShift.weekday == nextShift.weekday &&
     sle.availShifts.includes(nextShift)
   ) {
-    assignShift(nextShift, sle);
+    assignShift(sle, nextShift);
     return true;
   }
   return false;
@@ -340,16 +341,15 @@ function expandEarly(sle, currentShift) {
   if (
     currentShift.location == previousShift.location &&
     currentShift.weekday == nextShift.weekday &&
-    sle.availShifts.includes(shift)
+    sle.availShifts.includes(previousShift)
   ) {
-    assignShift(nextshift, sle);
+    assignShift(sle, previousShift);
     return true;
   }
   return false;
 }
 
 assignAllShifts();
-console.log(orderedShifts);
 
 /** Make sure there's no holes for DAY at LOCATION */
 function checkHoles(day, location) {}
