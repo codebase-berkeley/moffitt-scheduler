@@ -273,43 +273,43 @@ orderedSles = orderSles();
  */
 function assignAllShifts() {
   for (let i = 0; i < orderedShifts.length; i += 1) {
-    currentShift = orderedShifts[i];
+    let currentShift = orderedShifts[i];
     for (let j = 0; j < orderedSles.length; j += 1) {
-      currentSle = orderedSles[j];
-      if (currentSle.availShifts.includes(currentShift)) {
-        {
-          assignShift(currentSle, currentShift);
-          shiftsSoFar = 1;
-          shiftsSoFarArray = [currentShift];
-          shiftToExpand = currentShift;
-          // while (
-          //   checkNextShift(currentSle, shiftToExpand) &&
-          //   shiftsSoFar < maxShiftLength
-          // ) {
-          //   nextShiftIndex = allShifts.indexOf(shiftToExpand) + 1;
-          //   nextShift = allShifts[nextShiftIndex];
-          //   shiftToExpand = nextShift;
-          //   assignShift(currentSle, shiftToExpand);
-          //   shiftsSoFar += 1;
-          //   shiftsSoFarArray.push(shiftToExpand);
-          // }
+      let currentSle = orderedSles[j];
+      if (valid(currentSle, currentShift)) {
+        assignShift(currentSle, currentShift);
 
-          // shiftToExpand = currentShift;
-          // while (
-          //   checkPreviousShift(currentSle, shiftToExpand) &&
-          //   shiftsSoFar < maxShiftLength
-          // ) {
-          //   previousShiftIndex = allShifts.indexOf(shiftToExpand) - 1;
-          //   previousShift = allShifts[previousShiftIndex];
-          //   shiftToExpand = previousShift;
-          //   assignShift(currentSle, shiftToExpand);
-          //   shiftsSoFar += 1;
-          //   shiftsSoFarArray.push(shiftToExpand);
+        let shiftsSoFar = 1;
+        let shiftsSoFarArray = [currentShift];
+
+        let nextShift = currentShift;
+        while (
+          checkNextShift(currentSle, nextShift) &&
+          shiftsSoFar < maxShiftLength
+        ) {
+          nextShiftIndex = allShifts.indexOf(nextShift) + 1;
+          nextShift = allShifts[nextShiftIndex];
+          assignShift(currentSle, nextShift);
+          shiftsSoFar += 1;
+          shiftsSoFarArray.push(nextShift);
         }
-        // if (shiftsSoFar < minShiftLength) {
-        //   for (k = 0; k < shiftsSoFarArray.length; k += 1) {
-        //     unassignShift(currentSle, shiftsSoFarArray[k]);
-        //   }
+
+        let previousShift = currentShift;
+        while (
+          checkPreviousShift(currentSle, previousShift) &&
+          shiftsSoFar < maxShiftLength
+        ) {
+          previousShiftIndex = allShifts.indexOf(previousShift) - 1;
+          previousShift = allShifts[previousShiftIndex];
+          assignShift(currentSle, previousShift);
+          shiftsSoFar += 1;
+          shiftsSoFarArray.push(previousShift);
+        }
+        if (shiftsSoFar < minShiftLength) {
+          for (k = 0; k < shiftsSoFarArray.length; k += 1) {
+            unassignShift(currentSle, shiftsSoFarArray[k]);
+          }
+        }
       }
     }
   }
@@ -344,7 +344,7 @@ function valid(sle, shift) {
   function locationFull(shift) {
     if (shift.location == "Moffitt 3") {
       return shift.assignedSles.length >= minEmployeesMoffitt3;
-    } else {
+    } else if (shift.location == "Main") {
       return shift.assignedSles.length >= minEmployeesMain;
     }
   }
@@ -352,7 +352,7 @@ function valid(sle, shift) {
   /** Checks whether the SLE is already working another shift at the same time. */
   function workingConcurrent(sle, shift) {
     var concurrent = sle.concurrents(shift);
-    for (i = 0; i < concurrent.length; i += 1) {
+    for (let i = 0; i < concurrent.length; i += 1) {
       if (concurrent[i].assignedSles.includes(sle)) {
         return true;
       }
@@ -361,22 +361,22 @@ function valid(sle, shift) {
   }
 
   return (
-    shiftsLeft(sle) && !locationFull(shift) && !workingConcurrent(sle, shift)
+    sle.availShifts.includes(shift) &&
+    shiftsLeft(sle) &&
+    !locationFull(shift) &&
+    !workingConcurrent(sle, shift)
   );
 }
 
 /** Check whether you can expand into the next shift. */
 function checkNextShift(sle, currentShift) {
-  if (!valid(sle, currentShift)) {
-    return false;
-  }
   nextShiftIndex = allShifts.indexOf(currentShift) + 1;
   nextShift = allShifts[nextShiftIndex];
   if (
     nextShift != null &&
     currentShift.location == nextShift.location &&
     currentShift.weekday == nextShift.weekday &&
-    sle.availShifts.includes(nextShift)
+    valid(sle, nextShift)
   ) {
     return true;
   }
@@ -385,16 +385,13 @@ function checkNextShift(sle, currentShift) {
 
 /** Check whether you can expand into the previous shift. */
 function checkPreviousShift(sle, currentShift) {
-  if (!valid(sle, currentShift)) {
-    return false;
-  }
   previousShiftIndex = allShifts.indexOf(currentShift) - 1;
   previousShift = allShifts[previousShiftIndex];
   if (
     previousShift != null &&
     currentShift.location == previousShift.location &&
     currentShift.weekday == previousShift.weekday &&
-    sle.availShifts.includes(previousShift)
+    valid(sle, previousShift)
   ) {
     return true;
   }
@@ -403,19 +400,18 @@ function checkPreviousShift(sle, currentShift) {
 
 assignAllShifts();
 
-// for (let i = 0; i < allShifts.length; i += 1) {
-//   console.log(
-//     allShifts[i].location +
-//       " " +
-//       allShifts[i].weekday +
-//       " " +
-//       allShifts[i].start
-//   );
-//   for (let j = 0; j < allShifts[i].assignedSles.length; j++) {
-//     console.log(allShifts[i].assignedSles[j].id);
-//   }
-//   console.log("\n");
-// }
+for (let i = 0; i < allShifts.length; i += 1) {
+  console.log(
+    allShifts[i].location +
+      " " +
+      allShifts[i].weekday +
+      " " +
+      allShifts[i].start
+  );
+  for (let j = 0; j < allShifts[i].assignedSles.length; j++) {
+    console.log(allShifts[i].assignedSles[j].id);
+  }
+}
 
 // function blah() {
 //   arr = [];
