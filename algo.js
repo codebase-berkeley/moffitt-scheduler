@@ -38,7 +38,7 @@ class Shift {
     this.end = end;
     this.weekday = weekday;
     this.location = location;
-    this.assignSles = [];
+    this.assignedSles = [];
   }
 }
 
@@ -47,13 +47,13 @@ class Shift {
  *  availShifts will contain concurrent shifts at different locations
  */
 class Sle {
-  constructor(id, tMoffitt3, tMoffitt4, tMain, avails, hoursLeft) {
+  constructor(id, tMoffitt3, tMoffitt4, tMain, avails, shiftsLeft) {
     this.id = id;
     this.tMoffitt3 = tMoffitt3;
     this.tMoffitt4 = tMoffitt4;
     this.tMain = tMain;
     this.avails = avails;
-    this.hoursLeft = hoursLeft;
+    this.shiftsLeft = shiftsLeft;
     this.availShifts = [];
     this.availScore = 0;
   }
@@ -66,13 +66,15 @@ class Sle {
     copySle.tMoffitt4 = this.tMoffitt4;
     copySle.tMain = this.tMain;
     copySle.avails = this.avails;
-    copySle.hoursLeft = this.hoursLeft;
+    copySle.shiftsLeft = this.shiftsLeft;
     for (let i = 0; i < this.availShifts.length; i += 1) {
       copySle.availShifts.push(this.availShifts[i]);
     }
     copySle.availScore = this.availScore;
     return copySle;
   }
+
+  //TODO : Copy shifts as well?
 
   /** Change my availScore to be how many availShifts I have */
   updateScore() {
@@ -87,7 +89,7 @@ class Sle {
     }
   }
 
-  /** Return a list of all shifts in availShifts that are concurrent with SHIFT.
+  /** Return a list of all shifts in allShifts that are concurrent with SHIFT.
    */
   concurrents(shift) {
     var concurrents = [];
@@ -257,24 +259,100 @@ function assignAllShifts() {
     for (let j = 0; j < orderedSles.length; j += 1) {
       currentSle = orderedSles[j];
       if (currentSle.availShifts.includes(currentShift)) {
-        //DO SOMETHING
+        assignShift(currentSle, currentShift);
+        shiftToExpand = currentShift;
+        while (expandLater(currentSle, shiftToExpand)) {
+          nextShiftIndex = allShifts.indexOf(currentShift) + 1;
+          nextShift = allShifts[nextShiftIndex];
+          shiftToExpand = nextShift;
+        }
+        shiftToExpand = currentShift;
+        while (expandEarly(currentSle, shiftToExpand)) {
+          previousShiftIndex = allShifts.indexOf(currentShift) - 1;
+          previousShift = allShifts[previousShiftIndex];
+          shiftToExpand = nextShift;
+        }
       }
     }
   }
-
-  function assignShift(sle, shift) {}
-
-  function unassignShift() {}
-
-  /** Expand the initial 30-minute interval later. */
-  function expandLater() {}
-
-  /** Expand the initial 30-minute interval earlier. */
-  function expandEarly() {}
-
-  /** Make sure there's no holes for DAY at LOCATION */
-  function checkHoles(day, location) {}
 }
+
+/** Assigns a half hour shift to an SLE. */
+function assignShift(sle, shift) {
+  if (
+    shiftsLeft(sle) &&
+    !locationFull(shift) &&
+    !workingConcurrent(sle, shift)
+  ) {
+    shift.assignedSles.push(sle);
+    sle.hoursLeft = sle.shiftsLeft - 1;
+    sle.removeShift(shift);
+    //FIX ME: unassignshift
+  }
+}
+
+/** Checks whether the SLE can work any more shifts this week. */
+function shiftsLeft(sle) {
+  return sle.shiftsLeft != 0;
+}
+
+/** Checks whether the shift is full. */
+function locationFull(shift) {
+  if (shift.location == "Moffitt 3") {
+    return shift.assignedSles.length > minEmployeesMoffitt3;
+  } else {
+    return shift.assignedSles.length > minEmployeesMain;
+  }
+}
+
+/** Checks whether the SLE is already working another shift at the same time. */
+function workingConcurrent(sle, shift) {
+  var concurrent = sle.concurrents(shift);
+  for (i = 0; i < concurrent.length; i += 1) {
+    if (concurrent[i].assignedSles.includes(sle)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function unassignShift() {}
+
+/** Expand the 30-minute interval to the next 30-minute interval. */
+function expandLater(sle, currentShift) {
+  nextShiftIndex = allShifts.indexOf(currentShift) + 1;
+  nextShift = allShifts[nextShiftIndex];
+  if (
+    currentShift.location == nextShift.location &&
+    currentShift.weekday == nextShift.weekday &&
+    sle.availShifts.includes(nextShift)
+  ) {
+    assignShift(nextShift, sle);
+    return true;
+  }
+  return false;
+}
+
+/** Expand the 30-minute interval to the previous 30-minute interval. */
+function expandEarly(sle, currentShift) {
+  previousShiftIndex = allShifts.indexOf(currentShift) - 1;
+  previousShift = allShifts[previousShiftIndex];
+  if (
+    currentShift.location == previousShift.location &&
+    currentShift.weekday == nextShift.weekday &&
+    sle.availShifts.includes(shift)
+  ) {
+    assignShift(nextshift, sle);
+    return true;
+  }
+  return false;
+}
+
+assignAllShifts();
+console.log(orderedShifts);
+
+/** Make sure there's no holes for DAY at LOCATION */
+function checkHoles(day, location) {}
 
 // Next you need to count how many people can work
 // each of those half hour time slots
