@@ -2,7 +2,7 @@
   padding-top: 20%;
   padding-left: 30%;
 }
-.moffittButton {
+.clickedButton {
   background: #3f3cc8;
   border-radius: 6px;
   border: 2px solid transparent;
@@ -17,7 +17,7 @@
   text-align: center;
 }
 
-.doeButton {
+.nonClickedButton {
   width: 101px;
   height: 34px;
   left: 1136px;

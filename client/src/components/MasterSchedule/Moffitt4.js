@@ -3,14 +3,7 @@ import "./Moffitt.css";
 import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
 
-// function processData(database) {
-//   const listItems = database.map((entry, index) => (
-//     <Box text={entry.text} loc={entry.location} />
-//   ));
-//   return listItems;
-// }
-
-export default class Moffitt extends React.Component {
+export default class Moffitt4 extends React.Component {
   constructor(props) {
     super(props);
     let [
@@ -38,7 +31,7 @@ export default class Moffitt extends React.Component {
 
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 24; j++) {
-        this.state.allDaysOfWeek[i].push(<Box startDay={i} startTime={j} />);
+        this.state.allDaysOfWeek[i].push(<Box />);
       }
     }
   }
@@ -60,7 +53,7 @@ export default class Moffitt extends React.Component {
         let newAllDaysOfWeek = this.state.allDaysOfWeek;
         for (let i = 0; i < this.state.items.length; i++) {
           let location = this.state.items[i]["location"];
-          if (location == "Moffitt") {
+          if (location == "Moffitt4") {
             let name = this.state.items[i]["name"];
             let start_time = new Date(this.state.items[i]["start_time"]);
             let end_time = new Date(this.state.items[i]["end_time"]);
@@ -74,20 +67,10 @@ export default class Moffitt extends React.Component {
                 let previousState = this.state.allDaysOfWeek[start_time_date][i]
                   .props.text;
                 if (previousState == null) {
-                  newAllDaysOfWeek[start_time_date][i] = (
-                    <Box
-                      text={name}
-                      startTime={start_hour}
-                      startDay={start_time_date}
-                    />
-                  );
+                  newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
                 } else {
                   newAllDaysOfWeek[start_time_date][i] = (
-                    <Box
-                      text={previousState + "," + "\n" + name}
-                      startTime={start_hour}
-                      startDay={start_time_date}
-                    />
+                    <Box text={previousState + "," + "\n" + name} />
                   );
                 }
               }
@@ -97,20 +80,10 @@ export default class Moffitt extends React.Component {
                 let previousState = this.state.allDaysOfWeek[start_time_date][i]
                   .props.text;
                 if (previousState == null) {
-                  newAllDaysOfWeek[start_time_date][i] = (
-                    <Box
-                      text={name}
-                      startTime={start_hour}
-                      startDay={start_time_date}
-                    />
-                  );
+                  newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
                 } else {
                   newAllDaysOfWeek[start_time_date][i] = (
-                    <Box
-                      text={previousState + "," + "\n" + name}
-                      startTime={start_hour}
-                      startDay={start_time_date}
-                    />
+                    <Box text={previousState + "," + "\n" + name} />
                   );
                 }
               }
@@ -118,20 +91,10 @@ export default class Moffitt extends React.Component {
                 let previousState = this.state.allDaysOfWeek[end_time_date][i]
                   .props.text;
                 if (previousState == null) {
-                  newAllDaysOfWeek[end_time_date][i] = (
-                    <Box
-                      text={name}
-                      startTime={start_hour}
-                      startDay={end_time_date}
-                    />
-                  );
+                  newAllDaysOfWeek[end_time_date][i] = <Box text={name} />;
                 } else {
                   newAllDaysOfWeek[end_time_date][i] = (
-                    <Box
-                      text={previousState + "," + "\n" + name}
-                      startTime={start_hour}
-                      startDay={end_time_date}
-                    />
+                    <Box text={previousState + "," + "\n" + name} />
                   );
                 }
               }
@@ -161,11 +124,7 @@ function Box(props) {
     <div>
       <div className="box">
         {props.text}
-        <EditSchedule
-          day={props.startDay}
-          time={props.startTime}
-          employee={props.text}
-        />
+        <EditSchedule />
       </div>
     </div>
   );
@@ -254,15 +213,22 @@ function EditSchedule(props) {
           </h1>
           <div className="shiftInfo">
             <div className="locationTag">
-              <h3 className="locTag">Moffitt 3rd Floor</h3>
+              <h3 className="locTag">Moffitt Floor 4</h3>
             </div>
             <div className="timeTag">
-              <h3 className="tTag">
-                {props.day}, {props.time}
-              </h3>
+              <h3 className="tTag">Sunday, 12AM</h3>
             </div>
           </div>
-          <div className="currEmployees">{props.employee}</div>
+          <html>
+            <label for="cars">Select Employees:</label>
+
+            <select id="cars">
+              <option value="volvo">Kathleen</option>
+              <option value="saab">Tetsu</option>
+              <option value="opel">Kat</option>
+              <option value="audi">Stephanie</option>
+            </select>
+          </html>
         </div>
         <div className="button-container">
           <a href="/masterschedule">

@@ -29,7 +29,7 @@ export default class Doe extends React.Component {
     };
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 24; j++) {
-        this.state.allDaysOfWeek[i].push(<Box />);
+        this.state.allDaysOfWeek[i].push(<Box startDay={i} startTime={j} />);
       }
     }
   }
@@ -53,6 +53,7 @@ export default class Doe extends React.Component {
           let location = this.state.items[i]["location"];
           if (location == "Doe") {
             let name = this.state.items[i]["name"];
+            console.log("name", name);
             let start_time = new Date(this.state.items[i]["start_time"]);
             let end_time = new Date(this.state.items[i]["end_time"]);
             let start_time_date = start_time.getDay();
@@ -62,15 +63,74 @@ export default class Doe extends React.Component {
             if (start_time_date == end_time_date) {
               //If shifts runs across the same day
               for (let i = start_hour; i < end_hour; i++) {
-                newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
+                let previousState = this.state.allDaysOfWeek[start_time_date][i]
+                  .props.text;
+                if (previousState == null) {
+                  newAllDaysOfWeek[start_time_date][i] = (
+                    <Box
+                      text={name}
+                      startTime={start_hour}
+                      startDay={start_time_date}
+                    />
+                  );
+                } else {
+                  newAllDaysOfWeek[start_time_date][i] = (
+                    <Box
+                      text={previousState + "," + "\n" + name}
+                      startTime={start_hour}
+                      startDay={start_time_date}
+                    />
+                  );
+                }
               }
             } else {
               //In case days are not the same (i.e. Sunday-Monday shift)
               for (let i = start_hour; i < 24; i++) {
-                newAllDaysOfWeek[start_time_date][i] = <Box text={name} />;
+                let previousState = this.state.allDaysOfWeek[start_time_date][i]
+                  .props.text;
+                if (previousState == null) {
+                  newAllDaysOfWeek[start_time_date][i] = (
+                    <Box
+                      text={name}
+                      startTime={start_hour}
+                      startDay={start_time_date}
+                    />
+                  );
+                } else {
+                  newAllDaysOfWeek[start_time_date][i] = (
+                    <Box
+                      text={previousState + "," + "\n" + name}
+                      startTime={start_hour}
+                      startDay={start_time_date}
+                    />
+                  );
+                }
               }
               for (let i = 0; i < end_hour; i++) {
-                newAllDaysOfWeek[end_time_date][i] = <Box text={name} />;
+                newAllDaysOfWeek[end_time_date][i] = (
+                  <Box text={name} startDay={end_time_date} startTime={i} />
+                );
+              }
+              for (let i = 0; i < end_hour; i++) {
+                let previousState = this.state.allDaysOfWeek[end_time_date][i]
+                  .props.text;
+                if (previousState == null) {
+                  newAllDaysOfWeek[end_time_date][i] = (
+                    <Box
+                      text={name}
+                      startTime={start_hour}
+                      startDay={start_time_date}
+                    />
+                  );
+                } else {
+                  newAllDaysOfWeek[end_time_date][i] = (
+                    <Box
+                      text={previousState + "," + "\n" + name}
+                      startTime={start_hour}
+                      startDay={start_time_date}
+                    />
+                  );
+                }
               }
             }
           }
@@ -98,13 +158,17 @@ function Box(props) {
     <div>
       <div className="box">
         {props.text}
-        <EditSchedule />
+        <EditSchedule
+          day={props.startDay}
+          time={props.startTime}
+          employee={props.text}
+        />
       </div>
     </div>
   );
 }
 
-function EditSchedule() {
+function EditSchedule(props) {
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#black";
@@ -187,22 +251,15 @@ function EditSchedule() {
           </h1>
           <div className="shiftInfo">
             <div className="locationTag">
-              <h3 className="locTag">Moffitt Floor 4</h3>
+              <h3 className="locTag">Doe</h3>
             </div>
             <div className="timeTag">
-              <h3 className="tTag">Sunday, 12AM</h3>
+              <h3 className="tTag">
+                {props.day}, {props.time}
+              </h3>
             </div>
           </div>
-          <html>
-            <label for="cars">Select Employees:</label>
-
-            <select id="cars">
-              <option value="volvo">Kathleen</option>
-              <option value="saab">Tetsu</option>
-              <option value="opel">Kat</option>
-              <option value="audi">Stephanie</option>
-            </select>
-          </html>
+          <div className="currEmployees">{props.employee}</div>
         </div>
         <div className="button-container">
           <a href="/masterschedule">
