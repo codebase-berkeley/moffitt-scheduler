@@ -2,13 +2,7 @@ import React from "react";
 import "./Moffitt.css";
 import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
-
-// function processData(database) {
-//   const listItems = database.map((entry, index) => (
-//     <Box text={entry.text} loc={entry.location} />
-//   ));
-//   return listItems;
-// }
+import deleteButton from "./MasterImages/delete.png";
 
 export default class Moffitt extends React.Component {
   constructor(props) {
@@ -233,6 +227,28 @@ function EditSchedule(props) {
     }
   }
 
+  function CurrEmployee(props) {
+    var list = props.employee.split(",");
+    var employees = [];
+    for (let i = 0; i < list.length; i++) {
+      employees.push(
+        <div>
+          <div className="currentEmployee">{list[i]}</div>
+          <button className="deleteButton">
+            <img
+              className="deleteButtonImg"
+              src={deleteButton}
+              alt="deleteButton"
+            />
+          </button>
+        </div>
+      );
+    }
+    return employees;
+  }
+
+  function otherEmployee() {}
+
   return (
     <div>
       <button className="pencilIcon" onClick={openModal}>
@@ -262,7 +278,11 @@ function EditSchedule(props) {
               </h3>
             </div>
           </div>
-          <div className="currEmployees">{props.employee}</div>
+          <div className="currEmployees">
+            <CurrEmployee employee={props.employee} />
+          </div>
+
+          <div className="otherEmployees"></div>
         </div>
         <div className="button-container">
           <a href="/masterschedule">
