@@ -40,6 +40,14 @@ class Shift {
     this.location = location;
     this.assignedSles = [];
   }
+
+  /**Remove SLE from my assignedSles. */
+  removeAssignSle(sle) {
+    const index = this.assignedSles.indexOf(sle);
+    if (index > -1) {
+      this.assignedSles.splice(index, 1);
+    }
+  }
 }
 
 /** Data structure for each employee.
@@ -83,10 +91,18 @@ class Sle {
   }
 
   /**Remove SHIFT from my availShifts. */
-  removeShift(shift) {
+  removeAvailShift(shift) {
     const index = this.availShifts.indexOf(shift);
     if (index > -1) {
       this.availShifts.splice(index, 1);
+    }
+  }
+
+  /**Remove SHIFT from my assignedShifts. */
+  removeAssignShift(shift) {
+    const index = this.assignedShifts.indexOf(shift);
+    if (index > -1) {
+      this.assignedShifts.splice(index, 1);
     }
   }
 
@@ -286,10 +302,17 @@ function assignShift(sle, shift) {
   if (valid(sle, shift)) {
     shift.assignedSles.push(sle);
     sle.shiftsLeft -= 1;
-    sle.removeShift(shift);
+    sle.removeAvailShift(shift);
     sle.assignedShifts.push(shift);
-    //FIX ME: unassignshift
   }
+}
+
+/** Unassign a half hour shift from an SLE. */
+function unassignShift(sle, shift) {
+  shift.removeAssignSle(sle);
+  sle.shiftsLeft += 1;
+  sle.removeAssignShift(shift);
+  sle.availShifts.push(shift);
 }
 
 /** Check if this SLE/Shift assignment is valid using multiple helpers */
@@ -323,8 +346,6 @@ function valid(sle, shift) {
     shiftsLeft(sle) && !locationFull(shift) && !workingConcurrent(sle, shift)
   );
 }
-
-function unassignShift() {}
 
 /** Expand the 30-minute interval to the next 30-minute interval. */
 function expandLater(sle, currentShift) {
