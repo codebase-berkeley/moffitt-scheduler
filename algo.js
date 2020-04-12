@@ -277,21 +277,39 @@ function assignAllShifts() {
     for (let j = 0; j < orderedSles.length; j += 1) {
       currentSle = orderedSles[j];
       if (currentSle.availShifts.includes(currentShift)) {
-        assignShift(currentSle, currentShift);
+        {
+          assignShift(currentSle, currentShift);
+          shiftsSoFar = 1;
+          shiftsSoFarArray = [currentShift];
+          shiftToExpand = currentShift;
+          // while (
+          //   checkNextShift(currentSle, shiftToExpand) &&
+          //   shiftsSoFar < maxShiftLength
+          // ) {
+          //   nextShiftIndex = allShifts.indexOf(shiftToExpand) + 1;
+          //   nextShift = allShifts[nextShiftIndex];
+          //   shiftToExpand = nextShift;
+          //   assignShift(currentSle, shiftToExpand);
+          //   shiftsSoFar += 1;
+          //   shiftsSoFarArray.push(shiftToExpand);
+          // }
 
-        shiftToExpand = currentShift;
-        while (expandLater(currentSle, shiftToExpand)) {
-          nextShiftIndex = allShifts.indexOf(currentShift) + 1;
-          nextShift = allShifts[nextShiftIndex];
-          shiftToExpand = nextShift;
+          // shiftToExpand = currentShift;
+          // while (
+          //   checkPreviousShift(currentSle, shiftToExpand) &&
+          //   shiftsSoFar < maxShiftLength
+          // ) {
+          //   previousShiftIndex = allShifts.indexOf(shiftToExpand) - 1;
+          //   previousShift = allShifts[previousShiftIndex];
+          //   shiftToExpand = previousShift;
+          //   assignShift(currentSle, shiftToExpand);
+          //   shiftsSoFar += 1;
+          //   shiftsSoFarArray.push(shiftToExpand);
         }
-
-        shiftToExpand = currentShift;
-        while (expandEarly(currentSle, shiftToExpand)) {
-          previousShiftIndex = allShifts.indexOf(currentShift) - 1;
-          previousShift = allShifts[previousShiftIndex];
-          shiftToExpand = previousShift;
-        }
+        // if (shiftsSoFar < minShiftLength) {
+        //   for (k = 0; k < shiftsSoFarArray.length; k += 1) {
+        //     unassignShift(currentSle, shiftsSoFarArray[k]);
+        //   }
       }
     }
   }
@@ -347,37 +365,37 @@ function valid(sle, shift) {
   );
 }
 
-/** Expand the 30-minute interval to the next 30-minute interval. */
-function expandLater(sle, currentShift) {
+/** Check whether you can expand into the next shift. */
+function checkNextShift(sle, currentShift) {
   if (!valid(sle, currentShift)) {
     return false;
   }
   nextShiftIndex = allShifts.indexOf(currentShift) + 1;
   nextShift = allShifts[nextShiftIndex];
   if (
+    nextShift != null &&
     currentShift.location == nextShift.location &&
     currentShift.weekday == nextShift.weekday &&
     sle.availShifts.includes(nextShift)
   ) {
-    assignShift(sle, nextShift);
     return true;
   }
   return false;
 }
 
-/** Expand the 30-minute interval to the previous 30-minute interval. */
-function expandEarly(sle, currentShift) {
+/** Check whether you can expand into the previous shift. */
+function checkPreviousShift(sle, currentShift) {
   if (!valid(sle, currentShift)) {
     return false;
   }
   previousShiftIndex = allShifts.indexOf(currentShift) - 1;
   previousShift = allShifts[previousShiftIndex];
   if (
+    previousShift != null &&
     currentShift.location == previousShift.location &&
     currentShift.weekday == previousShift.weekday &&
     sle.availShifts.includes(previousShift)
   ) {
-    assignShift(sle, previousShift);
     return true;
   }
   return false;
@@ -385,56 +403,55 @@ function expandEarly(sle, currentShift) {
 
 assignAllShifts();
 
-/*
-for (let i = 0; i < allShifts.length; i += 1) {
-  console.log(
-    allShifts[i].location +
-      " " +
-      allShifts[i].weekday +
-      " " +
-      allShifts[i].start
-  );
-  for (let j = 0; j < allShifts[i].assignedSles.length; j++) {
-    console.log(allShifts[i].assignedSles[j].id);
-  }
-  console.log("\n");
-}*/
+// for (let i = 0; i < allShifts.length; i += 1) {
+//   console.log(
+//     allShifts[i].location +
+//       " " +
+//       allShifts[i].weekday +
+//       " " +
+//       allShifts[i].start
+//   );
+//   for (let j = 0; j < allShifts[i].assignedSles.length; j++) {
+//     console.log(allShifts[i].assignedSles[j].id);
+//   }
+//   console.log("\n");
+// }
 
-function blah() {
-  arr = [];
-  for (let i = 0; i < allShifts.length; i += 1) {
-    curShift = allShifts[i];
-    for (let j = 0; j < curShift.assignedSles.length; j += 1) {
-      curSle = curShift.assignedSles[j];
-      nextShift = allShifts[i + 1];
-      prevShift = allShifts[i - 1];
-      nextContainsSle = false;
-      prevContainsSle = false;
-      if (
-        nextShift != null &&
-        nextShift.location == curShift.location &&
-        nextShift.weekday == curShift.weekday &&
-        nextShift.assignedSles.includes(curSle)
-      ) {
-        nextContainsSle = true;
-      }
-      if (
-        prevShift != null &&
-        prevShift.location == curShift.location &&
-        prevShift.weekday == curShift.weekday &&
-        prevShift.assignedSles.includes(curSle)
-      ) {
-        prevContainsSle = true;
-      }
-      if (!nextContainsSle && !prevContainsSle) {
-        arr.push(curSle);
-      }
-    }
-  }
-  return arr;
-}
+// function blah() {
+//   arr = [];
+//   for (let i = 0; i < allShifts.length; i += 1) {
+//     curShift = allShifts[i];
+//     for (let j = 0; j < curShift.assignedSles.length; j += 1) {
+//       curSle = curShift.assignedSles[j];
+//       nextShift = allShifts[i + 1];
+//       prevShift = allShifts[i - 1];
+//       nextContainsSle = false;
+//       prevContainsSle = false;
+//       if (
+//         nextShift != null &&
+//         nextShift.location == curShift.location &&
+//         nextShift.weekday == curShift.weekday &&
+//         nextShift.assignedSles.includes(curSle)
+//       ) {
+//         nextContainsSle = true;
+//       }
+//       if (
+//         prevShift != null &&
+//         prevShift.location == curShift.location &&
+//         prevShift.weekday == curShift.weekday &&
+//         prevShift.assignedSles.includes(curSle)
+//       ) {
+//         prevContainsSle = true;
+//       }
+//       if (!nextContainsSle && !prevContainsSle) {
+//         arr.push(curSle);
+//       }
+//     }
+//   }
+//   return arr;
+// }
 
-console.log(blah());
+// console.log(blah());
 
 /** Make sure there's no holes for DAY at LOCATION */
 function checkHoles(day, location) {}
