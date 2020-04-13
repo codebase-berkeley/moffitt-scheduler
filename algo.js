@@ -18,9 +18,6 @@ var mainHours = [
   { day: "tue", start: 9, end: 12, location: "Main" },
 ];
 
-// In my opinion the first step is to covert those arrays
-// into an array of half hour timeslots that need to be scheduled.
-
 var minEmployeesMoffitt3 = 2;
 var minEmployeesMain = 3;
 
@@ -66,24 +63,6 @@ class Sle {
     this.availScore = 0;
     this.assignedShifts = [];
   }
-
-  /* Copy "constructor"*/
-  copy() {
-    var copySle = new Sle(null, null, null, null, null, null);
-    copySle.id = this.id;
-    copySle.tMoffitt3 = this.tMoffitt3;
-    copySle.tMoffitt4 = this.tMoffitt4;
-    copySle.tMain = this.tMain;
-    copySle.avails = this.avails;
-    copySle.shiftsLeft = this.shiftsLeft;
-    for (let i = 0; i < this.availShifts.length; i += 1) {
-      copySle.availShifts.push(this.availShifts[i]);
-    }
-    copySle.availScore = this.availScore;
-    return copySle;
-  }
-
-  //TODO : Copy shifts as well?
 
   /** Change my availScore to be how many availShifts I have */
   updateScore() {
@@ -244,7 +223,6 @@ orderedShifts = rareShifts();
 
 /** Returns a shallow copy of allSles in order of ascending availScore. */
 function orderSles() {
-  //make a copy first
   let copy = [];
   for (let i = 0; i < allSles.length; i += 1) {
     copy.push(allSles[i]);
@@ -273,41 +251,45 @@ orderedSles = orderSles();
  */
 function assignAllShifts() {
   for (let i = 0; i < orderedShifts.length; i += 1) {
-    currentShift = orderedShifts[i];
+    let currentShift = orderedShifts[i];
     for (let j = 0; j < orderedSles.length; j += 1) {
-      currentSle = orderedSles[j];
-      assignShift(currentSle, currentShift);
-      shiftToExpand = currentShift;
-      shiftsSoFar = 1;
-      shiftsSoFarArray = [currentShift];
-      // while (
-      //   checkNextShift(currentSle, shiftToExpand) &&
-      //   shiftsSoFar < maxShiftLength
-      // ) {
-      //   nextShiftIndex = allShifts.indexOf(shiftToExpand) + 1;
-      //   nextShift = allShifts[nextShiftIndex];
-      //   shiftToExpand = nextShift;
-      //   assignShift(currentSle, shiftToExpand);
-      //   shiftsSoFar += 1;
-      //   shiftsSoFarArray.push(shiftToExpand);
-      // }
+      let currentSle = orderedSles[j];
+      if (valid(currentSle, currentShift)) {
+        assignShift(currentSle, currentShift);
 
-      // shiftToExpand = currentShift;
-      // while (
-      //   checkPreviousShift(currentSle, shiftToExpand) &&
-      //   shiftsSoFar < maxShiftLength
-      // ) {
-      //   previousShiftIndex = allShifts.indexOf(shiftToExpand) - 1;
-      //   previousShift = allShifts[previousShiftIndex];
-      //   shiftToExpand = previousShift;
-      //   assignShift(currentSle, shiftToExpand);
-      //   shiftsSoFar += 1;
-      //   shiftsSoFarArray.push(shiftToExpand);
+        let shiftsSoFar = 1;
+        let shiftsSoFarArray = [currentShift];
+
+        let nextShift = currentShift;
+        while (
+          checkNextShift(currentSle, nextShift) &&
+          shiftsSoFar < maxShiftLength
+        ) {
+          nextShiftIndex = allShifts.indexOf(nextShift) + 1;
+          nextShift = allShifts[nextShiftIndex];
+          assignShift(currentSle, nextShift);
+          shiftsSoFar += 1;
+          shiftsSoFarArray.push(nextShift);
+        }
+
+        let previousShift = currentShift;
+        while (
+          checkPreviousShift(currentSle, previousShift) &&
+          shiftsSoFar < maxShiftLength
+        ) {
+          previousShiftIndex = allShifts.indexOf(previousShift) - 1;
+          previousShift = allShifts[previousShiftIndex];
+          assignShift(currentSle, previousShift);
+          shiftsSoFar += 1;
+          shiftsSoFarArray.push(previousShift);
+        }
+        if (shiftsSoFar < minShiftLength) {
+          for (k = 0; k < shiftsSoFarArray.length; k += 1) {
+            unassignShift(currentSle, shiftsSoFarArray[k]);
+          }
+        }
+      }
     }
-    // if (shiftsSoFar < minShiftLength) {
-    //   for (k = 0; k < shiftsSoFarArray.length; k += 1) {
-    //     unassignShift(currentSle, shiftsSoFarArray[k]);
-    //   }
   }
 }
 
@@ -340,7 +322,7 @@ function valid(sle, shift) {
   function locationFull(shift) {
     if (shift.location == "Moffitt 3") {
       return shift.assignedSles.length >= minEmployeesMoffitt3;
-    } else {
+    } else if (shift.location == "Main") {
       return shift.assignedSles.length >= minEmployeesMain;
     }
   }
@@ -348,7 +330,7 @@ function valid(sle, shift) {
   /** Checks whether the SLE is already working another shift at the same time. */
   function workingConcurrent(sle, shift) {
     var concurrent = sle.concurrents(shift);
-    for (i = 0; i < concurrent.length; i += 1) {
+    for (let i = 0; i < concurrent.length; i += 1) {
       if (concurrent[i].assignedSles.includes(sle)) {
         return true;
       }
@@ -356,22 +338,22 @@ function valid(sle, shift) {
     return false;
   }
   return (
-    shiftsLeft(sle) && !locationFull(shift) && !workingConcurrent(sle, shift)
+    sle.availShifts.includes(shift) &&
+    shiftsLeft(sle) &&
+    !locationFull(shift) &&
+    !workingConcurrent(sle, shift)
   );
 }
 
 /** Check whether you can expand into the next shift. */
 function checkNextShift(sle, currentShift) {
-  if (!valid(sle, currentShift)) {
-    return false;
-  }
   nextShiftIndex = allShifts.indexOf(currentShift) + 1;
   nextShift = allShifts[nextShiftIndex];
   if (
     nextShift != null &&
     currentShift.location == nextShift.location &&
     currentShift.weekday == nextShift.weekday &&
-    sle.availShifts.includes(nextShift)
+    valid(sle, nextShift)
   ) {
     return true;
   }
@@ -380,16 +362,13 @@ function checkNextShift(sle, currentShift) {
 
 /** Check whether you can expand into the previous shift. */
 function checkPreviousShift(sle, currentShift) {
-  if (!valid(sle, currentShift)) {
-    return false;
-  }
   previousShiftIndex = allShifts.indexOf(currentShift) - 1;
   previousShift = allShifts[previousShiftIndex];
   if (
     previousShift != null &&
     currentShift.location == previousShift.location &&
     currentShift.weekday == previousShift.weekday &&
-    sle.availShifts.includes(previousShift)
+    valid(sle, previousShift)
   ) {
     return true;
   }
@@ -398,6 +377,7 @@ function checkPreviousShift(sle, currentShift) {
 
 assignAllShifts();
 
+// Testing output
 // for (let i = 0; i < allShifts.length; i += 1) {
 //   console.log(
 //     allShifts[i].location +
@@ -409,53 +389,10 @@ assignAllShifts();
 //   for (let j = 0; j < allShifts[i].assignedSles.length; j++) {
 //     console.log(allShifts[i].assignedSles[j].id);
 //   }
-//   console.log("\n");
 // }
-
-// function blah() {
-//   arr = [];
-//   for (let i = 0; i < allShifts.length; i += 1) {
-//     curShift = allShifts[i];
-//     for (let j = 0; j < curShift.assignedSles.length; j += 1) {
-//       curSle = curShift.assignedSles[j];
-//       nextShift = allShifts[i + 1];
-//       prevShift = allShifts[i - 1];
-//       nextContainsSle = false;
-//       prevContainsSle = false;
-//       if (
-//         nextShift != null &&
-//         nextShift.location == curShift.location &&
-//         nextShift.weekday == curShift.weekday &&
-//         nextShift.assignedSles.includes(curSle)
-//       ) {
-//         nextContainsSle = true;
-//       }
-//       if (
-//         prevShift != null &&
-//         prevShift.location == curShift.location &&
-//         prevShift.weekday == curShift.weekday &&
-//         prevShift.assignedSles.includes(curSle)
-//       ) {
-//         prevContainsSle = true;
-//       }
-//       if (!nextContainsSle && !prevContainsSle) {
-//         arr.push(curSle);
-//       }
-//     }
-//   }
-//   return arr;
-// }
-
-// console.log(blah());
 
 /** Make sure there's no holes for DAY at LOCATION */
 function checkHoles(day, location) {}
-
-// Next you need to count how many people can work
-// each of those half hour time slots
-
-// Then start making assignments and keep track of how much/when
-// people are working
 
 // Your final output should be an object that looks like a row
 // in the shifts table. So an array of objects that looks like this:
@@ -477,3 +414,40 @@ function checkHoles(day, location) {}
 //     coverrequested: false
 //   }
 // ];
+
+class finalOutput {
+  constructor(sle_id, day_of_week, location, start_time, end_time) {
+    this.sle_id = sle_id;
+    this.day_of_week = day_of_week;
+    this.location = location;
+    this.start_time = start_time;
+    this.end_time = end_time;
+    this.coverrequested = false;
+  }
+}
+
+function initFinalOutput() {
+  retFinalOutput = [];
+  for (i = 0; i < allSles.length; i += 1) {
+    currentSle = allSles[i];
+    sle_id = currentSle.id;
+    for (j = 0; j < currentSle.assignedShifts.length; j += 1) {
+      currentShift = currentSle.assignedShifts[j];
+      day_of_week = currentShift.weekday;
+      location = currentShift.location;
+      start_time = currentShift.start;
+      end_time = currentShift.end;
+      newFinalOutput = new finalOutput(
+        sle_id,
+        day_of_week,
+        location,
+        start_time,
+        end_time
+      );
+      retFinalOutput.push(newFinalOutput);
+    }
+  }
+  return retFinalOutput;
+}
+
+console.log(initFinalOutput());
