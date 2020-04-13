@@ -276,42 +276,38 @@ function assignAllShifts() {
     currentShift = orderedShifts[i];
     for (let j = 0; j < orderedSles.length; j += 1) {
       currentSle = orderedSles[j];
-      if (currentSle.availShifts.includes(currentShift)) {
-        {
-          assignShift(currentSle, currentShift);
-          shiftsSoFar = 1;
-          shiftsSoFarArray = [currentShift];
-          shiftToExpand = currentShift;
-          // while (
-          //   checkNextShift(currentSle, shiftToExpand) &&
-          //   shiftsSoFar < maxShiftLength
-          // ) {
-          //   nextShiftIndex = allShifts.indexOf(shiftToExpand) + 1;
-          //   nextShift = allShifts[nextShiftIndex];
-          //   shiftToExpand = nextShift;
-          //   assignShift(currentSle, shiftToExpand);
-          //   shiftsSoFar += 1;
-          //   shiftsSoFarArray.push(shiftToExpand);
-          // }
+      assignShift(currentSle, currentShift);
+      shiftToExpand = currentShift;
+      shiftsSoFar = 1;
+      shiftsSoFarArray = [currentShift];
+      // while (
+      //   checkNextShift(currentSle, shiftToExpand) &&
+      //   shiftsSoFar < maxShiftLength
+      // ) {
+      //   nextShiftIndex = allShifts.indexOf(shiftToExpand) + 1;
+      //   nextShift = allShifts[nextShiftIndex];
+      //   shiftToExpand = nextShift;
+      //   assignShift(currentSle, shiftToExpand);
+      //   shiftsSoFar += 1;
+      //   shiftsSoFarArray.push(shiftToExpand);
+      // }
 
-          // shiftToExpand = currentShift;
-          // while (
-          //   checkPreviousShift(currentSle, shiftToExpand) &&
-          //   shiftsSoFar < maxShiftLength
-          // ) {
-          //   previousShiftIndex = allShifts.indexOf(shiftToExpand) - 1;
-          //   previousShift = allShifts[previousShiftIndex];
-          //   shiftToExpand = previousShift;
-          //   assignShift(currentSle, shiftToExpand);
-          //   shiftsSoFar += 1;
-          //   shiftsSoFarArray.push(shiftToExpand);
-        }
-        // if (shiftsSoFar < minShiftLength) {
-        //   for (k = 0; k < shiftsSoFarArray.length; k += 1) {
-        //     unassignShift(currentSle, shiftsSoFarArray[k]);
-        //   }
-      }
+      // shiftToExpand = currentShift;
+      // while (
+      //   checkPreviousShift(currentSle, shiftToExpand) &&
+      //   shiftsSoFar < maxShiftLength
+      // ) {
+      //   previousShiftIndex = allShifts.indexOf(shiftToExpand) - 1;
+      //   previousShift = allShifts[previousShiftIndex];
+      //   shiftToExpand = previousShift;
+      //   assignShift(currentSle, shiftToExpand);
+      //   shiftsSoFar += 1;
+      //   shiftsSoFarArray.push(shiftToExpand);
     }
+    // if (shiftsSoFar < minShiftLength) {
+    //   for (k = 0; k < shiftsSoFarArray.length; k += 1) {
+    //     unassignShift(currentSle, shiftsSoFarArray[k]);
+    //   }
   }
 }
 
@@ -359,7 +355,6 @@ function valid(sle, shift) {
     }
     return false;
   }
-
   return (
     shiftsLeft(sle) && !locationFull(shift) && !workingConcurrent(sle, shift)
   );
