@@ -18,9 +18,6 @@ var mainHours = [
   { day: "tue", start: 9, end: 12, location: "Main" },
 ];
 
-// In my opinion the first step is to covert those arrays
-// into an array of half hour timeslots that need to be scheduled.
-
 var minEmployeesMoffitt3 = 2;
 var minEmployeesMain = 3;
 
@@ -66,24 +63,6 @@ class Sle {
     this.availScore = 0;
     this.assignedShifts = [];
   }
-
-  /* Copy "constructor"*/
-  copy() {
-    var copySle = new Sle(null, null, null, null, null, null);
-    copySle.id = this.id;
-    copySle.tMoffitt3 = this.tMoffitt3;
-    copySle.tMoffitt4 = this.tMoffitt4;
-    copySle.tMain = this.tMain;
-    copySle.avails = this.avails;
-    copySle.shiftsLeft = this.shiftsLeft;
-    for (let i = 0; i < this.availShifts.length; i += 1) {
-      copySle.availShifts.push(this.availShifts[i]);
-    }
-    copySle.availScore = this.availScore;
-    return copySle;
-  }
-
-  //TODO : Copy shifts as well?
 
   /** Change my availScore to be how many availShifts I have */
   updateScore() {
@@ -400,6 +379,7 @@ function checkPreviousShift(sle, currentShift) {
 
 assignAllShifts();
 
+//Testing output
 for (let i = 0; i < allShifts.length; i += 1) {
   console.log(
     allShifts[i].location +
@@ -413,50 +393,8 @@ for (let i = 0; i < allShifts.length; i += 1) {
   }
 }
 
-// function blah() {
-//   arr = [];
-//   for (let i = 0; i < allShifts.length; i += 1) {
-//     curShift = allShifts[i];
-//     for (let j = 0; j < curShift.assignedSles.length; j += 1) {
-//       curSle = curShift.assignedSles[j];
-//       nextShift = allShifts[i + 1];
-//       prevShift = allShifts[i - 1];
-//       nextContainsSle = false;
-//       prevContainsSle = false;
-//       if (
-//         nextShift != null &&
-//         nextShift.location == curShift.location &&
-//         nextShift.weekday == curShift.weekday &&
-//         nextShift.assignedSles.includes(curSle)
-//       ) {
-//         nextContainsSle = true;
-//       }
-//       if (
-//         prevShift != null &&
-//         prevShift.location == curShift.location &&
-//         prevShift.weekday == curShift.weekday &&
-//         prevShift.assignedSles.includes(curSle)
-//       ) {
-//         prevContainsSle = true;
-//       }
-//       if (!nextContainsSle && !prevContainsSle) {
-//         arr.push(curSle);
-//       }
-//     }
-//   }
-//   return arr;
-// }
-
-// console.log(blah());
-
 /** Make sure there's no holes for DAY at LOCATION */
 function checkHoles(day, location) {}
-
-// Next you need to count how many people can work
-// each of those half hour time slots
-
-// Then start making assignments and keep track of how much/when
-// people are working
 
 // Your final output should be an object that looks like a row
 // in the shifts table. So an array of objects that looks like this:
