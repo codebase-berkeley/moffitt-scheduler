@@ -13,13 +13,13 @@ export default function EachEmployee(props) {
       </div>
       <div className="lib">
         <div className={props.currentDisplayMoffitt3}>
-          Moffitt 3: {props.moffitt3TrainingLevel}
+          Moffitt 3 {props.moffitt3TrainingLevel}
         </div>
         <div className={props.currentDisplayMoffitt4}>
-          Moffitt 4: {props.moffitt4TrainingLevel}
+          Moffitt 4 {props.moffitt4TrainingLevel}
         </div>
         <div className={props.currentDisplayDoe}>
-          Doe: {props.doeTrainingLevel}
+          Doe {props.doeTrainingLevel}
         </div>
       </div>
     </div>
