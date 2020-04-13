@@ -47,7 +47,7 @@
   color: white;
   margin-right: 60%;
   height: 30px;
-  width: 140px;
+  width: 150px;
   padding: 2%;
   margin: 20px;
   font-family: "Open Sans", sans-serif;
@@ -63,6 +63,8 @@
   align-items: center;
   padding-top: 0%;
   padding-bottom: 0%;
+  flex-direction: row;
+  justify-content: center;
 }
 .moffitt3NoDisplay {
   flex: 1;
@@ -70,7 +72,7 @@
   color: white;
   margin-right: 60%;
   height: 30px;
-  width: 140px;
+  width: 150px;
   padding: 2%;
   margin: 20px;
   font-family: "Open Sans", sans-serif;
@@ -81,11 +83,13 @@
   line-height: 30px;
   text-align: center;
   border-radius: 20.5px;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   padding-top: 0%;
   padding-bottom: 0%;
+  flex-direction: row;
+  justify-content: center;
 }
 .moffitt4Display {
   flex: 1;
@@ -93,7 +97,7 @@
   color: white;
   margin-right: 60%;
   height: 30px;
-  width: 140px;
+  width: 150px;
   padding: 2%;
   margin: 20px;
   font-family: "Open Sans", sans-serif;
@@ -109,6 +113,8 @@
   align-items: center;
   padding-top: 0%;
   padding-bottom: 0%;
+  flex-direction: row;
+  justify-content: center;
 }
 .moffitt4NoDisplay {
   flex: 1;
@@ -116,7 +122,7 @@
   color: white;
   margin-right: 60%;
   height: 30px;
-  width: 140px;
+  width: 150px;
   padding: 2%;
   margin: 20px;
   font-family: "Open Sans", sans-serif;
@@ -127,11 +133,13 @@
   line-height: 30px;
   text-align: center;
   border-radius: 20.5px;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   padding-top: 0%;
   padding-bottom: 0%;
+  flex-direction: row;
+  justify-content: center;
 }
 .doeDisplay {
   flex: 1;
@@ -139,7 +147,7 @@
   color: white;
   margin-right: 60%;
   height: 30px;
-  width: 100px;
+  width: 150px;
   padding: 2%;
   margin: 20px;
   font-family: "Open Sans", sans-serif;
@@ -155,6 +163,8 @@
   align-items: center;
   padding-top: 0%;
   padding-bottom: 0%;
+  flex-direction: row;
+  justify-content: center;
 }
 .doeNoDisplay {
   flex: 1;
@@ -162,7 +172,7 @@
   color: white;
   margin-right: 60%;
   height: 30px;
-  width: 100px;
+  width: 150px;
   padding: 2%;
   margin: 20px;
   font-family: "Open Sans", sans-serif;
@@ -173,11 +183,13 @@
   line-height: 30px;
   text-align: center;
   border-radius: 20.5px;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   padding-top: 0%;
   padding-bottom: 0%;
+  flex-direction: row;
+  justify-content: center;
 }
 .email {
   font-weight: normal;

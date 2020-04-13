@@ -2,6 +2,7 @@ import React from "react";
 import "./Employees.css";
 import EachEmployee from "./EachEmployee.js";
 import Modal from "react-modal";
+import starImage from "./baseline_grade_white_18dp.png";
 
 export default class Employees extends React.Component {
   constructor(props) {
@@ -36,6 +37,48 @@ export default class Employees extends React.Component {
   }
   processData(database) {
     const listItems = database.map((entry, index) => {
+      if (entry.moffitt3TrainingLevel == 1) {
+        entry.moffitt3TrainingLevel = <img src={starImage} />;
+      } else if (entry.moffitt3TrainingLevel == 2) {
+        entry.moffitt3TrainingLevel = [
+          <img src={starImage} />,
+          <img src={starImage} />,
+        ];
+      } else {
+        entry.moffitt3TrainingLevel = [
+          <img src={starImage} />,
+          <img src={starImage} />,
+          <img src={starImage} />,
+        ];
+      }
+      if (entry.moffitt4TrainingLevel == 1) {
+        entry.moffitt4TrainingLevel = <img src={starImage} />;
+      } else if (entry.moffitt4TrainingLevel == 2) {
+        entry.moffitt4TrainingLevel = [
+          <img src={starImage} />,
+          <img src={starImage} />,
+        ];
+      } else {
+        entry.moffitt4TrainingLevel = [
+          <img src={starImage} />,
+          <img src={starImage} />,
+          <img src={starImage} />,
+        ];
+      }
+      if (entry.doeTrainingLevel == 1) {
+        entry.doeTrainingLevel = <img src={starImage} />;
+      } else if (entry.doeTrainingLevel == 2) {
+        entry.doeTrainingLevel = [
+          <img src={starImage} />,
+          <img src={starImage} />,
+        ];
+      } else {
+        entry.doeTrainingLevel = [
+          <img src={starImage} />,
+          <img src={starImage} />,
+          <img src={starImage} />,
+        ];
+      }
       return (
         <EachEmployee
           name={entry.name}
