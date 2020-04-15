@@ -127,6 +127,8 @@
 .doeButton:focus {
   outline: 0;
 }
+.schedGenerator {
+}
 
 .hour {
   margin-bottom: 80px;
