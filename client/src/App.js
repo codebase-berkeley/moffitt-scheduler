@@ -10,6 +10,7 @@ import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
 import SupervisorCover from "./components/Supervisor/SupervisorCover";
 import Cover from "./components/Cover/Cover";
 import MasterSchedule from "./components/Supervisor/SupervisorMS";
+import Profile from "./components/Profile/Profile";
 
 import "./App.css";
 import SleOpenShifts from "./components/Sle/SleOpenShifts";
@@ -33,6 +34,7 @@ class App extends React.Component {
           />
           <Route exact path="/openshifts/:userId" component={SleOpenShifts} />
           <Route exact path="/employees" component={SupervisorEmployees} />
+          <Route exact path="/profile/:userId" component={Profile} />
           <Route exact path="/cover" component={SupervisorCover} />
           <Route exact path="/masterschedule" component={MasterSchedule} />
         </Switch>
