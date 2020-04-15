@@ -258,37 +258,37 @@ export default class Profile extends React.Component {
               <div className="scheduledShiftsText">Scheduled Shifts</div>
             </div>
           </div>
-          <div className="scheduledShiftsSpace" id="overall-container">
-            <div id="schedule-container-st">
-              <div id="frontWords">
-                <h1 id="weekString">{weekString}</h1>
+          <div id="schedule-container-st">
+            <div id="frontWords">
+              <h1 id="weekString">{weekString}</h1>
+            </div>
+            <div id="legend">
+              <div id="libtag">
+                <h3 id="findingspace">Moffitt&nbsp;&nbsp;</h3>
+                <div id="moffittcolor"></div>
               </div>
-              <div id="legend">
-                <div id="libtag">
-                  <h3 id="findingspace">Moffitt&nbsp;&nbsp;</h3>
-                  <div id="moffittcolor"></div>
-                </div>
-                <div id="libtag">
-                  <h3 id="findingspace">Doe&nbsp;&nbsp;</h3>
-                  <div id="doecolor"></div>
-                </div>
+              <div id="libtag">
+                <h3 id="findingspace">Doe&nbsp;&nbsp;</h3>
+                <div id="doecolor"></div>
               </div>
-              <div id="inner-schedule">
-                {wkdays}
+            </div>
+            <div id="inner-schedule">
+              <div></div>
 
-                {timeslots}
-              </div>
+              {wkdays}
+
+              {timeslots}
             </div>
           </div>
         </div>
         <div id="overall-container">
-          <h1 className="availabilityHeader" id="selectavail">
-            Availabilities
-          </h1>
+          <div className="availabilityHeader">
+            <div className="availabilitiesText">Availabilities</div>
+          </div>
           <div className="invisible"></div>
 
           <div className="availabilitiesInvisible" id="schedule-container">
-            <h1 id="weekString">{this.weekString}</h1>
+            <h1 id="weekString">{weekString}</h1>
             <ScheduleSelector
               startDate={startOfWeek(this.currentDate)}
               selection={this.state.schedule}
