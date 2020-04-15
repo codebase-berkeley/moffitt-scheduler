@@ -5,7 +5,7 @@ var pool = require("../db/db");
 
 router.get("/masterschedule", function (req, res) {
   pool.query(
-    "SELECT name, start_time, end_time, location, shift_id FROM shifts, sle WHERE id=sle_id ",
+    "SELECT name, start_time, end_time, location, shift_id, sle_id FROM shifts, sle WHERE id=sle_id ",
     (error, result) => {
       if (error) {
         throw error;

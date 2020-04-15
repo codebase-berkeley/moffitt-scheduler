@@ -16,6 +16,24 @@ export default class Moffitt extends React.Component {
       fridayArray,
       saturdayArray,
     ] = [[], [], [], [], [], [], []];
+    let shiftid = [];
+    let sleid = [];
+    let name = [];
+    let day = [[shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
+    [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
+    [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
+    [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
+    [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
+    [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name]];
+    let [
+      sunArr,
+      monArr,
+      tueArr,
+      wedArr,
+      thuArr,
+      friArr,
+      satArr
+    ] = [day, day, day, day, day, day, day];
     this.state = {
       items: [{}],
       allDaysOfWeek: [
@@ -27,7 +45,15 @@ export default class Moffitt extends React.Component {
         fridayArray,
         saturdayArray,
       ],
-      employeesInShift: [],
+      componentGrid: [
+        sunArr,
+        monArr,
+        tueArr,
+        wedArr,
+        thuArr,
+        friArr,
+        satArr
+      ]
     };
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 24; j++) {
@@ -54,64 +80,76 @@ export default class Moffitt extends React.Component {
         for (let i = 0; i < this.state.items.length; i++) {
           console.log("items: ", this.state.items);
           let location = this.state.items[i]["location"];
+          let shiftID = this.state.items[i]["shift_id"];
+          let sleID = this.state.items[i]["sle_id"];
+          let name = this.state.items[i]["name"];
+          console.log("shift id: ", shiftID);
+          console.log("sle id: ", sleID);
           if (location == "Moffitt") {
-            let name = this.state.items[i]["name"];
             let start_time = new Date(this.state.items[i]["start_time"]);
             let end_time = new Date(this.state.items[i]["end_time"]);
             let start_time_date = start_time.getDay();
             let end_time_date = start_time.getDay();
             let start_hour = start_time.getHours();
             let end_hour = end_time.getHours();
+
+            let shiftArray = [];
+            let sleArray = [];
+            let nameArray = [];
+
             if (start_time_date == end_time_date) {
               //If shifts runs across the same day
               for (let i = start_hour; i < end_hour; i++) {
-                let previousState = this.state.allDaysOfWeek[start_time_date][i]
-                  .props.text;
-                if (previousState == null) {
-                  newAllDaysOfWeek[start_time_date][i] = (
-                    <Box
-                      text={name}
-                      startTime={start_hour}
-                      curTime={i}
-                      startDay={start_time_date}
-                    />
-                  );
-                } else {
-                  newAllDaysOfWeek[start_time_date][i] = (
-                    <Box
-                      text={previousState + "," + "\n" + name}
-                      startTime={start_hour}
-                      curTime={i}
-                      startDay={start_time_date}
-                    />
-                  );
-                }
+
+                shiftArray.push(1);
+
+                let newShiftArray = shiftArray.push(shiftID);
+                shiftArray = newShiftArray;
+
+                let newSleArray = sleArray.push(sleID);
+                sleArray = newSleArray;
+
+                let newNameArray = nameArray.push(name);
+                nameArray = newNameArray;
+
+                newAllDaysOfWeek[start_time_date][i] = (
+                  <Box
+                    startTime={start_hour}
+                    curTime={i}
+                    startDay={start_time_date}
+                    shiftId={newShiftArray}
+                    sleId={newSleArray}
+                    names={newNameArray}
+                  />
+                );
               }
-              console.log("start hour: ", start_hour);
+              console.log("shift array: ", shiftArray);
+              console.log("sle array: ", sleArray);
+              console.log("names: ", nameArray);
+
             } else {
               //In case days are not the same (i.e. Sunday-Monday shift)
               for (let i = start_hour; i < 24; i++) {
-                let previousState = this.state.allDaysOfWeek[start_time_date][i]
-                  .props.text;
-                if (previousState == null) {
-                  newAllDaysOfWeek[start_time_date][i] = (
-                    <Box
-                      text={name}
-                      startTime={start_hour}
-                      curTime={i}
-                      startDay={start_time_date}
-                    />
-                  );
-                } else {
-                  newAllDaysOfWeek[start_time_date][i] = (
-                    <Box
-                      text={previousState + "," + "\n" + name}
-                      startTime={start_hour}
-                      curTime={i}
-                      startDay={start_time_date}
-                    />
-                  );
-                }
+
+                let newShiftArray = shiftArray.push(shiftID);
+                shiftArray = newShiftArray;
+
+                let newSleArray = sleArray.push(sleID);
+                sleArray = newSleArray;
+
+                let newNameArray = nameArray.push(name);
+                nameArray = newNameArray;
+
+                newAllDaysOfWeek[start_time_date][i] = (
+                  <Box
+                    startTime={start_hour}
+                    curTime={i}
+                    startDay={start_time_date}
+                    shiftId={newShiftArray}
+                    sleId={newSleArray}
+                    names={newNameArray}
+                  />
+                );
               }
               // for (let i = 0; i < end_hour; i++) {
               //   let previousState = this.state.allDaysOfWeek[end_time_date][i]
@@ -156,15 +194,24 @@ export default class Moffitt extends React.Component {
   }
 }
 
+function formatNames(names) {
+  let result = "";
+  for (let i = 0; i < names.length - 1; i++) {
+    result += names[i] + "\n";
+  }
+  result += names[names.length - 1];
+  return result;
+}
+
 function Box(props) {
   return (
     <div>
       <div className="box">
-        {props.text}
+        {/* {formatNames(props.names)} */}
         <EditSchedule
           day={props.startDay}
           time={props.curTime}
-          employee={props.text}
+          employee={props.names}
         // sleId={props.}
         // shiftId={props.}
         />
@@ -245,7 +292,7 @@ function EditSchedule(props) {
       employees.push(
         <div>
           <div className="currentEmployee">{list[i]}</div>
-          <button className="deleteButton" onClick={removeEmployee(props)}>
+          <button className="deleteButton">
             <img
               className="deleteButtonImg"
               src={deleteButton}
@@ -304,23 +351,23 @@ function EditSchedule(props) {
 
   function otherEmployee() { }
 
-  function removeEmployee(sle_id) {
-    fetch("/removeemployee", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ employeeID: sle_id })
-    })
-      .then(response => {
-        this.props.fixState(sle_id);
-        return response.json();
-      })
-      .then(jsonResponse => {
-        console.log(jsonResponse);
-      });
-  }
+  // function removeEmployee(sle_id) {
+  //   fetch("/removeemployee", {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({ employeeID: sle_id })
+  //   })
+  //     .then(response => {
+  //       this.props.fixState(sle_id);
+  //       return response.json();
+  //     })
+  //     .then(jsonResponse => {
+  //       console.log(jsonResponse);
+  //     });
+  // }
 
   return (
     <div>
