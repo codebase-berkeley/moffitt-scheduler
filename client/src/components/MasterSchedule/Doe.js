@@ -68,6 +68,7 @@ export default class Doe extends React.Component {
                 console.log("i: ", i);
                 let previousState = this.state.allDaysOfWeek[start_time_date][i]
                   .props.text;
+                console.log("pS", previousState);
                 if (previousState == null) {
                   newAllDaysOfWeek[start_time_date][i] = (
                     <Box
@@ -94,6 +95,7 @@ export default class Doe extends React.Component {
               for (let i = start_hour; i < 24; i++) {
                 let previousState = this.state.allDaysOfWeek[start_time_date][i]
                   .props.text;
+                console.log("pS", previousState);
                 if (previousState == null) {
                   newAllDaysOfWeek[start_time_date][i] = (
                     <Box
@@ -247,7 +249,7 @@ function EditSchedule(props) {
       4: "Thursday",
       5: "Friday",
       6: "Saturday",
-      7: "Sunday"
+      7: "Sunday",
     };
     return dayOfWeek[props];
   }
@@ -277,8 +279,8 @@ function EditSchedule(props) {
       20: "8 PM",
       21: "9 PM",
       22: "10 PM",
-      23: "11 PM"
-    }
+      23: "11 PM",
+    };
     return timeOfDay[props];
   }
 
