@@ -103,7 +103,7 @@
   display: flex;
   flex-direction: row;
   align-content: space-between;
-  justify-content: space-around;
+  justify-content: center;
 }
 .firstStat,
 .secondStat,
@@ -119,6 +119,14 @@
   line-height: 33px;
   color: #000000;
   padding-top: 2%;
+  padding-right: 3%;
+}
+.firstStat {
+  padding-right: 33%;
+}
+
+.thirdStat {
+  padding-left: 33%;
 }
 
 .statsDescriptions {
@@ -128,12 +136,13 @@
   justify-content: space-around;
   padding-top: 3%;
 }
-.secondStatDesc {
-  padding-left: 5%;
+.firstStatDesc {
+  padding-right: 10%;
+  padding-left: 1%;
 }
 
 .thirdStatDesc {
-  padding-left: 1%;
+  padding-left: 10%;
 }
 
 .scheduledShifts {
@@ -319,6 +328,7 @@
   flex-direction: row;
   margin-top: 6%;
   margin-left: -30%;
+  justify-content: center;
 }
 
 .trainingLevelsMoffittThird {
@@ -329,14 +339,16 @@
   top: 283px;
   background: #ff8d06;
   border-radius: 20.5px;
+  justify-content: center;
+  /* padding-right: 3%; */
 }
 
 .moffittFourthText {
-  width: 70%;
+  /* width: 70%; */
   height: 19px;
   left: 826px;
   top: 289px;
-  padding-left: 10%;
+  /* padding-left: 10%; */
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -347,11 +359,11 @@
   color: #ffffff;
 }
 .doeText {
-  width: 60%;
+  /* width: 60%; */
   height: 19px;
   left: 826px;
   top: 289px;
-  padding-left: 5%;
+  /* padding-left: 5%; */
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -370,6 +382,7 @@
   top: 283px;
   background: #04b17e;
   border-radius: 20.5px;
+  justify-content: center;
 }
 .trainingLevelsDoe {
   display: flex;
@@ -377,17 +390,17 @@
   height: 32px;
   left: 1092px;
   top: 283px;
-
+  justify-content: center;
   background: #d7269b;
   border-radius: 20.5px;
 }
 
 .moffittThirdText {
-  width: 70%;
+  /* width: 70%; */
   height: 19px;
   left: 826px;
   top: 289px;
-  padding-left: 10%;
+  /* padding-left: 10%; */
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;

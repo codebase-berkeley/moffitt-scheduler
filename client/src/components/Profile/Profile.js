@@ -3,8 +3,6 @@ import "./Profile.css";
 import star from "./Images/star.png";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import ScheduleSelector from "react-schedule-selector";
-let currentClicked = null;
-let currentClickedID = null;
 
 function Timeslot(props) {
   return (
@@ -12,7 +10,6 @@ function Timeslot(props) {
       className="item-cell"
       style={{ backgroundColor: props.color }}
       id={props.id}
-      onClick={props.onClick}
     ></div>
   );
 }
@@ -61,36 +58,17 @@ export default class Profile extends React.Component {
     this.currentDate = new Date();
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
-    this.stateFixer = this.stateFixer.bind(this);
-    this.submitClick = this.submitClick.bind(this);
-    this.cancelClick = this.cancelClick.bind(this);
     this.renderCustomDateCell = this.renderCustomDateCell.bind(this);
   }
 
   componentDidMount() {
     fetch("/availability/" + this.props.match.params.userId)
       .then((response) => {
-        console.log("availability response");
         return response.json();
       })
       .then((jsonResponse) => {
-        console.log("availability response 2");
         this.setState({ schedule: jsonResponse.schedule });
       });
-  }
-
-  stateFixer(e) {
-    if (
-      e.target.id != "" &&
-      e.target.style.backgroundColor != "rgb(193, 135, 211)"
-    ) {
-      /*The point of the background color check is to make sure that once a shift is requested to be covered,
-       * this can't happen again for the same shift.
-       */
-      currentClicked = e;
-      currentClickedID = e.target.id;
-      this.openModal();
-    }
   }
 
   renderCustomDateCell = (time, selected, innerRef) => {
@@ -101,38 +79,6 @@ export default class Profile extends React.Component {
     );
   };
 
-  submitClick() {
-    let reason = document.getElementById("reason");
-    let notes = reason.value;
-    fetch("/changecoverage", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        coverage: true,
-        shiftID: currentClickedID,
-        sentNotes: notes,
-      }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((jsonResponse) => {
-        let newShifts = this.state.shifts;
-        for (let i = 0; i < newShifts.length; i++) {
-          if (newShifts[i].id == currentClickedID) {
-            newShifts[i].color = "#C187D3";
-          }
-        }
-        this.setState({ shifts: newShifts });
-      });
-    this.closeModal();
-  }
-  cancelClick() {
-    this.closeModal();
-  }
   render() {
     let timeslots = [];
     const hours = [
