@@ -340,15 +340,13 @@
   background: #ff8d06;
   border-radius: 20.5px;
   justify-content: center;
-  /* padding-right: 3%; */
+  padding-top: 1.2%;
 }
 
 .moffittFourthText {
-  /* width: 70%; */
   height: 19px;
   left: 826px;
   top: 289px;
-  /* padding-left: 10%; */
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -359,19 +357,15 @@
   color: #ffffff;
 }
 .doeText {
-  /* width: 60%; */
   height: 19px;
   left: 826px;
   top: 289px;
-  /* padding-left: 5%; */
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 19px;
-
   text-align: center;
-
   color: #ffffff;
 }
 .trainingLevelsMoffittFourth {
@@ -383,6 +377,7 @@
   background: #04b17e;
   border-radius: 20.5px;
   justify-content: center;
+  padding-top: 1.2%;
 }
 .trainingLevelsDoe {
   display: flex;
@@ -393,21 +388,19 @@
   justify-content: center;
   background: #d7269b;
   border-radius: 20.5px;
+  padding-top: 1.2%;
 }
 
 .moffittThirdText {
-  /* width: 70%; */
   height: 19px;
   left: 826px;
   top: 289px;
-  /* padding-left: 10%; */
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
   line-height: 19px;
   text-align: center;
-
   color: #ffffff;
 }
 
