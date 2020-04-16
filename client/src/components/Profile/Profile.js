@@ -187,15 +187,17 @@ export default class Profile extends React.Component {
               <h1 className="statsText">Stats</h1>
             </div>
             <div className="statsBox">
-              <div className="statsNumbers">
-                <div className="firstStat">12</div>
-                <div className="secondStat">80</div>
-                <div className="thirdStat">4</div>
-              </div>
-              <div className="statsDescriptions">
+              <div className="firstStat">
+                <div className="firstStatNumber">12</div>
                 <div className="firstStatDesc">scheduled hours per week</div>
-                <div className="secondStatDesc">total hours worked</div>
-                <div className="thirdStatDesc">
+              </div>
+              <div className="secondStat">
+                <div className="secondStatNumber">80</div>
+                <div className="firstStatDesc">total hours worked</div>
+              </div>
+              <div className="thirdStat">
+                <div className="thirdStatNumber">4</div>
+                <div className="firstStatDesc">
                   shifts requested to be covered
                 </div>
               </div>
