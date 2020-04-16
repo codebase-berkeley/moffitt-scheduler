@@ -3,7 +3,7 @@ var router = express.Router();
 
 var pool = require("../db/db");
 
-router.post("/login", function(req, res) {
+router.post("/login", function (req, res) {
   var email = req.body.email.trim();
   var password = req.body.password;
   var sleID;
