@@ -61,7 +61,7 @@ export default class MSRenderer extends React.Component {
           <div className="masterScheduleText">Master Schedule</div>
           <div className="buttons">
             <button className="schedGenerator" onClick={this.generate}>
-              <h1>Generator</h1>
+              <h1>Generate</h1>
             </button>
             <button className={clicked} onClick={this.showMoffit}>
               <h1>Moffitt</h1>
