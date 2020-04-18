@@ -16,24 +16,7 @@ export default class Moffitt extends React.Component {
       fridayArray,
       saturdayArray,
     ] = [[], [], [], [], [], [], []];
-    let shiftid = [];
-    let sleid = [];
-    let name = [];
-    // let day = [[shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
-    // [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
-    // [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
-    // [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
-    // [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name],
-    // [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name], [shiftid, sleid, name]];
-    // let [
-    //   sunArr,
-    //   monArr,
-    //   tueArr,
-    //   wedArr,
-    //   thuArr,
-    //   friArr,
-    //   satArr
-    // ] = [day, day, day, day, day, day, day];
+
     this.state = {
       items: [{}],
       allDaysOfWeek: [
@@ -45,19 +28,19 @@ export default class Moffitt extends React.Component {
         fridayArray,
         saturdayArray,
       ],
-      // componentGrid: [
-      //   sunArr,
-      //   monArr,
-      //   tueArr,
-      //   wedArr,
-      //   thuArr,
-      //   friArr,
-      //   satArr
-      // ]
+
     };
+    let emptyArr = [];
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 24; j++) {
-        this.state.allDaysOfWeek[i].push(<Box startDay={i} curTime={j} />);
+        this.state.allDaysOfWeek[i][j].push(
+          <Box startTime={0}
+            curTime={j}
+            startDay={i}
+            shiftId={emptyArr}
+            sleId={emptyArr}
+            names={emptyArr}
+          />);
       }
     }
   }
@@ -76,79 +59,69 @@ export default class Moffitt extends React.Component {
         this.setState({
           items: jsonResponse.items,
         });
+
         let newAllDaysOfWeek = this.state.allDaysOfWeek;
+
         for (let i = 0; i < this.state.items.length; i++) {
+
           console.log("items: ", this.state.items);
+
           let location = this.state.items[i]["location"];
           let shiftID = this.state.items[i]["shift_id"];
           let sleID = this.state.items[i]["sle_id"];
           let name = this.state.items[i]["name"];
+
           console.log("shift id: ", shiftID);
           console.log("sle id: ", sleID);
+
           if (location == "Moffitt") {
+
             let start_time = new Date(this.state.items[i]["start_time"]);
             let end_time = new Date(this.state.items[i]["end_time"]);
+
             let start_time_date = start_time.getDay();
             let end_time_date = start_time.getDay();
+
             let start_hour = start_time.getHours();
             let end_hour = end_time.getHours();
 
-            let shiftArray = [];
-            let sleArray = [];
-            let nameArray = [];
+            // console.log("shift array before: ", shiftArray);
+            // console.log("sle array before: ", sleArray);
+            // console.log("name array before: ", nameArray);
 
-            // shiftArray.push(shiftID);
-            // sleArray.push(sleID);
-            // nameArray.push(name);
+            // console.log("shift array after: ", shiftArray);
+            // console.log("sle array after: ", sleArray);
+            // console.log("name array after: ", nameArray);
 
-            console.log("shift array: ", shiftArray);
-            console.log("sle array: ", sleArray);
-            console.log("name array: ", nameArray);
+            let end;
+
+            //If shifts runs across the same day
             if (start_time_date == end_time_date) {
-              //If shifts runs across the same day
-              for (let i = start_hour; i < end_hour; i++) {
-                shiftArray.push(shiftID);
-                console.log("shift array 2: ", shiftArray);
-
-                sleArray.push(sleID);
-                console.log("sle array 2: ", sleArray);
-
-                nameArray.push(name);
-                console.log("name array 2: ", nameArray);
-
-                newAllDaysOfWeek[start_time_date][i] = (
-                  <Box
-                    startTime={start_hour}
-                    curTime={i}
-                    startDay={start_time_date}
-                    shiftId={shiftArray}
-                    sleId={sleArray}
-                    names={nameArray}
-                  />
-                );
-              }
+              end = end_hour;
             } else {
-              //In case days are not the same (i.e. Sunday-Monday shift)
-              // shiftArray.push(shiftID);
-              // sleArray.push(sleID);
-              // nameArray.push(name);
+              end = 24;
+            }
 
-              for (let i = start_hour; i < 24; i++) {
-                shiftArray.push(shiftID);
-                sleArray.push(sleID);
-                nameArray.push(name);
+            for (let i = start_hour; i < end; i++) {
 
-                newAllDaysOfWeek[start_time_date][i] = (
-                  <Box
-                    startTime={start_hour}
-                    curTime={i}
-                    startDay={start_time_date}
-                    shiftId={shiftArray}
-                    sleId={sleArray}
-                    names={nameArray}
-                  />
-                );
-              }
+              let previousState = this.state.allDaysOfWeek[start_time_date][i].props;
+              console.log("pS: ", previousState);
+
+              let shiftArray = previousState.shiftId.push(shiftID);
+              let sleArray = previousState.sleId.push(sleID);
+              let nameArray = previousState.names.push(name);
+
+              newAllDaysOfWeek[start_time_date][i] = (
+                <Box
+                  startTime={start_hour}
+                  curTime={i}
+                  startDay={start_time_date}
+                  shiftId={shiftArray}
+                  sleId={sleArray}
+                  names={nameArray}
+                />
+              );
+
             }
           }
         }
@@ -171,27 +144,29 @@ export default class Moffitt extends React.Component {
   }
 }
 
-// function formatNames(names) {
-//   let result = "";
-//   for (let i = 0; i < names.length - 1; i++) {
-//     result += names[i] + "\n";
-//   }
-//   result += names[names.length - 1];
-//   return result;
-// }
+function formatNames(thenames) {
+  let result = "";
+  for (let i = 0; i < thenames.length - 1; i++) {
+    result += thenames[i] + "\n";
+  }
+  result += thenames[thenames.length - 1];
+  return result;
+}
 
 function Box(props) {
+  console.log("names: ", props.names);
+  //console.log("name length: ", (props.names).length);
   return (
     <div>
       <div className="box">
-        {props.names}
-        {/* {formatNames(props.names)} */}
+        {/* {props.names} */}
+        {formatNames(props.names)}
         <EditSchedule
           day={props.startDay}
           time={props.curTime}
           employee={props.names}
-          // sleId={props.}
-          // shiftId={props.}
+        // sleId={props.}
+        // shiftId={props.}
         />
       </div>
     </div>
@@ -327,7 +302,7 @@ function EditSchedule(props) {
     return timeOfDay[props];
   }
 
-  function otherEmployee() {}
+  function otherEmployee() { }
 
   // function removeEmployee(sle_id) {
   //   fetch("/removeemployee", {
