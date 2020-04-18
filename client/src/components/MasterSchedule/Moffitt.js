@@ -5,6 +5,12 @@ import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
 
+function fetchEmployees(database) {
+  const listItems = database.map((entry, index) => (
+    <OtherEmployee employee={entry.employee} sleId={entry.sleId} />
+  ));
+  return listItems;
+}
 export default class Moffitt extends React.Component {
   constructor(props) {
     super(props);
@@ -147,33 +153,32 @@ export default class Moffitt extends React.Component {
 
   render() {
     return (
-      <div className="weekdayColumns">
-        <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
-        <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
-        <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>
-        <div className="wednesdayColumn">{this.state.allDaysOfWeek[3]}</div>
-        <div className="thursdayColumn">{this.state.allDaysOfWeek[4]}</div>
-        <div className="fridayColumn">{this.state.allDaysOfWeek[5]}</div>
-        <div className="saturdayColumn">{this.state.allDaysOfWeek[6]}</div>
+      <div>
+        <div className="weekdayColumns">
+          <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
+          <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
+          <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>
+          <div className="wednesdayColumn">{this.state.allDaysOfWeek[3]}</div>
+          <div className="thursdayColumn">{this.state.allDaysOfWeek[4]}</div>
+          <div className="fridayColumn">{this.state.allDaysOfWeek[5]}</div>
+          <div className="saturdayColumn">{this.state.allDaysOfWeek[6]}</div>
+        </div>
+        <div>{fetchEmployees(this.state.allEmployees)}</div>
       </div>
     );
   }
 }
 
-function OtherEmployee() {
+function OtherEmployee(props) {
   var employees = [];
-  console.log("itemsssss", this.state.items);
   console.log("in function");
-  if (this.state.allEmployees == null) {
+  if (props == null) {
     return null;
   }
-  console.log("allEmployees2", this.state.allEmployees);
-  for (let i = 0; i < this.state.allEmployees.length; i++) {
+  for (let i = 0; i < props.length; i++) {
     employees.push(
       <div className="container">
-        <div className="otherEmployee">
-          {this.state.allEmployees[i]["name"]}
-        </div>
+        <div className="otherEmployee">{props.employee}</div>
         <div className="icon">
           <button className="addButton">
             <img className="addButtonImg" src={addButton} alt="addButton" />
@@ -199,6 +204,8 @@ function formatNames(names) {
 }
 
 function Box(props) {
+  //FILTER OTHER EMPLOYEES
+
   return (
     <div>
       <div className="box">
@@ -301,49 +308,6 @@ function EditSchedule(props) {
     return employees;
   }
 
-  // function OtherEmployee() {
-  //   var employees = [];
-  //   console.log("in function");
-  //   fetch("/otheremployees", {
-  //     method: "GET",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({}),
-  //   })
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((jsonResponse) => {
-  //       console.log("otherEmployees", jsonResponse.otherEmployees);
-  //       this.setState({
-  //         allEmployees: jsonResponse.otherEmployees,
-  //       });
-  //       console.log("allEmployees", this.state.allEmployees);
-  //       console.log(jsonResponse);
-  //     });
-  //   console.log("allEmployees2", this.state.allEmployees);
-  //   if (this.state.allEmployees == null) {
-  //     return null;
-  //   }
-  //   for (let i = 0; i < this.state.allEmployees.length; i++) {
-  //     employees.push(
-  //       <div className="container">
-  //         <div className="otherEmployee">
-  //           {this.state.allEmployees[i]["name"]}
-  //         </div>
-  //         <div className="icon">
-  //           <button className="addButton">
-  //             <img className="addButtonImg" src={addButton} alt="addButton" />
-  //           </button>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  //   return employees;
-  // }
-
   function displayDay(props) {
     const dayOfWeek = {
       0: "Sunday",
@@ -444,11 +408,7 @@ function EditSchedule(props) {
               />
             </div>
             <div className="otherEmployees">
-              <OtherEmployee
-                employee={props.employee}
-                sleId={props.sl}
-                shiftId
-              />
+              <OtherEmployee />
             </div>
           </div>
           <div className="button-container">
