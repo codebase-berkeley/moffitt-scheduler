@@ -69,6 +69,25 @@ export default class Profile extends React.Component {
       .then((jsonResponse) => {
         this.setState({ schedule: jsonResponse.schedule });
       });
+    // fetch("/staticcalendar/" + this.props.userId, {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     items: this.state.shifts,
+    //     userId: this.props.userId,
+    //   }),
+    // })
+    //   .then((response) => {
+    //     console.log("response");
+    //     return response.json();
+    //   })
+    //   .then((jsonResponse) => {
+    //     console.log(jsonResponse.shifts);
+    //     this.setState({ shifts: jsonResponse.shifts });
+    //   });
   }
 
   renderCustomDateCell = (time, selected, innerRef) => {
@@ -206,7 +225,7 @@ export default class Profile extends React.Component {
               <div className="scheduledShiftsText">Scheduled Shifts</div>
             </div>
           </div>
-          <div id="schedule-container-st">
+          <div id="profile-schedule-container-st">
             <div id="frontWords">
               <h1 id="weekString">{weekString}</h1>
             </div>
@@ -235,7 +254,10 @@ export default class Profile extends React.Component {
           </div>
           <div className="invisible"></div>
 
-          <div className="availabilitiesInvisible" id="schedule-container">
+          <div
+            className="availabilitiesInvisible"
+            id="profile-schedule-container"
+          >
             <h1 id="weekString">{weekString}</h1>
             <ScheduleSelector
               startDate={startOfWeek(this.currentDate)}

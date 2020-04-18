@@ -146,7 +146,7 @@
   height: 790px;
 }
 
-#schedule-container {
+#profile-schedule-container {
   position: relative;
   display: inline-block;
   left: 8%;
@@ -167,7 +167,7 @@
   padding: 4%;
   padding-left: 12%;
 }
-#schedule-container-st {
+#profile-schedule-container-st {
   position: relative;
   display: inline-block;
   left: 8%;
