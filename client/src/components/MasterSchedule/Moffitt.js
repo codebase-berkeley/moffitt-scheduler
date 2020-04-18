@@ -2,7 +2,7 @@ import React from "react";
 import "./Moffitt.css";
 import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
-import deleteButton from "./MasterImages/delete.png";
+import deleteButton from "./MasterImages/delete.svg";
 
 export default class Moffitt extends React.Component {
   constructor(props) {
@@ -28,22 +28,23 @@ export default class Moffitt extends React.Component {
         fridayArray,
         saturdayArray,
       ],
-
     };
+
     let emptyArr = [];
-    for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
-      for (let j = 0; j < 24; j++) {
-        this.state.allDaysOfWeek[i][j].push(
-          <Box startTime={0}
-            curTime={j}
-            startDay={i}
-            shiftId={emptyArr}
-            sleId={emptyArr}
-            names={emptyArr}
-          />);
+    for (let day = 0; day < this.state.allDaysOfWeek.length; day++) {
+      for (let hour = 0; hour < 24; hour++) {
+        this.state.allDaysOfWeek[day][hour] =
+          <Box startTime={hour}
+            curTime={hour}
+            startDay={day}
+            shiftId={[]}
+            sleId={[]}
+            names={[]}
+          />;
       }
     }
   }
+
   componentDidMount() {
     fetch("/masterschedule", {
       method: "GET",
@@ -85,14 +86,6 @@ export default class Moffitt extends React.Component {
             let start_hour = start_time.getHours();
             let end_hour = end_time.getHours();
 
-            // console.log("shift array before: ", shiftArray);
-            // console.log("sle array before: ", sleArray);
-            // console.log("name array before: ", nameArray);
-
-            // console.log("shift array after: ", shiftArray);
-            // console.log("sle array after: ", sleArray);
-            // console.log("name array after: ", nameArray);
-
             let end;
 
             //If shifts runs across the same day
@@ -102,19 +95,22 @@ export default class Moffitt extends React.Component {
               end = 24;
             }
 
-            for (let i = start_hour; i < end; i++) {
+            for (let j = start_hour; j < end; j++) {
 
-              let previousState = this.state.allDaysOfWeek[start_time_date][i].props;
+              let previousState = this.state.allDaysOfWeek[start_time_date][j].props;
               console.log("pS: ", previousState);
 
-              let shiftArray = previousState.shiftId.push(shiftID);
-              let sleArray = previousState.sleId.push(sleID);
-              let nameArray = previousState.names.push(name);
+              let shiftArray = previousState.shiftId;
+              shiftArray.push(shiftID);
+              let sleArray = previousState.sleId;
+              sleArray.push(sleID);
+              let nameArray = previousState.names;
+              nameArray.push(name);
 
-              newAllDaysOfWeek[start_time_date][i] = (
+              newAllDaysOfWeek[start_time_date][j] = (
                 <Box
                   startTime={start_hour}
-                  curTime={i}
+                  curTime={j}
                   startDay={start_time_date}
                   shiftId={shiftArray}
                   sleId={sleArray}
@@ -144,29 +140,32 @@ export default class Moffitt extends React.Component {
   }
 }
 
-function formatNames(thenames) {
-  let result = "";
-  for (let i = 0; i < thenames.length - 1; i++) {
-    result += thenames[i] + "\n";
+function formatNames(names) {
+  if (names.length == 0) {
+    return "";
   }
-  result += thenames[thenames.length - 1];
+  let result = "";
+  for (let i = 0; i < names.length - 1; i++) {
+    result += names[i];
+    result += "\n";
+  }
+  result += names[names.length - 1];
   return result;
 }
 
 function Box(props) {
-  console.log("names: ", props.names);
-  //console.log("name length: ", (props.names).length);
   return (
     <div>
       <div className="box">
-        {/* {props.names} */}
-        {formatNames(props.names)}
+        <div className="text">
+          {formatNames(props.names)}
+        </div>
         <EditSchedule
           day={props.startDay}
           time={props.curTime}
           employee={props.names}
-        // sleId={props.}
-        // shiftId={props.}
+          sleId={props.sleId}
+          shiftId={props.shiftId}
         />
       </div>
     </div>
@@ -239,19 +238,21 @@ function EditSchedule(props) {
     if (props.employee == null) {
       return null;
     }
-    var list = props.employee.split(",");
+    //var list = props.employee.split(",");
     var employees = [];
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < props.employee.length; i++) {
       employees.push(
-        <div>
-          <div className="currentEmployee">{list[i]}</div>
-          <button className="deleteButton">
-            <img
-              className="deleteButtonImg"
-              src={deleteButton}
-              alt="deleteButton"
-            />
-          </button>
+        <div className="container" >
+          <div className="currentEmployee">{props.employee[i]}</div>
+          <div className="icon">
+            <button className="deleteButton">
+              <img
+                className="deleteButtonImg"
+                src={deleteButton}
+                alt="deleteButton"
+              />
+            </button>
+          </div>
         </div>
       );
     }
@@ -323,56 +324,58 @@ function EditSchedule(props) {
   // }
 
   return (
-    <div>
+    <div className="modal">
       <button className="pencilIcon" onClick={openModal}>
         <img className="pencilImage" src={pencil} alt="pencil" />
       </button>
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <div className="AllText">
-          <h1
-            className="AddEmpText"
-            ref={(_subtitle) => (subtitle = _subtitle)}
-          >
-            Edit Master Schedule Shift
+      <div className="modal">
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <div className="AllText">
+            <h1
+              className="AddEmpText"
+              ref={(_subtitle) => (subtitle = _subtitle)}
+            >
+              Edit Master Schedule Shift
           </h1>
-          <div className="shiftInfo">
-            <div className="locationTag">
-              <h3 className="locTag">Moffitt 3rd Floor</h3>
+            <div className="shiftInfo">
+              <div className="locationTag">
+                <h3 className="locTag">Moffitt 3rd Floor</h3>
+              </div>
+              <div className="timeTag">
+                <h3 className="tTag">
+                  {displayDay(props.day)}, {displayTime(props.time)}
+                </h3>
+              </div>
             </div>
-            <div className="timeTag">
-              <h3 className="tTag">
-                {displayDay(props.day)}, {displayTime(props.time)}
-              </h3>
+            <div className="currEmployees">
+              <CurrEmployee employee={props.employee} sleId={props.sl} shiftId />
             </div>
+            <div className="otherEmployees"></div>
           </div>
-          <div className="currEmployees">
-            <CurrEmployee employee={props.employee} sleId={props.sl} shiftId />
-          </div>
-          <div className="otherEmployees"></div>
-        </div>
-        <div className="button-container">
-          <a href="/masterschedule">
-            <button className="CancelButton">
-              <div className="CancelHover">
-                <div className="CancelText">
-                  <h4> Cancel</h4>
+          <div className="button-container">
+            <a href="/masterschedule">
+              <button className="CancelButton">
+                <div className="CancelHover">
+                  <div className="CancelText">
+                    <h4> Cancel</h4>
+                  </div>
                 </div>
+              </button>
+            </a>
+            <button className="SubmitButton" onClick={submitClick}>
+              <div className="saveText">
+                <h4>Save Changes</h4>
               </div>
             </button>
-          </a>
-          <button className="SubmitButton" onClick={submitClick}>
-            <div className="saveText">
-              <h4>Save Changes</h4>
-            </div>
-          </button>
-        </div>
-      </Modal>
+          </div>
+        </Modal>
+      </div>
     </div>
   );
 }

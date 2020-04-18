@@ -29,7 +29,7 @@ export default class Doe extends React.Component {
     };
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 24; j++) {
-        this.state.allDaysOfWeek[i].push(<Box startDay={i} curTime={j} />);
+        this.state.allDaysOfWeek[i][j] = <Box startDay={i} curTime={j} />;
       }
     }
   }
@@ -66,8 +66,7 @@ export default class Doe extends React.Component {
               //If shifts runs across the same day
               for (let i = start_hour; i < end_hour; i++) {
                 console.log("i: ", i);
-                let previousState = this.state.allDaysOfWeek[start_time_date][i]
-                  .props.text;
+                let previousState = this.state.allDaysOfWeek[start_time_date][i].props.text;
                 console.log("pS", previousState);
                 if (previousState == null) {
                   newAllDaysOfWeek[start_time_date][i] = (
