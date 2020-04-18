@@ -3,6 +3,7 @@ constants = {
   minEmployeesMain: 3,
   minShiftLength: 2,
   maxShiftLength: 8,
+  maxWeeklyShifts: 10,
   moffitt3Hours: [
     { day: "sun", start: 13, end: 16, location: "Moffitt 3" },
     { day: "mon", start: 10, end: 14, location: "Moffitt 3" },
