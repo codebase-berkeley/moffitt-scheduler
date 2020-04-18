@@ -15,17 +15,18 @@ router.get("/masterschedule", function (req, res) {
   );
 });
 
-// router.get("/modalinfo", function(req, res) {
-//   pool.query(
-//     ""
-//   )
-// });
+router.get("/otheremployees", function (req, res) {
+  pool.query("SELECT name, id FROM sle", (error, result) => {
+    console.log("resulting rows", result.rows);
+    if (error) {
+      throw error;
+    }
+    return res.json({ allEmployees: result.rows });
+  });
+});
 
 router.post("/removeemployee", function (req, res) {
-
-  pool.query(
-
-  )
+  pool.query();
 });
 
 module.exports = router;
