@@ -137,7 +137,7 @@ export default class Moffitt extends React.Component {
               newAllDaysOfWeek[start_time_date][j] = (
                 <Box
                   startTime={start_hour}
-                  currTime={j}
+                  curTime={j}
                   startDay={start_time_date}
                   shiftId={shiftArray}
                   sleId={sleArray}
@@ -257,7 +257,7 @@ function Box(props) {
           sleId={props.sleId}
           shiftId={props.shiftId}
           allEmp={props.allEmp}
-          currTime={props.currTime}
+          currTime={props.curTime}
           date={props.date}
           fetchEverything={props.fetchEverything}
         />
