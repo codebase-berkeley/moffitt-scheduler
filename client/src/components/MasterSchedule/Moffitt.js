@@ -5,12 +5,12 @@ import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
 
-function fetchEmployees(database) {
-  const listItems = database.map((entry, index) => (
-    <OtherEmployee employee={entry.employee} sleId={entry.sleId} />
-  ));
-  return listItems;
-}
+// function fetchEmployees(database) {
+//   const listItems = database.map((entry, index) => (
+//     <OtherEmployee employee={entry.employee} sleId={entry.sleId} />
+//   ));
+//   return listItems;
+// }
 export default class Moffitt extends React.Component {
   constructor(props) {
     super(props);
@@ -48,6 +48,7 @@ export default class Moffitt extends React.Component {
             shiftId={[]}
             sleId={[]}
             names={[]}
+            allEmp={[]}
           />
         );
       }
@@ -55,6 +56,26 @@ export default class Moffitt extends React.Component {
   }
 
   componentDidMount() {
+    fetch("/otheremployees", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        console.log("in fetch request");
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log("in jsonResponse part");
+        console.log("otherEmployees", jsonResponse.allEmployees);
+        this.setState({
+          allEmployees: jsonResponse.allEmployees,
+        });
+        console.log("allEmployees", this.state.allEmployees);
+        console.log(jsonResponse);
+      });
     fetch("/masterschedule", {
       method: "GET",
       headers: {
@@ -122,32 +143,13 @@ export default class Moffitt extends React.Component {
                   shiftId={shiftArray}
                   sleId={sleArray}
                   names={nameArray}
+                  allEmp={this.state.allEmployees}
                 />
               );
             }
           }
         }
         this.setState({ allDaysOfWeek: newAllDaysOfWeek });
-      });
-    fetch("/otheremployees", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        console.log("in fetch request");
-        return response.json();
-      })
-      .then((jsonResponse) => {
-        console.log("in jsonResponse part");
-        console.log("otherEmployees", jsonResponse.allEmployees);
-        this.setState({
-          allEmployees: jsonResponse.allEmployees,
-        });
-        console.log("allEmployees", this.state.allEmployees);
-        console.log(jsonResponse);
       });
   }
 
@@ -163,7 +165,7 @@ export default class Moffitt extends React.Component {
           <div className="fridayColumn">{this.state.allDaysOfWeek[5]}</div>
           <div className="saturdayColumn">{this.state.allDaysOfWeek[6]}</div>
         </div>
-        <div>{fetchEmployees(this.state.allEmployees)}</div>
+        {/* <div>{fetchEmployees(this.state.allEmployees)}</div> */}
       </div>
     );
   }
@@ -175,10 +177,17 @@ function OtherEmployee(props) {
   if (props == null) {
     return null;
   }
-  for (let i = 0; i < props.length; i++) {
+  console.log("sdadad", props);
+  var filteredEmployees = [];
+  for (let i = 0; i < props.allEmp.length; i++) {
+    if (!props.currSleId.includes(props.allEmp[i]["id"])) {
+      filteredEmployees.push(props.allEmp[i]);
+    }
+  }
+  for (let i = 0; i < filteredEmployees.length; i++) {
     employees.push(
       <div className="container">
-        <div className="otherEmployee">{props.employee}</div>
+        <div className="otherEmployee">{filteredEmployees[i]["name"]}</div>
         <div className="icon">
           <button className="addButton">
             <img className="addButtonImg" src={addButton} alt="addButton" />
@@ -204,8 +213,6 @@ function formatNames(names) {
 }
 
 function Box(props) {
-  //FILTER OTHER EMPLOYEES
-
   return (
     <div>
       <div className="box">
@@ -216,6 +223,7 @@ function Box(props) {
           employee={props.names}
           sleId={props.sleId}
           shiftId={props.shiftId}
+          allEmp={props.allEmp}
         />
       </div>
     </div>
@@ -352,23 +360,27 @@ function EditSchedule(props) {
     return timeOfDay[props];
   }
 
-  // function removeEmployee(sle_id) {
-  //   fetch("/removeemployee", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify({ employeeID: sle_id })
-  //   })
-  //     .then(response => {
-  //       this.props.fixState(sle_id);
-  //       return response.json();
-  //     })
-  //     .then(jsonResponse => {
-  //       console.log(jsonResponse);
-  //     });
-  // }
+  function removeEmployee(sle_id, shift_id, currTime) {
+    fetch("/removeemployee", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sleId: sle_id,
+        shiftId: shift_id,
+        currHour: currTime,
+      }),
+    })
+      .then((response) => {
+        this.props.fixState(sle_id);
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log(jsonResponse);
+      });
+  }
 
   return (
     <div className="modal">
@@ -403,12 +415,12 @@ function EditSchedule(props) {
             <div className="currEmployees">
               <CurrEmployee
                 employee={props.employee}
-                sleId={props.sl}
+                sleId={props.sle}
                 shiftId
               />
             </div>
             <div className="otherEmployees">
-              <OtherEmployee />
+              <OtherEmployee allEmp={props.allEmp} currSleId={props.sleId} />
             </div>
           </div>
           <div className="button-container">
