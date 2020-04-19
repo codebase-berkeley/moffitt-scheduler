@@ -94,6 +94,16 @@
   float: left;
 }
 
+.otherEmployee {
+  font-family: "Open Sans";
+  font-weight: 900;
+  margin-top: 5px;
+  margin-left: 0%;
+  font-size: 14px;
+  margin-bottom: 10px;
+  float: left;
+}
+
 .deleteButtonImg {
   float: right;
   border: none;

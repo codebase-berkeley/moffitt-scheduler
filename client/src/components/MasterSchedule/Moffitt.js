@@ -185,7 +185,9 @@ function OtherEmployee(props) {
   for (let i = 0; i < filteredEmployees.length; i++) {
     employees.push(
       <div className="container">
-        <div className="otherEmployee">{filteredEmployees[i]["name"]}</div>
+        <div className="otherEmployee">
+          {filteredEmployees[i]["name"]}
+        </div>
         <div className="icon">
           <button
             className="addButton"
@@ -351,6 +353,36 @@ function EditSchedule(props) {
     return employees;
   }
 
+
+  function removeEmployee(
+    sle_id,
+    shift_id,
+    currTime,
+    fetchEverything,
+    setIsOpen
+  ) {
+    fetch("/removeemployee", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sleId: sle_id,
+        shiftId: shift_id,
+        currHour: currTime,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        setIsOpen(false);
+        fetchEverything();
+        console.log(jsonResponse);
+      });
+  }
+
   function displayDay(props) {
     const dayOfWeek = {
       0: "Sunday",
@@ -395,34 +427,6 @@ function EditSchedule(props) {
     return timeOfDay[props];
   }
 
-  function removeEmployee(
-    sle_id,
-    shift_id,
-    currTime,
-    fetchEverything,
-    setIsOpen
-  ) {
-    fetch("/removeemployee", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sleId: sle_id,
-        shiftId: shift_id,
-        currHour: currTime,
-      }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((jsonResponse) => {
-        setIsOpen(false);
-        fetchEverything();
-        console.log(jsonResponse);
-      });
-  }
 
   return (
     <div className="modal">
