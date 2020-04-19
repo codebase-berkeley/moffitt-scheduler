@@ -5,12 +5,16 @@ import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
 
-// function fetchEmployees(database) {
-//   const listItems = database.map((entry, index) => (
-//     <OtherEmployee employee={entry.employee} sleId={entry.sleId} />
-//   ));
-//   return listItems;
-// }
+function dateObject(day, hour) {
+  var dateObject = new Date();
+  dateObject.setHours(hour, 0, 0, 0);
+  var dayOfWeek = dateObject.getDay();
+  var diff = dayOfWeek - day;
+  var newDate = dateObject.getDate() - diff;
+  dateObject.setDate(newDate);
+  return dateObject;
+}
+
 export default class Moffitt extends React.Component {
   constructor(props) {
     super(props);
@@ -45,6 +49,7 @@ export default class Moffitt extends React.Component {
             startTime={hour}
             curTime={hour}
             startDay={day}
+            date={dateObject(day, hour)}
             shiftId={[]}
             sleId={[]}
             names={[]}
@@ -138,12 +143,13 @@ export default class Moffitt extends React.Component {
               newAllDaysOfWeek[start_time_date][j] = (
                 <Box
                   startTime={start_hour}
-                  curTime={j}
+                  currTime={j}
                   startDay={start_time_date}
                   shiftId={shiftArray}
                   sleId={sleArray}
                   names={nameArray}
                   allEmp={this.state.allEmployees}
+                  date={dateObject(start_time_date, j)}
                 />
               );
             }
@@ -165,7 +171,6 @@ export default class Moffitt extends React.Component {
           <div className="fridayColumn">{this.state.allDaysOfWeek[5]}</div>
           <div className="saturdayColumn">{this.state.allDaysOfWeek[6]}</div>
         </div>
-        {/* <div>{fetchEmployees(this.state.allEmployees)}</div> */}
       </div>
     );
   }
@@ -173,23 +178,34 @@ export default class Moffitt extends React.Component {
 
 function OtherEmployee(props) {
   var employees = [];
-  console.log("in function");
-  if (props == null) {
-    return null;
-  }
-  console.log("sdadad", props);
+  // if (props == null) {
+  //   return null;
+  // }
+  console.log("otherEmp props", props);
+  console.log("allEmp", props.allEmp);
   var filteredEmployees = [];
   for (let i = 0; i < props.allEmp.length; i++) {
     if (!props.currSleId.includes(props.allEmp[i]["id"])) {
       filteredEmployees.push(props.allEmp[i]);
     }
   }
+  console.log("fE", filteredEmployees);
+  console.log("otherEmployees() date", props.date);
   for (let i = 0; i < filteredEmployees.length; i++) {
     employees.push(
       <div className="container">
         <div className="otherEmployee">{filteredEmployees[i]["name"]}</div>
         <div className="icon">
-          <button className="addButton">
+          <button
+            className="addButton"
+            onClick={() =>
+              addEmployee(
+                filteredEmployees[i]["id"],
+                props.currTime,
+                props.date
+              )
+            }
+          >
             <img className="addButtonImg" src={addButton} alt="addButton" />
           </button>
         </div>
@@ -197,6 +213,28 @@ function OtherEmployee(props) {
     );
   }
   return employees;
+}
+
+function addEmployee(sle_id, currTime, date) {
+  fetch("/addemployee", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      sleId: sle_id,
+      currHour: currTime,
+      currDate: date,
+      loc: "Moffitt",
+    }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((jsonResponse) => {
+      console.log(jsonResponse);
+    });
 }
 
 function formatNames(names) {
@@ -224,6 +262,8 @@ function Box(props) {
           sleId={props.sleId}
           shiftId={props.shiftId}
           allEmp={props.allEmp}
+          currTime={props.currTime}
+          date={props.date}
         />
       </div>
     </div>
@@ -260,26 +300,13 @@ function EditSchedule(props) {
   };
 
   function submitClick() {
-    var firstName = document.getElementById("firstName");
-    var firstNameText = firstName.value;
-    console.log(firstNameText);
-    var lastName = document.getElementById("lastName");
-    var lastNameText = lastName.value;
-    console.log(lastNameText);
-    var email = document.getElementById("email");
-    var emailText = email.value;
-    console.log(emailText);
     fetch("http://localhost:8000/masterschedule", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        firstName: firstNameText,
-        lastName: lastNameText,
-        email: emailText,
-      }),
+      body: JSON.stringify({}),
     })
       .then((response) => {
         return response.json();
@@ -293,16 +320,23 @@ function EditSchedule(props) {
   }
 
   function CurrEmployee(props) {
-    if (props.employee == null) {
+    //shiftId, sleId, currTime
+    if (props == null) {
       return null;
     }
+    console.log("currTime", props.currTime);
     var employees = [];
     for (let i = 0; i < props.employee.length; i++) {
       employees.push(
         <div className="container">
           <div className="currentEmployee">{props.employee[i]}</div>
           <div className="icon">
-            <button className="deleteButton">
+            <button
+              className="deleteButton"
+              onClick={() =>
+                removeEmployee(props.sleId[i], props.shiftId[i], props.currTime)
+              }
+            >
               <img
                 className="deleteButtonImg"
                 src={deleteButton}
@@ -374,7 +408,6 @@ function EditSchedule(props) {
       }),
     })
       .then((response) => {
-        this.props.fixState(sle_id);
         return response.json();
       })
       .then((jsonResponse) => {
@@ -415,12 +448,18 @@ function EditSchedule(props) {
             <div className="currEmployees">
               <CurrEmployee
                 employee={props.employee}
-                sleId={props.sle}
-                shiftId
+                shiftId={props.shiftId}
+                sleId={props.sleId}
+                currTime={props.currTime}
               />
             </div>
             <div className="otherEmployees">
-              <OtherEmployee allEmp={props.allEmp} currSleId={props.sleId} />
+              <OtherEmployee
+                allEmp={props.allEmp}
+                currSleId={props.sleId}
+                currTime={props.currTime}
+                date={props.date}
+              />
             </div>
           </div>
           <div className="button-container">

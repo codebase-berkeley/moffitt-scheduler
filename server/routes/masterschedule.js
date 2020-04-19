@@ -17,7 +17,6 @@ router.get("/masterschedule", function (req, res) {
 
 router.get("/otheremployees", function (req, res) {
   pool.query("SELECT name, id FROM sle", (error, result) => {
-    console.log("resulting rows", result.rows);
     if (error) {
       throw error;
     }
@@ -25,40 +24,59 @@ router.get("/otheremployees", function (req, res) {
   });
 });
 
-router.post("/removeemployee", (req, res) => {
-  var shiftId = req.body.shiftId;
-  var sleId = req.body.sleId;
-  var currHour = req.body.currHour;
+router.post("/addemployee", (req, res) => {
+  var sleId = parseInt(req.body.sleId);
+  var currHour = parseInt(req.body.currHour);
+  var currDate = new Date(req.body.currDate);
+  var loc = req.body.loc;
+  console.log("loc", loc);
+  console.log("currDate", currDate);
+
+  var endTime = new Date(currDate);
+  endTime.setHours(currHour + 1, 0, 0, 0);
+  console.log("endTime", endTime);
 
   pool.query(
-    "SELECT start_time, end_time FROM shifts WHERE shift_id = $1",
+    `INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES (${sleId}, '${loc}', to_timestamp(${currDate.getTime()} / 1000.0), to_timestamp(${endTime.getTime()} / 1000.0))`,
+    [],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+    }
+  );
+});
+
+router.post("/removeemployee", (req, res) => {
+  var shiftId = parseInt(req.body.shiftId);
+  var sleId = parseInt(req.body.sleId);
+  var currHour = parseInt(req.body.currHour);
+
+  pool.query(
+    "SELECT start_time, end_time, location FROM shifts WHERE shift_id = $1",
     [shiftId],
     (error, result) => {
       if (error) {
         throw error;
       }
-
       var startTimeObj = result.rows[0]["start_time"];
       var endTimeObj = result.rows[0]["end_time"];
-      var currTimeObj = new Date(startTimeObj.getTime()).setHours(
-        currHour,
-        0,
-        0,
-        0
-      );
+
       var startTime = startTimeObj.getHours();
       var endTime = endTimeObj.getHours();
+
+      var loc = result.rows[0]["location"];
+
+      var currTimeObj = new Date(startTimeObj.getTime());
+      currTimeObj.setHours(currHour, 0, 0, 0);
+
       if (currHour != startTime) {
         //overnight
         if (currHour < startTime) {
-          currTimeObj = new Date(endTimeObj.getTime()).setHours(
-            currHour,
-            0,
-            0,
-            0
-          );
+          currTimeObj = new Date(endTimeObj.getTime());
+          currTimeObj.setHours(currHour, 0, 0, 0);
           pool.query(
-            `INSERT INTO AVAILABILITY (sle_id, location, start_time, end_time) VALUES (${sleId}, ${startTimeObj}, ${currTimeObj})`,
+            `INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES (${sleId}, '${loc}', to_timestamp(${startTimeObj.getTime()} / 1000.0), to_timestamp(${currTimeObj.getTime()} / 1000.0))`,
             (error, result) => {
               if (error) {
                 throw error;
@@ -68,7 +86,7 @@ router.post("/removeemployee", (req, res) => {
         } //non-overnight
         else {
           pool.query(
-            `INSERT INTO AVAILABILITY (sle_id, location, start_time, end_time) VALUES (${sleId}, ${startTimeObj}, ${currTimeObj})`,
+            `INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES (${sleId}, '${loc}', to_timestamp(${startTimeObj.getTime()} / 1000.0), to_timestamp(${currTimeObj.getTime()} / 1000.0))`,
             (error, result) => {
               if (error) {
                 throw error;
@@ -78,17 +96,14 @@ router.post("/removeemployee", (req, res) => {
         }
       }
       var endCurrHour = (currHour + 1) % 24;
-      var endCurrTimeObj = new Date(startTimeObj.getTime()).setHours(
-        endCurrHour,
-        0,
-        0,
-        0
-      );
+      var endCurrTimeObj = new Date(startTimeObj.getTime());
+      endCurrTimeObj.setHours(endCurrHour, 0, 0, 0);
+
       if (endCurrHour != endTime) {
         //non-overnight
         if (endCurrHour < endTime) {
           pool.query(
-            `INSERT INTO AVAILABILITY (sle_id, location, start_time, end_time) VALUES (${sleId}, ${endCurrTimeObj}, ${endTimeObj})`,
+            `INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES (${sleId}, '${loc}', to_timestamp(${endCurrTimeObj.getTime()} / 1000.0), to_timestamp(${endTimeObj.getTime()} / 1000.0))`,
             (error, result) => {
               if (error) {
                 throw error;
@@ -97,14 +112,11 @@ router.post("/removeemployee", (req, res) => {
           );
         } //overnight
         else {
-          endCurrTimeObj = new Date(endTimeObj.getTime()).setHours(
-            endCurrHour,
-            0,
-            0,
-            0
-          );
+          endCurrTimeObj = new Date(endTimeObj.getTime());
+          endCurrTimeObj.setHours(endCurrHour, 0, 0, 0);
+
           pool.query(
-            `INSERT INTO AVAILABILITY (sle_id, location, start_time, end_time) VALUES (${sleId}, ${endCurrTimeObj}, ${endTimeObj})`,
+            `INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES (${sleId}, '${loc}', to_timestamp(${endCurrTimeObj.getTime()} / 1000.0), to_timestamp(${endTimeObj.getTime()} / 1000.0))`,
             (error, result) => {
               if (error) {
                 throw error;
