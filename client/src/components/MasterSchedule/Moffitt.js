@@ -29,7 +29,6 @@ export default class Moffitt extends React.Component {
     ] = [[], [], [], [], [], [], []];
 
     this.state = {
-      items: [{}],
       allEmployees: [{}],
       allDaysOfWeek: [
         sundayArray,
@@ -41,23 +40,6 @@ export default class Moffitt extends React.Component {
         saturdayArray,
       ],
     };
-    for (let day = 0; day < this.state.allDaysOfWeek.length; day++) {
-      for (let hour = 0; hour < 24; hour++) {
-        this.state.allDaysOfWeek[day][hour] = (
-          <Box
-            startTime={hour}
-            curTime={hour}
-            startDay={day}
-            date={dateObject(day, hour)}
-            shiftId={[]}
-            sleId={[]}
-            names={[]}
-            allEmp={[]}
-            fetchEverything={this.fetchEverything}
-          />
-        );
-      }
-    }
     this.fetchEverything = this.fetchEverything.bind(this);
   }
 
@@ -66,6 +48,7 @@ export default class Moffitt extends React.Component {
   }
 
   fetchEverything() {
+    var employeeList = [];
     fetch("/otheremployees", {
       method: "GET",
       headers: {
@@ -77,6 +60,7 @@ export default class Moffitt extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
+        employeeList = jsonResponse.allEmployees;
         this.setState({
           allEmployees: jsonResponse.allEmployees,
         });
@@ -93,9 +77,7 @@ export default class Moffitt extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        this.setState({
-          items: jsonResponse.items,
-        });
+        let items = jsonResponse.items;
 
         let newAllDaysOfWeek = [[], [], [], [], [], [], []];
 
@@ -110,22 +92,22 @@ export default class Moffitt extends React.Component {
                 shiftId={[]}
                 sleId={[]}
                 names={[]}
-                allEmp={[]}
+                allEmp={employeeList}
                 fetchEverything={this.fetchEverything}
               />
             );
           }
         }
 
-        for (let i = 0; i < this.state.items.length; i++) {
-          let location = this.state.items[i]["location"];
-          let shiftID = this.state.items[i]["shift_id"];
-          let sleID = this.state.items[i]["sle_id"];
-          let name = this.state.items[i]["name"];
+        for (let i = 0; i < items.length; i++) {
+          let location = items[i]["location"];
+          let shiftID = items[i]["shift_id"];
+          let sleID = items[i]["sle_id"];
+          let name = items[i]["name"];
 
           if (location == "Moffitt") {
-            let start_time = new Date(this.state.items[i]["start_time"]);
-            let end_time = new Date(this.state.items[i]["end_time"]);
+            let start_time = new Date(items[i]["start_time"]);
+            let end_time = new Date(items[i]["end_time"]);
 
             let start_time_date = start_time.getDay();
             let end_time_date = start_time.getDay();
