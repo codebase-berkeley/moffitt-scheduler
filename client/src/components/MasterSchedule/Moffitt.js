@@ -41,7 +41,6 @@ export default class Moffitt extends React.Component {
         saturdayArray,
       ],
     };
-
     for (let day = 0; day < this.state.allDaysOfWeek.length; day++) {
       for (let hour = 0; hour < 24; hour++) {
         this.state.allDaysOfWeek[day][hour] = (
@@ -54,13 +53,19 @@ export default class Moffitt extends React.Component {
             sleId={[]}
             names={[]}
             allEmp={[]}
+            fetchEverything={this.fetchEverything}
           />
         );
       }
     }
+    this.fetchEverything = this.fetchEverything.bind(this);
   }
 
   componentDidMount() {
+    this.fetchEverything();
+  }
+
+  fetchEverything() {
     fetch("/otheremployees", {
       method: "GET",
       headers: {
@@ -69,16 +74,12 @@ export default class Moffitt extends React.Component {
       },
     })
       .then((response) => {
-        console.log("in fetch request");
         return response.json();
       })
       .then((jsonResponse) => {
-        console.log("in jsonResponse part");
-        console.log("otherEmployees", jsonResponse.allEmployees);
         this.setState({
           allEmployees: jsonResponse.allEmployees,
         });
-        console.log("allEmployees", this.state.allEmployees);
         console.log(jsonResponse);
       });
     fetch("/masterschedule", {
@@ -96,18 +97,31 @@ export default class Moffitt extends React.Component {
           items: jsonResponse.items,
         });
 
-        let newAllDaysOfWeek = this.state.allDaysOfWeek;
+        let newAllDaysOfWeek = [[], [], [], [], [], [], []];
+
+        for (let day = 0; day < newAllDaysOfWeek.length; day++) {
+          for (let hour = 0; hour < 24; hour++) {
+            newAllDaysOfWeek[day][hour] = (
+              <Box
+                startTime={hour}
+                curTime={hour}
+                startDay={day}
+                date={dateObject(day, hour)}
+                shiftId={[]}
+                sleId={[]}
+                names={[]}
+                allEmp={[]}
+                fetchEverything={this.fetchEverything}
+              />
+            );
+          }
+        }
 
         for (let i = 0; i < this.state.items.length; i++) {
-          console.log("items: ", this.state.items);
-
           let location = this.state.items[i]["location"];
           let shiftID = this.state.items[i]["shift_id"];
           let sleID = this.state.items[i]["sle_id"];
           let name = this.state.items[i]["name"];
-
-          console.log("shift id: ", shiftID);
-          console.log("sle id: ", sleID);
 
           if (location == "Moffitt") {
             let start_time = new Date(this.state.items[i]["start_time"]);
@@ -129,9 +143,7 @@ export default class Moffitt extends React.Component {
             }
 
             for (let j = start_hour; j < end; j++) {
-              let previousState = this.state.allDaysOfWeek[start_time_date][j]
-                .props;
-              console.log("pS: ", previousState);
+              let previousState = newAllDaysOfWeek[start_time_date][j].props;
 
               let shiftArray = previousState.shiftId;
               shiftArray.push(shiftID);
@@ -150,6 +162,7 @@ export default class Moffitt extends React.Component {
                   names={nameArray}
                   allEmp={this.state.allEmployees}
                   date={dateObject(start_time_date, j)}
+                  fetchEverything={this.fetchEverything}
                 />
               );
             }
@@ -181,16 +194,12 @@ function OtherEmployee(props) {
   // if (props == null) {
   //   return null;
   // }
-  console.log("otherEmp props", props);
-  console.log("allEmp", props.allEmp);
   var filteredEmployees = [];
   for (let i = 0; i < props.allEmp.length; i++) {
     if (!props.currSleId.includes(props.allEmp[i]["id"])) {
       filteredEmployees.push(props.allEmp[i]);
     }
   }
-  console.log("fE", filteredEmployees);
-  console.log("otherEmployees() date", props.date);
   for (let i = 0; i < filteredEmployees.length; i++) {
     employees.push(
       <div className="container">
@@ -202,7 +211,9 @@ function OtherEmployee(props) {
               addEmployee(
                 filteredEmployees[i]["id"],
                 props.currTime,
-                props.date
+                props.date,
+                props.fetchEverything,
+                props.setIsOpen
               )
             }
           >
@@ -215,7 +226,7 @@ function OtherEmployee(props) {
   return employees;
 }
 
-function addEmployee(sle_id, currTime, date) {
+function addEmployee(sle_id, currTime, date, fetchEverything, setIsOpen) {
   fetch("/addemployee", {
     method: "POST",
     headers: {
@@ -233,7 +244,9 @@ function addEmployee(sle_id, currTime, date) {
       return response.json();
     })
     .then((jsonResponse) => {
-      console.log(jsonResponse);
+      setIsOpen(false);
+      fetchEverything();
+      console.log("hihihi", jsonResponse);
     });
 }
 
@@ -264,6 +277,7 @@ function Box(props) {
           allEmp={props.allEmp}
           currTime={props.currTime}
           date={props.date}
+          fetchEverything={props.fetchEverything}
         />
       </div>
     </div>
@@ -324,7 +338,6 @@ function EditSchedule(props) {
     if (props == null) {
       return null;
     }
-    console.log("currTime", props.currTime);
     var employees = [];
     for (let i = 0; i < props.employee.length; i++) {
       employees.push(
@@ -334,7 +347,13 @@ function EditSchedule(props) {
             <button
               className="deleteButton"
               onClick={() =>
-                removeEmployee(props.sleId[i], props.shiftId[i], props.currTime)
+                removeEmployee(
+                  props.sleId[i],
+                  props.shiftId[i],
+                  props.currTime,
+                  props.fetchEverything,
+                  setIsOpen
+                )
               }
             >
               <img
@@ -394,7 +413,13 @@ function EditSchedule(props) {
     return timeOfDay[props];
   }
 
-  function removeEmployee(sle_id, shift_id, currTime) {
+  function removeEmployee(
+    sle_id,
+    shift_id,
+    currTime,
+    fetchEverything,
+    setIsOpen
+  ) {
     fetch("/removeemployee", {
       method: "POST",
       headers: {
@@ -411,6 +436,8 @@ function EditSchedule(props) {
         return response.json();
       })
       .then((jsonResponse) => {
+        setIsOpen(false);
+        fetchEverything();
         console.log(jsonResponse);
       });
   }
@@ -451,6 +478,7 @@ function EditSchedule(props) {
                 shiftId={props.shiftId}
                 sleId={props.sleId}
                 currTime={props.currTime}
+                fetchEverything={props.fetchEverything}
               />
             </div>
             <div className="otherEmployees">
@@ -459,6 +487,8 @@ function EditSchedule(props) {
                 currSleId={props.sleId}
                 currTime={props.currTime}
                 date={props.date}
+                fetchEverything={props.fetchEverything}
+                setIsOpen={setIsOpen}
               />
             </div>
           </div>

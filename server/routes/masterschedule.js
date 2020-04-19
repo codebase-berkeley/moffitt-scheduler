@@ -29,12 +29,9 @@ router.post("/addemployee", (req, res) => {
   var currHour = parseInt(req.body.currHour);
   var currDate = new Date(req.body.currDate);
   var loc = req.body.loc;
-  console.log("loc", loc);
-  console.log("currDate", currDate);
 
   var endTime = new Date(currDate);
   endTime.setHours(currHour + 1, 0, 0, 0);
-  console.log("endTime", endTime);
 
   pool.query(
     `INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES (${sleId}, '${loc}', to_timestamp(${currDate.getTime()} / 1000.0), to_timestamp(${endTime.getTime()} / 1000.0))`,
@@ -45,6 +42,7 @@ router.post("/addemployee", (req, res) => {
       }
     }
   );
+  return res.json({});
 });
 
 router.post("/removeemployee", (req, res) => {
@@ -137,6 +135,7 @@ router.post("/removeemployee", (req, res) => {
       }
     }
   );
+  return res.json({});
 });
 
 module.exports = router;
