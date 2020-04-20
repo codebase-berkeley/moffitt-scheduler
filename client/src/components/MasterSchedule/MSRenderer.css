@@ -11,10 +11,8 @@
 .masterScheduleText {
   top: 150px;
   position: fixed;
-  margin-left: 12%;
+  margin-left: 10%;
   margin-bottom: 20px;
-  margin-top: 0px;
-  padding-top: 0px;
   width: 215px;
   height: 25px;
   font-family: "Open Sans";
@@ -30,9 +28,7 @@
   align-content: space-between;
   display: flex;
   position: fixed;
-  margin-top: 0px;
   margin-left: 56%;
-  margin-right: 270px;
 }
 
 .msmoffitt {
@@ -42,10 +38,9 @@
 
 .weekdayBox {
   position: fixed;
-  margin-left: 0%;
   width: 68%;
   height: 44px;
-  left: 400px;
+  left: 380px;
   top: 220px;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -82,12 +77,12 @@
   width: 95%;
   height: 95.4px;
   margin-bottom: 12px;
+  margin-right: 3%;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-size: 14px;
   text-align: center;
   justify-content: space-between;
-  padding: 0px;
 }
 
 .sundayColumn {
@@ -145,7 +140,7 @@
 
 .hours {
   min-width: 100px;
-  margin-left: 70px;
+  margin-left: 50px;
 }
 .monday {
   padding-left: 25px;
