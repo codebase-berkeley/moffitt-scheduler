@@ -85,10 +85,25 @@ router.post("/staticcalendar/:userId", (req, res) => {
                 shifts[i].end <= currentRow.end_time.getHours()));
           if (sameStartEndValid || diffStartEndValid) {
             shifts[i].id = currentRow.shift_id;
-            if (currentRow.location == "Moffitt") {
-              shifts[i].color = "#FFA1A1";
+            console.log(currentRow.cover_requested);
+            if (currentRow.location == "Moffitt3") {
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#ff8d06";
+              }
             } else if (currentRow.location == "Doe") {
-              shifts[i].color = "#b0e9c2";
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#d7269b";
+              }
+            } else if (currentRow.location == "Moffitt4") {
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#04b17e";
+              }
             }
           }
         }
