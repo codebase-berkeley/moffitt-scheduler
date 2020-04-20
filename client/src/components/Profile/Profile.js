@@ -54,7 +54,7 @@ var weekString =
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { shifts: initialShifts(), schedule: [] };
+    this.state = { shifts: initialShifts(), schedule: [], items: [] };
     this.currentDate = new Date();
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
@@ -64,31 +64,89 @@ export default class Profile extends React.Component {
   componentDidMount() {
     fetch("/availability/" + this.props.match.params.userId)
       .then((response) => {
+        // console.log(this.props.items);
+
         return response.json();
       })
       .then((jsonResponse) => {
         this.setState({ schedule: jsonResponse.schedule });
       });
-    // fetch("/staticcalendar/" + this.props.userId, {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     items: this.state.shifts,
-    //     userId: this.props.userId,
-    //   }),
-    // })
-    //   .then((response) => {
-    //     console.log("response");
-    //     return response.json();
-    //   })
-    //   .then((jsonResponse) => {
-    //     console.log(jsonResponse.shifts);
-    //     this.setState({ shifts: jsonResponse.shifts });
-    //   });
+    fetch("/allemployees", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({
+          items: jsonResponse.items,
+        });
+        console.log(this.state.items);
+      });
   }
+  // fetch("/staticcalendar/" + this.props.userId, {
+  //   method: "POST",
+  //   headers: {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     items: this.state.shifts,
+  //     userId: this.props.userId,
+  //   }),
+  // })
+  //   .then((response) => {
+  //     console.log("response");
+  //     return response.json();
+  //   })
+  //   .then((jsonResponse) => {
+  //     console.log(jsonResponse.shifts);
+  //     this.setState({ shifts: jsonResponse.shifts });
+  //   });
+  //}
+
+  // processData(database) {
+  //   const listItems = database.map((entry, index) => {
+  //     if (entry.moffitt3TrainingLevel == 1) {
+  //       entry.moffitt3TrainingLevel = <img src={star} />;
+  //     } else if (entry.moffitt3TrainingLevel == 2) {
+  //       entry.moffitt3TrainingLevel = [<img src={star} />, <img src={star} />];
+  //     } else {
+  //       entry.moffitt3TrainingLevel = [
+  //         <img src={star} />,
+  //         <img src={star} />,
+  //         <img src={star} />,
+  //       ];
+  //     }
+  //     if (entry.moffitt4TrainingLevel == 1) {
+  //       entry.moffitt4TrainingLevel = <img src={star} />;
+  //     } else if (entry.moffitt4TrainingLevel == 2) {
+  //       entry.moffitt4TrainingLevel = [<img src={star} />, <img src={star} />];
+  //     } else {
+  //       entry.moffitt4TrainingLevel = [
+  //         <img src={star} />,
+  //         <img src={star} />,
+  //         <img src={star} />,
+  //       ];
+  //     }
+  //     if (entry.doeTrainingLevel == 1) {
+  //       entry.doeTrainingLevel = <img src={star} />;
+  //     } else if (entry.doeTrainingLevel == 2) {
+  //       entry.doeTrainingLevel = [<img src={star} />, <img src={star} />];
+  //     } else {
+  //       entry.doeTrainingLevel = [
+  //         <img src={star} />,
+  //         <img src={star} />,
+  //         <img src={star} />,
+  //       ];
+  //     }
+  //   });
+  //   return listItems;
+  // }
 
   renderCustomDateCell = (time, selected, innerRef) => {
     return (
@@ -189,15 +247,15 @@ export default class Profile extends React.Component {
                 <div className="trainingLevelsContainer">
                   <div className="trainingLevelsMoffittThird">
                     <div className="moffittThirdText">Moffitt 3rd</div>
-                    <img src={star} height="20" width="20"></img>
+                    {/* {this.processData(this.state.items)} */}
                   </div>
                   <div className="trainingLevelsMoffittFourth">
                     <div className="moffittFourthText">Moffitt 4th</div>
-                    <img src={star} height="20" width="20"></img>
+                    {/* {this.processData(this.state.items)} */}
                   </div>
                   <div className="trainingLevelsDoe">
                     <div className="doeText">Doe</div>
-                    <img src={star} height="20" width="20"></img>
+                    {/* {this.processData(this.state.items)} */}
                   </div>
                 </div>
               </div>
