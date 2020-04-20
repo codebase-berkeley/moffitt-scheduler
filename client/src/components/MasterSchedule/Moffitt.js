@@ -238,12 +238,10 @@ function formatNames(names) {
   if (names.length == 0) {
     return "";
   }
-  let result = "";
-  for (let i = 0; i < names.length - 1; i++) {
-    result += names[i];
-    result += "\n";
+  let result = [];
+  for (let i = 0; i < names.length; i++) {
+    result.push(<div className="name-row">{names[i]}</div>);
   }
-  result += names[names.length - 1];
   return result;
 }
 
@@ -251,7 +249,9 @@ function Box(props) {
   return (
     <div>
       <div className="box">
-        <div className="text">{formatNames(props.names)}</div>
+        <div className="boxText">
+          {formatNames(props.names)}
+        </div>
         <EditSchedule
           day={props.startDay}
           time={props.curTime}
@@ -291,9 +291,12 @@ function EditSchedule(props) {
       top: "400px",
       left: "50%",
       width: "450px",
-      height: "400px",
+      height: "550px",
       transform: "translate(-50%, -50%)",
-      overflow: 0,
+      overflowY: "scroll",
+      border: "0px",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      borderRadius: "20px",
     },
   };
 
@@ -352,7 +355,6 @@ function EditSchedule(props) {
     }
     return employees;
   }
-
 
   function removeEmployee(
     sle_id,
@@ -427,13 +429,12 @@ function EditSchedule(props) {
     return timeOfDay[props];
   }
 
-
   return (
-    <div className="modal">
+    <div>
       <button className="pencilIcon" onClick={openModal}>
         <img className="pencilImage" src={pencil} alt="pencil" />
       </button>
-      <div className="modal">
+      <div className="modal-wrapper">
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
@@ -447,10 +448,12 @@ function EditSchedule(props) {
               ref={(_subtitle) => (subtitle = _subtitle)}
             >
               Edit Master Schedule Shift
-            </h1>
+              </h1>
             <div className="shiftInfo">
               <div className="locationTag">
-                <h3 className="locTag">Moffitt 3rd Floor</h3>
+                <h3 className="locTag">
+                  Moffitt 3rd Floor
+                  </h3>
               </div>
               <div className="timeTag">
                 <h3 className="tTag">
@@ -458,6 +461,9 @@ function EditSchedule(props) {
                 </h3>
               </div>
             </div>
+            <h3 className="CurrentEmployees">
+              Current Employees
+              </h3>
             <div className="currEmployees">
               <CurrEmployee
                 employee={props.employee}
@@ -467,6 +473,9 @@ function EditSchedule(props) {
                 fetchEverything={props.fetchEverything}
               />
             </div>
+            <h3 className="NotInShift">
+              Employees Not in Shift
+              </h3>
             <div className="otherEmployees">
               <OtherEmployee
                 allEmp={props.allEmp}
@@ -477,22 +486,6 @@ function EditSchedule(props) {
                 setIsOpen={setIsOpen}
               />
             </div>
-          </div>
-          <div className="button-container">
-            <a href="/masterschedule">
-              <button className="CancelButton">
-                <div className="CancelHover">
-                  <div className="CancelText">
-                    <h4> Cancel</h4>
-                  </div>
-                </div>
-              </button>
-            </a>
-            <button className="SubmitButton" onClick={submitClick}>
-              <div className="saveText">
-                <h4>Save Changes</h4>
-              </div>
-            </button>
           </div>
         </Modal>
       </div>

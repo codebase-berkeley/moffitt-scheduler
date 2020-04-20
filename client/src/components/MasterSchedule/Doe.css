@@ -15,6 +15,7 @@
   top: 200px;
   line-height: 19px;
   text-align: center;
+  margin-left: 10px;
 }
 
 .nonClickedButton {
@@ -31,4 +32,6 @@
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
+  margin-left: 10px;
+  cursor: pointer;
 }

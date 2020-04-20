@@ -54,9 +54,11 @@ export default class MSRenderer extends React.Component {
       pending = null;
     }
     return (
-      <div className="everything">
+      <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
-          <div className="masterScheduleText">Master Schedule</div>
+          <div className="masterScheduleText">
+            Master Schedule
+          </div>
           <div className="buttons">
             <button className={moffitt} onClick={this.showMoffitt}>
               <h1>Moffitt 3rd</h1>
@@ -68,7 +70,6 @@ export default class MSRenderer extends React.Component {
               <h1>Doe</h1>
             </button>
           </div>
-          <div className="editButtonCont">{/* <EditSchedule /> */}</div>
         </div>
 
         <div className="weekdayBox">
@@ -81,7 +82,6 @@ export default class MSRenderer extends React.Component {
             <div className="friday">Friday</div>
             <div className="saturday">Saturday</div>
           </div>
-          {/* <Box text="something" /> */}
         </div>
         <div className="boxesAndDates">
           <div className="hours">

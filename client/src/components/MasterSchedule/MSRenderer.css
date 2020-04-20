@@ -1,57 +1,23 @@
-.msrenderer {
+.everythingMS {
   /* padding-top: 20%; */
-  padding-left: 30%;
+  overflow: visible;
 }
 
-.editButton {
+.masterScheduleAndButtons {
   display: flex;
-  flex-direction: row;
-  width: 10%;
-  margin-left: 81%;
-  margin-bottom: 20px;
-  align-items: center;
-  align-content: center;
-  font-size: 13px;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
-  color: #330c9c;
-}
-
-.buttons-container {
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  margin-left: 1000px;
-  margin-right: 150px;
-  align-items: center;
-  align-content: space-between;
 }
-.msmoffitt {
-  /* padding-top: 20%; */
-  padding-left: 30%;
-}
-.weekdayBox {
-  margin-left: 15%;
-  width: 75%;
-  height: 44px;
-  left: 380px;
-  top: 276px;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  color: #9e9e9e;
-  padding-top: 8px;
-  margin-bottom: 12px;
-}
+
 .masterScheduleText {
-  margin-left: 15%;
-  padding-top: 60px;
+  top: 150px;
+  position: fixed;
+  margin-left: 12%;
+  margin-bottom: 20px;
+  margin-top: 0px;
+  padding-top: 0px;
   width: 215px;
   height: 25px;
-  left: 392px;
-  top: 203px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans";
   font-style: normal;
   font-weight: bold;
   font-size: 25px;
@@ -60,23 +26,52 @@
 }
 
 .buttons {
+  top: 150px;
+  align-content: space-between;
   display: flex;
-  margin-left: 70%;
-  margin-right: 100px;
-  padding-bottom: 25px;
-  /* cursor: pointer; */
+  position: fixed;
+  margin-top: 0px;
+  margin-left: 56%;
+  margin-right: 270px;
+}
+
+.msmoffitt {
+  /* padding-top: 20%; */
+  padding-left: 30%;
+}
+
+.weekdayBox {
+  position: fixed;
+  margin-left: 0%;
+  width: 68%;
+  height: 44px;
+  left: 400px;
+  top: 220px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  color: #9e9e9e;
+  padding-top: 8px;
+  margin-bottom: 20px;
+}
+
+.boxesAndDates {
+  margin-top: 160px;
+  height: 1000px;
+  overflow: scroll;
 }
 
 .weekdayText {
+  margin-top: 3px;
   display: flex;
   justify-content: space-between;
   margin-left: 5%;
   margin-right: 4%;
   overflow: hidden;
-}
-.masterScheduleAndButtons {
-  display: flex;
-  justify-content: space-between;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
 }
 
 .box {
@@ -84,17 +79,17 @@
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  width: 80%;
-  height: 90px;
+  width: 95%;
+  height: 95.4px;
   margin-bottom: 12px;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
-  font-size: 70%;
+  font-size: 14px;
   text-align: center;
-  align-items: flex-start;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 0px;
 }
+
 .sundayColumn {
   width: 250px;
   height: 60%;
@@ -126,8 +121,7 @@
 .weekdayColumns {
   display: flex;
   justify-content: space-between;
-  width: 73.5%;
-  margin-left: 7%;
+  width: 59.5%;
   flex-direction: row;
 }
 .moffittButton {
@@ -150,7 +144,8 @@
 }
 
 .hours {
-  min-width: 120px;
+  min-width: 100px;
+  margin-left: 70px;
 }
 .monday {
   padding-left: 25px;
