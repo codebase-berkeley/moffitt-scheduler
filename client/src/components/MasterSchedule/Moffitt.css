@@ -89,11 +89,10 @@
   font-size: 12px;
   margin-bottom: 20px;
   font-weight: normal;
-
 }
 
 .CurrentEmployees {
-  font-family: Open Sans;
+  font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
@@ -101,7 +100,7 @@
 }
 
 .NotInShift {
-  font-family: Open Sans;
+  font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: bold;
   margin-left: 10px;
@@ -143,7 +142,7 @@
   border: 0px;
   outline: none;
   cursor: pointer;
-  border-radius: 0.0000px;
+  border-radius: 0px;
 }
 
 .addButton {
@@ -157,7 +156,7 @@
   border: 0px;
   outline: none;
   cursor: pointer;
-  border-radius: 0.0000px;
+  border-radius: 0px;
 }
 
 .boxText {
