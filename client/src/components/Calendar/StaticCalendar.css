@@ -101,15 +101,25 @@
   text-align: justify;
   white-space: nowrap;
 }
-#moffittcolor {
+#moffitt3colorStatic {
   height: 24px;
   width: 24px;
-  background-color: #ffa1a1;
+  background-color: #ff8d06;
 }
-#doecolor {
+#moffitt4color {
   height: 24px;
   width: 24px;
-  background-color: #b0e9c2;
+  background-color: #04b17e;
+}
+#doecolorStatic {
+  height: 24px;
+  width: 24px;
+  background-color: #d7269b;
+}
+#coverrequestedcolor {
+  height: 24px;
+  width: 24px;
+  background-color: #c187d3;
 }
 #findingspace {
   padding-right: 5%;

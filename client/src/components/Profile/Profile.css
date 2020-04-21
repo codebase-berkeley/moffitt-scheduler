@@ -61,11 +61,12 @@
   font-weight: bold;
   float: left;
   color: black;
+  width: 265%;
 }
 .emailText {
   font-size: 16px;
   font-weight: normal;
-
+  width: 265%;
   color: black;
 }
 .nameAndEmail {
@@ -99,6 +100,7 @@
   margin-left: 10%;
   display: flex;
   justify-content: space-around;
+  margin-bottom: -5%;
 }
 
 .firstStatNumber,
@@ -122,15 +124,14 @@
 }
 
 .scheduledShifts {
-  padding-top: 7%;
+  margin-top: 7%;
 }
 .scheduledShiftsText {
   font-size: 18px;
   font-weight: bold;
-  padding-top: 2%;
   padding-left: 12%;
-  float: left;
   color: black;
+  margin-top: 12%;
 }
 .availabilitiesText {
   font-size: 18px;
@@ -143,16 +144,16 @@
   z-index: 1;
 }
 .everything {
-  height: 790px;
+  height: 1790px;
 }
 
-#schedule-container {
+#profile-schedule-container {
   position: relative;
   display: inline-block;
   left: 8%;
   bottom: 2.5%;
   transform: scale(0.9, 0.9);
-  width: 66%;
+  width: 950px;
   font-family: "Open Sans";
   background-color: white;
   border-radius: 20px;
@@ -161,24 +162,35 @@
   padding-right: 2%;
   padding-top: 1%;
   padding-bottom: 2%;
-  margin-top: -1.6%;
+}
+#overall-containerProfile {
+  background-color: #f5f5fd;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  z-index: 0;
 }
 .availabilityHeader {
   padding: 4%;
   padding-left: 12%;
 }
-#schedule-container-st {
-  position: relative;
-  display: inline-block;
+#profile-schedule-container-st {
+  padding-top: 1%;
+  padding-bottom: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
   left: 8%;
-  top: 50%;
+  margin-left: 7%;
   transform: scale(0.9, 0.9);
-  width: 935px;
+  width: 950px;
   font-family: "Open Sans";
   background-color: white;
   border-radius: 20px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: -30%;
+}
+.containerContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 #yourshifts {
@@ -304,11 +316,21 @@
   flex-direction: row;
   margin-top: 6%;
   margin-left: -30%;
-  justify-content: center;
 }
 
 .trainingLevelsMoffittThird {
   display: flex;
+  width: 150px;
+  height: 32px;
+  left: 809px;
+  top: 283px;
+  background: #ff8d06;
+  border-radius: 20.5px;
+  justify-content: center;
+  padding-top: 1.2%;
+}
+.trainingLevelsNoMoffittThird {
+  display: none;
   width: 150px;
   height: 32px;
   left: 809px;
@@ -331,6 +353,7 @@
   align-items: center;
   text-align: center;
   color: #ffffff;
+  display: flex;
 }
 .doeText {
   height: 19px;
@@ -343,9 +366,22 @@
   line-height: 19px;
   text-align: center;
   color: #ffffff;
+  display: flex;
 }
 .trainingLevelsMoffittFourth {
   display: flex;
+  width: 150px;
+  height: 32px;
+  left: 981px;
+  top: 283px;
+  background: #04b17e;
+  border-radius: 20.5px;
+  justify-content: center;
+  padding-top: 1.2%;
+  margin-left: 2%;
+}
+.trainingLevelsNoMoffittFourth {
+  display: none;
   width: 150px;
   height: 32px;
   left: 981px;
@@ -365,8 +401,19 @@
   background: #d7269b;
   border-radius: 20.5px;
   padding-top: 1.2%;
+  margin-left: 2%;
 }
-
+.trainingLevelsNoDoe {
+  display: none;
+  width: 150px;
+  height: 32px;
+  left: 1092px;
+  top: 283px;
+  justify-content: center;
+  background: #d7269b;
+  border-radius: 20.5px;
+  padding-top: 1.2%;
+}
 .moffittThirdText {
   height: 19px;
   left: 826px;
@@ -378,6 +425,7 @@
   line-height: 19px;
   text-align: center;
   color: #ffffff;
+  display: flex;
 }
 
 .availabilitiesInvisible {

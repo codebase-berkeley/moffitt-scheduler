@@ -1,8 +1,9 @@
 import React from "react";
 import "./Profile.css";
-import star from "./Images/star.png";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import ScheduleSelector from "react-schedule-selector";
+import starImage from "./baseline_grade_white_18dp.png";
+import DisplayLibs from "./DisplayLibs";
 
 function Timeslot(props) {
   return (
@@ -50,18 +51,42 @@ var weekString =
   format(startOfWeek(currentDate), "MM/DD") +
   " - " +
   format(endOfWeek(currentDate), "MM/DD");
-
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { shifts: initialShifts(), schedule: [] };
+    this.state = {
+      shifts: initialShifts(),
+      schedule: [],
+      items: [],
+      profileHours: [],
+      totalhours: [],
+    };
     this.currentDate = new Date();
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
     this.renderCustomDateCell = this.renderCustomDateCell.bind(this);
+    this.processData = this.processData.bind(this);
   }
-
   componentDidMount() {
+    fetch("/staticcalendar/" + this.props.match.params.userId, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: this.state.shifts,
+        userId: this.props.userId,
+      }),
+    })
+      .then((response) => {
+        console.log("response");
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log(jsonResponse.shifts);
+        this.setState({ shifts: jsonResponse.shifts });
+      });
     fetch("/availability/" + this.props.match.params.userId)
       .then((response) => {
         return response.json();
@@ -69,8 +94,114 @@ export default class Profile extends React.Component {
       .then((jsonResponse) => {
         this.setState({ schedule: jsonResponse.schedule });
       });
+    fetch("/profilehours/" + this.props.match.params.userId)
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({ profileHours: jsonResponse.profileHours });
+      });
+    fetch("/totalhours/" + this.props.match.params.userId)
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({ totalhours: jsonResponse.totalhours });
+      });
+    fetch("/allemployees", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({
+          items: jsonResponse.items,
+        });
+        console.log(this.state.items);
+        let newItems;
+        for (let i = 0; i < this.state.items.length; i++) {
+          if (this.state.items[i].id == this.props.match.params.userId) {
+            newItems = this.state.items[i];
+          }
+        }
+        this.setState({
+          items: newItems,
+        });
+      });
   }
-
+  processData(database) {
+    console.log("Debugger: ");
+    console.log(database);
+    let m3L = database.training_level_moffitt3;
+    let m4L = database.training_level_moffitt4;
+    let dL = database.training_level_doe;
+    let cm3;
+    let cm4;
+    let cd;
+    if (m3L == 0) {
+      cm3 = "trainingLevelsNoMoffittThird";
+    } else {
+      cm3 = "trainingLevelsMoffittThird";
+    }
+    if (m4L == 0) {
+      cm4 = "trainingLevelsNoMoffittFourth";
+    } else {
+      cm4 = "trainingLevelsMoffittFourth";
+    }
+    if (cd == 0) {
+      cd = "trainingLevelsNoDoe";
+    } else {
+      cd = "trainingLevelsDoe";
+    }
+    if (m3L == 1) {
+      m3L = <img src={starImage} />;
+    } else if (m3L == 2) {
+      m3L = [<img src={starImage} />, <img src={starImage} />];
+    } else if (m3L == 3) {
+      m3L = [
+        <img src={starImage} />,
+        <img src={starImage} />,
+        <img src={starImage} />,
+      ];
+    }
+    if (m4L == 1) {
+      m4L = <img src={starImage} />;
+    } else if (m4L == 2) {
+      m4L = [<img src={starImage} />, <img src={starImage} />];
+    } else if (m4L == 4) {
+      m4L = [
+        <img src={starImage} />,
+        <img src={starImage} />,
+        <img src={starImage} />,
+      ];
+    }
+    if (dL == 1) {
+      dL = <img src={starImage} />;
+    } else if (dL == 2) {
+      dL = [<img src={starImage} />, <img src={starImage} />];
+    } else if (dL == 3) {
+      dL = [
+        <img src={starImage} />,
+        <img src={starImage} />,
+        <img src={starImage} />,
+      ];
+    }
+    return (
+      <DisplayLibs
+        moffitt3TrainingLevel={m3L}
+        moffitt4TrainingLevel={m4L}
+        doeTrainingLevel={dL}
+        currentDisplayMoffitt3={cm3}
+        currentDisplayMoffitt4={cm4}
+        currentDisplayDoe={cd}
+      />
+    );
+  }
   renderCustomDateCell = (time, selected, innerRef) => {
     return (
       <div style={{ textAlign: "center" }} ref={innerRef}>
@@ -158,29 +289,14 @@ export default class Profile extends React.Component {
                 <div className="profilePictureContainer">
                   <div className="profilePicture"></div>
                 </div>
-
                 <div className="nameAndEmail">
-                  <div className="nameText">Bianca Lee</div>
-                  <div className="emailText">biancalee@berkeley.edu</div>
+                  <div className="nameText">{this.state.items.name}</div>
+                  <div className="emailText">{this.state.items.email}</div>
                 </div>
-
                 <div className="trainingLevels">
                   <h1 className="trainingLevelsText">Training Levels</h1>
                 </div>
-                <div className="trainingLevelsContainer">
-                  <div className="trainingLevelsMoffittThird">
-                    <div className="moffittThirdText">Moffitt 3rd</div>
-                    <img src={star} height="20" width="20"></img>
-                  </div>
-                  <div className="trainingLevelsMoffittFourth">
-                    <div className="moffittFourthText">Moffitt 4th</div>
-                    <img src={star} height="20" width="20"></img>
-                  </div>
-                  <div className="trainingLevelsDoe">
-                    <div className="doeText">Doe</div>
-                    <img src={star} height="20" width="20"></img>
-                  </div>
-                </div>
+                {this.processData(this.state.items)}
               </div>
             </div>
             <div className="stats">
@@ -192,60 +308,70 @@ export default class Profile extends React.Component {
                 <div className="firstStatDesc">scheduled hours per week</div>
               </div>
               <div className="secondStat">
-                <div className="secondStatNumber">80</div>
+                <div className="secondStatNumber">{this.state.totalhours}</div>
                 <div className="firstStatDesc">total hours worked</div>
               </div>
               <div className="thirdStat">
-                <div className="thirdStatNumber">4</div>
+                <div className="thirdStatNumber">{this.state.profileHours}</div>
                 <div className="firstStatDesc">
                   shifts requested to be covered
                 </div>
               </div>
             </div>
             <div className="scheduledShifts">
+              {" "}
+              <div className="invisible"></div>
               <div className="scheduledShiftsText">Scheduled Shifts</div>
             </div>
-          </div>
-          <div id="schedule-container-st">
-            <div id="frontWords">
-              <h1 id="weekString">{weekString}</h1>
-            </div>
-            <div id="legend">
-              <div id="libtag">
-                <h3 id="findingspace">Moffitt&nbsp;&nbsp;</h3>
-                <div id="moffittcolor"></div>
+            <div class="containerContainer">
+              <div id="profile-schedule-container-st">
+                <div id="frontWords">
+                  <h1 id="weekString">{weekString}</h1>
+                </div>
+                <div id="legend">
+                  <div id="libtag">
+                    <h3 id="findingspace">Moffitt 3rd&nbsp;</h3>
+                    <div id="moffitt3colorStatic"></div>
+                    <h3 id="findingspace">&nbsp;&nbsp;Moffitt 4th&nbsp;</h3>
+                    <div id="moffitt4color"></div>
+                  </div>
+                  <div id="libtag">
+                    <h3 id="findingspace">&nbsp;&nbsp;Doe&nbsp;</h3>
+                    <div id="doecolorStatic"></div>
+                    <h3 id="findingspace">&nbsp;&nbsp;Cover Requested&nbsp;</h3>
+                    <div id="coverrequestedcolor"></div>
+                  </div>
+                </div>
+                <div id="inner-schedule">
+                  <div></div>
+
+                  {wkdays}
+
+                  {timeslots}
+                </div>
               </div>
-              <div id="libtag">
-                <h3 id="findingspace">Doe&nbsp;&nbsp;</h3>
-                <div id="doecolor"></div>
+              <div id="overall-containerProfile">
+                <div className="availabilityHeader">
+                  <div className="availabilitiesText">Availabilities</div>
+                </div>
+
+                <div
+                  className="availabilitiesInvisible"
+                  id="profile-schedule-container"
+                >
+                  <h1 id="weekString">{weekString}</h1>
+                  <ScheduleSelector
+                    startDate={startOfWeek(this.currentDate)}
+                    selection={this.state.schedule}
+                    numDays={7}
+                    minTime={0}
+                    maxTime={23}
+                    dateFormat="dd MM/DD"
+                    renderDateCell={this.renderCustomDateCell}
+                  />
+                </div>
               </div>
             </div>
-            <div id="inner-schedule">
-              <div></div>
-
-              {wkdays}
-
-              {timeslots}
-            </div>
-          </div>
-        </div>
-        <div id="overall-container">
-          <div className="availabilityHeader">
-            <div className="availabilitiesText">Availabilities</div>
-          </div>
-          <div className="invisible"></div>
-
-          <div className="availabilitiesInvisible" id="schedule-container">
-            <h1 id="weekString">{weekString}</h1>
-            <ScheduleSelector
-              startDate={startOfWeek(this.currentDate)}
-              selection={this.state.schedule}
-              numDays={7}
-              minTime={0}
-              maxTime={23}
-              dateFormat="dd MM/DD"
-              renderDateCell={this.renderCustomDateCell}
-            />
           </div>
         </div>
       </div>
