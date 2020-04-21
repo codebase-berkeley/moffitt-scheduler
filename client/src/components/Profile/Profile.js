@@ -59,6 +59,7 @@ export default class Profile extends React.Component {
       schedule: [],
       items: [],
       profileHours: [],
+      totalhours: [],
     };
     this.currentDate = new Date();
     this.deselectCell = <div class="deselectCell"></div>;
@@ -80,6 +81,13 @@ export default class Profile extends React.Component {
       })
       .then((jsonResponse) => {
         this.setState({ profileHours: jsonResponse.profileHours });
+      });
+    fetch("/totalhours/" + this.props.match.params.userId)
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({ totalhours: jsonResponse.totalhours });
       });
     fetch("/allemployees", {
       method: "GET",
@@ -107,26 +115,6 @@ export default class Profile extends React.Component {
         });
       });
   }
-  // fetch("/staticcalendar/" + this.props.userId, {
-  //   method: "POST",
-  //   headers: {
-  //     Accept: "application/json",
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     items: this.state.shifts,
-  //     userId: this.props.userId,
-  //   }),
-  // })
-  //   .then((response) => {
-  //     console.log("response");
-  //     return response.json();
-  //   })
-  //   .then((jsonResponse) => {
-  //     console.log(jsonResponse.shifts);
-  //     this.setState({ shifts: jsonResponse.shifts });
-  //   });
-  //}
   processData(database) {
     console.log("Debugger: ");
     console.log(database);
@@ -301,7 +289,7 @@ export default class Profile extends React.Component {
                 <div className="firstStatDesc">scheduled hours per week</div>
               </div>
               <div className="secondStat">
-                <div className="secondStatNumber">80</div>
+                <div className="secondStatNumber">{this.state.totalhours}</div>
                 <div className="firstStatDesc">total hours worked</div>
               </div>
               <div className="thirdStat">

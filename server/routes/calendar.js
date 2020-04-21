@@ -160,30 +160,31 @@ router.get("/availability/:userId", (req, res) => {
     }
   );
 });
-// router.get("/profilehours/:userId", (req, res) => {
-//   var selected = [];
-//   var curr_day = new Date();
-//   var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
-//   var curr_week_saturday = curr_day.getDate() + (6 - curr_day.getDay());
-//   pool.query(
-//     `SELECT * FROM coverrequests, shifts
-//      WHERE sle_id = $1 AND sle_id = coveree_id`,
-//     [req.params.userId],
-//     (error, result) => {
-//       if (error) {
-//         throw error;
-//       } else {
-//         let scheduledHoursPerWeek = 0;
-//         let totalHoursWorker = 0;
-//         let requestedShifts = 0;
-//         for (var i = 0; i < result.rows.length; i++) {
-
-//         }
-//       }
-//       return res.json({ schedule: selected });
-//     }
-//   );
-// });
+router.get("/totalhours/:userId", (req, res) => {
+  //Accouting for daylight savings
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff =
+    now -
+    start +
+    (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var currentDay = Math.floor(diff / oneDay);
+  pool.query(
+    `SELECT * FROM coverrequests, shifts
+     WHERE sle_id = $1 AND sle_id = coveree_id`,
+    [req.params.userId],
+    (error, result) => {
+      let allHours = 0;
+      if (error) {
+        throw error;
+      } else {
+        for (var i = 0; i < result.rows.length; i++) {}
+      }
+      return res.json({ totalhours: allHours });
+    }
+  );
+});
 
 router.get("/profilehours/:userId", (req, res) => {
   pool.query(

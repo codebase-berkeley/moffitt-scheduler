@@ -323,6 +323,17 @@
   justify-content: center;
   padding-top: 1.2%;
 }
+.trainingLevelsNoMoffittThird {
+  display: none;
+  width: 150px;
+  height: 32px;
+  left: 809px;
+  top: 283px;
+  background: #ff8d06;
+  border-radius: 20.5px;
+  justify-content: center;
+  padding-top: 1.2%;
+}
 
 .moffittFourthText {
   height: 19px;
@@ -362,6 +373,17 @@
   justify-content: center;
   padding-top: 1.2%;
 }
+.trainingLevelsNoMoffittFourth {
+  display: none;
+  width: 150px;
+  height: 32px;
+  left: 981px;
+  top: 283px;
+  background: #04b17e;
+  border-radius: 20.5px;
+  justify-content: center;
+  padding-top: 1.2%;
+}
 .trainingLevelsDoe {
   display: flex;
   width: 150px;
@@ -373,7 +395,17 @@
   border-radius: 20.5px;
   padding-top: 1.2%;
 }
-
+.trainingLevelsNoDoe {
+  display: none;
+  width: 150px;
+  height: 32px;
+  left: 1092px;
+  top: 283px;
+  justify-content: center;
+  background: #d7269b;
+  border-radius: 20.5px;
+  padding-top: 1.2%;
+}
 .moffittThirdText {
   height: 19px;
   left: 826px;
