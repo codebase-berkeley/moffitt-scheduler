@@ -85,10 +85,25 @@ router.post("/staticcalendar/:userId", (req, res) => {
                 shifts[i].end <= currentRow.end_time.getHours()));
           if (sameStartEndValid || diffStartEndValid) {
             shifts[i].id = currentRow.shift_id;
-            if (currentRow.location == "Moffitt") {
-              shifts[i].color = "#FFA1A1";
+            console.log(currentRow.cover_requested);
+            if (currentRow.location == "Moffitt3") {
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#ff8d06";
+              }
             } else if (currentRow.location == "Doe") {
-              shifts[i].color = "#b0e9c2";
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#d7269b";
+              }
+            } else if (currentRow.location == "Moffitt4") {
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#04b17e";
+              }
             }
           }
         }
@@ -142,6 +157,70 @@ router.get("/availability/:userId", (req, res) => {
         }
       }
       return res.json({ schedule: selected });
+    }
+  );
+});
+router.get("/totalhours/:userId", (req, res) => {
+  //Accouting for daylight savings
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff =
+    now -
+    start +
+    (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var currentDay = Math.floor(diff / oneDay);
+  pool.query(
+    `select * from shifts as a left join coverrequests as b on a.shift_id = b.shift_id and a.sle_id = b.coveree_id where (supervisor_status is null or supervisor_status = 'Denied') and sle_id = $1;
+    `,
+    [req.params.userId],
+    (error, result) => {
+      let allHours = 0;
+      if (error) {
+        throw error;
+      } else {
+        for (var i = 0; i < result.rows.length; i++) {
+          var currentRow = result.rows[i].end_time;
+          var startt = new Date(currentRow.getFullYear(), 0, 0);
+          var difff =
+            currentRow -
+            startt +
+            (startt.getTimezoneOffset() - currentRow.getTimezoneOffset()) *
+              60 *
+              1000;
+          var oneDayy = 1000 * 60 * 60 * 24;
+          var lastDay = Math.floor(difff / oneDayy);
+          if (lastDay < currentDay) {
+            let start_time = result.rows[i].start_time;
+            let end_time = result.rows[i].end_time;
+            let start_time_date = start_time.getDay();
+            let end_time_date = start_time.getDay();
+            let start_hour = start_time.getHours();
+            let end_hour = end_time.getHours();
+            if (start_time_date == end_time_date) {
+              allHours = allHours + (end_hour - start_hour);
+            }
+          } else {
+            allHours = allHours + (24 - start_hour) + end_hour;
+          }
+        }
+      }
+      return res.json({ totalhours: allHours });
+    }
+  );
+});
+
+router.get("/profilehours/:userId", (req, res) => {
+  pool.query(
+    `SELECT * FROM shifts
+     WHERE sle_id = $1 AND cover_requested = $2`,
+    [req.params.userId, true],
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+      }
+      return res.json({ profileHours: result.rows.length });
     }
   );
 });

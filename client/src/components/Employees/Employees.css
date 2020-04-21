@@ -101,6 +101,10 @@
   left: 519px;
   top: 287px;
   border-radius: 5px;
+  border-style: solid;
+  border: none;
+  border-width: 1px;
+  border: 1px solid #cccccc;
 }
 
 .EmailInput {
@@ -109,6 +113,10 @@
   left: 519px;
   top: 287px;
   border-radius: 5px;
+  border-style: solid;
+  border: none;
+  border-width: 1px;
+  border: 1px solid #cccccc;
 }
 
 .EmployeeName {
@@ -146,6 +154,7 @@
   margin-left: 7%;
   cursor: pointer;
   padding-top: 0%;
+  margin-right: 40px;
 }
 
 .SubmitButton {
@@ -166,14 +175,12 @@
 }
 
 .button-container {
-  width: 85%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   align-content: space-between;
-  padding-left: 150px;
-  margin-top: 15%;
+  margin-top: 30px;
 }
 
 .modal {
@@ -203,6 +210,12 @@
   font-size: 14px;
   line-height: 19px;
 }
+#moffitt3level,
+#moffitt4level,
+#doelevel {
+  width: 110px;
+  margin-right: 20px;
+}
 
 .MoffittText {
   padding-top: 2%;
@@ -216,4 +229,57 @@
 .DoeText {
   padding-top: 2%;
   padding-left: 210%;
+}
+.libleveltext {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 19px;
+  background-color: transparent;
+}
+
+.TrainedFor {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 25px;
+  padding-top: 8%;
+  background-color: transparent;
+  padding-bottom: 2%;
+}
+.libleveltext {
+  display: flex;
+}
+.Moffitt3Input {
+  width: 30%;
+  height: 30px;
+  left: 519px;
+  top: 287px;
+  border-radius: 5px;
+}
+.Moffitt4Input {
+  width: 30%;
+  height: 30px;
+  left: 519px;
+  top: 287px;
+  border-radius: 5px;
+}
+.DoeInput {
+  width: 30%;
+  height: 30px;
+  left: 519px;
+  top: 287px;
+  border-radius: 5px;
+}
+.sameLevelplz {
+  display: flex;
+  justify-content: space-between;
+}
+.vertalign {
+  display: flex;
+  flex-direction: column;
 }

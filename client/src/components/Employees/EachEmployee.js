@@ -12,8 +12,15 @@ export default function EachEmployee(props) {
         </div>
       </div>
       <div className="lib">
-        <div className="first">{props.firstLibrary}</div>
-        <div className="second">{props.secondLibrary}</div>
+        <div className={props.currentDisplayMoffitt3}>
+          Moffitt 3 {props.moffitt3TrainingLevel}
+        </div>
+        <div className={props.currentDisplayMoffitt4}>
+          Moffitt 4 {props.moffitt4TrainingLevel}
+        </div>
+        <div className={props.currentDisplayDoe}>
+          Doe {props.doeTrainingLevel}
+        </div>
       </div>
     </div>
   );
