@@ -150,11 +150,23 @@ export default class Moffitt extends React.Component {
           }
         }
         this.setState({ allDaysOfWeek: newAllDaysOfWeek });
-        console.log("firstalldaysofweek", this.state.allDaysOfWeek);
       });
   }
 
-  removeEmployee(sle_id, shift_id, currTime, setIsOpen, day) {
+  removeEmployee(
+    sle_id,
+    shift_id,
+    currTime,
+    setIsOpen,
+    day,
+    employeeArr,
+    shiftIdArr,
+    sleIdArr,
+    removeEmployee,
+    allEmp,
+    date,
+    addEmployee
+  ) {
     fetch("/removeemployee", {
       method: "POST",
       headers: {
@@ -173,10 +185,42 @@ export default class Moffitt extends React.Component {
       .then((jsonResponse) => {
         setIsOpen(false);
         console.log(jsonResponse);
+
+        let clonedAllDaysOfWeek = this.state.allDaysOfWeek.slice(0);
+
+        let newSleIdArr = sleIdArr.slice(0);
+        let newEmployeeArr = employeeArr.slice(0);
+        let newShiftArr = shiftIdArr.slice(0);
+
+        for (let i = 0; i < newSleIdArr.length; i++) {
+          //
+          if (sle_id === newSleIdArr[i]) {
+            newSleIdArr.splice(i, 1);
+            newEmployeeArr.splice(i, 1);
+            newShiftArr.splice(i, 1);
+          }
+        }
+
+        clonedAllDaysOfWeek[day][currTime] = (
+          <Box
+            startTime={currTime}
+            curTime={currTime}
+            startDay={day}
+            shiftId={newShiftArr} // edit
+            sleId={newSleIdArr} // edit
+            names={newEmployeeArr} // edit
+            allEmp={allEmp}
+            date={date}
+            addEmployee={addEmployee}
+            removeEmployee={removeEmployee}
+          />
+        );
+        this.setState({ allDaysOfWeek: clonedAllDaysOfWeek });
       });
   }
 
   addEmployee(
+    currName,
     sle_id,
     currTime,
     date,
@@ -207,36 +251,33 @@ export default class Moffitt extends React.Component {
       })
       .then((jsonResponse) => {
         setIsOpen(false);
-        // var prevAllDaysOfWeek = this.state.allDaysOfWeek;
-        //make state changes here
-        console.log("curSleId", currSleId);
-        console.log("sle_id", sle_id);
 
-        currSleId.push(sle_id); // update sleId Array
-        let newEmployeeArray = [];
+        let clonedAllDaysOfWeek = this.state.allDaysOfWeek.slice(0);
 
-        console.log("currSleId", currSleId);
+        let newSleIdArr = currSleId.slice(0);
+        newSleIdArr.push(sle_id);
 
-        shiftId.push(); // add new shiftId
-        employee.push(); // add new employee name
+        let newEmployeeArr = employee.slice(0);
+        newEmployeeArr.push(currName);
 
-        console.log("allDaysOfWeek", this.state.allDaysOfWeek);
+        let newShiftArr = shiftId.slice(0);
+        newShiftArr.push(jsonResponse.id);
 
-        var clonedAllDaysOfWeek = this.state.allDaysOfWeek.slice(0);
         clonedAllDaysOfWeek[day][currTime] = (
           <Box
             startTime={currTime}
             curTime={currTime}
             startDay={day}
-            shiftId={shiftId} // SHOOT WHAT THE HECK DO I DO ABOUT NEW SHIFT IDs new fetch?
-            sleId={currSleId} // edited array
-            names={employee} // edited array
+            shiftId={newShiftArr}
+            sleId={newSleIdArr}
+            names={newEmployeeArr}
             allEmp={allEmp}
             date={date}
             addEmployee={addEmployee}
             removeEmployee={removeEmployee}
           />
         );
+        this.setState({ allDaysOfWeek: clonedAllDaysOfWeek });
       });
   }
 
@@ -275,6 +316,7 @@ function OtherEmployee(props) {
             className="addButton"
             onClick={() =>
               props.addEmployee(
+                filteredEmployees[i]["name"],
                 filteredEmployees[i]["id"],
                 props.currTime,
                 props.date,
@@ -363,26 +405,6 @@ function EditSchedule(props) {
     },
   };
 
-  function submitClick() {
-    fetch("http://localhost:8000/masterschedule", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((jsonResponse) => {
-        console.log(jsonResponse);
-      });
-    function cancelClick() {
-      console.log("doesNothingForNow");
-    }
-  }
-
   function CurrEmployee(props) {
     if (props == null) {
       return null;
@@ -401,7 +423,14 @@ function EditSchedule(props) {
                   props.shiftId[i],
                   props.currTime,
                   setIsOpen,
-                  props.day
+                  props.day,
+                  props.employee,
+                  props.shiftId,
+                  props.sleId,
+                  props.removeEmployee,
+                  props.allEmp,
+                  props.date,
+                  props.addEmployee
                 )
               }
             >
@@ -495,15 +524,16 @@ function EditSchedule(props) {
             <h3 className="CurrentEmployees">Current Employees</h3>
             <div className="currEmployees">
               <CurrEmployee
-                employee={props.employee}
-                shiftId={props.shiftId}
+                allEmp={props.allEmp}
                 sleId={props.sleId}
                 currTime={props.currTime}
-                removeEmployee={props.removeEmployee}
-                day={props.day}
-                allEmp={props.allEmp}
                 date={props.date}
+                setIsOpen={setIsOpen}
                 addEmployee={props.addEmployee}
+                day={props.day}
+                shiftId={props.shiftId}
+                removeEmployee={props.removeEmployee}
+                employee={props.employee}
               />
             </div>
             <h3 className="NotInShift">Employees Not in Shift</h3>

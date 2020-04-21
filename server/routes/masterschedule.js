@@ -34,15 +34,18 @@ router.post("/addemployee", (req, res) => {
   endTime.setHours(currHour + 1, 0, 0, 0);
 
   pool.query(
-    `INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES (${sleId}, '${loc}', to_timestamp(${currDate.getTime()} / 1000.0), to_timestamp(${endTime.getTime()} / 1000.0))`,
+    `INSERT INTO shifts (sle_id, location, start_time, end_time) 
+    VALUES (${sleId}, '${loc}', to_timestamp(${currDate.getTime()} / 1000.0), to_timestamp(${endTime.getTime()} / 1000.0)) 
+    RETURNING shift_id`,
     [],
     (error, result) => {
       if (error) {
         throw error;
       }
+      var newShiftId = result.rows[0]["shift_id"];
+      return res.json({ id: newShiftId });
     }
   );
-  return res.json({});
 });
 
 router.post("/removeemployee", (req, res) => {
