@@ -68,6 +68,25 @@ export default class Profile extends React.Component {
     this.processData = this.processData.bind(this);
   }
   componentDidMount() {
+    fetch("/staticcalendar/" + this.props.match.params.userId, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: this.state.shifts,
+        userId: this.props.userId,
+      }),
+    })
+      .then((response) => {
+        console.log("response");
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log(jsonResponse.shifts);
+        this.setState({ shifts: jsonResponse.shifts });
+      });
     fetch("/availability/" + this.props.match.params.userId)
       .then((response) => {
         return response.json();
@@ -300,56 +319,59 @@ export default class Profile extends React.Component {
               </div>
             </div>
             <div className="scheduledShifts">
+              {" "}
+              <div className="invisible"></div>
               <div className="scheduledShiftsText">Scheduled Shifts</div>
             </div>
-          </div>
-          <div id="profile-schedule-container-st">
-            <div id="frontWords">
-              <h1 id="weekString">{weekString}</h1>
-            </div>
-            <div id="legend">
-              <div id="libtag">
-                <h3 id="findingspace">Moffitt 3rd&nbsp;</h3>
-                <div id="moffitt3colorStatic"></div>
-                <h3 id="findingspace">&nbsp;&nbsp;Moffitt 4th&nbsp;</h3>
-                <div id="moffitt4color"></div>
+            <div class="containerContainer">
+              <div id="profile-schedule-container-st">
+                <div id="frontWords">
+                  <h1 id="weekString">{weekString}</h1>
+                </div>
+                <div id="legend">
+                  <div id="libtag">
+                    <h3 id="findingspace">Moffitt 3rd&nbsp;</h3>
+                    <div id="moffitt3colorStatic"></div>
+                    <h3 id="findingspace">&nbsp;&nbsp;Moffitt 4th&nbsp;</h3>
+                    <div id="moffitt4color"></div>
+                  </div>
+                  <div id="libtag">
+                    <h3 id="findingspace">&nbsp;&nbsp;Doe&nbsp;</h3>
+                    <div id="doecolorStatic"></div>
+                    <h3 id="findingspace">&nbsp;&nbsp;Cover Requested&nbsp;</h3>
+                    <div id="coverrequestedcolor"></div>
+                  </div>
+                </div>
+                <div id="inner-schedule">
+                  <div></div>
+
+                  {wkdays}
+
+                  {timeslots}
+                </div>
               </div>
-              <div id="libtag">
-                <h3 id="findingspace">&nbsp;&nbsp;Doe&nbsp;</h3>
-                <div id="doecolorStatic"></div>
-                <h3 id="findingspace">&nbsp;&nbsp;Cover Requested&nbsp;</h3>
-                <div id="coverrequestedcolor"></div>
+              <div id="overall-containerProfile">
+                <div className="availabilityHeader">
+                  <div className="availabilitiesText">Availabilities</div>
+                </div>
+
+                <div
+                  className="availabilitiesInvisible"
+                  id="profile-schedule-container"
+                >
+                  <h1 id="weekString">{weekString}</h1>
+                  <ScheduleSelector
+                    startDate={startOfWeek(this.currentDate)}
+                    selection={this.state.schedule}
+                    numDays={7}
+                    minTime={0}
+                    maxTime={23}
+                    dateFormat="dd MM/DD"
+                    renderDateCell={this.renderCustomDateCell}
+                  />
+                </div>
               </div>
             </div>
-            <div id="inner-schedule">
-              <div></div>
-
-              {wkdays}
-
-              {timeslots}
-            </div>
-          </div>
-        </div>
-        <div id="overall-container">
-          <div className="availabilityHeader">
-            <div className="availabilitiesText">Availabilities</div>
-          </div>
-          <div className="invisible"></div>
-
-          <div
-            className="availabilitiesInvisible"
-            id="profile-schedule-container"
-          >
-            <h1 id="weekString">{weekString}</h1>
-            <ScheduleSelector
-              startDate={startOfWeek(this.currentDate)}
-              selection={this.state.schedule}
-              numDays={7}
-              minTime={0}
-              maxTime={23}
-              dateFormat="dd MM/DD"
-              renderDateCell={this.renderCustomDateCell}
-            />
           </div>
         </div>
       </div>
