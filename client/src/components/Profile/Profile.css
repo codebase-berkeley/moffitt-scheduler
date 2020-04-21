@@ -57,15 +57,13 @@
 }
 
 .nameText {
-  font-family: "Open Sans";
   font-size: 16px;
   font-weight: bold;
   float: left;
   color: black;
 }
 .emailText {
-  font-family: "Open Sans";
-  font-size: 12px;
+  font-size: 16px;
   font-weight: normal;
 
   color: black;
@@ -170,12 +168,17 @@
   padding-left: 12%;
 }
 #profile-schedule-container-st {
+  padding-top: 1%;
+  padding-bottom: 2%;
+  margin-top: -1.6%;
+  padding-left: 2%;
+  padding-right: 2%;
   position: relative;
   display: inline-block;
   left: 8%;
   top: 50%;
   transform: scale(0.9, 0.9);
-  width: 935px;
+  width: 66%;
   font-family: "Open Sans";
   background-color: white;
   border-radius: 20px;
@@ -320,17 +323,6 @@
   justify-content: center;
   padding-top: 1.2%;
 }
-.trainingLevelsNoMoffittThird {
-  display: none;
-  width: 150px;
-  height: 32px;
-  left: 809px;
-  top: 283px;
-  background: #ff8d06;
-  border-radius: 20.5px;
-  justify-content: center;
-  padding-top: 1.2%;
-}
 
 .moffittFourthText {
   height: 19px;
@@ -368,29 +360,7 @@
   justify-content: center;
   padding-top: 1.2%;
 }
-.trainingLevelsMoffittNoFourth {
-  display: none;
-  width: 150px;
-  height: 32px;
-  left: 981px;
-  top: 283px;
-  background: #04b17e;
-  border-radius: 20.5px;
-  justify-content: center;
-  padding-top: 1.2%;
-}
 .trainingLevelsDoe {
-  display: flex;
-  width: 150px;
-  height: 32px;
-  left: 1092px;
-  top: 283px;
-  justify-content: center;
-  background: #d7269b;
-  border-radius: 20.5px;
-  padding-top: 1.2%;
-}
-.trainingLevelsNoDoe {
   display: flex;
   width: 150px;
   height: 32px;
@@ -413,8 +383,6 @@
   line-height: 19px;
   text-align: center;
   color: #ffffff;
-  /* flex-direction: row;
-  justify-content: center; */
 }
 
 .availabilitiesInvisible {
