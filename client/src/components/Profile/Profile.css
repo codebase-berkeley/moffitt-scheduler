@@ -309,7 +309,7 @@
   flex-direction: row;
   margin-top: 6%;
   margin-left: -30%;
-  justify-content: center;
+  /* justify-content: flex-end; */
 }
 
 .trainingLevelsMoffittThird {
@@ -336,6 +336,7 @@
   align-items: center;
   text-align: center;
   color: #ffffff;
+  display: flex;
 }
 .doeText {
   height: 19px;
@@ -348,6 +349,7 @@
   line-height: 19px;
   text-align: center;
   color: #ffffff;
+  display: flex;
 }
 .trainingLevelsMoffittFourth {
   display: flex;
@@ -383,6 +385,7 @@
   line-height: 19px;
   text-align: center;
   color: #ffffff;
+  display: flex;
 }
 
 .availabilitiesInvisible {
