@@ -74,6 +74,13 @@ export default class Profile extends React.Component {
       .then((jsonResponse) => {
         this.setState({ schedule: jsonResponse.schedule });
       });
+    fetch("/profilehours/" + this.props.match.params.userId)
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({ hours: jsonResponse.hours });
+      });
     fetch("/allemployees", {
       method: "GET",
       headers: {
