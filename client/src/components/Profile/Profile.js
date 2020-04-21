@@ -1,8 +1,9 @@
 import React from "react";
 import "./Profile.css";
-import star from "./Images/star.png";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import ScheduleSelector from "react-schedule-selector";
+import starImage from "./baseline_grade_white_18dp.png";
+import DisplayLibs from "./DisplayLibs";
 
 function Timeslot(props) {
   return (
@@ -50,7 +51,6 @@ var weekString =
   format(startOfWeek(currentDate), "MM/DD") +
   " - " +
   format(endOfWeek(currentDate), "MM/DD");
-
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -59,13 +59,11 @@ export default class Profile extends React.Component {
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
     this.renderCustomDateCell = this.renderCustomDateCell.bind(this);
+    this.processData = this.processData.bind(this);
   }
-
   componentDidMount() {
     fetch("/availability/" + this.props.match.params.userId)
       .then((response) => {
-        // console.log(this.props.items);
-
         return response.json();
       })
       .then((jsonResponse) => {
@@ -86,6 +84,15 @@ export default class Profile extends React.Component {
           items: jsonResponse.items,
         });
         console.log(this.state.items);
+        let newItems;
+        for (let i = 0; i < this.state.items.length; i++) {
+          if (this.state.items[i].id == this.props.match.params.userId) {
+            newItems = this.state.items[i];
+          }
+        }
+        this.setState({
+          items: newItems,
+        });
       });
   }
   // fetch("/staticcalendar/" + this.props.userId, {
@@ -108,46 +115,74 @@ export default class Profile extends React.Component {
   //     this.setState({ shifts: jsonResponse.shifts });
   //   });
   //}
-
-  // processData(database) {
-  //   const listItems = database.map((entry, index) => {
-  //     if (entry.moffitt3TrainingLevel == 1) {
-  //       entry.moffitt3TrainingLevel = <img src={star} />;
-  //     } else if (entry.moffitt3TrainingLevel == 2) {
-  //       entry.moffitt3TrainingLevel = [<img src={star} />, <img src={star} />];
-  //     } else {
-  //       entry.moffitt3TrainingLevel = [
-  //         <img src={star} />,
-  //         <img src={star} />,
-  //         <img src={star} />,
-  //       ];
-  //     }
-  //     if (entry.moffitt4TrainingLevel == 1) {
-  //       entry.moffitt4TrainingLevel = <img src={star} />;
-  //     } else if (entry.moffitt4TrainingLevel == 2) {
-  //       entry.moffitt4TrainingLevel = [<img src={star} />, <img src={star} />];
-  //     } else {
-  //       entry.moffitt4TrainingLevel = [
-  //         <img src={star} />,
-  //         <img src={star} />,
-  //         <img src={star} />,
-  //       ];
-  //     }
-  //     if (entry.doeTrainingLevel == 1) {
-  //       entry.doeTrainingLevel = <img src={star} />;
-  //     } else if (entry.doeTrainingLevel == 2) {
-  //       entry.doeTrainingLevel = [<img src={star} />, <img src={star} />];
-  //     } else {
-  //       entry.doeTrainingLevel = [
-  //         <img src={star} />,
-  //         <img src={star} />,
-  //         <img src={star} />,
-  //       ];
-  //     }
-  //   });
-  //   return listItems;
-  // }
-
+  processData(database) {
+    console.log("Debugger: ");
+    console.log(database);
+    let m3L = database.training_level_moffitt3;
+    let m4L = database.training_level_moffitt4;
+    let dL = database.training_level_doe;
+    let cm3;
+    let cm4;
+    let cd;
+    if (m3L == 0) {
+      cm3 = "trainingLevelsNoMoffittThird";
+    } else {
+      cm3 = "trainingLevelsMoffittThird";
+    }
+    if (m4L == 0) {
+      cm4 = "trainingLevelsNoMoffittFourth";
+    } else {
+      cm4 = "trainingLevelsMoffittFourth";
+    }
+    if (cd == 0) {
+      cd = "trainingLevelsNoDoe";
+    } else {
+      cd = "trainingLevelsDoe";
+    }
+    if (m3L == 1) {
+      m3L = <img src={starImage} />;
+    } else if (m3L == 2) {
+      m3L = [<img src={starImage} />, <img src={starImage} />];
+    } else if (m3L == 3) {
+      m3L = [
+        <img src={starImage} />,
+        <img src={starImage} />,
+        <img src={starImage} />,
+      ];
+    }
+    if (m4L == 1) {
+      m4L = <img src={starImage} />;
+    } else if (m4L == 2) {
+      m4L = [<img src={starImage} />, <img src={starImage} />];
+    } else if (m4L == 4) {
+      m4L = [
+        <img src={starImage} />,
+        <img src={starImage} />,
+        <img src={starImage} />,
+      ];
+    }
+    if (dL == 1) {
+      dL = <img src={starImage} />;
+    } else if (dL == 2) {
+      dL = [<img src={starImage} />, <img src={starImage} />];
+    } else if (dL == 3) {
+      dL = [
+        <img src={starImage} />,
+        <img src={starImage} />,
+        <img src={starImage} />,
+      ];
+    }
+    return (
+      <DisplayLibs
+        moffitt3TrainingLevel={m3L}
+        moffitt4TrainingLevel={m4L}
+        doeTrainingLevel={dL}
+        currentDisplayMoffitt3={cm3}
+        currentDisplayMoffitt4={cm4}
+        currentDisplayDoe={cd}
+      />
+    );
+  }
   renderCustomDateCell = (time, selected, innerRef) => {
     return (
       <div style={{ textAlign: "center" }} ref={innerRef}>
@@ -244,20 +279,7 @@ export default class Profile extends React.Component {
                 <div className="trainingLevels">
                   <h1 className="trainingLevelsText">Training Levels</h1>
                 </div>
-                <div className="trainingLevelsContainer">
-                  <div className="trainingLevelsMoffittThird">
-                    <div className="moffittThirdText">Moffitt 3rd</div>
-                    {/* {this.processData(this.state.items)} */}
-                  </div>
-                  <div className="trainingLevelsMoffittFourth">
-                    <div className="moffittFourthText">Moffitt 4th</div>
-                    {/* {this.processData(this.state.items)} */}
-                  </div>
-                  <div className="trainingLevelsDoe">
-                    <div className="doeText">Doe</div>
-                    {/* {this.processData(this.state.items)} */}
-                  </div>
-                </div>
+                {this.processData(this.state.items)}
               </div>
             </div>
             <div className="stats">
