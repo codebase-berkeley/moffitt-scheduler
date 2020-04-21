@@ -112,7 +112,6 @@ export default class MSRenderer extends React.Component {
           </div>
           {pending}
         </div>
-        {/* <Box text="something" /> */}
       </div>
     );
   }

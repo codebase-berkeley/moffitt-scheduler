@@ -242,16 +242,14 @@ export default class Moffitt extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="weekdayColumns">
-          <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
-          <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
-          <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>
-          <div className="wednesdayColumn">{this.state.allDaysOfWeek[3]}</div>
-          <div className="thursdayColumn">{this.state.allDaysOfWeek[4]}</div>
-          <div className="fridayColumn">{this.state.allDaysOfWeek[5]}</div>
-          <div className="saturdayColumn">{this.state.allDaysOfWeek[6]}</div>
-        </div>
+      <div className="weekdayColumns">
+        <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
+        <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
+        <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>
+        <div className="wednesdayColumn">{this.state.allDaysOfWeek[3]}</div>
+        <div className="thursdayColumn">{this.state.allDaysOfWeek[4]}</div>
+        <div className="fridayColumn">{this.state.allDaysOfWeek[5]}</div>
+        <div className="saturdayColumn">{this.state.allDaysOfWeek[6]}</div>
       </div>
     );
   }
