@@ -275,8 +275,8 @@ COPY public.shifts (shift_id, sle_id, location, start_time, end_time) FROM stdin
 --
 
 COPY public.sle (id, name, training_level_doe, training_level_moffitt, email, password) FROM stdin;
-1	brian	3	3	bdeleonardis@berkeley.edu	bripass
-2	bianca	1	1	biancalee@berkeley.edu	biapass
+1	Brian	3	3	bdeleonardis@berkeley.edu	bripass
+2	Bianca	1	1	biancalee@berkeley.edu	biapass
 3	Sahil	3	2	sahil@berkeley.edu	sahil
 4	Kat	3	2	Kat@berkeley.edu	Kat
 5	Kerry	2	2	Kerry@berkeley.edu	Kerry

@@ -33,6 +33,7 @@
   display: flex;
   flex-direction: row;
 }
+
 .vertical {
   display: flex;
   flex-direction: column;
@@ -66,7 +67,8 @@
   flex-direction: row;
   justify-content: center;
 }
-.moffitt3NoDisplay {
+
+.second, .moffitt3NoDisplay {
   flex: 1;
   background-color: white;
   color: white;
@@ -191,6 +193,7 @@
   flex-direction: row;
   justify-content: center;
 }
+
 .email {
   font-weight: normal;
   margin-left: 0%;
