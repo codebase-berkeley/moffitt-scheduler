@@ -54,7 +54,12 @@ var weekString =
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { shifts: initialShifts(), schedule: [], items: [] };
+    this.state = {
+      shifts: initialShifts(),
+      schedule: [],
+      items: [],
+      hours: [],
+    };
     this.currentDate = new Date();
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
@@ -270,12 +275,10 @@ export default class Profile extends React.Component {
                 <div className="profilePictureContainer">
                   <div className="profilePicture"></div>
                 </div>
-
                 <div className="nameAndEmail">
-                  <div className="nameText">Bianca Lee</div>
-                  <div className="emailText">biancalee@berkeley.edu</div>
+                  <div className="nameText">{this.state.items.name}</div>
+                  <div className="emailText">{this.state.items.email}</div>
                 </div>
-
                 <div className="trainingLevels">
                   <h1 className="trainingLevelsText">Training Levels</h1>
                 </div>

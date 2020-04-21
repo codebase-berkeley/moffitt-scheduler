@@ -57,13 +57,15 @@
 }
 
 .nameText {
+  font-family: "Open Sans";
   font-size: 16px;
   font-weight: bold;
   float: left;
   color: black;
 }
 .emailText {
-  font-size: 16px;
+  font-family: "Open Sans";
+  font-size: 12px;
   font-weight: normal;
 
   color: black;
