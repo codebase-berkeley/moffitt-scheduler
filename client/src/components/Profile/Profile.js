@@ -58,7 +58,7 @@ export default class Profile extends React.Component {
       shifts: initialShifts(),
       schedule: [],
       items: [],
-      hours: [],
+      profileHours: [],
     };
     this.currentDate = new Date();
     this.deselectCell = <div class="deselectCell"></div>;
@@ -79,7 +79,7 @@ export default class Profile extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        this.setState({ hours: jsonResponse.hours });
+        this.setState({ profileHours: jsonResponse.profileHours });
       });
     fetch("/allemployees", {
       method: "GET",
@@ -305,7 +305,7 @@ export default class Profile extends React.Component {
                 <div className="firstStatDesc">total hours worked</div>
               </div>
               <div className="thirdStat">
-                <div className="thirdStatNumber">4</div>
+                <div className="thirdStatNumber">{this.state.profileHours}</div>
                 <div className="firstStatDesc">
                   shifts requested to be covered
                 </div>

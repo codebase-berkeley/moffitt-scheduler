@@ -160,6 +160,45 @@ router.get("/availability/:userId", (req, res) => {
     }
   );
 });
+// router.get("/profilehours/:userId", (req, res) => {
+//   var selected = [];
+//   var curr_day = new Date();
+//   var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
+//   var curr_week_saturday = curr_day.getDate() + (6 - curr_day.getDay());
+//   pool.query(
+//     `SELECT * FROM coverrequests, shifts
+//      WHERE sle_id = $1 AND sle_id = coveree_id`,
+//     [req.params.userId],
+//     (error, result) => {
+//       if (error) {
+//         throw error;
+//       } else {
+//         let scheduledHoursPerWeek = 0;
+//         let totalHoursWorker = 0;
+//         let requestedShifts = 0;
+//         for (var i = 0; i < result.rows.length; i++) {
+
+//         }
+//       }
+//       return res.json({ schedule: selected });
+//     }
+//   );
+// });
+
+router.get("/profilehours/:userId", (req, res) => {
+  pool.query(
+    `SELECT * FROM shifts
+     WHERE sle_id = $1 AND cover_requested = $2`,
+    [req.params.userId, true],
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+      }
+      return res.json({ profileHours: result.rows.length });
+    }
+  );
+});
 
 const coverColors = ["#ffff42", "#ffaf0f", "#ffc34d", "#4eb548"];
 
