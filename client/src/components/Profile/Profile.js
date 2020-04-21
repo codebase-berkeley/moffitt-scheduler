@@ -310,7 +310,7 @@ export default class Profile extends React.Component {
             <div id="legend">
               <div id="libtag">
                 <h3 id="findingspace">Moffitt 3rd&nbsp;</h3>
-                <div id="moffitt3color"></div>
+                <div id="moffitt3colorStatic"></div>
                 <h3 id="findingspace">&nbsp;&nbsp;Moffitt 4th&nbsp;</h3>
                 <div id="moffitt4color"></div>
               </div>

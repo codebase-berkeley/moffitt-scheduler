@@ -101,10 +101,10 @@
   text-align: justify;
   white-space: nowrap;
 }
-#moffitt3color {
+#moffitt3colorStatic {
   height: 24px;
   width: 24px;
-  background-color: #ffa1a1;
+  background-color: #ff8d06;
 }
 #moffitt4color {
   height: 24px;
