@@ -103,7 +103,7 @@ export default class Moffitt extends React.Component {
           let sleID = items[i]["sle_id"];
           let name = items[i]["name"];
 
-          if (location == "Moffitt") {
+          if (location == "Moffitt3") {
             let start_time = new Date(items[i]["start_time"]);
             let end_time = new Date(items[i]["end_time"]);
 

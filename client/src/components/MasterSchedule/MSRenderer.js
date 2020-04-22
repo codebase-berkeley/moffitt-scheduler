@@ -53,6 +53,7 @@ export default class MSRenderer extends React.Component {
     } else {
       pending = null;
     }
+
     return (
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
