@@ -11,7 +11,7 @@ export default class Doe extends React.Component {
       wednesdayArray,
       thursdayArray,
       fridayArray,
-      saturdayArray
+      saturdayArray,
     ] = [[], [], [], [], [], [], []];
     this.state = {
       items: [{}],
@@ -22,8 +22,8 @@ export default class Doe extends React.Component {
         wednesdayArray,
         thursdayArray,
         fridayArray,
-        saturdayArray
-      ]
+        saturdayArray,
+      ],
     };
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 24; j++) {
@@ -36,15 +36,15 @@ export default class Doe extends React.Component {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         this.setState({
-          items: jsonResponse.items
+          items: jsonResponse.items,
         });
         let newAllDaysOfWeek = this.state.allDaysOfWeek;
         for (let i = 0; i < this.state.items.length; i++) {
@@ -54,7 +54,7 @@ export default class Doe extends React.Component {
             let start_time = new Date(this.state.items[i]["start_time"]);
             let end_time = new Date(this.state.items[i]["end_time"]);
             let start_time_date = start_time.getDay();
-            let end_time_date = start_time.getDay();
+            let end_time_date = end_time.getDay();
             let start_hour = start_time.getHours();
             let end_hour = end_time.getHours();
             if (start_time_date == end_time_date) {
