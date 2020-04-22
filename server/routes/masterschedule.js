@@ -64,6 +64,7 @@ router.get("/generatesched", function (req, res) {
         }
       }
       pool.query("DELETE FROM Schedule");
+      employeeList = require("./availabilities.js");
       var algoSchedule = finalSchedule(employeeList);
       for (let i = 0; i < algoSchedule.length; i += 1) {
         let current = algoSchedule[i];
@@ -462,14 +463,8 @@ function finalSchedule(employeeList) {
       currentShift = currentSle.assignedShifts[j];
       day_of_week = currentShift.weekday;
       location = currentShift.location;
-      start_time =
-        currentShift.start % 1 == 0
-          ? currentShift.start + ":00"
-          : currentShift.start - 0.5 + ":30";
-      end_time =
-        currentShift.end % 1 == 0
-          ? currentShift.end + ":00"
-          : currentShift.end - 0.5 + ":30";
+      start_time = currentShift.start;
+      end_time = currentShift.end;
       newFinalOutput = new finalOutput(
         sle_id,
         day_of_week,
