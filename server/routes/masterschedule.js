@@ -42,7 +42,6 @@ router.get("/generatesched", function (req, res) {
             break;
           }
         }
-        //ASSUMING AVAILABILITY TABLE START_TIME = 30MIN SHIFTS
         if (idExists) {
           currEmployee.avails.push({
             day: weekdayMap[result.rows[i].day_of_week],
