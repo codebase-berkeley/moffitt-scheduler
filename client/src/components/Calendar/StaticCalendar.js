@@ -80,8 +80,8 @@ export default class StaticCalendar extends React.Component {
       },
       body: JSON.stringify({
         items: this.state.shifts,
-        userId: this.props.userId
-      })
+        userId: this.props.userId,
+      }),
     })
       .then((response) => {
         console.log("response");
@@ -244,12 +244,16 @@ export default class StaticCalendar extends React.Component {
           </div>
           <div id="legend">
             <div id="libtag">
-              <h3 id="findingspace">Moffitt&nbsp;&nbsp;</h3>
-              <div id="moffittcolor"></div>
+              <h3 id="findingspace">Moffitt 3rd&nbsp;</h3>
+              <div id="moffitt3colorStatic"></div>
+              <h3 id="findingspace">&nbsp;&nbsp;Moffitt 4th&nbsp;</h3>
+              <div id="moffitt4color"></div>
             </div>
             <div id="libtag">
-              <h3 id="findingspace">Doe&nbsp;&nbsp;</h3>
-              <div id="doecolor"></div>
+              <h3 id="findingspace">&nbsp;&nbsp;Doe&nbsp;</h3>
+              <div id="doecolorStatic"></div>
+              <h3 id="findingspace">&nbsp;&nbsp;Cover Requested&nbsp;</h3>
+              <div id="coverrequestedcolor"></div>
             </div>
           </div>
           <div id="inner-schedule">

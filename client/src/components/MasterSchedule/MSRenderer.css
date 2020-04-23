@@ -1,41 +1,24 @@
-.msrenderer {
+.everythingMS {
   /* padding-top: 20%; */
-  padding-left: 30%;
+  /* overflow-x: scroll; */
+  overflow: hidden;
+  position: relative;
+  
 }
-.buttons-container {
+
+.masterScheduleAndButtons {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  margin-left: 1000px;
-  margin-right: 150px;
-  align-items: center;
-  align-content: space-between;
 }
-.msmoffitt {
-  /* padding-top: 20%; */
-  padding-left: 30%;
-}
-.weekdayBox {
-  margin-left: 15%;
-  width: 75%;
-  height: 44px;
-  left: 380px;
-  top: 276px;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  color: #9e9e9e;
-  padding-top: 8px;
-  margin-bottom: 12px;
-}
+
 .masterScheduleText {
-  margin-left: 15%;
-  padding-top: 60px;
+  top: 150px;
+  position: fixed;
+  margin-left: 10%;
+  margin-bottom: 20px;
   width: 215px;
   height: 25px;
-  left: 392px;
-  top: 203px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans";
   font-style: normal;
   font-weight: bold;
   font-size: 25px;
@@ -44,23 +27,50 @@
 }
 
 .buttons {
+  top: 150px;
+  align-content: space-between;
   display: flex;
-  margin-left: 70%;
-  margin-right: 100px;
-  padding-bottom: 25px;
-  /* cursor: pointer; */
+  position: fixed;
+  right: 100px;
+}
+
+.msmoffitt {
+  padding-left: 30%;
+}
+
+.weekdayBox {
+  position: fixed;
+  height: 44px;
+  left: 380px;
+  top: 220px;
+  right: 100px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  color: #9e9e9e;
+  padding-top: 8px;
+  margin-bottom: 20px;
+}
+
+.boxesAndDates {
+  margin-right: 77px;
+  display: flex;
+  margin-top: 160px;
+  height: 450px;
+  overflow-y: scroll;
 }
 
 .weekdayText {
+  margin-top: 3px;
   display: flex;
   justify-content: space-between;
   margin-left: 5%;
   margin-right: 4%;
   overflow: hidden;
-}
-.masterScheduleAndButtons {
-  display: flex;
-  justify-content: space-between;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
 }
 
 .box {
@@ -68,64 +78,60 @@
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  width: 80%;
-  height: 90px;
+  width: 95%;
+  height: 95.4px;
   margin-bottom: 12px;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
-  font-size: 70%;
+  font-size: 14px;
   text-align: center;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  overflow-y: auto;
 }
-.sundayColumn {
-  width: 250px;
-  height: 60%;
-}
-.mondayColumn {
-  width: 250px;
-  height: 60%;
-}
-.tuesdayColumn {
-  width: 250px;
-  height: 60%;
-}
-.wednesdayColumn {
-  width: 250px;
-  height: 60%;
-}
-.thursdayColumn {
-  width: 250px;
-  height: 60%;
-}
-.fridayColumn {
-  width: 250px;
-  height: 60%;
-}
-.saturdayColumn {
-  width: 250px;
-  height: 60%;
-}
+
 .weekdayColumns {
   display: flex;
   justify-content: space-between;
-  width: 73.5%;
-  margin-left: 7%;
+  width: 100%;
   flex-direction: row;
+  resize: both;
+  right: 100px;
 }
-.moffittButton {
-  margin-right: 20px;
-  cursor: pointer;
+
+.sundayColumn {
+  width: 15%;
+  height: 60%;
+  resize: both;
 }
-.moffittButton:focus {
-  outline: 0;
+.mondayColumn {
+  width: 15%;
+  height: 60%;
+  resize: both;
 }
-.doeButton {
-  margin-right: 20px;
-  cursor: pointer;
+.tuesdayColumn {
+  width: 15%;
+  height: 60%;
+  resize: both;
 }
-.doeButton:focus {
-  outline: 0;
+.wednesdayColumn {
+  width: 15%;
+  height: 60%;
+  resize: both;
+}
+.thursdayColumn {
+  width: 15%;
+  height: 60%;
+  resize: both;
+}
+.fridayColumn {
+  width: 15%;
+  height: 60%;
+  resize: both;
+}
+.saturdayColumn {
+  width: 15%;
+  height: 60%;
+  resize: both;
 }
 .schedGenerator {
   background: #ffffff;
@@ -155,7 +161,8 @@
 }
 
 .hours {
-  min-width: 120px;
+  min-width: 100px;
+  margin-left: 50px;
 }
 .monday {
   padding-left: 25px;

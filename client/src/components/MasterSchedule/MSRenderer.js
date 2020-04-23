@@ -1,6 +1,8 @@
 import React from "react";
+// import Modal from "react-modal";
 import "./MSRenderer.css";
 import Moffitt from "./Moffitt";
+import Moffitt4 from "./Moffitt4";
 import Doe from "./Doe";
 
 export default class MSRenderer extends React.Component {
@@ -10,13 +12,18 @@ export default class MSRenderer extends React.Component {
       items: [{}],
       typeOfLibrary: "moffitt",
     };
-    this.showMoffit = this.showMoffit.bind(this);
+    this.showMoffitt = this.showMoffitt.bind(this);
+    this.showMoffitt4 = this.showMoffitt4.bind(this);
     this.showDoe = this.showDoe.bind(this);
     this.generate = this.generate.bind(this);
   }
 
-  showMoffit() {
+  showMoffitt() {
     this.setState({ typeOfLibrary: "moffitt" });
+  }
+
+  showMoffitt4() {
+    this.setState({ typeOfLibrary: "moffitt4" });
   }
 
   showDoe() {
@@ -42,31 +49,49 @@ export default class MSRenderer extends React.Component {
   render() {
     let typeOfLibrary = this.state.typeOfLibrary;
     let pending;
-    let clicked;
-    let nonClicked;
+    let moffitt;
+    let moffitt4;
+    let doe;
     if (typeOfLibrary == "moffitt") {
       pending = <Moffitt />;
-      clicked = "moffittButton";
-      nonClicked = "doeButton";
+      moffitt = "clickedButton";
+      moffitt4 = "nonClickedButton";
+      doe = "nonClickedButton";
+    } else if (typeOfLibrary == "moffitt4") {
+      pending = <Moffitt4 />;
+      moffitt = "nonClickedButton";
+      moffitt4 = "clickedButton";
+      doe = "nonClickedButton";
     } else if (typeOfLibrary == "doe") {
       pending = <Doe />;
-      clicked = "doeButton";
-      nonClicked = "moffittButton";
+      moffitt = "nonClickedButton";
+      moffitt4 = "nonClickedButton";
+      doe = "clickedButton";
     } else {
       pending = null;
     }
     return (
-      <div className="everything">
+      <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
-          <div className="masterScheduleText">Master Schedule</div>
+          <div className="masterScheduleText">
+            Master Schedule
+          </div>
           <div className="buttons">
+<<<<<<< HEAD
             <button className="schedGenerator" onClick={this.generate}>
               <h1>Generate</h1>
             </button>
             <button className={clicked} onClick={this.showMoffit}>
               <h1>Moffitt</h1>
+=======
+            <button className={moffitt} onClick={this.showMoffitt}>
+              <h1>Moffitt 3rd</h1>
+>>>>>>> master
             </button>
-            <button className={nonClicked} onClick={this.showDoe}>
+            <button className={moffitt4} onClick={this.showMoffitt4}>
+              <h1>Moffitt 4th</h1>
+            </button>
+            <button className={doe} onClick={this.showDoe}>
               <h1>Doe</h1>
             </button>
           </div>
@@ -82,7 +107,6 @@ export default class MSRenderer extends React.Component {
             <div className="friday">Friday</div>
             <div className="saturday">Saturday</div>
           </div>
-          {/* <Box text="something" /> */}
         </div>
         <div className="boxesAndDates">
           <div className="hours">
@@ -113,12 +137,7 @@ export default class MSRenderer extends React.Component {
           </div>
           {pending}
         </div>
-        {/* <Box text="something" /> */}
       </div>
     );
   }
-}
-
-function Box(props) {
-  return <div>{props.text}</div>;
 }

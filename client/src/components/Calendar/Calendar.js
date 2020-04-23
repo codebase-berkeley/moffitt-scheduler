@@ -28,18 +28,18 @@ export default class Calendar extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: this.props.userId,
-        items: this.state.formattedSchedule
-      })
-    }).then(response => {
+        items: this.state.formattedSchedule,
+      }),
+    }).then((response) => {
       return response.json();
     });
   }
 
-  handleChange = newSchedule => {
+  handleChange = (newSchedule) => {
     var schedule2 = [];
     for (var i = 0; i < newSchedule.length; i += 1) {
       schedule2.push([getHours(newSchedule[i]), getDay(newSchedule[i])]);
@@ -57,10 +57,10 @@ export default class Calendar extends React.Component {
 
   componentDidMount() {
     fetch("/availability/" + this.props.userId)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         this.setState({ schedule: jsonResponse.schedule });
       });
   }

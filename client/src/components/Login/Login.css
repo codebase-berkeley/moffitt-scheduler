@@ -26,6 +26,20 @@
   padding: 6%;
 }
 
+.errorBox {
+  font-family: "Open Sans", sans-serif;
+  font-size: 6px;
+  margin-top: 5%;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding: 1.5%;
+  width: 70%;
+  color: #fa6969;
+  border: 2px solid #fa6969;
+  border-radius: 5px;
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
 .emailBox {
   width: 80%;
   height: 50px;
@@ -33,7 +47,7 @@
   border: 1px solid #c6c4c4;
   box-sizing: content-box;
   border-radius: 8px;
-  margin-top: 12%;
+  margin-top: 5%;
   margin-left: 10%;
 }
 
