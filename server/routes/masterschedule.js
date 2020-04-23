@@ -4,13 +4,59 @@ var config = require("./config");
 var pool = require("../db/db");
 
 router.get("/masterschedule", function (req, res) {
+  function getWeekNumber(d) {
+    //Copied from stackoverflow
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - d.getUTCDay());
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+    return weekNo;
+  }
+  function sameWeekAsCurrent(date) {
+    var currentDay = new Date();
+    if (
+      getWeekNumber(date) == getWeekNumber(currentDay) &&
+      date.getYear() == currentDay.getYear()
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   pool.query(
     "SELECT name, start_time, end_time, location, shift_id, sle_id FROM shifts, sle WHERE id=sle_id ",
     (error, result) => {
       if (error) {
         throw error;
       }
-      return res.json({ items: result.rows });
+      for (let i = 0; i < result.rows.length; i += 1) {
+        //some shifts will cover more than one week (saturday night through sunday morning)
+        //in these cases, set the not-in-week start_time or end_time to be 12AM or 11:59PM of the in-week time, respectively
+        if (
+          !sameWeekAsCurrent(result.rows[i].start_time) &&
+          !sameWeekAsCurrent(result.rows[i].end_time)
+        ) {
+          result.rows[i] = null;
+        } else if (
+          sameWeekAsCurrent(result.rows[i].start_time) &&
+          !sameWeekAsCurrent(result.rows[i].end_time)
+        ) {
+          result.rows[i].end_time.setHours(0, 0, 0, 0);
+        } else if (
+          !sameWeekAsCurrent(result.rows[i].start_time) &&
+          sameWeekAsCurrent(result.rows[i].end_time)
+        ) {
+          result.rows[i].start_time = new Date(result.rows[i].end_time);
+          result.rows[i].start_time.setHours(0, 0, 0, 0);
+        }
+      }
+      var resultInWeek = [];
+      for (let i = 0; i < result.rows.length; i += 1) {
+        if (result.rows[i] != null) {
+          resultInWeek.push(result.rows[i]);
+        }
+      }
+      return res.json({ items: resultInWeek });
     }
   );
 });

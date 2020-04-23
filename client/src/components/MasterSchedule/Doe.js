@@ -59,14 +59,15 @@ export default class Doe extends React.Component {
             let start_time = new Date(this.state.items[i]["start_time"]);
             let end_time = new Date(this.state.items[i]["end_time"]);
             let start_time_date = start_time.getDay();
-            let end_time_date = start_time.getDay();
+            let end_time_date = end_time.getDay();
             let start_hour = start_time.getHours();
             let end_hour = end_time.getHours();
             if (start_time_date == end_time_date) {
               //If shifts runs across the same day
               for (let i = start_hour; i < end_hour; i++) {
                 console.log("i: ", i);
-                let previousState = this.state.allDaysOfWeek[start_time_date][i].props.text;
+                let previousState = this.state.allDaysOfWeek[start_time_date][i]
+                  .props.text;
                 console.log("pS", previousState);
                 if (previousState == null) {
                   newAllDaysOfWeek[start_time_date][i] = (
