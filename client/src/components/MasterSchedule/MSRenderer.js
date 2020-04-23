@@ -29,6 +29,22 @@ export default class MSRenderer extends React.Component {
     this.setState({ typeOfLibrary: "doe" });
   }
 
+  generate() {
+    fetch("/generatesched", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log(jsonResponse.items);
+      });
+  }
+
   render() {
     let typeOfLibrary = this.state.typeOfLibrary;
     let pending;
@@ -56,10 +72,11 @@ export default class MSRenderer extends React.Component {
     return (
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
-          <div className="masterScheduleText">
-            Master Schedule
-          </div>
+          <div className="masterScheduleText">Master Schedule</div>
           <div className="buttons">
+            <button className="schedGenerator" onClick={this.generate}>
+              <h1>Generate</h1>
+            </button>
             <button className={moffitt} onClick={this.showMoffitt}>
               <h1>Moffitt 3rd</h1>
             </button>

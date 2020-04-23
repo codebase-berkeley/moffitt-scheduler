@@ -3,7 +3,29 @@
   /* overflow-x: scroll; */
   overflow: hidden;
   position: relative;
-  
+}
+
+.schedGenerator {
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #949494;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 8px;
+  color: #949494;
+  width: 101px;
+  top: 200px;
+  line-height: 19px;
+  text-align: center;
+  margin-right: 18px;
+  padding-right: 7px;
+  padding-left: 7px;
+}
+
+.schedGenerator:active {
+  border: 1px solid black;
+  color: black;
 }
 
 .masterScheduleAndButtons {
