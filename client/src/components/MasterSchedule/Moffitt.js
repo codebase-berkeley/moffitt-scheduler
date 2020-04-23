@@ -57,9 +57,14 @@ export default class Moffitt extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
+<<<<<<< HEAD
         employeeList = jsonResponse.allEmployees;
         this.setState({
           allEmployees: jsonResponse.allEmployees,
+=======
+        this.setState({
+          items: jsonResponse.items,
+>>>>>>> 04e7659fb3d11b504d31bb0a037c3331cb7dd20b
         });
         console.log(jsonResponse);
       });
@@ -108,8 +113,12 @@ export default class Moffitt extends React.Component {
             let end_time = new Date(items[i]["end_time"]);
 
             let start_time_date = start_time.getDay();
+<<<<<<< HEAD
             let end_time_date = start_time.getDay();
 
+=======
+            let end_time_date = end_time.getDay();
+>>>>>>> 04e7659fb3d11b504d31bb0a037c3331cb7dd20b
             let start_hour = start_time.getHours();
             let end_hour = end_time.getHours();
 

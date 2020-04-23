@@ -4,13 +4,59 @@ var pool = require("../db/db");
 var config = require("./config");
 
 router.get("/masterschedule", function (req, res) {
+  function getWeekNumber(d) {
+    //Copied from stackoverflow
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - d.getUTCDay());
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+    return weekNo;
+  }
+  function sameWeekAsCurrent(date) {
+    var currentDay = new Date();
+    if (
+      getWeekNumber(date) == getWeekNumber(currentDay) &&
+      date.getYear() == currentDay.getYear()
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   pool.query(
     "SELECT name, start_time, end_time, location, shift_id, sle_id FROM shifts, sle WHERE id=sle_id ",
     (error, result) => {
       if (error) {
         throw error;
       }
-      return res.json({ items: result.rows });
+      for (let i = 0; i < result.rows.length; i += 1) {
+        //some shifts will cover more than one week (saturday night through sunday morning)
+        //in these cases, set the not-in-week start_time or end_time to be 12AM or 11:59PM of the in-week time, respectively
+        if (
+          !sameWeekAsCurrent(result.rows[i].start_time) &&
+          !sameWeekAsCurrent(result.rows[i].end_time)
+        ) {
+          result.rows[i] = null;
+        } else if (
+          sameWeekAsCurrent(result.rows[i].start_time) &&
+          !sameWeekAsCurrent(result.rows[i].end_time)
+        ) {
+          result.rows[i].end_time.setHours(0, 0, 0, 0);
+        } else if (
+          !sameWeekAsCurrent(result.rows[i].start_time) &&
+          sameWeekAsCurrent(result.rows[i].end_time)
+        ) {
+          result.rows[i].start_time = new Date(result.rows[i].end_time);
+          result.rows[i].start_time.setHours(0, 0, 0, 0);
+        }
+      }
+      var resultInWeek = [];
+      for (let i = 0; i < result.rows.length; i += 1) {
+        if (result.rows[i] != null) {
+          resultInWeek.push(result.rows[i]);
+        }
+      }
+      return res.json({ items: resultInWeek });
     }
   );
 });
@@ -31,6 +77,7 @@ router.get("/generatesched", function (req, res) {
         if (error) {
           throw error;
         }
+<<<<<<< HEAD
         return res.json({ allEmployees: result.rows });
       });
 
@@ -43,6 +90,33 @@ router.get("/generatesched", function (req, res) {
         var endTime = new Date(currDate);
         endTime.setHours(currHour + 1, 0, 0, 0);
 
+=======
+        if (idExists) {
+          currEmployee.avails.push({
+            day: weekdayMap[result.rows[i].day_of_week],
+            slot: result.rows[i].start_time,
+          });
+        } else {
+          employeeList.push({
+            id: result.rows[i].id,
+            tMoffitt3: result.rows[i].training_level_moffitt,
+            tMoffitt4: null, //NOT IN DATABASE ?
+            tMain: result.rows[i].training_level_doe,
+            avails: [
+              {
+                day: weekdayMap[result.rows[i].day_of_week],
+                slot: result.rows[i].start_time,
+              },
+            ],
+          });
+        }
+      }
+      pool.query("DELETE FROM Schedule");
+      employeeList = require("./availabilities.js");
+      var algoSchedule = finalSchedule(employeeList);
+      for (let i = 0; i < algoSchedule.length; i += 1) {
+        let current = algoSchedule[i];
+>>>>>>> 04e7659fb3d11b504d31bb0a037c3331cb7dd20b
         pool.query(
           `INSERT INTO shifts (sle_id, location, start_time, end_time) 
     VALUES (${sleId}, '${loc}', to_timestamp(${currDate.getTime()} / 1000.0), to_timestamp(${endTime.getTime()} / 1000.0)) 
@@ -598,6 +672,45 @@ router.get("/generatesched", function (req, res) {
         }
         return retFinalOutput;
       }
+<<<<<<< HEAD
     })
   );
 });
+=======
+    }
+  }
+
+  assignAllShifts();
+  class finalOutput {
+    constructor(sle_id, day_of_week, location, start_time, end_time) {
+      this.sle_id = sle_id;
+      this.day_of_week = day_of_week;
+      this.location = location;
+      this.start_time = start_time;
+      this.end_time = end_time;
+      this.coverrequested = false;
+    }
+  }
+  retFinalOutput = [];
+  for (i = 0; i < allSles.length; i += 1) {
+    currentSle = allSles[i];
+    sle_id = currentSle.id;
+    for (j = 0; j < currentSle.assignedShifts.length; j += 1) {
+      currentShift = currentSle.assignedShifts[j];
+      day_of_week = currentShift.weekday;
+      location = currentShift.location;
+      start_time = currentShift.start;
+      end_time = currentShift.end;
+      newFinalOutput = new finalOutput(
+        sle_id,
+        day_of_week,
+        location,
+        start_time,
+        end_time
+      );
+      retFinalOutput.push(newFinalOutput);
+    }
+  }
+  return retFinalOutput;
+}
+>>>>>>> 04e7659fb3d11b504d31bb0a037c3331cb7dd20b
