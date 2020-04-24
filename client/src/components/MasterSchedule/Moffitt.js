@@ -4,8 +4,6 @@ import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
-import leftArrow from "./MasterImages/leftarrow.svg";
-import rightArrow from "./MasterImages/rightarrow.svg";
 
 function dateObject(day, hour) {
   var dateObject = new Date();
@@ -41,12 +39,14 @@ export default class Moffitt extends React.Component {
         fridayArray,
         saturdayArray,
       ],
+      currWeek: this.props.currWeek,
     };
     this.addEmployee = this.addEmployee.bind(this);
     this.removeEmployee = this.removeEmployee.bind(this);
   }
 
   componentDidMount() {
+    console.log("currWeekMoffit", this.state.currWeek);
     var employeeList = [];
     fetch("/otheremployees", {
       method: "GET",
@@ -65,7 +65,7 @@ export default class Moffitt extends React.Component {
         });
         console.log(jsonResponse);
       });
-    fetch("/masterschedule", {
+    fetch("/masterschedule/" + this.state.currWeek, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -105,7 +105,7 @@ export default class Moffitt extends React.Component {
           let sleID = items[i]["sle_id"];
           let name = items[i]["name"];
 
-          if (location == "Moffitt3") {
+          if (location === "Moffitt3") {
             let start_time = new Date(items[i]["start_time"]);
             let end_time = new Date(items[i]["end_time"]);
 
@@ -118,7 +118,7 @@ export default class Moffitt extends React.Component {
             let end;
 
             //If shifts runs across the same day
-            if (start_time_date == end_time_date) {
+            if (start_time_date === end_time_date) {
               end = end_hour;
             } else {
               end = 24;
@@ -343,7 +343,7 @@ function OtherEmployee(props) {
 }
 
 function formatNames(names) {
-  if (names.length == 0) {
+  if (names.length === 0) {
     return "";
   }
   let result = [];
