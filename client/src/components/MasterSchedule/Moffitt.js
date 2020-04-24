@@ -4,6 +4,8 @@ import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
+import leftArrow from "./MasterImages/leftarrow.svg";
+import rightArrow from "./MasterImages/rightarrow.svg";
 
 function dateObject(day, hour) {
   var dateObject = new Date();
@@ -103,7 +105,7 @@ export default class Moffitt extends React.Component {
           let sleID = items[i]["sle_id"];
           let name = items[i]["name"];
 
-          if (location == "Moffitt") {
+          if (location == "Moffitt3") {
             let start_time = new Date(items[i]["start_time"]);
             let end_time = new Date(items[i]["end_time"]);
 
@@ -243,7 +245,7 @@ export default class Moffitt extends React.Component {
         sleId: sle_id,
         currHour: currTime,
         currDate: date,
-        loc: "Moffitt",
+        loc: "Moffitt3",
       }),
     })
       .then((response) => {

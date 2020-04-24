@@ -1,9 +1,10 @@
 import React from "react";
-// import Modal from "react-modal";
 import "./MSRenderer.css";
 import Moffitt from "./Moffitt";
 import Moffitt4 from "./Moffitt4";
 import Doe from "./Doe";
+import leftArrow from "./MasterImages/leftarrow.svg";
+import rightArrow from "./MasterImages/rightarrow.svg";
 
 export default class MSRenderer extends React.Component {
   constructor(props) {
@@ -56,8 +57,14 @@ export default class MSRenderer extends React.Component {
     return (
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
-          <div className="masterScheduleText">
-            Master Schedule
+          <div className="masterScheduleText">Master Schedule</div>
+          <div className="arrows">
+            <button className="buttonLeftArrow">
+              <img className="leftArrow" src={leftArrow} alt="leftArrow" />
+            </button>
+            <button className="buttonRightArrow">
+              <img className="rightArrow" src={rightArrow} alt="rightArrow" />
+            </button>
           </div>
           <div className="buttons">
             <button className={moffitt} onClick={this.showMoffitt}>

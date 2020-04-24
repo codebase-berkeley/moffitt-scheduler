@@ -3,7 +3,6 @@
   /* overflow-x: scroll; */
   overflow: hidden;
   position: relative;
-  
 }
 
 .masterScheduleAndButtons {
@@ -24,6 +23,23 @@
   font-size: 25px;
   line-height: 25px;
   color: #000000;
+}
+
+.arrows {
+  margin-left: 38%;
+  margin-top: 4%;
+  display: flex;
+  justify-content: space-between;
+  width: 10%;
+  position: fixed;
+}
+
+.leftArrow {
+  background-color: none;
+}
+
+.rightArrow {
+  background-color: none;
 }
 
 .buttons {
