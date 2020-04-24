@@ -39,14 +39,23 @@ export default class Moffitt extends React.Component {
         fridayArray,
         saturdayArray,
       ],
-      currWeek: this.props.currWeek,
     };
     this.addEmployee = this.addEmployee.bind(this);
     this.removeEmployee = this.removeEmployee.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.currWeek != prevProps.currWeek) {
+      this.fetchData();
+    }
   }
 
   componentDidMount() {
-    console.log("currWeekMoffit", this.state.currWeek);
+    this.fetchData();
+  }
+
+  fetchData() {
     var employeeList = [];
     fetch("/otheremployees", {
       method: "GET",
@@ -65,7 +74,7 @@ export default class Moffitt extends React.Component {
         });
         console.log(jsonResponse);
       });
-    fetch("/masterschedule/" + this.state.currWeek, {
+    fetch("/masterschedule/" + this.props.currWeek, {
       method: "GET",
       headers: {
         Accept: "application/json",

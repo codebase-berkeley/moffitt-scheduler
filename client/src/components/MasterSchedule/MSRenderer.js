@@ -88,6 +88,7 @@ export default class MSRenderer extends React.Component {
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
           <div className="masterScheduleText">Master Schedule</div>
+          <div className="currentWeek">{this.state.currentWeek.getDate()}</div>
           <div className="arrows">
             <button className="buttonLeftArrow">
               <img

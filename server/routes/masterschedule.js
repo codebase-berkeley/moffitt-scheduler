@@ -4,7 +4,6 @@ var router = express.Router();
 var pool = require("../db/db");
 
 router.get("/masterschedule/:currWeek", function (req, res) {
-  console.log("params", req.params);
   let newCurrWeek = new Date(req.params.currWeek);
   let currWeekStartDate = newCurrWeek.getTime();
   let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
