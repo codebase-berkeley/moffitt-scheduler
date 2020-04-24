@@ -87,47 +87,67 @@ export default class MSRenderer extends React.Component {
               <h1>Doe</h1>
             </button>
           </div>
+          <div className="form">
+            <form action="/action_page.php">
+              <label for="startDate">Start Date</label>
+              <input
+                type="date"
+                id="startDate"
+                className="startDate"
+                placeholder="Start Date"
+              ></input>
+              <label for="endDate">End Date</label>
+              <input
+                type="date"
+                id="endDate"
+                className="endDate"
+                placeholder="End Date"
+              ></input>
+            </form>
+          </div>
         </div>
 
-        <div className="weekdayBox">
-          <div className="weekdayText">
-            <div className="sunday">Sunday</div>
-            <div className="monday">Monday</div>
-            <div className="tuesday">Tuesday</div>
-            <div className="wednesday">Wednesday</div>
-            <div className="thursday">Thursday</div>
-            <div className="friday">Friday</div>
-            <div className="saturday">Saturday</div>
+        <div className="Calendar">
+          <div className="weekdayBox">
+            <div className="weekdayText">
+              <div className="sunday">Sunday</div>
+              <div className="monday">Monday</div>
+              <div className="tuesday">Tuesday</div>
+              <div className="wednesday">Wednesday</div>
+              <div className="thursday">Thursday</div>
+              <div className="friday">Friday</div>
+              <div className="saturday">Saturday</div>
+            </div>
           </div>
-        </div>
-        <div className="boxesAndDates">
-          <div className="hours">
-            <div className="hour">12 AM</div>
-            <div className="hour">1 AM</div>
-            <div className="hour">2 AM</div>
-            <div className="hour">3 AM</div>
-            <div className="hour">4 AM</div>
-            <div className="hour">5 AM</div>
-            <div className="hour">6 AM</div>
-            <div className="hour">7 AM</div>
-            <div className="hour">8 AM</div>
-            <div className="hour">9 AM</div>
-            <div className="hour">10 AM</div>
-            <div className="hour">11 AM</div>
-            <div className="hour">12 PM</div>
-            <div className="hour">1 PM</div>
-            <div className="hour">2 PM</div>
-            <div className="hour">3 PM</div>
-            <div className="hour">4 PM</div>
-            <div className="hour">5 PM</div>
-            <div className="hour">6 PM</div>
-            <div className="hour">7 PM</div>
-            <div className="hour">8 PM</div>
-            <div className="hour">9 PM</div>
-            <div className="hour">10 PM</div>
-            <div className="hour">11 PM</div>
+          <div className="boxesAndDates">
+            <div className="hours">
+              <div className="hour">12 AM</div>
+              <div className="hour">1 AM</div>
+              <div className="hour">2 AM</div>
+              <div className="hour">3 AM</div>
+              <div className="hour">4 AM</div>
+              <div className="hour">5 AM</div>
+              <div className="hour">6 AM</div>
+              <div className="hour">7 AM</div>
+              <div className="hour">8 AM</div>
+              <div className="hour">9 AM</div>
+              <div className="hour">10 AM</div>
+              <div className="hour">11 AM</div>
+              <div className="hour">12 PM</div>
+              <div className="hour">1 PM</div>
+              <div className="hour">2 PM</div>
+              <div className="hour">3 PM</div>
+              <div className="hour">4 PM</div>
+              <div className="hour">5 PM</div>
+              <div className="hour">6 PM</div>
+              <div className="hour">7 PM</div>
+              <div className="hour">8 PM</div>
+              <div className="hour">9 PM</div>
+              <div className="hour">10 PM</div>
+              <div className="hour">11 PM</div>
+            </div>
+            {pending}
           </div>
-          {pending}
         </div>
       </div>
     );
