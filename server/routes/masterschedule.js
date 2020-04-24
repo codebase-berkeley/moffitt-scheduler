@@ -7,8 +7,7 @@ router.get("/masterschedule/:currWeek", function (req, res) {
   let newCurrWeek = new Date(req.params.currWeek);
   let currWeekStartDate = newCurrWeek.getTime();
   let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
-  console.log("timetime", currWeekStartDate);
-  console.log("timetimeend", currWeekEndDate);
+
   pool.query(
     `SELECT name, start_time, end_time, location, shift_id, sle_id FROM shifts, sle 
     WHERE id=sle_id AND start_time >= to_timestamp(${currWeekStartDate}/1000.0) AND end_time <= to_timestamp(${currWeekEndDate}/1000.0)`,
