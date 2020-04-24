@@ -97,9 +97,6 @@ export default class MSRenderer extends React.Component {
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
           <div className="masterScheduleText">Master Schedule</div>
-          <div className="currentWeek">
-            {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
-          </div>
           <div className="arrows">
             <button className="buttonLeftArrow">
               <img
@@ -109,6 +106,11 @@ export default class MSRenderer extends React.Component {
                 alt="leftArrow"
               />
             </button>
+            <div className="currWeekContainer">
+              <div className="currWeek">
+                {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
+              </div>
+            </div>
             <button className="buttonRightArrow">
               <img
                 className="rightArrow"

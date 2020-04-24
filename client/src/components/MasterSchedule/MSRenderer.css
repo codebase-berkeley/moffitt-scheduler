@@ -34,20 +34,24 @@
 }
 
 .arrows {
-  margin-left: 38%;
   margin-top: 3%;
+  margin-left: 35%;
   display: flex;
   justify-content: space-between;
-  width: 10%;
+  width: 15%;
   position: fixed;
 }
 
-.leftArrow {
+.buttonLeftArrow {
   border: none;
+  background-color: #f5f5fd;
+  cursor: pointer;
 }
 
-.rightArrow {
+.buttonRightArrow {
   border: none;
+  background-color: #f5f5fd;
+  cursor: pointer;
 }
 
 .buttons {
