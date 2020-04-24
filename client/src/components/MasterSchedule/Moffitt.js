@@ -5,14 +5,12 @@ import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
 
-function dateObject(day, hour) {
-  var dateObject = new Date();
-  dateObject.setHours(hour, 0, 0, 0);
-  var dayOfWeek = dateObject.getDay();
-  var diff = dayOfWeek - day;
-  var newDate = dateObject.getDate() - diff;
-  dateObject.setDate(newDate);
-  return dateObject;
+function dateObject(week, day, hour) {
+  let newSameDate = new Date(week);
+  newSameDate.setHours(hour, 0, 0, 0);
+  console.log("newdate", newSameDate);
+  let newSetDate = newSameDate.setDate(newSameDate.getDate() + day);
+  return newSetDate;
 }
 
 export default class Moffitt extends React.Component {
@@ -89,6 +87,8 @@ export default class Moffitt extends React.Component {
 
         let newAllDaysOfWeek = [[], [], [], [], [], [], []];
 
+        let weekDate = this.props.currWeek;
+
         for (let day = 0; day < newAllDaysOfWeek.length; day++) {
           for (let hour = 0; hour < 24; hour++) {
             newAllDaysOfWeek[day][hour] = (
@@ -96,7 +96,7 @@ export default class Moffitt extends React.Component {
                 startTime={hour}
                 curTime={hour}
                 startDay={day}
-                date={dateObject(day, hour)}
+                date={dateObject(weekDate, day, hour)}
                 shiftId={[]}
                 sleId={[]}
                 names={[]}
@@ -152,7 +152,7 @@ export default class Moffitt extends React.Component {
                   sleId={sleArray}
                   names={nameArray}
                   allEmp={this.state.allEmployees}
-                  date={dateObject(start_time_date, j)}
+                  date={dateObject(weekDate, start_time_date, j)}
                   addEmployee={this.addEmployee}
                   removeEmployee={this.removeEmployee}
                 />
