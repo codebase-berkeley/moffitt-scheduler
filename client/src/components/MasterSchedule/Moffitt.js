@@ -70,98 +70,189 @@ export default class Moffitt extends React.Component {
         this.setState({
           allEmployees: jsonResponse.allEmployees,
         });
+        fetch("/masterschedule/" + this.props.currWeek, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((jsonResponse) => {
+            let items = jsonResponse.items;
+
+            let newAllDaysOfWeek = [[], [], [], [], [], [], []];
+
+            let weekDate = this.props.currWeek;
+
+            for (let day = 0; day < newAllDaysOfWeek.length; day++) {
+              for (let hour = 0; hour < 24; hour++) {
+                newAllDaysOfWeek[day][hour] = (
+                  <Box
+                    startTime={hour}
+                    curTime={hour}
+                    startDay={day}
+                    date={dateObject(weekDate, day, hour)}
+                    shiftId={[]}
+                    sleId={[]}
+                    names={[]}
+                    allEmp={employeeList}
+                    addEmployee={this.addEmployee}
+                    removeEmployee={this.removeEmployee}
+                  />
+                );
+              }
+            }
+
+            for (let i = 0; i < items.length; i++) {
+              let location = items[i]["location"];
+              let shiftID = items[i]["shift_id"];
+              let sleID = items[i]["sle_id"];
+              let name = items[i]["name"];
+
+              if (location === "Moffitt3") {
+                let start_time = new Date(items[i]["start_time"]);
+                let end_time = new Date(items[i]["end_time"]);
+
+                let start_time_date = start_time.getDay();
+                let end_time_date = start_time.getDay();
+
+                let start_hour = start_time.getHours();
+                let end_hour = end_time.getHours();
+
+                let end;
+
+                //If shifts runs across the same day
+                if (start_time_date === end_time_date) {
+                  end = end_hour;
+                } else {
+                  end = 24;
+                }
+
+                for (let j = start_hour; j < end; j++) {
+                  let previousState =
+                    newAllDaysOfWeek[start_time_date][j].props;
+
+                  let shiftArray = previousState.shiftId;
+                  shiftArray.push(shiftID);
+                  let sleArray = previousState.sleId;
+                  sleArray.push(sleID);
+                  let nameArray = previousState.names;
+                  nameArray.push(name);
+
+                  newAllDaysOfWeek[start_time_date][j] = (
+                    <Box
+                      startTime={start_hour}
+                      curTime={j}
+                      startDay={start_time_date}
+                      shiftId={shiftArray}
+                      sleId={sleArray}
+                      names={nameArray}
+                      allEmp={this.state.allEmployees}
+                      date={dateObject(weekDate, start_time_date, j)}
+                      addEmployee={this.addEmployee}
+                      removeEmployee={this.removeEmployee}
+                    />
+                  );
+                }
+              }
+            }
+            this.setState({ allDaysOfWeek: newAllDaysOfWeek });
+          });
         console.log(jsonResponse);
       });
-    fetch("/masterschedule/" + this.props.currWeek, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((jsonResponse) => {
-        let items = jsonResponse.items;
+    // fetch("/masterschedule/" + this.props.currWeek, {
+    //   method: "GET",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((jsonResponse) => {
+    //     let items = jsonResponse.items;
 
-        let newAllDaysOfWeek = [[], [], [], [], [], [], []];
+    //     let newAllDaysOfWeek = [[], [], [], [], [], [], []];
 
-        let weekDate = this.props.currWeek;
+    //     let weekDate = this.props.currWeek;
 
-        for (let day = 0; day < newAllDaysOfWeek.length; day++) {
-          for (let hour = 0; hour < 24; hour++) {
-            newAllDaysOfWeek[day][hour] = (
-              <Box
-                startTime={hour}
-                curTime={hour}
-                startDay={day}
-                date={dateObject(weekDate, day, hour)}
-                shiftId={[]}
-                sleId={[]}
-                names={[]}
-                allEmp={employeeList}
-                addEmployee={this.addEmployee}
-                removeEmployee={this.removeEmployee}
-              />
-            );
-          }
-        }
+    //     for (let day = 0; day < newAllDaysOfWeek.length; day++) {
+    //       for (let hour = 0; hour < 24; hour++) {
+    //         newAllDaysOfWeek[day][hour] = (
+    //           <Box
+    //             startTime={hour}
+    //             curTime={hour}
+    //             startDay={day}
+    //             date={dateObject(weekDate, day, hour)}
+    //             shiftId={[]}
+    //             sleId={[]}
+    //             names={[]}
+    //             allEmp={employeeList}
+    //             addEmployee={this.addEmployee}
+    //             removeEmployee={this.removeEmployee}
+    //           />
+    //         );
+    //       }
+    //     }
 
-        for (let i = 0; i < items.length; i++) {
-          let location = items[i]["location"];
-          let shiftID = items[i]["shift_id"];
-          let sleID = items[i]["sle_id"];
-          let name = items[i]["name"];
+    //     for (let i = 0; i < items.length; i++) {
+    //       let location = items[i]["location"];
+    //       let shiftID = items[i]["shift_id"];
+    //       let sleID = items[i]["sle_id"];
+    //       let name = items[i]["name"];
 
-          if (location === "Moffitt3") {
-            let start_time = new Date(items[i]["start_time"]);
-            let end_time = new Date(items[i]["end_time"]);
+    //       if (location === "Moffitt3") {
+    //         let start_time = new Date(items[i]["start_time"]);
+    //         let end_time = new Date(items[i]["end_time"]);
 
-            let start_time_date = start_time.getDay();
-            let end_time_date = start_time.getDay();
+    //         let start_time_date = start_time.getDay();
+    //         let end_time_date = start_time.getDay();
 
-            let start_hour = start_time.getHours();
-            let end_hour = end_time.getHours();
+    //         let start_hour = start_time.getHours();
+    //         let end_hour = end_time.getHours();
 
-            let end;
+    //         let end;
 
-            //If shifts runs across the same day
-            if (start_time_date === end_time_date) {
-              end = end_hour;
-            } else {
-              end = 24;
-            }
+    //         //If shifts runs across the same day
+    //         if (start_time_date === end_time_date) {
+    //           end = end_hour;
+    //         } else {
+    //           end = 24;
+    //         }
 
-            for (let j = start_hour; j < end; j++) {
-              let previousState = newAllDaysOfWeek[start_time_date][j].props;
+    //         for (let j = start_hour; j < end; j++) {
+    //           let previousState = newAllDaysOfWeek[start_time_date][j].props;
 
-              let shiftArray = previousState.shiftId;
-              shiftArray.push(shiftID);
-              let sleArray = previousState.sleId;
-              sleArray.push(sleID);
-              let nameArray = previousState.names;
-              nameArray.push(name);
+    //           let shiftArray = previousState.shiftId;
+    //           shiftArray.push(shiftID);
+    //           let sleArray = previousState.sleId;
+    //           sleArray.push(sleID);
+    //           let nameArray = previousState.names;
+    //           nameArray.push(name);
 
-              newAllDaysOfWeek[start_time_date][j] = (
-                <Box
-                  startTime={start_hour}
-                  curTime={j}
-                  startDay={start_time_date}
-                  shiftId={shiftArray}
-                  sleId={sleArray}
-                  names={nameArray}
-                  allEmp={this.state.allEmployees}
-                  date={dateObject(weekDate, start_time_date, j)}
-                  addEmployee={this.addEmployee}
-                  removeEmployee={this.removeEmployee}
-                />
-              );
-            }
-          }
-        }
-        this.setState({ allDaysOfWeek: newAllDaysOfWeek });
-      });
+    //           newAllDaysOfWeek[start_time_date][j] = (
+    //             <Box
+    //               startTime={start_hour}
+    //               curTime={j}
+    //               startDay={start_time_date}
+    //               shiftId={shiftArray}
+    //               sleId={sleArray}
+    //               names={nameArray}
+    //               allEmp={this.state.allEmployees}
+    //               date={dateObject(weekDate, start_time_date, j)}
+    //               addEmployee={this.addEmployee}
+    //               removeEmployee={this.removeEmployee}
+    //             />
+    //           );
+    //         }
+    //       }
+    //     }
+    //     this.setState({ allDaysOfWeek: newAllDaysOfWeek });
+    //   });
   }
 
   removeEmployee(
