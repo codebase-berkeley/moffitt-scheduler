@@ -25,9 +25,17 @@
   color: #000000;
 }
 
+.currentWeek {
+  margin-left: 10%;
+  margin-top: 4%;
+  display: flex;
+  font-family: "Open Sans", sans-serif;
+  position: fixed;
+}
+
 .arrows {
   margin-left: 38%;
-  margin-top: 4%;
+  margin-top: 3%;
   display: flex;
   justify-content: space-between;
   width: 10%;

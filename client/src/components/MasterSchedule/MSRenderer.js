@@ -84,11 +84,22 @@ export default class MSRenderer extends React.Component {
       pending = null;
     }
 
+    let startMonth = this.state.currentWeek.getMonth() + 1;
+    let startDate = this.state.currentWeek.getDate();
+
+    let endDate = new Date(this.state.currentWeek);
+    endDate.setDate(endDate.getDate() + 7);
+
+    let endDateNum = endDate.getDate();
+    let endDateMonth = endDate.getMonth() + 1;
+
     return (
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
           <div className="masterScheduleText">Master Schedule</div>
-          <div className="currentWeek">{this.state.currentWeek.getDate()}</div>
+          <div className="currentWeek">
+            {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
+          </div>
           <div className="arrows">
             <button className="buttonLeftArrow">
               <img
