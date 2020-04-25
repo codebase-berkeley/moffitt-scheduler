@@ -11,10 +11,13 @@ export default class MSRenderer extends React.Component {
     this.state = {
       items: [{}],
       typeOfLibrary: "moffitt",
+      startDate: null,
+      endDate: null,
     };
     this.showMoffitt = this.showMoffitt.bind(this);
     this.showMoffitt4 = this.showMoffitt4.bind(this);
     this.showDoe = this.showDoe.bind(this);
+    this.confirm = this.confirm.bind(this);
   }
 
   showMoffitt() {
@@ -42,6 +45,27 @@ export default class MSRenderer extends React.Component {
       })
       .then((jsonResponse) => {
         console.log(jsonResponse.items);
+      });
+  }
+
+  confirm() {
+    var startDateText = document.getElementById("startDate").value;
+    console.log(startDateText);
+    var endDateText = document.getElementById("endDate").value;
+    console.log(endDateText);
+    fetch("/generateshifts", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ startDate: startDateText, endDate: endDateText }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log(jsonResponse);
       });
   }
 
@@ -76,6 +100,9 @@ export default class MSRenderer extends React.Component {
           <div className="buttons">
             <button className="schedGenerator" onClick={this.generate}>
               <h1>Generate</h1>
+            </button>
+            <button className="confirmButton" onClick={this.confirm}>
+              <h1>Confirm</h1>
             </button>
             <button className={moffitt} onClick={this.showMoffitt}>
               <h1>Moffitt 3rd</h1>
