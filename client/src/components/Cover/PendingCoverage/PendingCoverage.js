@@ -4,7 +4,6 @@ import "./PendingCoverage.css";
 function processData(database) {
   const listItems = database.map((entry, index) => (
     <PendingCoverageItem
-      // desk={entry.desk}
       loc={entry.loc}
       date={entry.date}
       time={entry.time}

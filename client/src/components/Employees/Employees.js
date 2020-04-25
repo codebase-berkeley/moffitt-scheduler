@@ -1,10 +1,57 @@
 import React from "react";
 import "./Employees.css";
-import EachEmployee from "./EachEmployee.js";
 import Modal from "react-modal";
 import starImage from "./baseline_grade_white_18dp.png";
+import { Redirect } from "react-router-dom";
 
-export default class Employees extends React.Component {
+class EachEmployee extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [{}],
+      redirect: null,
+    };
+    this.redirect = this.redirect.bind(this);
+  }
+
+  redirect(id) {
+    console.log(id);
+    this.setState({ redirect: "/profile/" + id });
+  }
+
+  render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
+    return (
+      <div
+        className="someEmployee"
+        onClick={() => this.redirect(this.props.id)}
+      >
+        <div className="pleaseWork">
+          <div class="holder"></div>
+          <div className="vertical">
+            <h2 className="name">{this.props.name}</h2>
+            <h3 className="email">{this.props.email}</h3>
+          </div>
+        </div>
+        <div className="lib">
+          <div className={this.props.currentDisplayMoffitt3}>
+            Moffitt 3 {this.props.moffitt3TrainingLevel}
+          </div>
+          <div className={this.props.currentDisplayMoffitt4}>
+            Moffitt 4 {this.props.moffitt4TrainingLevel}
+          </div>
+          <div className={this.props.currentDisplayDoe}>
+            Doe {this.props.doeTrainingLevel}
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+class Employees extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,6 +136,7 @@ export default class Employees extends React.Component {
           currentDisplayMoffitt3={entry.currentDisplayMoffitt3}
           currentDisplayMoffitt4={entry.currentDisplayMoffitt4}
           currentDisplayDoe={entry.currentDisplayDoe}
+          id={entry.id}
         />
       );
     });
@@ -240,3 +288,4 @@ export default class Employees extends React.Component {
     );
   }
 }
+export default Employees;
