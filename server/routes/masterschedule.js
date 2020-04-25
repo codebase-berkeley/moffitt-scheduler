@@ -187,6 +187,108 @@ router.post("/removeemployee", (req, res) => {
   return res.json({});
 });
 
+router.post("/generateshifts", (req, res) => {
+  var startDate = new Date(req.body.startDate);
+  var endDate = new Date(req.body.endDate);
+  var weekdayMap = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  pool.query(
+    "SELECT * FROM SCHEDULE ORDER BY sle_id, start_time",
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      var shiftGroups = [];
+      var duplicateTracker = [];
+      for (let i = 0; i < result.rows.length; i += 1) {
+        let currRow = result.rows[i];
+        let dup = false;
+        for (let j = 0; j < duplicateTracker.length; j += 1) {
+          if (
+            currRow.sle_id == duplicateTracker[j].sle_id &&
+            currRow.day_of_week == duplicateTracker[j].day_of_week &&
+            currRow.location == duplicateTracker[j].location &&
+            currRow.start_time == duplicateTracker[j].start_time
+          ) {
+            dup = true;
+          }
+        }
+        if (!dup) {
+          duplicateTracker.push(currRow);
+          let newgroup = null;
+          for (let j = 0; j < shiftGroups.length; j += 1) {
+            if (
+              shiftGroups[j].sle_id == currRow.sle_id &&
+              shiftGroups[j].loc == currRow.location &&
+              currRow.end_time == shiftGroups[j].e + 0.5
+            ) {
+              newgroup = shiftGroups[j];
+            }
+          }
+          if (newgroup == null) {
+            shiftGroups.push({
+              sle_id: currRow.sle_id,
+              loc: currRow.location,
+              s: currRow.start_time,
+              e: currRow.end_time,
+              day: currRow.day_of_week,
+            });
+          } else {
+            newgroup.e += 0.5;
+          }
+        }
+      }
+      console.log(shiftGroups);
+      var realShifts = [];
+      while (
+        startDate.getDate() != endDate.getDate() ||
+        startDate.getMonth() != endDate.getMonth()
+      ) {
+        for (let i = 0; i < shiftGroups.length; i += 1) {
+          if (shiftGroups[i].day == weekdayMap[startDate.getDay()]) {
+            let next = {
+              sle_id: shiftGroups[i].sle_id,
+              location: shiftGroups[i].loc,
+              start_time: new Date(startDate),
+              end_time: new Date(startDate),
+            };
+            if (shiftGroups[i].s % 1 == 0) {
+              next.start_time.setHours(shiftGroups[i].s);
+            } else {
+              next.start_time.setHours(shiftGroups[i].s, 30);
+            }
+            if (shiftGroups[i].e % 1 == 0) {
+              next.end_time.setHours(shiftGroups[i].e);
+            } else {
+              next.end_time.setHours(shiftGroups[i].e, 30);
+            }
+            realShifts.push(next);
+          }
+        }
+        startDate.setDate(startDate.getDate() + 1);
+      }
+
+      for (let i = 0; i < realShifts.length; i += 1) {
+        pool.query(
+          "INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES ($1, $2, $3, $4)",
+          [
+            realShifts[i].sle_id,
+            realShifts[i].location,
+            realShifts[i].start_time,
+            realShifts[i].end_time,
+          ],
+          (error, result) => {
+            if (error) {
+              console.log(error);
+              throw error;
+            }
+          }
+        );
+      }
+      return res.json({ items: realShifts });
+    }
+  );
+});
+
 var moffitt3Hours = config.moffitt3Hours;
 var mainHours = config.mainHours;
 var minEmployeesMoffitt3 = config.minEmployeesMoffitt3;
@@ -605,14 +707,8 @@ function finalSchedule(employeeList) {
       currentShift = currentSle.assignedShifts[j];
       day_of_week = currentShift.weekday;
       location = currentShift.location;
-      start_time =
-        currentShift.start % 1 == 0
-          ? currentShift.start + ":00"
-          : currentShift.start - 0.5 + ":30";
-      end_time =
-        currentShift.end % 1 == 0
-          ? currentShift.end + ":00"
-          : currentShift.end - 0.5 + ":30";
+      start_time = currentShift.start;
+      end_time = currentShift.end;
       newFinalOutput = new finalOutput(
         sle_id,
         day_of_week,
