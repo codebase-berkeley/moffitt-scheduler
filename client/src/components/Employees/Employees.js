@@ -2,18 +2,32 @@ import React from "react";
 import "./Employees.css";
 import Modal from "react-modal";
 import starImage from "./baseline_grade_white_18dp.png";
+import { Redirect } from "react-router-dom";
 
 class EachEmployee extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [{}],
+      redirect: null,
     };
+    this.redirect = this.redirect.bind(this);
+  }
+
+  redirect(id) {
+    console.log(id);
+    this.setState({ redirect: "/profile/" + id });
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
     return (
-      <div className="someEmployee">
+      <div
+        className="someEmployee"
+        onClick={() => this.redirect(this.props.id)}
+      >
         <div className="pleaseWork">
           <div class="holder"></div>
           <div className="vertical">
@@ -122,6 +136,7 @@ class Employees extends React.Component {
           currentDisplayMoffitt3={entry.currentDisplayMoffitt3}
           currentDisplayMoffitt4={entry.currentDisplayMoffitt4}
           currentDisplayDoe={entry.currentDisplayDoe}
+          id={entry.id}
         />
       );
     });

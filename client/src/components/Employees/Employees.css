@@ -301,6 +301,7 @@
   margin-bottom: 2%;
   justify-content: space-between;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .holder {

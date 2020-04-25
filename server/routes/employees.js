@@ -58,6 +58,7 @@ router.get("/allemployees", (req, res) => {
         } else {
           result.rows[i].currentDisplayDoe = "doeNoDisplay";
         }
+        result.rows[i].id_person = result.rows.id;
       }
     }
     res.json({ items: result.rows });
