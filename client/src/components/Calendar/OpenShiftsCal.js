@@ -215,6 +215,9 @@ export default class OpenShiftsCal extends React.Component {
   }
   previousWeek() {
     let currStartDate = new Date(this.state.currentDate);
+    if (Date.parse(currStartDate) < Date.parse(new Date())) {
+      return;
+    }
     currStartDate.setDate(currStartDate.getDate() - 7);
     var weekStringg =
       format(currStartDate, "MMMM") +
