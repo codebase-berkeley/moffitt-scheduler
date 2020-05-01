@@ -266,7 +266,7 @@ router.post("/generateshifts", (req, res) => {
         }
         startDate.setDate(startDate.getDate() + 1);
       }
-
+      pool.query("DELETE FROM SHIFTS");
       for (let i = 0; i < realShifts.length; i += 1) {
         console.log(hello);
         pool.query(
