@@ -7,6 +7,7 @@ router.get("/masterschedule", function (req, res) {
   pool.query(
     "SELECT name, start_time, end_time, location, shift_id, sle_id FROM shifts, sle WHERE id=sle_id ",
     (error, result) => {
+      console.log("MS endpoint");
       if (error) {
         throw error;
       }

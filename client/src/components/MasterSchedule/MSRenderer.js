@@ -1,16 +1,14 @@
 import React from "react";
-// import Modal from "react-modal";
 import "./MSRenderer.css";
-import Moffitt from "./Moffitt";
-import Moffitt4 from "./Moffitt4";
-import Doe from "./Doe";
+import Library from "./Library";
+
 
 export default class MSRenderer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [{}],
-      typeOfLibrary: "moffitt",
+      typeOfLibrary: "Moffitt3",
     };
     this.showMoffitt = this.showMoffitt.bind(this);
     this.showMoffitt4 = this.showMoffitt4.bind(this);
@@ -18,36 +16,37 @@ export default class MSRenderer extends React.Component {
   }
 
   showMoffitt() {
-    this.setState({ typeOfLibrary: "moffitt" });
+    this.setState({ typeOfLibrary: "Moffitt3" });
   }
 
   showMoffitt4() {
-    this.setState({ typeOfLibrary: "moffitt4" });
+    this.setState({ typeOfLibrary: "Moffitt4" });
   }
 
   showDoe() {
-    this.setState({ typeOfLibrary: "doe" });
+    this.setState({ typeOfLibrary: "Doe" });
   }
 
   render() {
     let typeOfLibrary = this.state.typeOfLibrary;
     let pending;
-    let moffitt;
+    let moffitt3;
     let moffitt4;
     let doe;
-    if (typeOfLibrary == "moffitt") {
-      pending = <Moffitt />;
-      moffitt = "clickedButton";
+    console.log("type of library: ", typeOfLibrary);
+    if (typeOfLibrary == "Moffitt3") {
+      pending = <Library location={typeOfLibrary} />;
+      moffitt3 = "clickedButton";
       moffitt4 = "nonClickedButton";
       doe = "nonClickedButton";
-    } else if (typeOfLibrary == "moffitt4") {
-      pending = <Moffitt4 />;
-      moffitt = "nonClickedButton";
+    } else if (typeOfLibrary == "Moffitt4") {
+      pending = <Library location={typeOfLibrary} />;
+      moffitt3 = "nonClickedButton";
       moffitt4 = "clickedButton";
       doe = "nonClickedButton";
-    } else if (typeOfLibrary == "doe") {
-      pending = <Doe />;
-      moffitt = "nonClickedButton";
+    } else if (typeOfLibrary == "Doe") {
+      pending = <Library location={typeOfLibrary} />;
+      moffitt3 = "nonClickedButton";
       moffitt4 = "nonClickedButton";
       doe = "clickedButton";
     } else {
@@ -61,7 +60,7 @@ export default class MSRenderer extends React.Component {
             Master Schedule
           </div>
           <div className="buttons">
-            <button className={moffitt} onClick={this.showMoffitt}>
+            <button className={moffitt3} onClick={this.showMoffitt}>
               <h1>Moffitt 3rd</h1>
             </button>
             <button className={moffitt4} onClick={this.showMoffitt4}>
