@@ -9,13 +9,12 @@ export default class Cover extends React.Component {
     super(props);
     this.state = {
       items: [{}],
-      typeOfPending: "supervisor approval" // coverage, supervisor approval, history
+      typeOfPending: "supervisor approval", // coverage, supervisor approval, history
     };
     this.showPendingCoverage = this.showPendingCoverage.bind(this);
     this.showSupervisorApproval = this.showSupervisorApproval.bind(this);
     this.showHistory = this.showHistory.bind(this);
   }
-
   showPendingCoverage() {
     this.setState({ typeOfPending: "coverage" });
   }

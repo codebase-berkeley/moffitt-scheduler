@@ -183,6 +183,7 @@ export default class OpenShiftsCal extends React.Component {
   }
 
   componentDidMount() {
+    /** Use current week variable to edit this. */
     fetch("/openshifts/" + this.props.userId, {
       method: "POST",
       headers: {
