@@ -289,6 +289,20 @@ router.post("/generateshifts", (req, res) => {
   );
 });
 
+async function insertShifts(realShifts) {
+  for (let i = 0; i < realShifts.length; i += 1) {
+    var test = await pool.query(
+      "INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES ($1, $2, $3, $4)",
+      [
+        realShifts[i].sle_id,
+        realShifts[i].location,
+        realShifts[i].start_time,
+        realShifts[i].end_time,
+      ]
+    );
+  }
+}
+
 var moffitt3Hours = config.moffitt3Hours;
 var mainHours = config.mainHours;
 var minEmployeesMoffitt3 = config.minEmployeesMoffitt3;
