@@ -64,7 +64,6 @@ export default class Library extends React.Component {
         });
         console.log(jsonResponse);
       });
-    console.log("above fetch");
     fetch("/masterschedule", {
       method: "GET",
       headers: {
@@ -73,11 +72,9 @@ export default class Library extends React.Component {
       },
     })
       .then((response) => {
-        console.log("in response");
         return response.json();
       })
       .then((jsonResponse) => {
-        console.log("inside json res, ", jsonResponse);
         let items = jsonResponse.items;
 
         let newAllDaysOfWeek = [[], [], [], [], [], [], []];
@@ -102,16 +99,11 @@ export default class Library extends React.Component {
           }
         }
 
-        console.log("outside for, location: ", this.props.location);
-
         for (let i = 0; i < items.length; i++) {
           let location = items[i]["location"];
           let shiftID = items[i]["shift_id"];
           let sleID = items[i]["sle_id"];
           let name = items[i]["name"];
-
-          console.log("location: ", location);
-          console.log("this.props.location: ", this.props.location);
 
           if (location === this.props.location) {
             let start_time = new Date(items[i]["start_time"]);
@@ -204,7 +196,6 @@ export default class Library extends React.Component {
         let newShiftArr = shiftIdArr.slice(0);
 
         for (let i = 0; i < newSleIdArr.length; i++) {
-          //
           if (sle_id === newSleIdArr[i]) {
             newSleIdArr.splice(i, 1);
             newEmployeeArr.splice(i, 1);
@@ -250,7 +241,6 @@ export default class Library extends React.Component {
           });
           console.log(jsonResponse);
         });
-      console.log("above fetch");
       fetch("/masterschedule", {
         method: "GET",
         headers: {
@@ -259,11 +249,9 @@ export default class Library extends React.Component {
         },
       })
         .then((response) => {
-          console.log("in response");
           return response.json();
         })
         .then((jsonResponse) => {
-          console.log("inside json res, ", jsonResponse);
           let items = jsonResponse.items;
 
           let newAllDaysOfWeek = [[], [], [], [], [], [], []];
@@ -288,16 +276,11 @@ export default class Library extends React.Component {
             }
           }
 
-          console.log("outside for, location: ", this.props.location);
-
           for (let i = 0; i < items.length; i++) {
             let location = items[i]["location"];
             let shiftID = items[i]["shift_id"];
             let sleID = items[i]["sle_id"];
             let name = items[i]["name"];
-
-            console.log("location: ", location);
-            console.log("this.props.location: ", this.props.location);
 
             if (location === this.props.location) {
               let start_time = new Date(items[i]["start_time"]);
@@ -391,7 +374,6 @@ export default class Library extends React.Component {
         let newShiftArr = shiftIdArr.slice(0);
 
         for (let i = 0; i < newSleIdArr.length; i++) {
-          //
           if (sle_id === newSleIdArr[i]) {
             newSleIdArr.splice(i, 1);
             newEmployeeArr.splice(i, 1);
@@ -480,8 +462,6 @@ export default class Library extends React.Component {
   }
 
   render() {
-    console.log("in render", this.props.location);
-
     return (
       <div className="weekdayColumns">
         <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>

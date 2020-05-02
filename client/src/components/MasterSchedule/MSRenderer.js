@@ -33,7 +33,6 @@ export default class MSRenderer extends React.Component {
     let moffitt3;
     let moffitt4;
     let doe;
-    console.log("type of library: ", typeOfLibrary);
     if (typeOfLibrary == "Moffitt3") {
       pending = <Library location={typeOfLibrary} />;
       moffitt3 = "clickedButton";
