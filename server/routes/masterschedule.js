@@ -268,7 +268,6 @@ router.post("/generateshifts", (req, res) => {
       }
       pool.query("DELETE FROM SHIFTS");
       for (let i = 0; i < realShifts.length; i += 1) {
-        console.log(hello);
         pool.query(
           "INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES ($1, $2, $3, $4)",
           [
