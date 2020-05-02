@@ -267,28 +267,7 @@ router.post("/generateshifts", (req, res) => {
         startDate.setDate(startDate.getDate() + 1);
       }
       pool.query("DELETE FROM SHIFTS");
-<<<<<<< HEAD
       insertShifts(realShifts);
-=======
-      for (let i = 0; i < realShifts.length; i += 1) {
-        console.log(hello);
-        pool.query(
-          "INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES ($1, $2, $3, $4)",
-          [
-            realShifts[i].sle_id,
-            realShifts[i].location,
-            realShifts[i].start_time,
-            realShifts[i].end_time,
-          ],
-          (error, result) => {
-            if (error) {
-              console.log(error);
-              throw error;
-            }
-          }
-        );
-      }
->>>>>>> 7ea2dff3ea88b1826c17f364a85dabebc0f961f7
       return res.json({ items: realShifts });
     }
   );
@@ -358,30 +337,28 @@ router.get("/generatesched", function (req, res) {
       }
       pool.query("DELETE FROM Schedule");
       var algoSchedule = finalSchedule(employeeList);
-      for (let i = 0; i < algoSchedule.length; i += 1) {
-        let current = algoSchedule[i];
-        pool.query(
-          "INSERT INTO Schedule VALUES ($1, $2, $3, $4, $5, $6)",
-          [
-            current.sle_id,
-            current.day_of_week,
-            current.location,
-            current.start_time,
-            current.end_time,
-            current.coverrequested,
-          ],
-          (error, result) => {
-            if (error) {
-              console.log(error);
-              throw error;
-            }
-          }
-        );
-      }
+      insertSchedule(algoSchedule);
       return res.json({ items: algoSchedule });
     }
   );
 });
+
+async function insertSchedule(algoSchedule) {
+  for (let i = 0; i < algoSchedule.length; i += 1) {
+    let current = algoSchedule[i];
+    var test = await pool.query(
+      "INSERT INTO Schedule VALUES ($1, $2, $3, $4, $5, $6)",
+      [
+        current.sle_id,
+        current.day_of_week,
+        current.location,
+        current.start_time,
+        current.end_time,
+        current.coverrequested,
+      ]
+    );
+  }
+}
 
 /* Generate a list of objects representing the final schedule */
 function finalSchedule(employeeList) {
