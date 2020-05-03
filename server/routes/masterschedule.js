@@ -247,8 +247,10 @@ router.post("/generateshifts", (req, res) => {
       }
       console.log(shiftGroups);
       var realShifts = [];
+      startDate.setDate(startDate.getDate() + 1);
+      endDate.setDate(endDate.getDate() + 1);
       while (
-        startDate.getDate() <= endDate.getDate() + 1 ||
+        startDate.getDate() <= endDate.getDate() ||
         startDate.getMonth() != endDate.getMonth()
       ) {
         for (let i = 0; i < shiftGroups.length; i += 1) {
