@@ -1,24 +1,39 @@
 import React from "react";
-// import Modal from "react-modal";
 import "./MSRenderer.css";
 import Moffitt from "./Moffitt";
 import Moffitt4 from "./Moffitt4";
 import Doe from "./Doe";
+import leftArrow from "./MasterImages/leftarrow.svg";
+import rightArrow from "./MasterImages/rightarrow.svg";
+
+function dateObject(day, hour) {
+  var dateObject = new Date();
+  dateObject.setHours(hour, 0, 0, 0);
+  var dayOfWeek = dateObject.getDay();
+  var diff = dayOfWeek - day;
+  var newDate = dateObject.getDate() - diff;
+  dateObject.setDate(newDate);
+  return dateObject;
+}
 
 export default class MSRenderer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [{}],
-      typeOfLibrary: "moffitt",
+      typeOfLibrary: "moffitt3",
+      currentWeek: dateObject(0, 0),
     };
     this.showMoffitt = this.showMoffitt.bind(this);
     this.showMoffitt4 = this.showMoffitt4.bind(this);
     this.showDoe = this.showDoe.bind(this);
+
+    this.previousWeek = this.previousWeek.bind(this);
+    this.nextWeek = this.nextWeek.bind(this);
   }
 
   showMoffitt() {
-    this.setState({ typeOfLibrary: "moffitt" });
+    this.setState({ typeOfLibrary: "moffitt3" });
   }
 
   showMoffitt4() {
@@ -29,23 +44,38 @@ export default class MSRenderer extends React.Component {
     this.setState({ typeOfLibrary: "doe" });
   }
 
+  previousWeek() {
+    console.log("inpreviousweek");
+    let currStartDate = new Date(this.state.currentWeek);
+    currStartDate.setDate(currStartDate.getDate() - 7);
+    this.setState({ currentWeek: currStartDate });
+  }
+
+  nextWeek() {
+    console.log("innextweek");
+    let currStartDate = new Date(this.state.currentWeek);
+    currStartDate.setDate(currStartDate.getDate() + 7);
+    this.setState({ currentWeek: currStartDate });
+  }
+
   render() {
     let typeOfLibrary = this.state.typeOfLibrary;
     let pending;
     let moffitt;
     let moffitt4;
     let doe;
-    if (typeOfLibrary == "moffitt") {
-      pending = <Moffitt />;
+    console.log("week", this.state.currentWeek);
+    if (typeOfLibrary === "moffitt3") {
+      pending = <Moffitt currWeek={this.state.currentWeek} />;
       moffitt = "clickedButton";
       moffitt4 = "nonClickedButton";
       doe = "nonClickedButton";
-    } else if (typeOfLibrary == "moffitt4") {
+    } else if (typeOfLibrary === "moffitt4") {
       pending = <Moffitt4 />;
       moffitt = "nonClickedButton";
       moffitt4 = "clickedButton";
       doe = "nonClickedButton";
-    } else if (typeOfLibrary == "doe") {
+    } else if (typeOfLibrary === "doe") {
       pending = <Doe />;
       moffitt = "nonClickedButton";
       moffitt4 = "nonClickedButton";
@@ -53,11 +83,42 @@ export default class MSRenderer extends React.Component {
     } else {
       pending = null;
     }
+
+    let startMonth = this.state.currentWeek.getMonth() + 1;
+    let startDate = this.state.currentWeek.getDate();
+
+    let endDate = new Date(this.state.currentWeek);
+    endDate.setDate(endDate.getDate() + 7);
+
+    let endDateNum = endDate.getDate();
+    let endDateMonth = endDate.getMonth() + 1;
+
     return (
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
-          <div className="masterScheduleText">
-            Master Schedule
+          <div className="masterScheduleText">Master Schedule</div>
+          <div className="arrows">
+            <button className="buttonLeftArrow">
+              <img
+                className="leftArrow"
+                onClick={this.previousWeek}
+                src={leftArrow}
+                alt="leftArrow"
+              />
+            </button>
+            <div className="currWeekContainer">
+              <div className="currWeek">
+                {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
+              </div>
+            </div>
+            <button className="buttonRightArrow">
+              <img
+                className="rightArrow"
+                onClick={this.nextWeek}
+                src={rightArrow}
+                alt="rightArrow"
+              />
+            </button>
           </div>
           <div className="buttons">
             <button className={moffitt} onClick={this.showMoffitt}>

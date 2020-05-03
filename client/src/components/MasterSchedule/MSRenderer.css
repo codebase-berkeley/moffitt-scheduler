@@ -3,7 +3,6 @@
   /* overflow-x: scroll; */
   overflow: hidden;
   position: relative;
-  
 }
 
 .masterScheduleAndButtons {
@@ -24,6 +23,35 @@
   font-size: 25px;
   line-height: 25px;
   color: #000000;
+}
+
+.currentWeek {
+  margin-left: 10%;
+  margin-top: 4%;
+  display: flex;
+  font-family: "Open Sans", sans-serif;
+  position: fixed;
+}
+
+.arrows {
+  margin-top: 3%;
+  margin-left: 30%;
+  display: flex;
+  justify-content: space-between;
+  width: 15%;
+  position: fixed;
+}
+
+.buttonLeftArrow {
+  border: none;
+  background-color: #f5f5fd;
+  cursor: pointer;
+}
+
+.buttonRightArrow {
+  border: none;
+  background-color: #f5f5fd;
+  cursor: pointer;
 }
 
 .buttons {
