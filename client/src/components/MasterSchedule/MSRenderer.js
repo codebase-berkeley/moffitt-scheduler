@@ -1,8 +1,6 @@
 import React from "react";
 import "./MSRenderer.css";
-import Moffitt from "./Moffitt";
-import Moffitt4 from "./Moffitt4";
-import Doe from "./Doe";
+import Library from "./Library";
 import leftArrow from "./MasterImages/leftarrow.svg";
 import rightArrow from "./MasterImages/rightarrow.svg";
 
@@ -21,7 +19,7 @@ export default class MSRenderer extends React.Component {
     super(props);
     this.state = {
       items: [{}],
-      typeOfLibrary: "moffitt3",
+      typeOfLibrary: "Moffitt3",
       currentWeek: dateObject(0, 0),
     };
     this.showMoffitt = this.showMoffitt.bind(this);
@@ -33,26 +31,24 @@ export default class MSRenderer extends React.Component {
   }
 
   showMoffitt() {
-    this.setState({ typeOfLibrary: "moffitt3" });
+    this.setState({ typeOfLibrary: "Moffitt3" });
   }
 
   showMoffitt4() {
-    this.setState({ typeOfLibrary: "moffitt4" });
+    this.setState({ typeOfLibrary: "Moffitt3" });
   }
 
   showDoe() {
-    this.setState({ typeOfLibrary: "doe" });
+    this.setState({ typeOfLibrary: "Moffitt3" });
   }
 
   previousWeek() {
-    console.log("inpreviousweek");
     let currStartDate = new Date(this.state.currentWeek);
     currStartDate.setDate(currStartDate.getDate() - 7);
     this.setState({ currentWeek: currStartDate });
   }
 
   nextWeek() {
-    console.log("innextweek");
     let currStartDate = new Date(this.state.currentWeek);
     currStartDate.setDate(currStartDate.getDate() + 7);
     this.setState({ currentWeek: currStartDate });
@@ -61,23 +57,28 @@ export default class MSRenderer extends React.Component {
   render() {
     let typeOfLibrary = this.state.typeOfLibrary;
     let pending;
-    let moffitt;
+    let moffitt3;
     let moffitt4;
     let doe;
-    console.log("week", this.state.currentWeek);
-    if (typeOfLibrary === "moffitt3") {
-      pending = <Moffitt currWeek={this.state.currentWeek} />;
-      moffitt = "clickedButton";
+    if (typeOfLibrary === "Moffitt3") {
+      pending = (
+        <Library currWeek={this.state.currentWeek} location={typeOfLibrary} />
+      );
+      moffitt3 = "clickedButton";
       moffitt4 = "nonClickedButton";
       doe = "nonClickedButton";
-    } else if (typeOfLibrary === "moffitt4") {
-      pending = <Moffitt4 />;
-      moffitt = "nonClickedButton";
+    } else if (typeOfLibrary === "Moffitt4") {
+      pending = (
+        <Library currWeek={this.state.currentWeek} location={typeOfLibrary} />
+      );
+      moffitt3 = "nonClickedButton";
       moffitt4 = "clickedButton";
       doe = "nonClickedButton";
-    } else if (typeOfLibrary === "doe") {
-      pending = <Doe />;
-      moffitt = "nonClickedButton";
+    } else if (typeOfLibrary === "Doe") {
+      pending = (
+        <Library currWeek={this.state.currentWeek} location={typeOfLibrary} />
+      );
+      moffitt3 = "nonClickedButton";
       moffitt4 = "nonClickedButton";
       doe = "clickedButton";
     } else {
@@ -121,7 +122,7 @@ export default class MSRenderer extends React.Component {
             </button>
           </div>
           <div className="buttons">
-            <button className={moffitt} onClick={this.showMoffitt}>
+            <button className={moffitt3} onClick={this.showMoffitt}>
               <h1>Moffitt 3rd</h1>
             </button>
             <button className={moffitt4} onClick={this.showMoffitt4}>
