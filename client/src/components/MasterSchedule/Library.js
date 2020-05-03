@@ -509,6 +509,16 @@ function EditSchedule(props) {
     return timeOfDay[props];
   }
 
+  function displayLoc(loc) {
+    if (loc === "Moffitt3") {
+      return "Moffitt 3rd Floor";
+    } else if (loc === "Moffitt4") {
+      return "Moffitt 4th Floor";
+    } else {
+      return "Doe Library";
+    }
+  }
+
   return (
     <div>
       <button className="pencilIcon" onClick={openModal}>
@@ -531,7 +541,7 @@ function EditSchedule(props) {
             </h1>
             <div className="shiftInfo">
               <div className="locationTag">
-                <h3 className="locTag">{props.location}</h3>
+                <h3 className="locTag">{displayLoc(props.location)}</h3>
               </div>
               <div className="timeTag">
                 <h3 className="tTag">
