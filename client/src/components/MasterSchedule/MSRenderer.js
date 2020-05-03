@@ -35,11 +35,11 @@ export default class MSRenderer extends React.Component {
   }
 
   showMoffitt4() {
-    this.setState({ typeOfLibrary: "Moffitt3" });
+    this.setState({ typeOfLibrary: "Moffitt4" });
   }
 
   showDoe() {
-    this.setState({ typeOfLibrary: "Moffitt3" });
+    this.setState({ typeOfLibrary: "Doe" });
   }
 
   previousWeek() {
