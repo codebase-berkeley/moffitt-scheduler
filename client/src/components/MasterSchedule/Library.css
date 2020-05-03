@@ -118,11 +118,12 @@
 }
 
 .shiftInfo {
-  margin-left: 10px;
   margin-top: 10px;
   font-size: 12px;
   margin-bottom: 20px;
   font-weight: normal;
+  width: 250px;
+  display: flex;
 }
 
 .CurrentEmployees {
@@ -218,4 +219,5 @@
   margin-bottom: 5px;
   padding-top: 3px;
   padding-bottom: 3px;
+  margin-right: 10px;
 }
