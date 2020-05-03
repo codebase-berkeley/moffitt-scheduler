@@ -223,9 +223,9 @@ export default class Library extends React.Component {
             startTime={currTime}
             curTime={currTime}
             startDay={day}
-            shiftId={newShiftArr} // edit
-            sleId={newSleIdArr} // edit
-            names={newEmployeeArr} // edit
+            shiftId={newShiftArr}
+            sleId={newSleIdArr}
+            names={newEmployeeArr}
             allEmp={allEmp}
             date={date}
             addEmployee={addEmployee}
