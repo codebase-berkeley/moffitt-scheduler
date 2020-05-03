@@ -122,6 +122,7 @@ export default class MSRenderer extends React.Component {
                 id="startDate"
                 className="startDate"
                 placeholder="Start Date"
+                defaultValue="2020-05-07"
               ></input>
               <label for="endDate">End Date</label>
               <input
@@ -129,6 +130,7 @@ export default class MSRenderer extends React.Component {
                 id="endDate"
                 className="endDate"
                 placeholder="End Date"
+                defaultValue="2020-05-08"
               ></input>
             </form>
           </div>
