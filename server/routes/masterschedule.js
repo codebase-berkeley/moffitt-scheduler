@@ -240,7 +240,7 @@ router.post("/generateshifts", (req, res) => {
       console.log(shiftGroups);
       var realShifts = [];
       while (
-        startDate.getDate() != endDate.getDate() ||
+        startDate.getDate() <= endDate.getDate() + 1 ||
         startDate.getMonth() != endDate.getMonth()
       ) {
         for (let i = 0; i < shiftGroups.length; i += 1) {
@@ -336,6 +336,7 @@ router.get("/generatesched", function (req, res) {
         }
       }
       pool.query("DELETE FROM Schedule");
+
       var algoSchedule = finalSchedule(employeeList);
       insertSchedule(algoSchedule);
       return res.json({ items: algoSchedule });

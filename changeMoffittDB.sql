@@ -130,6 +130,20 @@ VALUES
     -- (91, 7, 13, 1),   
     -- (92, 7, 13.5, 1)
 
+/** This query inserts an SLE that works through midnight (make sure to change the hours of the library) */
+INSERT INTO availability (
+    availability_id,
+    sle_id,
+    start_time,
+    day_of_week
+)
+VALUES
+    (29, 4, 23, 0),
+    (30, 4, 23.5, 0),
+    (31, 4, 0, 1),
+    (32, 4, 0.5, 1);
+
+
 
 /** This query tests that master schedule correctly displays shifts within the current week. */
 INSERT INTO shifts (
