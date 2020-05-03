@@ -511,11 +511,11 @@ function EditSchedule(props) {
 
   function displayLoc(loc) {
     if (loc === "Moffitt3") {
-      return "Moffitt 3rd Floor";
+      return "Moffitt 3rd";
     } else if (loc === "Moffitt4") {
-      return "Moffitt 4th Floor";
+      return "Moffitt 4th";
     } else {
-      return "Doe Library";
+      return "Doe";
     }
   }
 

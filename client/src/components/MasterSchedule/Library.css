@@ -205,3 +205,17 @@
 .name-row {
   text-align: center;
 }
+
+.locTag {
+  background-color: #3f3cc8;
+  display: flex;
+  justify-content: center;
+  color: white;
+  letter-spacing: 1px;
+  border-radius: 10px;
+  font-size: 11px;
+  width: 90px;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
