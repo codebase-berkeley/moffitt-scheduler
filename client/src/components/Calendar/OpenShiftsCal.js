@@ -271,7 +271,7 @@ export default class OpenShiftsCal extends React.Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        items: this.state.shifts,
+        items: this.state.emptyShifts,
         userId: this.props.userId,
         currentDate: currStartDate,
         startOfWeek: startOfWeek(currStartDate),
