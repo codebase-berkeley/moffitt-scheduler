@@ -237,10 +237,11 @@ router.post("/generateshifts", (req, res) => {
           }
         }
       }
-      console.log(shiftGroups);
       var realShifts = [];
+      startDate.setDate(startDate.getDate() + 1);
+      endDate.setDate(endDate.getDate() + 1);
       while (
-        startDate.getDate() <= endDate.getDate() + 1 ||
+        startDate.getDate() <= endDate.getDate() ||
         startDate.getMonth() != endDate.getMonth()
       ) {
         for (let i = 0; i < shiftGroups.length; i += 1) {
@@ -266,25 +267,49 @@ router.post("/generateshifts", (req, res) => {
         }
         startDate.setDate(startDate.getDate() + 1);
       }
+      let queryHolder = [];
+      for (let i = 0; i < realShifts.length; i += 1) {
+        queryHolder.push([
+          realShifts[i].sle_id,
+          realShifts[i].location,
+          realShifts[i].start_time,
+          realShifts[i].end_time,
+        ]);
+      }
+
       pool.query("DELETE FROM SHIFTS");
-      insertShifts(realShifts);
+      pool.query(
+        `INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES ${expand(
+          queryHolder.length,
+          4
+        )}`,
+        flatten(queryHolder)
+      );
       return res.json({ items: realShifts });
     }
   );
 });
 
-async function insertShifts(realShifts) {
-  for (let i = 0; i < realShifts.length; i += 1) {
-    var test = await pool.query(
-      "INSERT INTO shifts (sle_id, location, start_time, end_time) VALUES ($1, $2, $3, $4)",
-      [
-        realShifts[i].sle_id,
-        realShifts[i].location,
-        realShifts[i].start_time,
-        realShifts[i].end_time,
-      ]
-    );
-  }
+// expand(3, 2) returns "($1, $2), ($3, $4), ($5, $6)"
+function expand(rowCount, columnCount, startAt = 1) {
+  var index = startAt;
+  return Array(rowCount)
+    .fill(0)
+    .map(
+      (v) =>
+        `(${Array(columnCount)
+          .fill(0)
+          .map((v) => `$${index++}`)
+          .join(", ")})`
+    )
+    .join(", ");
+}
+
+// flatten([[1, 2], [3, 4]]) returns [1, 2, 3, 4]
+function flatten(arr) {
+  var newArr = [];
+  arr.forEach((v) => v.forEach((p) => newArr.push(p)));
+  return newArr;
 }
 
 var moffitt3Hours = config.moffitt3Hours;
@@ -335,31 +360,28 @@ router.get("/generatesched", function (req, res) {
           });
         }
       }
-      pool.query("DELETE FROM Schedule");
-
       var algoSchedule = finalSchedule(employeeList);
-      insertSchedule(algoSchedule);
+      let queryHolder = [];
+      for (let i = 0; i < algoSchedule.length; i += 1) {
+        let current = algoSchedule[i];
+        queryHolder.push([
+          current.sle_id,
+          current.day_of_week,
+          current.location,
+          current.start_time,
+          current.end_time,
+          current.coverrequested,
+        ]);
+      }
+      pool.query("DELETE FROM Schedule");
+      pool.query(
+        `INSERT INTO schedule VALUES ${expand(queryHolder.length, 6)}`,
+        flatten(queryHolder)
+      );
       return res.json({ items: algoSchedule });
     }
   );
 });
-
-async function insertSchedule(algoSchedule) {
-  for (let i = 0; i < algoSchedule.length; i += 1) {
-    let current = algoSchedule[i];
-    var test = await pool.query(
-      "INSERT INTO Schedule VALUES ($1, $2, $3, $4, $5, $6)",
-      [
-        current.sle_id,
-        current.day_of_week,
-        current.location,
-        current.start_time,
-        current.end_time,
-        current.coverrequested,
-      ]
-    );
-  }
-}
 
 /* Generate a list of objects representing the final schedule */
 function finalSchedule(employeeList) {
