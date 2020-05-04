@@ -20,7 +20,7 @@ export default class MSRenderer extends React.Component {
     this.state = {
       items: [{}],
       typeOfLibrary: "Moffitt3",
-      currentWeek: dateObject(0, 0),
+      currentWeek: dateObject(0, 0)
     };
     this.showMoffitt = this.showMoffitt.bind(this);
     this.showMoffitt4 = this.showMoffitt4.bind(this);
@@ -28,6 +28,7 @@ export default class MSRenderer extends React.Component {
 
     this.previousWeek = this.previousWeek.bind(this);
     this.nextWeek = this.nextWeek.bind(this);
+    this.confirm = this.confirm.bind(this);
   }
 
   showMoffitt() {
@@ -52,6 +53,43 @@ export default class MSRenderer extends React.Component {
     let currStartDate = new Date(this.state.currentWeek);
     currStartDate.setDate(currStartDate.getDate() + 7);
     this.setState({ currentWeek: currStartDate });
+  }
+
+  generate() {
+    fetch("/generatesched", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        console.log(jsonResponse.items);
+      });
+  }
+
+  confirm() {
+    var startDateText = document.getElementById("startDate").value;
+    console.log(startDateText);
+    var endDateText = document.getElementById("endDate").value;
+    console.log(endDateText);
+    fetch("/generateshifts", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ startDate: startDateText, endDate: endDateText })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        console.log(jsonResponse);
+      });
   }
 
   render() {
@@ -122,6 +160,12 @@ export default class MSRenderer extends React.Component {
             </button>
           </div>
           <div className="buttons">
+            <button className="schedGenerator" onClick={this.generate}>
+              <h1>Generate</h1>
+            </button>
+            <button className="confirmButton" onClick={this.confirm}>
+              <h1>Confirm</h1>
+            </button>
             <button className={moffitt3} onClick={this.showMoffitt}>
               <h1>Moffitt 3rd</h1>
             </button>
@@ -132,47 +176,69 @@ export default class MSRenderer extends React.Component {
               <h1>Doe</h1>
             </button>
           </div>
+          <div className="form">
+            <form action="/action_page.php">
+              <label for="startDate">Start Date</label>
+              <input
+                type="date"
+                id="startDate"
+                className="startDate"
+                placeholder="Start Date"
+                defaultValue="2020-05-07"
+              ></input>
+              <label for="endDate">End Date</label>
+              <input
+                type="date"
+                id="endDate"
+                className="endDate"
+                placeholder="End Date"
+                defaultValue="2020-05-08"
+              ></input>
+            </form>
+          </div>
         </div>
 
-        <div className="weekdayBox">
-          <div className="weekdayText">
-            <div className="sunday">Sunday</div>
-            <div className="monday">Monday</div>
-            <div className="tuesday">Tuesday</div>
-            <div className="wednesday">Wednesday</div>
-            <div className="thursday">Thursday</div>
-            <div className="friday">Friday</div>
-            <div className="saturday">Saturday</div>
+        <div className="Calendar">
+          <div className="weekdayBox">
+            <div className="weekdayText">
+              <div className="sunday">Sunday</div>
+              <div className="monday">Monday</div>
+              <div className="tuesday">Tuesday</div>
+              <div className="wednesday">Wednesday</div>
+              <div className="thursday">Thursday</div>
+              <div className="friday">Friday</div>
+              <div className="saturday">Saturday</div>
+            </div>
           </div>
-        </div>
-        <div className="boxesAndDates">
-          <div className="hours">
-            <div className="hour">12 AM</div>
-            <div className="hour">1 AM</div>
-            <div className="hour">2 AM</div>
-            <div className="hour">3 AM</div>
-            <div className="hour">4 AM</div>
-            <div className="hour">5 AM</div>
-            <div className="hour">6 AM</div>
-            <div className="hour">7 AM</div>
-            <div className="hour">8 AM</div>
-            <div className="hour">9 AM</div>
-            <div className="hour">10 AM</div>
-            <div className="hour">11 AM</div>
-            <div className="hour">12 PM</div>
-            <div className="hour">1 PM</div>
-            <div className="hour">2 PM</div>
-            <div className="hour">3 PM</div>
-            <div className="hour">4 PM</div>
-            <div className="hour">5 PM</div>
-            <div className="hour">6 PM</div>
-            <div className="hour">7 PM</div>
-            <div className="hour">8 PM</div>
-            <div className="hour">9 PM</div>
-            <div className="hour">10 PM</div>
-            <div className="hour">11 PM</div>
+          <div className="boxesAndDates">
+            <div className="hours">
+              <div className="hour">12 AM</div>
+              <div className="hour">1 AM</div>
+              <div className="hour">2 AM</div>
+              <div className="hour">3 AM</div>
+              <div className="hour">4 AM</div>
+              <div className="hour">5 AM</div>
+              <div className="hour">6 AM</div>
+              <div className="hour">7 AM</div>
+              <div className="hour">8 AM</div>
+              <div className="hour">9 AM</div>
+              <div className="hour">10 AM</div>
+              <div className="hour">11 AM</div>
+              <div className="hour">12 PM</div>
+              <div className="hour">1 PM</div>
+              <div className="hour">2 PM</div>
+              <div className="hour">3 PM</div>
+              <div className="hour">4 PM</div>
+              <div className="hour">5 PM</div>
+              <div className="hour">6 PM</div>
+              <div className="hour">7 PM</div>
+              <div className="hour">8 PM</div>
+              <div className="hour">9 PM</div>
+              <div className="hour">10 PM</div>
+              <div className="hour">11 PM</div>
+            </div>
+            {pending}
           </div>
-          {pending}
         </div>
       </div>
     );

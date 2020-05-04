@@ -3,6 +3,52 @@
   position: relative;
 }
 
+.schedGenerator {
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #949494;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 8px;
+  color: #949494;
+  width: 101px;
+  top: 200px;
+  line-height: 19px;
+  text-align: center;
+  margin-right: 18px;
+  padding-right: 7px;
+  padding-left: 7px;
+}
+
+.confirmButton {
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #949494;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 8px;
+  color: #949494;
+  width: 101px;
+  top: 200px;
+  line-height: 19px;
+  text-align: center;
+  margin-right: 18px;
+  padding-right: 7px;
+  padding-left: 7px;
+}
+
+.schedGenerator:active {
+  border: 1px solid black;
+  color: black;
+}
+
+.confirmButton:active {
+  border: 1px solid black;
+  color: black;
+}
+
 .masterScheduleAndButtons {
   display: flex;
   justify-content: space-between;
@@ -53,7 +99,7 @@
 }
 
 .buttons {
-  top: 150px;
+  top: 230px;
   align-content: space-between;
   display: flex;
   position: fixed;
@@ -68,13 +114,14 @@
   position: fixed;
   height: 44px;
   left: 380px;
-  top: 220px;
+  top: 250px;
   right: 100px;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   color: #9e9e9e;
   padding-top: 8px;
+  margin-top: 35px;
   margin-bottom: 20px;
 }
 
@@ -182,4 +229,29 @@
 }
 .friday {
   padding-right: 20px;
+}
+
+.form {
+  position: fixed;
+  display: flex;
+  margin-top: 60px;
+  margin-left: 35%;
+  font-family: "Open Sans", sans-serif;
+  display: inline-block;
+}
+
+.endDate,
+.startDate {
+  font-family: "Open Sans", sans-serif;
+  text-align: right;
+}
+
+label {
+  display: inline-flex;
+  justify-content: flex-end;
+  width: 150px;
+}
+
+input {
+  margin-left: 15px;
 }
