@@ -118,11 +118,12 @@
 }
 
 .shiftInfo {
-  margin-left: 10px;
   margin-top: 10px;
   font-size: 12px;
   margin-bottom: 20px;
   font-weight: normal;
+  width: 250px;
+  display: flex;
 }
 
 .CurrentEmployees {
@@ -130,14 +131,12 @@
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
-  margin-left: 10px;
 }
 
 .NotInShift {
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: bold;
-  margin-left: 10px;
   font-size: 14px;
   margin-top: 20px;
 }
@@ -204,4 +203,19 @@
 
 .name-row {
   text-align: center;
+}
+
+.locTag {
+  background-color: #3f3cc8;
+  display: flex;
+  justify-content: center;
+  color: white;
+  letter-spacing: 1px;
+  border-radius: 10px;
+  font-size: 11px;
+  width: 90px;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-right: 10px;
 }

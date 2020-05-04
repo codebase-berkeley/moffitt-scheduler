@@ -1,5 +1,5 @@
 import React from "react";
-import "./Moffitt.css";
+import "./Library.css";
 import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
@@ -13,7 +13,7 @@ function dateObject(week, day, hour) {
   return newSetDate;
 }
 
-export default class Moffitt extends React.Component {
+export default class Library extends React.Component {
   constructor(props) {
     super(props);
     let [
@@ -45,6 +45,9 @@ export default class Moffitt extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.currWeek != prevProps.currWeek) {
+      this.fetchData();
+    }
+    if (this.props.location != prevProps.location) {
       this.fetchData();
     }
   }
@@ -101,6 +104,7 @@ export default class Moffitt extends React.Component {
                     allEmp={employeeList}
                     addEmployee={this.addEmployee}
                     removeEmployee={this.removeEmployee}
+                    location={this.props.location}
                   />
                 );
               }
@@ -112,7 +116,7 @@ export default class Moffitt extends React.Component {
               let sleID = items[i]["sle_id"];
               let name = items[i]["name"];
 
-              if (location === "Moffitt3") {
+              if (location === this.props.location) {
                 let start_time = new Date(items[i]["start_time"]);
                 let end_time = new Date(items[i]["end_time"]);
 
@@ -154,6 +158,7 @@ export default class Moffitt extends React.Component {
                       date={dateObject(weekDate, start_time_date, j)}
                       addEmployee={this.addEmployee}
                       removeEmployee={this.removeEmployee}
+                      location={this.props.location}
                     />
                   );
                 }
@@ -218,9 +223,9 @@ export default class Moffitt extends React.Component {
             startTime={currTime}
             curTime={currTime}
             startDay={day}
-            shiftId={newShiftArr} // edit
-            sleId={newSleIdArr} // edit
-            names={newEmployeeArr} // edit
+            shiftId={newShiftArr}
+            sleId={newSleIdArr}
+            names={newEmployeeArr}
             allEmp={allEmp}
             date={date}
             addEmployee={addEmployee}
@@ -255,7 +260,7 @@ export default class Moffitt extends React.Component {
         sleId: sle_id,
         currHour: currTime,
         currDate: date,
-        loc: "Moffitt3",
+        loc: this.props.location,
       }),
     })
       .then((response) => {
@@ -379,6 +384,7 @@ function Box(props) {
           date={props.date}
           addEmployee={props.addEmployee}
           removeEmployee={props.removeEmployee}
+          location={props.location}
         />
       </div>
     </div>
@@ -503,6 +509,16 @@ function EditSchedule(props) {
     return timeOfDay[props];
   }
 
+  function displayLoc(loc) {
+    if (loc === "Moffitt3") {
+      return "Moffitt 3rd";
+    } else if (loc === "Moffitt4") {
+      return "Moffitt 4th";
+    } else {
+      return "Doe";
+    }
+  }
+
   return (
     <div>
       <button className="pencilIcon" onClick={openModal}>
@@ -525,7 +541,7 @@ function EditSchedule(props) {
             </h1>
             <div className="shiftInfo">
               <div className="locationTag">
-                <h3 className="locTag">Moffitt 3rd Floor</h3>
+                <h3 className="locTag">{displayLoc(props.location)}</h3>
               </div>
               <div className="timeTag">
                 <h3 className="tTag">

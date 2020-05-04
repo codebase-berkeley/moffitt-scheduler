@@ -1,6 +1,4 @@
 .everythingMS {
-  /* padding-top: 20%; */
-  /* overflow-x: scroll; */
   overflow: hidden;
   position: relative;
 }
@@ -163,7 +161,7 @@
 }
 
 .hour {
-  margin-bottom: 80px;
+  margin-bottom: 85px;
 }
 
 .hours {
