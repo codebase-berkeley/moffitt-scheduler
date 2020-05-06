@@ -20,13 +20,10 @@ router.post("/login", function (req, res) {
     "SELECT id, password, salt FROM supervisor WHERE email = $1";
   const values2 = [email];
   pool.query(sleSelect, values2, (error, result) => {
-    // console.log(sleSelect);
-    // console.log(supSelect);
     if (error) {
       throw error;
     } else if (result.rows.length == 0) {
       pool.query(supSelect, values2, (error, result) => {
-        console.log("Case 1");
         if (error) {
           res.json({ isSupervisor: false });
         } else if (result.rows.length == 0) {
@@ -43,11 +40,9 @@ router.post("/login", function (req, res) {
     } else if (
       result.rows[0]["password"] == converter(password, result.rows[0]["salt"])
     ) {
-      console.log("Case 2");
       sleID = result.rows[0]["id"];
       res.json({ isSle: sleID });
     } else {
-      console.log("Case 3");
       pool.query(supSelect, values2, (error, result) => {
         if (error) {
           res.json({ isSupervisor: false });
