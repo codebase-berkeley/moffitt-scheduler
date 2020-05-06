@@ -1,0 +1,8 @@
+# pack-refs with: peeled fully-peeled sorted 
+e7d6082984d095f31ef1642398a1e421d2784cb0 refs/remotes/origin/dependabot/npm_and_yarn/fstream-1.0.12
+166cd1eebfc2cef446cb84e0f805be3b1aa36ba6 refs/remotes/origin/dependabot/npm_and_yarn/handlebars-4.7.3
+aece8a562c2a390f4ab1dca610094bc763d6e1b2 refs/remotes/origin/dependabot/npm_and_yarn/merge-1.2.1
+a958bd2584acd65c76de4aa6a301c820594ee262 refs/remotes/origin/dependabot/npm_and_yarn/mixin-deep-1.3.2
+ed9b7f9a2d4b940314ee694479f963e733d8e831 refs/remotes/origin/master
+90ec41f66c63dae45d142b6557863fec55ae823d refs/remotes/origin/minute-resolution
+fe070fb0c1260e626dd54f98513f736c497be529 refs/tags/v1.1.0
