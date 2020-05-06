@@ -1,5 +1,6 @@
 import React from "react";
-import ScheduleSelector from "react-schedule-selector";
+//import ScheduleSelector from "react-schedule-selector";
+import ScheduleSelector from "../react-schedule-selector";
 import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, getDay, getHours } from "date-fns";
 
@@ -24,6 +25,7 @@ export default class Calendar extends React.Component {
   }
 
   save() {
+    console.log(this.state.formattedSchedule);
     fetch("/save", {
       method: "POST",
       headers: {
@@ -41,8 +43,19 @@ export default class Calendar extends React.Component {
 
   handleChange = (newSchedule) => {
     var schedule2 = [];
-    for (var i = 0; i < newSchedule.length; i += 1) {
-      schedule2.push([getHours(newSchedule[i]), getDay(newSchedule[i])]);
+    for (
+      var i = 0, thirtyMin = false;
+      i < newSchedule.length;
+      i += 1, thirtyMin = !thirtyMin
+    ) {
+      if (!thirtyMin) {
+        schedule2.push([getHours(newSchedule[i]), getDay(newSchedule[i])]);
+      } else {
+        schedule2.push([
+          getHours(newSchedule[i]) + 0.5,
+          getDay(newSchedule[i]),
+        ]);
+      }
     }
     this.setState({ schedule: newSchedule, formattedSchedule: schedule2 });
   };
@@ -79,8 +92,10 @@ export default class Calendar extends React.Component {
             selection={this.state.schedule}
             numDays={7}
             minTime={0}
-            maxTime={23}
+            maxTime={24}
             dateFormat="dd MM/DD"
+            hourlyChunks={2}
+            timeFormat={"h:mma"}
             renderDateCell={this.renderCustomDateCell}
             onChange={this.handleChange}
           />
