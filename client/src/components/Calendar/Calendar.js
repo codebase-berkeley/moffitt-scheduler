@@ -85,7 +85,7 @@ export default class Calendar extends React.Component {
         <SaveChanges save={this.save} />
         <div id="schedule-container">
           <h1 id="weekString">{this.weekString}</h1>
-          <ScheduleSelector
+          <div
             startDate={startOfWeek(this.currentDate)}
             selection={this.state.schedule}
             numDays={7}
