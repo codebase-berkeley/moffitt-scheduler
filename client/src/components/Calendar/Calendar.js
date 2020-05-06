@@ -1,6 +1,4 @@
 import React from "react";
-//import ScheduleSelector from "react-schedule-selector";
-import ScheduleSelector from "../react-schedule-selector";
 import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, getDay, getHours } from "date-fns";
 
