@@ -3,6 +3,8 @@ import "./OpenShiftsCal.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
 import { Redirect } from "react-router-dom";
+import leftArrow from "./Arrows/leftarrow.svg";
+import rightArrow from "./Arrows/rightarrow.svg";
 
 function Timeslot(props) {
   function CovererRequest() {
@@ -164,25 +166,33 @@ function initialShifts() {
   return a;
 }
 
-var currentDate = new Date();
-var weekString =
-  format(currentDate, "MMMM") +
-  " " +
-  format(currentDate, "YYYY") +
-  ": " +
-  format(startOfWeek(currentDate), "MM/DD") +
-  " - " +
-  format(endOfWeek(currentDate), "MM/DD");
-
 var emptyShifts = initialShifts();
 
 export default class OpenShiftsCal extends React.Component {
   constructor(props) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate());
+    var weekString =
+      format(currentDate, "MMMM") +
+      " " +
+      format(currentDate, "YYYY") +
+      ": " +
+      format(startOfWeek(currentDate), "MM/DD") +
+      " - " +
+      format(endOfWeek(currentDate), "MM/DD");
     super(props);
-    this.state = { shifts: emptyShifts };
+    this.state = {
+      shifts: emptyShifts,
+      currentDate: currentDate,
+      weekString: weekString,
+      emptyShifts: emptyShifts,
+    };
+    this.previousWeek = this.previousWeek.bind(this);
+    this.nextWeek = this.nextWeek.bind(this);
   }
 
   componentDidMount() {
+    /** Use current week variable to edit this. */
     fetch("/openshifts/" + this.props.userId, {
       method: "POST",
       headers: {
@@ -190,8 +200,11 @@ export default class OpenShiftsCal extends React.Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        items: this.state.shifts,
+        items: this.state.emptyShifts,
         userId: this.props.userId,
+        currentDate: this.state.currentDate,
+        startOfWeek: startOfWeek(this.state.currentDate),
+        endOfWeek: endOfWeek(this.state.currentDate),
       }),
     })
       .then((response) => {
@@ -201,7 +214,82 @@ export default class OpenShiftsCal extends React.Component {
         this.setState({ shifts: jsonResponse.shifts });
       });
   }
+  previousWeek() {
+    let currStartDate = new Date(this.state.currentDate);
+    if (Date.parse(currStartDate) < Date.parse(new Date())) {
+      return;
+    }
+    currStartDate.setDate(currStartDate.getDate() - 7);
+    var weekStringg =
+      format(currStartDate, "MMMM") +
+      " " +
+      format(currStartDate, "YYYY") +
+      ": " +
+      format(startOfWeek(currStartDate), "MM/DD") +
+      " - " +
+      format(endOfWeek(currStartDate), "MM/DD");
+    fetch("/openshifts/" + this.props.userId, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: this.state.emptyShifts,
+        userId: this.props.userId,
+        currentDate: currStartDate,
+        startOfWeek: startOfWeek(currStartDate),
+        endOfWeek: endOfWeek(currStartDate),
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({
+          shifts: jsonResponse.shifts,
+          currentDate: currStartDate,
+          weekString: weekStringg,
+        });
+      });
+  }
 
+  nextWeek() {
+    let currStartDate = new Date(this.state.currentDate);
+    currStartDate.setDate(currStartDate.getDate() + 7);
+    var weekStringg =
+      format(currStartDate, "MMMM") +
+      " " +
+      format(currStartDate, "YYYY") +
+      ": " +
+      format(startOfWeek(currStartDate), "MM/DD") +
+      " - " +
+      format(endOfWeek(currStartDate), "MM/DD");
+    fetch("/openshifts/" + this.props.userId, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: this.state.shifts,
+        userId: this.props.userId,
+        currentDate: currStartDate,
+        startOfWeek: startOfWeek(currStartDate),
+        endOfWeek: endOfWeek(currStartDate),
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({
+          shifts: jsonResponse.shifts,
+          currentDate: currStartDate,
+          weekString: weekStringg,
+        });
+      });
+  }
   render() {
     const hours = [
       "12am",
@@ -232,18 +320,18 @@ export default class OpenShiftsCal extends React.Component {
 
     /* Displays the wkdays header.
      */
-    const wkdays = [];
+    var wkdays = [];
     for (var i = 0; i < 7; i += 1) {
       wkdays.push(
         <div class="item-wday1">
-          {format(addDays(startOfWeek(currentDate), i), "dd MM/DD")}
+          {format(addDays(startOfWeek(this.state.currentDate), i), "dd MM/DD")}
         </div>
       );
     }
 
     /* Maps shift ids to their collective starttimes, endtimes, and locations
      */
-    const shiftGrouper = {};
+    var shiftGrouper = {};
     for (var i = 0; i < 168; i += 1) {
       if (this.state.shifts[i] != null && this.state.shifts[i].id != null) {
         if (this.state.shifts[i].id in shiftGrouper) {
@@ -262,7 +350,7 @@ export default class OpenShiftsCal extends React.Component {
       while every 1-7th element should be a shift cell.
       The valid prop tracks if the Timeslot is a clickable, colored cell belonging to a shift or not.
     */
-    const timeslots = [];
+    var timeslots = [];
     for (var i = 0, ti = 0; i < 192; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
@@ -301,7 +389,23 @@ export default class OpenShiftsCal extends React.Component {
         <h1 id="yourshifts1">Open Shifts</h1>
         <div id="schedule-container-st1">
           <div id="frontWords1">
-            <h1 id="weekString1">{weekString}</h1>
+            <button className="buttonLeftArrow">
+              <img
+                className="leftArrow"
+                src={leftArrow}
+                onClick={this.previousWeek}
+                alt="leftArrow"
+              />
+            </button>
+            <h1 id="weekString1">{this.state.weekString}</h1>
+            <button className="buttonRightArrow">
+              <img
+                className="rightArrow"
+                src={rightArrow}
+                onClick={this.nextWeek}
+                alt="rightArrow"
+              />
+            </button>
           </div>
           <div id="inner-schedule1">
             <div></div>

@@ -3,9 +3,14 @@ var router = express.Router();
 
 var pool = require("../db/db");
 
-router.get("/masterschedule", function (req, res) {
+router.get("/masterschedule/:currWeek", function (req, res) {
+  let newCurrWeek = new Date(req.params.currWeek);
+  let currWeekStartDate = newCurrWeek.getTime();
+  let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
+
   pool.query(
-    "SELECT name, start_time, end_time, location, shift_id, sle_id FROM shifts, sle WHERE id=sle_id ",
+    `SELECT name, start_time, end_time, location, shift_id, sle_id FROM shifts, sle 
+    WHERE id=sle_id AND start_time >= to_timestamp(${currWeekStartDate}/1000.0) AND end_time <= to_timestamp(${currWeekEndDate}/1000.0)`,
     (error, result) => {
       if (error) {
         throw error;

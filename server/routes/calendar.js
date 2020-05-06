@@ -50,9 +50,7 @@ router.post("/save", (req, res) => {
   );
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
-      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${
-        items[i][0]
-      }, ${items[i][1]})`,
+      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i][0]}, ${items[i][1]})`,
       (error, result) => {
         if (error) {
           throw error;
@@ -120,7 +118,7 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.get("/shifts", function(req, res) {
+router.get("/shifts", function (req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;
@@ -239,6 +237,20 @@ router.post("/openshifts/:userId", (req, res) => {
         console.log(error);
         throw error;
       }
+      let wantedDates = [];
+      console.log(req.body.startOfWeek);
+      console.log(req.body.endOfWeek);
+      for (var k = 0; k < result.rows.length; k++) {
+        if (
+          Date.parse(result.rows[k].start_time) >=
+            Date.parse(req.body.startOfWeek) &&
+          Date.parse(result.rows[k].start_time) < Date.parse(req.body.endOfWeek)
+        ) {
+          wantedDates.push(result.rows[k]);
+        }
+      }
+      result.rows = wantedDates;
+      console.log(result.rows);
       let shiftid_to_color = {};
       for (var j = 0; j < result.rows.length; j += 1) {
         let currentRow1 = result.rows[j];
@@ -269,7 +281,7 @@ router.post("/openshifts/:userId", (req, res) => {
   );
 });
 
-router.post("/updateopenshifts", function(req, res) {
+router.post("/updateopenshifts", function (req, res) {
   let sleID = req.body.sleID;
   let shiftID = req.body.shiftID;
   pool.query(

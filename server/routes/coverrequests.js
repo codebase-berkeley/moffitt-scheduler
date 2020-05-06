@@ -126,27 +126,69 @@ router.get("/pendingsupervisor", (req, res) => {
 });
 
 router.get("/pendingcoverage", (req, res) => {
-  var database = {
-    items: [
-      {
-        desk: "Fourth Floor",
-        loc: "Moffitt",
-        date: "Wednesday, March 6, 2020",
-        time: "3:00 PM - 5:00 PM",
-        needname: "Broco Lee",
-        message: "Going home for the weekend",
-      },
-      {
-        desk: "Fourth Floor",
-        loc: "Moffitt",
-        date: "Thursday, March 7, 2020",
-        time: "3:00 PM - 5:00 PM",
-        needname: "Broco Lee",
-        message: "Need sleep. Very tired.",
-      },
-    ],
-  };
-  res.json(database);
+  pool.query(
+    `select * from sle as c, shifts as a left join coverrequests as b on a.shift_id = b.shift_id where a.cover_requested = 'true' and  c.id = a.sle_id and request_id is null`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+        var options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        };
+        for (var i = 0; i < result.rows.length; i++) {
+          var startHours = result.rows[i].start_time.getHours();
+          var startMinutes = result.rows[i].start_time.getMinutes();
+          var ampm = startHours >= 12 ? "PM" : "AM";
+          startHours = startHours % 12;
+          startHours = startHours ? startHours : 12;
+          startMinutes = startMinutes < 10 ? "0" + startMinutes : startMinutes;
+          var strTimeStart = startHours + ":" + startMinutes + " " + ampm;
+          var endHours = result.rows[i].end_time.getHours();
+          var endMinutes = result.rows[i].end_time.getMinutes();
+          var ampmm = endHours >= 12 ? "PM" : "AM";
+          endHours = endHours % 12;
+          endHours = endHours ? endHours : 12;
+          endMinutes = endMinutes < 10 ? "0" + endMinutes : endMinutes;
+          var strTimeEnd = endHours + ":" + startMinutes + " " + ampmm;
+          result.rows[i].loc = result.rows[i].location;
+          result.rows[i].date = result.rows[i].start_time.toLocaleDateString(
+            "en-US",
+            options
+          );
+          result.rows[i].time = strTimeStart + " - " + strTimeEnd;
+          result.rows[i].needname = result.rows[i].name;
+          result.rows[i].message = result.rows[i].notes;
+        }
+        res.json({ items: result.rows });
+      }
+    }
+  );
 });
 
 module.exports = router;
+//select * from sle as c, shifts as a left join coverrequests as b on a.shift_id = b.shift_id where a.cover_requested = 'true' and  c.id = a.sle_id and request_id is null;
+/*
+var database = {
+  items: [
+    {
+      desk: "Fourth Floor",
+      loc: "Moffitt",
+      date: "Wednesday, March 6, 2020",
+      time: "3:00 PM - 5:00 PM",
+      needname: "Broco Lee",
+      message: "Going home for the weekend",
+    },
+    {
+      desk: "Fourth Floor",
+      loc: "Moffitt",
+      date: "Thursday, March 7, 2020",
+      time: "3:00 PM - 5:00 PM",
+      needname: "Broco Lee",
+      message: "Need sleep. Very tired.",
+    },
+  ],
+};
+*/

@@ -80,17 +80,46 @@ a {
   width: 50%;
 }
 
-.colorful_box1 {
-  background-color: #1de0a6;
+.moffitt3CoverBox {
+  background-color: #ff8d06;
   display: flex;
   flex-direction: column;
   align-self: center;
   border-radius: 20px;
   color: white;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 1px;
-  width: 30%;
+  width: 45%;
+  height: 25px;
+  text-align: center;
+}
+.moffitt4CoverBox {
+  background-color: #04b17e;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border-radius: 20px;
+  color: white;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 1px;
+  width: 45%;
+  height: 25px;
+  text-align: center;
+}
+.doeCoverBox {
+  background-color: #d7269b;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border-radius: 20px;
+  color: white;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 1px;
+  width: 45%;
+  height: 25px;
   text-align: center;
 }
 .need_cov1 {

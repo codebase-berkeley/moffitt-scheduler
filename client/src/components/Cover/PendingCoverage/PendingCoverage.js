@@ -4,7 +4,6 @@ import "./PendingCoverage.css";
 function processData(database) {
   const listItems = database.map((entry, index) => (
     <PendingCoverageItem
-      desk={entry.desk}
       loc={entry.loc}
       date={entry.date}
       time={entry.time}
@@ -19,20 +18,30 @@ class PendingCoverageItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [{}]
+      items: [{}],
     };
   }
 
   render() {
+    let library = this.props.loc;
+    let libraryid;
+    let locName = this.props.loc;
+    if (library === "Moffitt3") {
+      libraryid = "moffitt3CoverBox";
+      locName = "Moffitt 3rd";
+    } else if (library === "Moffitt4") {
+      libraryid = "moffitt4CoverBox";
+      locName = "Moffitt 4th";
+    } else {
+      libraryid = "doeCoverBox";
+      locName = "Doe";
+    }
     return (
       <div className="shift1">
         <div className="time_loc1">
           <div className="firstrow1">
-            <div className="bold_desk1">
-              <p className="desk">{this.props.desk}</p>
-            </div>
-            <div className="colorful_box1">
-              <p className="loc">{this.props.loc}</p>
+            <div className={libraryid}>
+              <p className="loc">{locName}</p>
             </div>
           </div>
           <p className="date1">{this.props.date}</p>
@@ -59,15 +68,15 @@ class PendingCoverage extends React.Component {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         this.setState({
-          items: jsonResponse.items
+          items: jsonResponse.items,
         });
         console.log(this.state.items);
       });
