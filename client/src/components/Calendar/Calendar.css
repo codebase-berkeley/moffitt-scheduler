@@ -84,6 +84,14 @@
   font-weight: lighter;
   color: gray;
 }
+
+.arrowsAndTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* .availabilityHeader {
   margin-left: 27.2%;
 } */

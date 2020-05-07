@@ -2,6 +2,8 @@ import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
+import leftArrow from "./Arrows/leftarrow.svg";
+import rightArrow from "./Arrows/rightarrow.svg";
 let currentClicked = null;
 let currentClickedID = null;
 function Timeslot(props) {
@@ -239,8 +241,20 @@ export default class StaticCalendar extends React.Component {
           </div>
         </Modal>
         <div id="schedule-container-st">
-          <div id="frontWords">
-            <h1 id="weekString">{weekString}</h1>
+          <div className="arrowsAndTitle">
+            <div>
+              <button>
+                <img className="arrowLeft" src={leftArrow} alt="arrowLeft" />
+              </button>
+            </div>
+            <div id="frontWords">
+              <h1 id="weekString">{weekString}</h1>
+            </div>
+            <div>
+              <button>
+                <img className="arrowRight" src={rightArrow} alt="arrowRight" />
+              </button>
+            </div>
           </div>
           <div id="legend">
             <div id="libtag">
