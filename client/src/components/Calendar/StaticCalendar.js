@@ -263,7 +263,6 @@ export default class StaticCalendar extends React.Component {
     let startMonth = this.state.currentWeek.getMonth() + 1;
     let startDate = this.state.currentWeek.getDate();
     let year = this.state.currentWeek.getFullYear();
-    console.log("year", year);
 
     let endDate = new Date(this.state.currentWeek);
     endDate.setDate(endDate.getDate() + 7);
