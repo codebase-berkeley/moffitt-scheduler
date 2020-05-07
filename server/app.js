@@ -1,7 +1,9 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
-
+var cookieParser = require("cookie-parser");
+var path = require("path");
+var session = require("express-session");
 var calendarRoutes = require("./routes/calendar");
 var coverRequestRoutes = require("./routes/coverrequests");
 var employeesRoutes = require("./routes/employees");
@@ -19,6 +21,18 @@ app.use("/", coverRequestRoutes);
 app.use("/", employeesRoutes);
 app.use("/", loginRoutes);
 app.use("/", masterScheduleRoutes);
+
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use(
+  session({
+    secret: "keyboard-cat",
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true },
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
