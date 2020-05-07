@@ -46,15 +46,6 @@ function initialShifts() {
   return a;
 }
 
-// var weekString =
-//   format(currentDate, "MMMM") +
-//   " " +
-//   format(currentDate, "YYYY") +
-//   ": " +
-//   format(startOfWeek(currentDate), "MM/DD") +
-//   " - " +
-//   format(endOfWeek(currentDate), "MM/DD");
-
 function dateObject(day, hour) {
   var dateObject = new Date();
   dateObject.setHours(hour, 0, 0, 0);
@@ -317,10 +308,8 @@ export default class StaticCalendar extends React.Component {
             </div>
             <div id="frontWords">
               <h1 id="weekString">
-                <div>
-                  {displayMonth(startMonth)} {year}:
-                </div>
-                {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
+                {displayMonth(startMonth)} {year}: {startMonth}/{startDate} -{" "}
+                {endDateMonth}/{endDateNum}
               </h1>
             </div>
             <div>
