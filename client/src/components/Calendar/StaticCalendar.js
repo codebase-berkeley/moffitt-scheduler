@@ -62,6 +62,7 @@ function dateObject(day, hour) {
   var diff = dayOfWeek - day;
   var newDate = dateObject.getDate() - diff;
   dateObject.setDate(newDate);
+  console.log("dateobjectinfunct", dateObject);
   return dateObject;
 }
 
@@ -80,20 +81,22 @@ export default class StaticCalendar extends React.Component {
     this.cancelClick = this.cancelClick.bind(this);
     this.previousWeek = this.previousWeek.bind(this);
     this.nextWeek = this.nextWeek.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
   previousWeek() {
     console.log("in previous week");
     let currStartDate = new Date(this.state.currentWeek);
     currStartDate.setDate(currStartDate.getDate() - 7);
-    this.setState({ currentWeek: currStartDate });
+    this.setState({ currentWeek: currStartDate }, this.fetchData);
   }
 
   nextWeek() {
     console.log("in next week");
     let currStartDate = new Date(this.state.currentWeek);
     currStartDate.setDate(currStartDate.getDate() + 7);
-    this.setState({ currentWeek: currStartDate });
+    console.log("beforeSETSTATE_next", currStartDate);
+    this.setState({ currentWeek: currStartDate }, this.fetchData);
   }
 
   closeModal() {
@@ -105,6 +108,11 @@ export default class StaticCalendar extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    console.log("inside component did mount");
     fetch("/staticcalendar/" + this.props.userId, {
       method: "POST",
       headers: {

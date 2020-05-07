@@ -66,8 +66,7 @@ router.post("/staticcalendar/:userId", (req, res) => {
   let newCurrWeek = new Date(req.body.currWeek);
   let currWeekStartDate = newCurrWeek.getTime();
   let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
-
-  console.log("currweek in endpoint", newCurrWeek);
+  console.log("original", req.body.currWeek);
   pool.query(
     `SELECT * FROM SHIFTS WHERE sle_id = $1 
     AND start_time >= to_timestamp(${currWeekStartDate}/1000.0) AND end_time <= to_timestamp(${currWeekEndDate}/1000.0)`,
@@ -76,6 +75,7 @@ router.post("/staticcalendar/:userId", (req, res) => {
       if (error) {
         throw error;
       }
+      console.log("result", result.rows);
       for (var i = 0; i < 168; i += 1) {
         for (var j = 0; j < result.rows.length; j += 1) {
           let currentRow = result.rows[j];
