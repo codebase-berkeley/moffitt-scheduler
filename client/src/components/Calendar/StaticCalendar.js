@@ -46,7 +46,6 @@ function initialShifts() {
   return a;
 }
 
-var currentDate = new Date();
 // var weekString =
 //   format(currentDate, "MMMM") +
 //   " " +
@@ -115,6 +114,7 @@ export default class StaticCalendar extends React.Component {
       body: JSON.stringify({
         items: this.state.shifts,
         userId: this.props.userId,
+        currWeek: this.state.currentWeek,
       }),
     })
       .then((response) => {
