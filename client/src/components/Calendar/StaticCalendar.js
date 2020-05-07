@@ -120,7 +120,7 @@ export default class StaticCalendar extends React.Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        items: this.state.shifts,
+        items: initialShifts(),
         userId: this.props.userId,
         currWeek: this.state.currentWeek,
       }),
