@@ -243,7 +243,7 @@ export default class StaticCalendar extends React.Component {
         <div id="schedule-container-st">
           <div className="arrowsAndTitle">
             <div>
-              <button>
+              <button className="arrowLeftButton">
                 <img className="arrowLeft" src={leftArrow} alt="arrowLeft" />
               </button>
             </div>
@@ -251,7 +251,7 @@ export default class StaticCalendar extends React.Component {
               <h1 id="weekString">{weekString}</h1>
             </div>
             <div>
-              <button>
+              <button className="arrowRightButton">
                 <img className="arrowRight" src={rightArrow} alt="arrowRight" />
               </button>
             </div>
