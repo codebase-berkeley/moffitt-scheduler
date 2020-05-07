@@ -47,14 +47,14 @@ function initialShifts() {
 }
 
 var currentDate = new Date();
-var weekString =
-  format(currentDate, "MMMM") +
-  " " +
-  format(currentDate, "YYYY") +
-  ": " +
-  format(startOfWeek(currentDate), "MM/DD") +
-  " - " +
-  format(endOfWeek(currentDate), "MM/DD");
+// var weekString =
+//   format(currentDate, "MMMM") +
+//   " " +
+//   format(currentDate, "YYYY") +
+//   ": " +
+//   format(startOfWeek(currentDate), "MM/DD") +
+//   " - " +
+//   format(endOfWeek(currentDate), "MM/DD");
 
 function dateObject(day, hour) {
   var dateObject = new Date();
@@ -239,6 +239,15 @@ export default class StaticCalendar extends React.Component {
       },
     };
 
+    let startMonth = this.state.currentWeek.getMonth() + 1;
+    let startDate = this.state.currentWeek.getDate();
+
+    let endDate = new Date(this.state.currentWeek);
+    endDate.setDate(endDate.getDate() + 7);
+
+    let endDateNum = endDate.getDate() - 1;
+    let endDateMonth = endDate.getMonth() + 1;
+
     return (
       <div id="overall-container">
         <h1 id="yourshifts">Your Shifts</h1>
@@ -285,7 +294,9 @@ export default class StaticCalendar extends React.Component {
               </button>
             </div>
             <div id="frontWords">
-              <h1 id="weekString">{weekString}</h1>
+              <h1 id="weekString">
+                {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
+              </h1>
             </div>
             <div>
               <button className="arrowRightButton">
