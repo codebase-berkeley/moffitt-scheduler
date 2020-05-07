@@ -223,7 +223,7 @@ export default class StaticCalendar extends React.Component {
     for (var i = 0; i < 7; i += 1) {
       wkdays.push(
         <div class="item-wday">
-          {format(addDays(startOfWeek(currentDate), i), "dd MM/DD")}
+          {format(addDays(startOfWeek(this.state.currentWeek), i), "dd MM/DD")}
         </div>
       );
     }
