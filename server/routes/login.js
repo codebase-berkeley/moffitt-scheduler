@@ -12,6 +12,7 @@ function converter(password, salt) {
 
 router.post("/login", function (req, res) {
   var email = req.body.email.trim();
+  console.log(email);
   var password = req.body.password;
   var sleID;
 
