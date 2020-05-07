@@ -23,7 +23,7 @@ function sameWeekAsCurrent(date) {
   }
 }
 
-router.get("/masterschedule/:currWeek", function(req, res) {
+router.get("/masterschedule/:currWeek", function (req, res) {
   let newCurrWeek = new Date(req.params.currWeek);
   let currWeekStartDate = newCurrWeek.getTime();
   let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
@@ -67,7 +67,7 @@ router.get("/masterschedule/:currWeek", function(req, res) {
   );
 });
 
-router.get("/otheremployees", function(req, res) {
+router.get("/otheremployees", function (req, res) {
   pool.query("SELECT name, id FROM sle", (error, result) => {
     if (error) {
       throw error;
@@ -244,7 +244,7 @@ router.post("/generateshifts", (req, res) => {
               loc: currRow.location,
               s: currRow.start_time,
               e: currRow.end_time,
-              day: currRow.day_of_week
+              day: currRow.day_of_week,
             });
           } else {
             newgroup.e += 0.5;
@@ -265,7 +265,7 @@ router.post("/generateshifts", (req, res) => {
               sle_id: shiftGroups[i].sle_id,
               location: shiftGroups[i].loc,
               start_time: new Date(startDate),
-              end_time: new Date(startDate)
+              end_time: new Date(startDate),
             };
             if (shiftGroups[i].s % 1 == 0) {
               next.start_time.setHours(shiftGroups[i].s);
@@ -300,7 +300,7 @@ function insertShifts(realShifts, res) {
         realShifts[i].sle_id,
         realShifts[i].location,
         realShifts[i].start_time,
-        realShifts[i].end_time
+        realShifts[i].end_time,
       ]
     );
   }
@@ -315,7 +315,7 @@ var minShiftLength = config.minShiftLength;
 var maxShiftLength = config.maxShiftLength;
 var maxWeeklyShifts = config.maxWeeklyShifts;
 
-router.get("/generatesched", function(req, res) {
+router.get("/generatesched", function (req, res) {
   pool.query(
     "SELECT * from AVAILABILITY inner join SLE on AVAILABILITY.sle_id = SLE.id",
     (error, result) => {
@@ -338,7 +338,7 @@ router.get("/generatesched", function(req, res) {
         if (idExists) {
           currEmployee.avails.push({
             day: weekdayMap[result.rows[i].day_of_week],
-            slot: result.rows[i].start_time
+            slot: result.rows[i].start_time,
           });
         } else {
           employeeList.push({
@@ -349,9 +349,9 @@ router.get("/generatesched", function(req, res) {
             avails: [
               {
                 day: weekdayMap[result.rows[i].day_of_week],
-                slot: result.rows[i].start_time
-              }
-            ]
+                slot: result.rows[i].start_time,
+              },
+            ],
           });
         }
       }
@@ -375,7 +375,7 @@ function insertSchedule(algoSchedule, res) {
       current.location,
       current.start_time,
       current.end_time,
-      current.coverrequested
+      current.coverrequested,
     ]);
   }
   return res.json({ items: algoSchedule });

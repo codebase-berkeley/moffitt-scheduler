@@ -62,7 +62,6 @@ function dateObject(day, hour) {
   var diff = dayOfWeek - day;
   var newDate = dateObject.getDate() - diff;
   dateObject.setDate(newDate);
-  console.log("dateobjectinfunct", dateObject);
   return dateObject;
 }
 
@@ -85,17 +84,14 @@ export default class StaticCalendar extends React.Component {
   }
 
   previousWeek() {
-    console.log("in previous week");
     let currStartDate = new Date(this.state.currentWeek);
     currStartDate.setDate(currStartDate.getDate() - 7);
     this.setState({ currentWeek: currStartDate }, this.fetchData);
   }
 
   nextWeek() {
-    console.log("in next week");
     let currStartDate = new Date(this.state.currentWeek);
     currStartDate.setDate(currStartDate.getDate() + 7);
-    console.log("beforeSETSTATE_next", currStartDate);
     this.setState({ currentWeek: currStartDate }, this.fetchData);
   }
 
@@ -112,7 +108,6 @@ export default class StaticCalendar extends React.Component {
   }
 
   fetchData() {
-    console.log("inside component did mount");
     fetch("/staticcalendar/" + this.props.userId, {
       method: "POST",
       headers: {
@@ -247,8 +242,28 @@ export default class StaticCalendar extends React.Component {
       },
     };
 
+    function displayMonth(m) {
+      const month = {
+        1: "January",
+        2: "February",
+        3: "March",
+        4: "April",
+        5: "May",
+        6: "June",
+        7: "July",
+        8: "August",
+        9: "September",
+        10: "October",
+        11: "November",
+        12: "December",
+      };
+      return month[m];
+    }
+
     let startMonth = this.state.currentWeek.getMonth() + 1;
     let startDate = this.state.currentWeek.getDate();
+    let year = this.state.currentWeek.getFullYear();
+    console.log("year", year);
 
     let endDate = new Date(this.state.currentWeek);
     endDate.setDate(endDate.getDate() + 7);
@@ -303,6 +318,9 @@ export default class StaticCalendar extends React.Component {
             </div>
             <div id="frontWords">
               <h1 id="weekString">
+                <div>
+                  {displayMonth(startMonth)} {year}:
+                </div>
                 {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
               </h1>
             </div>
