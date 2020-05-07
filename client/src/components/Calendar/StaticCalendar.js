@@ -4,8 +4,10 @@ import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
 import leftArrow from "./Arrows/leftarrow.svg";
 import rightArrow from "./Arrows/rightarrow.svg";
+
 let currentClicked = null;
 let currentClickedID = null;
+
 function Timeslot(props) {
   return (
     <div
@@ -54,15 +56,45 @@ var weekString =
   " - " +
   format(endOfWeek(currentDate), "MM/DD");
 
+function dateObject(day, hour) {
+  var dateObject = new Date();
+  dateObject.setHours(hour, 0, 0, 0);
+  var dayOfWeek = dateObject.getDay();
+  var diff = dayOfWeek - day;
+  var newDate = dateObject.getDate() - diff;
+  dateObject.setDate(newDate);
+  return dateObject;
+}
+
 export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { shifts: initialShifts(), modalIsOpen: false };
+    this.state = {
+      shifts: initialShifts(),
+      modalIsOpen: false,
+      currentWeek: dateObject(0, 0),
+    };
     this.stateFixer = this.stateFixer.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
     this.submitClick = this.submitClick.bind(this);
     this.cancelClick = this.cancelClick.bind(this);
+    this.previousWeek = this.previousWeek.bind(this);
+    this.nextWeek = this.nextWeek.bind(this);
+  }
+
+  previousWeek() {
+    console.log("in previous week");
+    let currStartDate = new Date(this.state.currentWeek);
+    currStartDate.setDate(currStartDate.getDate() - 7);
+    this.setState({ currentWeek: currStartDate });
+  }
+
+  nextWeek() {
+    console.log("in next week");
+    let currStartDate = new Date(this.state.currentWeek);
+    currStartDate.setDate(currStartDate.getDate() + 7);
+    this.setState({ currentWeek: currStartDate });
   }
 
   closeModal() {
@@ -244,7 +276,12 @@ export default class StaticCalendar extends React.Component {
           <div className="arrowsAndTitle">
             <div>
               <button className="arrowLeftButton">
-                <img className="arrowLeft" src={leftArrow} alt="arrowLeft" />
+                <img
+                  className="arrowLeft"
+                  onClick={this.previousWeek}
+                  src={leftArrow}
+                  alt="arrowLeft"
+                />
               </button>
             </div>
             <div id="frontWords">
@@ -252,7 +289,12 @@ export default class StaticCalendar extends React.Component {
             </div>
             <div>
               <button className="arrowRightButton">
-                <img className="arrowRight" src={rightArrow} alt="arrowRight" />
+                <img
+                  className="arrowRight"
+                  onClick={this.nextWeek}
+                  src={rightArrow}
+                  alt="arrowRight"
+                />
               </button>
             </div>
           </div>
