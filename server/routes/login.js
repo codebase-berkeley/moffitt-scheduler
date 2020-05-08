@@ -7,18 +7,18 @@ var passport = require("../passport");
 router.post("/login", function (req, res, next) {
   passport.authenticate("local", function (err, user, info) {
     if (err || !user) {
-      console.log("There is not a valid user");
-      return res.json({ successful: false, isSupervisor: false });
+      console.log("no user");
+      return res.json({ successful: false, isSupervisor: false, isSle: null });
     }
     req.logIn(user, function (err) {
-      console.log("There is a valid user");
-      console.log(user);
       if (err) {
-        console.log("If there is a valid user why is this reached? Why error?");
-        return res.json({ successful: false, isSupervisor: false });
+        return res.json({ successful: false });
       }
-      console.log("This statement should happen");
-      return res.json({ successful: true });
+      if (user.id == 0) {
+        return res.json({ successful: true, isSupervisor: true });
+      } else {
+        return res.json({ successful: true, isSle: true, id: user.id });
+      }
     });
   })(req, res, next);
 });

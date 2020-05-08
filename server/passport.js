@@ -32,7 +32,7 @@ passport.use(
             result.rows[0]["password"] ==
             converter(password, result.rows[0]["salt"])
           ) {
-            cb(null, true);
+            cb(null, { id: 0 });
           } else {
             cb(null, false);
           }
@@ -42,7 +42,7 @@ passport.use(
         converter(password, result.rows[0]["salt"])
       ) {
         sleID = result.rows[0]["id"];
-        cb(null, { sleID: sleID });
+        cb(null, { id: sleID });
       } else {
         pool.query(supSelect, values2, (error, result) => {
           if (error) {
@@ -53,7 +53,7 @@ passport.use(
             result.rows[0]["password"] ==
             converter(password, result.rows[0]["salt"])
           ) {
-            cb(null, true);
+            cb(null, { id: 0 });
           } else {
             cb(null, false);
           }

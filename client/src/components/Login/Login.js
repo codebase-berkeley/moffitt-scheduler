@@ -102,8 +102,11 @@ class Login extends React.Component {
             this.setState({ isError: true });
           }
         }
-        this.handleIsSle(jsonResponse.isSle);
-        this.handleIsSupervisor(jsonResponse.isSupervisor);
+        if (jsonResponse.isSle) {
+          this.handleIsSle(jsonResponse.id);
+        } else {
+          this.handleIsSupervisor(jsonResponse.isSupervisor);
+        }
         console.log(jsonResponse);
       });
   }
