@@ -37,14 +37,14 @@ class Shift {
 
 function initialShifts() {
   let a = [];
-  for (var i = 0; i < 168; i += 1) {
+  for (var i = 0; i < 336; i += 1) {
     a.push(new Shift("#f8f8f8", null, null, null, null, null, null));
   }
   let count = 0;
-  for (var i = 0; i <= 23; i += 1) {
+  for (var i = 0; i <= 23; i += 0.5) {
     for (var j = 0; j <= 6; j += 1) {
       a[count].start = i;
-      a[count].end = i + 1;
+      a[count].end = i + 0.5;
       a[count].day = j;
       count += 1;
     }
@@ -71,11 +71,12 @@ export default class Calendar extends React.Component {
       shifts: emptyShifts,
       currentDate: currentDate,
       weekString: weekString,
-      emptyShifts: emptyShifts,
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.state.shifts);
+  }
 
   render() {
     const hours = [];
@@ -110,10 +111,10 @@ export default class Calendar extends React.Component {
     /* Maps shift ids to their collective starttimes, endtimes, and locations
      */
     var shiftGrouper = {};
-    for (var i = 0; i < 168; i += 1) {
+    for (var i = 0; i < 336; i += 1) {
       if (this.state.shifts[i] != null && this.state.shifts[i].id != null) {
         if (this.state.shifts[i].id in shiftGrouper) {
-          shiftGrouper[this.state.shifts[i].id][1] += 1;
+          shiftGrouper[this.state.shifts[i].id][1] += 0.5;
         } else {
           shiftGrouper[this.state.shifts[i].id] = [
             this.state.shifts[i].start,
