@@ -14,7 +14,7 @@ router.post("/login", function (req, res, next) {
       console.log("There is a valid user");
       console.log(user);
       if (err) {
-        console.log("If there is a valid user why is this reached?");
+        console.log("If there is a valid user why is this reached? Why error?");
         return res.json({ successful: false, isSupervisor: false });
       }
       console.log("This statement should happen");
