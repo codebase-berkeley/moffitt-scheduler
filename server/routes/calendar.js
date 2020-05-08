@@ -127,6 +127,18 @@ router.get("/shifts", function (req, res) {
   });
 });
 
+class Shift {
+  constructor(color, id, start, end, day, sleid, location) {
+    this.color = color;
+    this.id = id;
+    this.start = start;
+    this.end = end;
+    this.day = day;
+    this.sleid = sleid;
+    this.location = location;
+  }
+}
+
 router.get("/availability/:userId", (req, res) => {
   var selected = [];
   var curr_day = new Date();
@@ -143,17 +155,7 @@ router.get("/availability/:userId", (req, res) => {
           var row = result.rows[r];
           var t = result.rows[r].t;
           var d = result.rows[r].d;
-          selected.push(
-            new Date(
-              curr_day.getFullYear(),
-              curr_day.getMonth(),
-              d + curr_week_sunday,
-              t,
-              0,
-              0,
-              0
-            )
-          );
+          selected.push(new Shift("green", row));
         }
       }
       return res.json({ schedule: selected });

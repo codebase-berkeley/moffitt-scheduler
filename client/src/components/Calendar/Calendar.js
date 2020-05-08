@@ -68,14 +68,20 @@ export default class Calendar extends React.Component {
       format(endOfWeek(currentDate), "MM/DD");
     super(props);
     this.state = {
-      shifts: emptyShifts,
+      schedule: emptyShifts,
       currentDate: currentDate,
       weekString: weekString,
     };
   }
 
   componentDidMount() {
-    console.log(this.state.shifts);
+    fetch("/availability/" + this.props.userId)
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        this.setState({ schedule: jsonResponse.schedule });
+      });
   }
 
   render() {
@@ -112,14 +118,15 @@ export default class Calendar extends React.Component {
      */
     var shiftGrouper = {};
     for (var i = 0; i < 336; i += 1) {
-      if (this.state.shifts[i] != null && this.state.shifts[i].id != null) {
-        if (this.state.shifts[i].id in shiftGrouper) {
-          shiftGrouper[this.state.shifts[i].id][1] += 0.5;
+      let curr = this.state.schedule;
+      if (curr[i] != null && curr[i].id != null) {
+        if (curr[i].id in shiftGrouper) {
+          shiftGrouper[curr[i].id][1] += 0.5;
         } else {
-          shiftGrouper[this.state.shifts[i].id] = [
-            this.state.shifts[i].start,
-            this.state.shifts[i].end,
-            this.state.shifts[i].location,
+          shiftGrouper[curr[i].id] = [
+            curr[i].start,
+            curr[i].end,
+            curr[i].location,
           ];
         }
       }
@@ -130,46 +137,38 @@ export default class Calendar extends React.Component {
       The valid prop tracks if the Timeslot is a clickable, colored cell belonging to a shift or not.
     */
     var timeslots = [];
-    for (var i = 0; i < 384; i += 1) {
+    for (var i = 0, ti = 0; i < 384; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
       } else {
-        timeslots.push(<Timeslot></Timeslot>);
+        if (
+          this.state.schedule[ti].sleid == this.props.userId ||
+          !(this.state.schedule[ti].id in shiftGrouper)
+        ) {
+          timeslots.push(
+            <Timeslot
+              color={this.state.schedule[ti].color}
+              id={this.state.schedule[ti].id}
+              userid={this.props.userId}
+              valid={false}
+            />
+          );
+        } else {
+          timeslots.push(
+            <Timeslot
+              color={this.state.schedule[ti].color}
+              id={this.state.schedule[ti].id}
+              userid={this.props.userId}
+              valid={true}
+              start={shiftGrouper[this.state.schedule[ti].id][0]}
+              end={shiftGrouper[this.state.schedule[ti].id][1]}
+              location={shiftGrouper[this.state.schedule[ti].id][2]}
+            />
+          );
+        }
+        ti += 1;
       }
     }
-    // var timeslots = [];
-    // for (var i = 0, ti = 0; i < 192; i += 1) {
-    //   if (i % 8 == 0) {
-    //     timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
-    //   } else {
-    //     if (
-    //       this.state.shifts[ti].sleid == this.props.userId ||
-    //       !(this.state.shifts[ti].id in shiftGrouper)
-    //     ) {
-    //       timeslots.push(
-    //         <Timeslot
-    //           color={this.state.shifts[ti].color}
-    //           id={this.state.shifts[ti].id}
-    //           userid={this.props.userId}
-    //           valid={false}
-    //         />
-    //       );
-    //     } else {
-    //       timeslots.push(
-    //         <Timeslot
-    //           color={this.state.shifts[ti].color}
-    //           id={this.state.shifts[ti].id}
-    //           userid={this.props.userId}
-    //           valid={true}
-    //           start={shiftGrouper[this.state.shifts[ti].id][0]}
-    //           end={shiftGrouper[this.state.shifts[ti].id][1]}
-    //           location={shiftGrouper[this.state.shifts[ti].id][2]}
-    //         />
-    //       );
-    //     }
-    //     ti += 1;
-    //   }
-    // }
     return (
       <div id="overall-container">
         <h1 id="avails">Select Availabilities</h1>
