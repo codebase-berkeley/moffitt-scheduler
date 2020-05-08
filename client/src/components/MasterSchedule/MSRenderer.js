@@ -3,7 +3,7 @@ import "./MSRenderer.css";
 import Library from "./Library";
 import leftArrow from "./MasterImages/leftarrow.svg";
 import rightArrow from "./MasterImages/rightarrow.svg";
-import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import { format, startOfWeek, addDays } from "date-fns";
 
 function dateObject(day, hour) {
   var dateObject = new Date();
