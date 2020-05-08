@@ -140,10 +140,15 @@
   margin-left: 5%;
   margin-right: 4%;
   overflow: hidden;
-  font-family: Open Sans;
+  font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: 900;
-  font-size: 14px;
+}
+
+.item-wday2 {
+  grid-area: "wday";
+  font-size: 16px;
+  color: #949494;
 }
 
 .box {
