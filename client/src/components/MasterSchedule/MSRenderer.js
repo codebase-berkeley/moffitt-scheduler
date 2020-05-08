@@ -139,7 +139,7 @@ export default class MSRenderer extends React.Component {
     let endDate = new Date(this.state.currentWeek);
     endDate.setDate(endDate.getDate() + 7);
 
-    let endDateNum = endDate.getDate();
+    let endDateNum = endDate.getDate() - 1;
     let endDateMonth = endDate.getMonth() + 1;
 
     return (
