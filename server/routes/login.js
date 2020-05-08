@@ -4,27 +4,20 @@ const crypto = require("crypto");
 var pool = require("../db/db");
 var passport = require("../passport");
 
-function converter(password, salt) {
-  return crypto
-    .pbkdf2Sync(password, salt, 1000, 64, `sha512`)
-    .toString(`hex`)
-    .substring(0, 39);
-}
-
 router.post("/login", function (req, res, next) {
-  console.log(user);
   passport.authenticate("local", function (err, user, info) {
-    console.log("where tf is the above statement going");
-    console.log(user);
     if (err || !user) {
-      return res.json({ successful: false });
+      console.log("There is not a valid user");
+      return res.json({ successful: false, isSupervisor: false });
     }
-
     req.logIn(user, function (err) {
+      console.log("There is a valid user");
+      console.log(user);
       if (err) {
-        return res.json({ successful: false });
+        console.log("If there is a valid user why is this reached?");
+        return res.json({ successful: false, isSupervisor: false });
       }
-
+      console.log("This statement should happen");
       return res.json({ successful: true });
     });
   })(req, res, next);

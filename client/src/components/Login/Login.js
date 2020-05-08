@@ -84,7 +84,7 @@ class Login extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: emailText, password: passwordText }),
+      body: JSON.stringify({ username: emailText, password: passwordText }),
     })
       .then((response) => {
         return response.json();
