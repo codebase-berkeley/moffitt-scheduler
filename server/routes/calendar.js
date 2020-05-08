@@ -62,6 +62,7 @@ router.post("/save", (req, res) => {
 });
 
 router.post("/staticcalendar/:userId", (req, res) => {
+  console.log("User id: " + req.user);
   let shifts = req.body.items;
   pool.query(
     "SELECT * FROM SHIFTS WHERE sle_id = $1",
@@ -85,7 +86,6 @@ router.post("/staticcalendar/:userId", (req, res) => {
                 shifts[i].end <= currentRow.end_time.getHours()));
           if (sameStartEndValid || diffStartEndValid) {
             shifts[i].id = currentRow.shift_id;
-            console.log(currentRow.cover_requested);
             if (currentRow.location == "Moffitt3") {
               if (currentRow.cover_requested == "true") {
                 shifts[i].color = "#C187D3";
