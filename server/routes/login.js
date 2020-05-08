@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const crypto = require("crypto");
 var pool = require("../db/db");
+var passport = require("../passport");
 
 function converter(password, salt) {
   return crypto
@@ -10,54 +11,23 @@ function converter(password, salt) {
     .substring(0, 39);
 }
 
-router.post("/login", function (req, res) {
-  var email = req.body.email.trim();
-  var password = req.body.password;
-  var sleID;
-
-  const sleSelect = "SELECT id, password, salt FROM sle WHERE email = $1";
-  const supSelect =
-    "SELECT id, password, salt FROM supervisor WHERE email = $1";
-  const values2 = [email];
-  pool.query(sleSelect, values2, (error, result) => {
-    if (error) {
-      throw error;
-    } else if (result.rows.length == 0) {
-      pool.query(supSelect, values2, (error, result) => {
-        if (error) {
-          res.json({ isSupervisor: false });
-        } else if (result.rows.length == 0) {
-          res.json({ isSupervisor: false });
-        } else if (
-          result.rows[0]["password"] ==
-          converter(password, result.rows[0]["salt"])
-        ) {
-          res.json({ isSupervisor: true });
-        } else {
-          res.json({ isSupervisor: false });
-        }
-      });
-    } else if (
-      result.rows[0]["password"] == converter(password, result.rows[0]["salt"])
-    ) {
-      sleID = result.rows[0]["id"];
-      res.json({ isSle: sleID });
-    } else {
-      pool.query(supSelect, values2, (error, result) => {
-        if (error) {
-          res.json({ isSupervisor: false });
-        } else if (result.rows.length == 0) {
-          res.json({ isSupervisor: false });
-        } else if (
-          result.rows[0]["password"] ==
-          converter(password, result.rows[0]["salt"])
-        ) {
-          res.json({ isSupervisor: true });
-        } else {
-          res.json({ isSupervisor: false });
-        }
-      });
+router.post("/login", function (req, res, next) {
+  console.log(user);
+  passport.authenticate("local", function (err, user, info) {
+    console.log("where tf is the above statement going");
+    console.log(user);
+    if (err || !user) {
+      return res.json({ successful: false });
     }
-  });
+
+    req.logIn(user, function (err) {
+      if (err) {
+        return res.json({ successful: false });
+      }
+
+      return res.json({ successful: true });
+    });
+  })(req, res, next);
 });
+
 module.exports = router;
