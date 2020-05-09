@@ -4,10 +4,10 @@ import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
 function Timeslot(props) {
   function timeslotClick() {
-    if (document.getElementById(props.id).style.backgroundColor == "green") {
+    if (document.getElementById(props.id).style.backgroundColor == "b0e9c2") {
       document.getElementById(props.id).style.backgroundColor = "#f8f8f8";
     } else {
-      document.getElementById(props.id).style.backgroundColor = "green";
+      document.getElementById(props.id).style.backgroundColor = "b0e9c2";
     }
   }
 
