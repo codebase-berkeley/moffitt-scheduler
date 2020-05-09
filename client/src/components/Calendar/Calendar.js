@@ -153,7 +153,7 @@ export default class Calendar extends React.Component {
       The valid prop tracks if the Timeslot is a clickable, colored cell belonging to a shift or not.
     */
     var timeslots = [];
-    for (var i = 0; i < 384; i += 1) {
+    for (var i = 0, ti = 0; i < 384; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
       } else if (this.state.schedule.length > 0) {
