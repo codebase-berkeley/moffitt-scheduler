@@ -152,3 +152,7 @@
 #saveButton:focus {
   outline: none;
 }
+
+.availButton:focus {
+  background-color: green;
+}

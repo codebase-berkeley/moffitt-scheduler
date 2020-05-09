@@ -20,7 +20,7 @@ export default class MSRenderer extends React.Component {
     this.state = {
       items: [{}],
       typeOfLibrary: "Moffitt3",
-      currentWeek: dateObject(0, 0)
+      currentWeek: dateObject(0, 0),
     };
     this.showMoffitt = this.showMoffitt.bind(this);
     this.showMoffitt4 = this.showMoffitt4.bind(this);
@@ -60,13 +60,13 @@ export default class MSRenderer extends React.Component {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         console.log(jsonResponse.items);
       });
   }
@@ -80,14 +80,14 @@ export default class MSRenderer extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ startDate: startDateText, endDate: endDateText })
+      body: JSON.stringify({ startDate: startDateText, endDate: endDateText }),
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         console.log(jsonResponse);
       });
   }
@@ -134,31 +134,49 @@ export default class MSRenderer extends React.Component {
 
     return (
       <div className="everythingMS">
-        <div classname="masterScheduleAndButtons">
-          <div className="masterScheduleText">Master Schedule</div>
-          <div className="arrows">
-            <button className="buttonLeftArrow">
-              <img
-                className="leftArrow"
-                onClick={this.previousWeek}
-                src={leftArrow}
-                alt="leftArrow"
-              />
-            </button>
-            <div className="currWeekContainer">
-              <div className="currWeek">
-                {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
-              </div>
+        <div className="masterScheduleText">Master Schedule</div>
+        <div className="arrows">
+          <button className="buttonLeftArrow">
+            <img
+              className="leftArrow"
+              onClick={this.previousWeek}
+              src={leftArrow}
+              alt="leftArrow"
+            />
+          </button>
+          <div className="currWeekContainer">
+            <div className="currWeek">
+              {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
             </div>
-            <button className="buttonRightArrow">
-              <img
-                className="rightArrow"
-                onClick={this.nextWeek}
-                src={rightArrow}
-                alt="rightArrow"
-              />
-            </button>
           </div>
+          <button className="buttonRightArrow">
+            <img
+              className="rightArrow"
+              onClick={this.nextWeek}
+              src={rightArrow}
+              alt="rightArrow"
+            />
+          </button>
+        </div>
+        <div className="form">
+          <form action="/action_page.php">
+            <label for="startDate">Start Date</label>
+            <input
+              type="date"
+              id="startDate"
+              className="startDate"
+              placeholder="Start Date"
+              defaultValue="2020-05-07"
+            ></input>
+            <label for="endDate">End Date</label>
+            <input
+              type="date"
+              id="endDate"
+              className="endDate"
+              placeholder="End Date"
+              defaultValue="2020-05-08"
+            ></input>
+          </form>
           <div className="buttons">
             <button className="schedGenerator" onClick={this.generate}>
               <h1>Generate</h1>
@@ -175,26 +193,6 @@ export default class MSRenderer extends React.Component {
             <button className={doe} onClick={this.showDoe}>
               <h1>Doe</h1>
             </button>
-          </div>
-          <div className="form">
-            <form action="/action_page.php">
-              <label for="startDate">Start Date</label>
-              <input
-                type="date"
-                id="startDate"
-                className="startDate"
-                placeholder="Start Date"
-                defaultValue="2020-05-07"
-              ></input>
-              <label for="endDate">End Date</label>
-              <input
-                type="date"
-                id="endDate"
-                className="endDate"
-                placeholder="End Date"
-                defaultValue="2020-05-08"
-              ></input>
-            </form>
           </div>
         </div>
 

@@ -3,14 +3,28 @@ import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
 function Timeslot(props) {
-  return (
-    <div
-      class="item-cell"
-      style={{ backgroundColor: props.color }}
-      id={props.id}
-      onClick={props.onClick}
-    ></div>
-  );
+  if (props.color == "green") {
+    return (
+      <button
+        // className="availButton"
+        // class="item-cell"
+        style={{ backgroundColor: "grey" }}
+        id={props.id}
+        onClick={props.onClick}
+      ></button>
+    );
+  }
+  if (props.color == "grey") {
+    return (
+      <button
+        // className="availButton"
+        // class="item-cell"
+        style={{ backgroundColor: "green" }}
+        id={props.id}
+        onClick={props.onClick}
+      ></button>
+    );
+  }
 }
 
 function SaveChanges(props) {
