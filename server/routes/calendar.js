@@ -50,7 +50,7 @@ router.post("/save", (req, res) => {
   );
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
-      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i][0]}, ${items[i][1]})`,
+      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i].start}, ${items[i].day})`,
       (error, result) => {
         if (error) {
           throw error;
@@ -157,7 +157,6 @@ function initialShifts() {
 
 router.get("/availability/:userId", (req, res) => {
   var selected = initialShifts();
-  console.log(selected);
   pool.query(
     `SELECT start_time, day_of_week FROM AVAILABILITY 
      WHERE sle_id = $1`,

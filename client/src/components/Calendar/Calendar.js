@@ -10,7 +10,6 @@ function Timeslot(props) {
       document.getElementById(props.id).style.backgroundColor = "green";
     }
   }
-
   return (
     <button
       style={{ backgroundColor: props.color }}
@@ -47,7 +46,9 @@ export default class Calendar extends React.Component {
       schedule: [],
       currentDate: currentDate,
       weekString: weekString,
+      saved: [],
     };
+    this.save = this.save.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +59,29 @@ export default class Calendar extends React.Component {
       .then((jsonResponse) => {
         this.setState({ schedule: jsonResponse.schedule });
       });
+  }
+
+  save() {
+    this.state.saved = [];
+    for (let i = 0; i < 336; i += 1) {
+      if (document.getElementById(i).style.backgroundColor == "green") {
+        this.state.saved.push(this.state.schedule[i]);
+      }
+    }
+    console.log(this.state.saved);
+    fetch("/save", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: this.props.userId,
+        items: this.state.saved,
+      }),
+    }).then((response) => {
+      return response.json();
+    });
   }
 
   render() {
@@ -105,6 +129,7 @@ export default class Calendar extends React.Component {
         ti += 1;
       }
     }
+
     return (
       <div id="overall-container">
         <h1 id="avails">Select Availabilities</h1>
