@@ -15,6 +15,24 @@ function dateObject(day, hour) {
   return dateObject;
 }
 
+function displayMonth(m) {
+  const month = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December",
+  };
+  return month[m];
+}
+
 export default class MSRenderer extends React.Component {
   constructor(props) {
     super(props);
@@ -142,6 +160,8 @@ export default class MSRenderer extends React.Component {
     let endDateNum = endDate.getDate() - 1;
     let endDateMonth = endDate.getMonth() + 1;
 
+    let year = this.state.currentWeek.getFullYear();
+
     return (
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
@@ -157,7 +177,8 @@ export default class MSRenderer extends React.Component {
             </button>
             <div className="currWeekContainer">
               <div className="currWeek">
-                {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
+                {displayMonth(startMonth)} {year}: {startMonth}/{startDate} -{" "}
+                {endDateMonth}/{endDateNum}
               </div>
             </div>
             <button className="buttonRightArrow">

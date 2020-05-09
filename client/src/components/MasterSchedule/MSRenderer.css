@@ -78,8 +78,8 @@
 }
 
 .arrows {
-  margin-top: 3%;
-  margin-left: 30%;
+  /* margin-top: 3%;
+  margin-left: 30%; */
   display: flex;
   justify-content: space-between;
   width: 15%;
@@ -90,12 +90,18 @@
   border: none;
   background-color: #f5f5fd;
   cursor: pointer;
+  margin-right: 4px;
 }
 
 .buttonRightArrow {
   border: none;
   background-color: #f5f5fd;
   cursor: pointer;
+  margin-left: 4px;
+}
+
+.currWeek {
+  text-align: center;
 }
 
 .buttons {
