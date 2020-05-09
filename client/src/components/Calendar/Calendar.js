@@ -4,12 +4,13 @@ import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
 function Timeslot(props) {
   return (
-    <div
-      class="item-cell"
+    <button
+      className="availButton"
+      // class="item-cell"
       style={{ backgroundColor: props.color }}
       id={props.id}
       onClick={props.onClick}
-    ></div>
+    ></button>
   );
 }
 
@@ -32,6 +33,7 @@ class Shift {
     this.day = day;
     this.sleid = sleid;
     this.location = location;
+    this.active = false;
   }
 }
 
