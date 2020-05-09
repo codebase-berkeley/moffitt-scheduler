@@ -3,13 +3,19 @@ import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
 function Timeslot(props) {
+  function timeslotClick() {
+    if (props.color == "green") {
+      document.getElementById(props.id).style.backgroundColor = "#f8f8f8";
+    } else {
+      document.getElementById(props.id).style.backgroundColor = "green";
+    }
+  }
+
   return (
     <button
-      // className="availButton"
-      // class="item-cell"
       style={{ backgroundColor: props.color }}
       id={props.id}
-      onClick={props.onClick}
+      onClick={timeslotClick}
     ></button>
   );
 }
