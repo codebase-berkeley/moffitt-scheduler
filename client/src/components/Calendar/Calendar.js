@@ -92,7 +92,9 @@ export default class Calendar extends React.Component {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
       } else if (this.state.schedule.length > 0) {
-        timeslots.push(<Timeslot color={this.state.schedule[ti].color} />);
+        timeslots.push(
+          <Timeslot color={this.state.schedule[ti].color} id={ti} />
+        );
         ti += 1;
       }
     }
