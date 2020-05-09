@@ -3,15 +3,28 @@ import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
 function Timeslot(props) {
-  return (
-    <button
-      className="availButton"
-      // class="item-cell"
-      style={{ backgroundColor: props.color }}
-      id={props.id}
-      onClick={props.onClick}
-    ></button>
-  );
+  if (props.color == "green") {
+    return (
+      <button
+        // className="availButton"
+        // class="item-cell"
+        style={{ backgroundColor: "grey" }}
+        id={props.id}
+        onClick={props.onClick}
+      ></button>
+    );
+  }
+  if (props.color == "grey") {
+    return (
+      <button
+        // className="availButton"
+        // class="item-cell"
+        style={{ backgroundColor: "green" }}
+        id={props.id}
+        onClick={props.onClick}
+      ></button>
+    );
+  }
 }
 
 function SaveChanges(props) {
@@ -24,41 +37,6 @@ function SaveChanges(props) {
   );
 }
 
-<<<<<<< HEAD
-class Shift {
-  constructor(color, id, start, end, day, sleid, location) {
-    this.color = color;
-    this.id = id;
-    this.start = start;
-    this.end = end;
-    this.day = day;
-    this.sleid = sleid;
-    this.location = location;
-    this.active = false;
-  }
-}
-
-function initialShifts() {
-  let a = [];
-  for (var i = 0; i < 168; i += 1) {
-    a.push(new Shift("#f8f8f8", null, null, null, null, null, null));
-  }
-  let count = 0;
-  for (var i = 0; i <= 23; i += 1) {
-    for (var j = 0; j <= 6; j += 1) {
-      a[count].start = i;
-      a[count].end = i + 1;
-      a[count].day = j;
-      count += 1;
-    }
-  }
-  return a;
-}
-
-var emptyShifts = initialShifts();
-
-=======
->>>>>>> 5f4884c58fa340d5f3376391cd860c419ce9cc2d
 export default class Calendar extends React.Component {
   constructor(props) {
     var currentDate = new Date();
