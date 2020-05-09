@@ -3,29 +3,39 @@ import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
 function Timeslot(props) {
-  if (props.color == "green") {
-    return (
-      <button
-        // className="availButton"
-        // class="item-cell"
-        style={{ backgroundColor: "grey" }}
-        id={props.id}
-        onClick={props.onClick}
-      ></button>
-    );
-  }
-  if (props.color == "grey") {
-    return (
-      <button
-        // className="availButton"
-        // class="item-cell"
-        style={{ backgroundColor: "green" }}
-        id={props.id}
-        onClick={props.onClick}
-      ></button>
-    );
-  }
+  // var clicked = [];
+  // function timeslotClick() {
+  //   if clicked.includes(props.id){
+  //   }
+  //   else{}
+  //   clicked = clicked.push(props.id);
+  // }
+
+  // function timeslotClick(el) {
+  //   el.style.backgroundColor = "red";
+  // }
+
+  return (
+    <button
+      // className="availButton"
+      // class="item-cell"
+      style={{ backgroundColor: props.color }}
+      id={props.id}
+      onClick={props.onClick}
+      // onClick={timeslotClick(this)}
+    ></button>
+  );
 }
+
+// return (
+//   <button
+//     // className="availButton"
+//     // class="item-cell"
+//     style={{ backgroundColor: "green" }}
+//     id={props.id}
+//     onClick={props.onClick}
+//   ></button>
+// );
 
 function SaveChanges(props) {
   return (
@@ -36,6 +46,37 @@ function SaveChanges(props) {
     </div>
   );
 }
+
+class Shift {
+  constructor(color, id, start, end, day, sleid, location) {
+    this.color = color;
+    this.id = id;
+    this.start = start;
+    this.end = end;
+    this.day = day;
+    this.sleid = sleid;
+    this.location = location;
+  }
+}
+
+function initialShifts() {
+  let a = [];
+  for (var i = 0; i < 168; i += 1) {
+    a.push(new Shift("#f8f8f8", null, null, null, null, null, null));
+  }
+  let count = 0;
+  for (var i = 0; i <= 23; i += 1) {
+    for (var j = 0; j <= 6; j += 1) {
+      a[count].start = i;
+      a[count].end = i + 1;
+      a[count].day = j;
+      count += 1;
+    }
+  }
+  return a;
+}
+
+var emptyShifts = initialShifts();
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -51,21 +92,14 @@ export default class Calendar extends React.Component {
       format(endOfWeek(currentDate), "MM/DD");
     super(props);
     this.state = {
-      schedule: [],
+      shifts: emptyShifts,
       currentDate: currentDate,
       weekString: weekString,
+      emptyShifts: emptyShifts,
     };
   }
 
-  componentDidMount() {
-    fetch("/availability/" + this.props.userId)
-      .then((response) => {
-        return response.json();
-      })
-      .then((jsonResponse) => {
-        this.setState({ schedule: jsonResponse.schedule });
-      });
-  }
+  componentDidMount() {}
 
   render() {
     const hours = [];
@@ -97,19 +131,68 @@ export default class Calendar extends React.Component {
       );
     }
 
+    /* Maps shift ids to their collective starttimes, endtimes, and locations
+     */
+    var shiftGrouper = {};
+    for (var i = 0; i < 168; i += 1) {
+      if (this.state.shifts[i] != null && this.state.shifts[i].id != null) {
+        if (this.state.shifts[i].id in shiftGrouper) {
+          shiftGrouper[this.state.shifts[i].id][1] += 1;
+        } else {
+          shiftGrouper[this.state.shifts[i].id] = [
+            this.state.shifts[i].start,
+            this.state.shifts[i].end,
+            this.state.shifts[i].location,
+          ];
+        }
+      }
+    }
+
     /*Every 8th element should be an "item-hours" header,
       while every 1-7th element should be a shift cell.
       The valid prop tracks if the Timeslot is a clickable, colored cell belonging to a shift or not.
     */
     var timeslots = [];
-    for (var i = 0, ti = 0; i < 384; i += 1) {
+    for (var i = 0; i < 384; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
-      } else if (this.state.schedule.length > 0) {
-        timeslots.push(<Timeslot color={this.state.schedule[ti].color} />);
-        ti += 1;
+      } else {
+        timeslots.push(<Timeslot></Timeslot>);
       }
     }
+    // var timeslots = [];
+    // for (var i = 0, ti = 0; i < 192; i += 1) {
+    //   if (i % 8 == 0) {
+    //     timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
+    //   } else {
+    //     if (
+    //       this.state.shifts[ti].sleid == this.props.userId ||
+    //       !(this.state.shifts[ti].id in shiftGrouper)
+    //     ) {
+    //       timeslots.push(
+    //         <Timeslot
+    //           color={this.state.shifts[ti].color}
+    //           id={this.state.shifts[ti].id}
+    //           userid={this.props.userId}
+    //           valid={false}
+    //         />
+    //       );
+    //     } else {
+    //       timeslots.push(
+    //         <Timeslot
+    //           color={this.state.shifts[ti].color}
+    //           id={this.state.shifts[ti].id}
+    //           userid={this.props.userId}
+    //           valid={true}
+    //           start={shiftGrouper[this.state.shifts[ti].id][0]}
+    //           end={shiftGrouper[this.state.shifts[ti].id][1]}
+    //           location={shiftGrouper[this.state.shifts[ti].id][2]}
+    //         />
+    //       );
+    //     }
+    //     ti += 1;
+    //   }
+    // }
     return (
       <div id="overall-container">
         <h1 id="avails">Select Availabilities</h1>
