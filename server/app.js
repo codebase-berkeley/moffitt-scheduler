@@ -9,7 +9,7 @@ var masterScheduleRoutes = require("./routes/masterschedule");
 var passport = require("./passport");
 var cors = require("cors");
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(require("cookie-parser")());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

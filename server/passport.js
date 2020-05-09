@@ -68,11 +68,11 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, cb) => {
-  cb(null, id);
-  //   console.log("Des id: " + id);
+  console.log("Des id: " + id);
   //   dbquery("SELECT id, name FROM sle WHERE id = $1", [parseInt(id)], (rows) => {
   //     cb(null, rows[0]);
   //   });
+  cb(null, id);
 });
 
 module.exports = passport;

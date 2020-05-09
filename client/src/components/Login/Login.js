@@ -80,6 +80,7 @@ class Login extends React.Component {
     console.log(passwordText);
     fetch("http://localhost:8000/login", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
