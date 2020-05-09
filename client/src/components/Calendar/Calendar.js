@@ -4,10 +4,15 @@ import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 
 function Timeslot(props) {
   function timeslotClick() {
-    if (document.getElementById(props.id).style.backgroundColor == "b0e9c2") {
-      document.getElementById(props.id).style.backgroundColor = "#f8f8f8";
+    if (
+      document.getElementById(props.id).style.backgroundColor ==
+      "rgb(176, 233, 194)"
+    ) {
+      document.getElementById(props.id).style.backgroundColor =
+        "rgb(248, 248, 248)";
     } else {
-      document.getElementById(props.id).style.backgroundColor = "b0e9c2";
+      document.getElementById(props.id).style.backgroundColor =
+        "rgb(176, 233, 194)";
     }
   }
   return (
@@ -64,7 +69,9 @@ export default class Calendar extends React.Component {
   save() {
     this.state.saved = [];
     for (let i = 0; i < 336; i += 1) {
-      if (document.getElementById(i).style.backgroundColor == "green") {
+      if (
+        document.getElementById(i).style.backgroundColor == "rgb(176, 233, 194)"
+      ) {
         this.state.saved.push(this.state.schedule[i]);
       }
     }

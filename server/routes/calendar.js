@@ -141,7 +141,7 @@ class Shift {
 function initialShifts() {
   let a = [];
   for (var i = 0; i < 336; i += 1) {
-    a.push(new Shift("#f8f8f8", null, null, null, null, null, null));
+    a.push(new Shift("rgb(248, 248, 248)", null, null, null, null, null, null));
   }
   let count = 0;
   for (var i = 0; i <= 23; i += 0.5) {
@@ -171,7 +171,7 @@ router.get("/availability/:userId", (req, res) => {
               result.rows[r].day_of_week == selected[s].day &&
               result.rows[r].start_time == selected[s].start
             ) {
-              selected[s].color = "green";
+              selected[s].color = "rgb(176, 233, 194)";
             }
           }
         }
