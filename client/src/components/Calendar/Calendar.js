@@ -23,37 +23,6 @@ function SaveChanges(props) {
   );
 }
 
-class Shift {
-  constructor(color, id, start, end, day, sleid, location) {
-    this.color = color;
-    this.id = id;
-    this.start = start;
-    this.end = end;
-    this.day = day;
-    this.sleid = sleid;
-    this.location = location;
-  }
-}
-
-function initialShifts() {
-  let a = [];
-  for (var i = 0; i < 336; i += 1) {
-    a.push(new Shift("#f8f8f8", null, null, null, null, null, null));
-  }
-  let count = 0;
-  for (var i = 0; i <= 23; i += 0.5) {
-    for (var j = 0; j <= 6; j += 1) {
-      a[count].start = i;
-      a[count].end = i + 0.5;
-      a[count].day = j;
-      count += 1;
-    }
-  }
-  return a;
-}
-
-var emptyShifts = initialShifts();
-
 export default class Calendar extends React.Component {
   constructor(props) {
     var currentDate = new Date();
@@ -68,7 +37,7 @@ export default class Calendar extends React.Component {
       format(endOfWeek(currentDate), "MM/DD");
     super(props);
     this.state = {
-      schedule: emptyShifts,
+      schedule: [],
       currentDate: currentDate,
       weekString: weekString,
     };
@@ -114,24 +83,6 @@ export default class Calendar extends React.Component {
       );
     }
 
-    /* Maps shift ids to their collective starttimes, endtimes, and locations
-     */
-    var shiftGrouper = {};
-    for (var i = 0; i < 336; i += 1) {
-      let curr = this.state.schedule;
-      if (curr[i] != null && curr[i].id != null) {
-        if (curr[i].id in shiftGrouper) {
-          shiftGrouper[curr[i].id][1] += 0.5;
-        } else {
-          shiftGrouper[curr[i].id] = [
-            curr[i].start,
-            curr[i].end,
-            curr[i].location,
-          ];
-        }
-      }
-    }
-
     /*Every 8th element should be an "item-hours" header,
       while every 1-7th element should be a shift cell.
       The valid prop tracks if the Timeslot is a clickable, colored cell belonging to a shift or not.
@@ -140,32 +91,8 @@ export default class Calendar extends React.Component {
     for (var i = 0, ti = 0; i < 384; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
-      } else {
-        if (
-          this.state.schedule[ti].sleid == this.props.userId ||
-          !(this.state.schedule[ti].id in shiftGrouper)
-        ) {
-          timeslots.push(
-            <Timeslot
-              color={this.state.schedule[ti].color}
-              id={this.state.schedule[ti].id}
-              userid={this.props.userId}
-              valid={false}
-            />
-          );
-        } else {
-          timeslots.push(
-            <Timeslot
-              color={this.state.schedule[ti].color}
-              id={this.state.schedule[ti].id}
-              userid={this.props.userId}
-              valid={true}
-              start={shiftGrouper[this.state.schedule[ti].id][0]}
-              end={shiftGrouper[this.state.schedule[ti].id][1]}
-              location={shiftGrouper[this.state.schedule[ti].id][2]}
-            />
-          );
-        }
+      } else if (this.state.schedule.length > 0) {
+        timeslots.push(<Timeslot color={this.state.schedule[ti].color} />);
         ti += 1;
       }
     }
