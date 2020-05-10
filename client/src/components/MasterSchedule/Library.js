@@ -420,16 +420,16 @@ function displayError(typeOfError) {
   if (typeOfError == 1) {
     return (
       <div className="errorText">
-        <img className="error" src={error} alt="error" />
-        too many people
+        <img className="errorImg" src={error} alt="error" />
+        Warning: Too many employees
       </div>
     );
   }
   if (typeOfError == -1) {
     return (
       <div className="errorText">
-        <img className="error" src={error} alt="error" />
-        not enough people
+        <img className="errorImg" src={error} alt="error" />
+        Warning: Not enough employees
       </div>
     );
   }
