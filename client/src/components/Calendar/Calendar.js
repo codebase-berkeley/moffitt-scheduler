@@ -90,7 +90,6 @@ export default class Calendar extends React.Component {
       return response.json();
     });
   }
-
   selectClick() {
     var startText = document.getElementById("startText").value;
     console.log(startText);
@@ -275,13 +274,194 @@ export default class Calendar extends React.Component {
     }
 
     for (var i = startCellID; i < endCellID; i = i + 7) {
-      if (
-        document.getElementById(i).style.backgroundColor == "rgb(176, 233, 194)"
-      ) {
-        document.getElementById(i).style.backgroundColor = "rgb(248, 248, 248)";
-      } else {
-        document.getElementById(i).style.backgroundColor = "rgb(176, 233, 194)";
+      document.getElementById(i).style.backgroundColor = "rgb(176, 233, 194)";
+    }
+  }
+  selectClear() {
+    var startText = document.getElementById("startText").value;
+    console.log(startText);
+    var endText = document.getElementById("endText").value;
+    console.log(endText);
+    var weekdayText = document.getElementById("weekdayText").value;
+    console.log(weekdayText);
+    function findIncrement(time) {
+      if (time == "00:00") {
+        var increment = 0;
       }
+      if (time == "00:30") {
+        var increment = 1;
+      }
+      if (time == "01:00") {
+        var increment = 2;
+      }
+      if (time == "01:30") {
+        var increment = 3;
+      }
+      if (time == "02:00") {
+        var increment = 4;
+      }
+      if (time == "02:30") {
+        var increment = 5;
+      }
+      if (time == "03:00") {
+        var increment = 6;
+      }
+      if (time == "03:30") {
+        var increment = 7;
+      }
+      if (time == "04:00") {
+        var increment = 8;
+      }
+      if (time == "04:30") {
+        var increment = 9;
+      }
+      if (time == "05:00") {
+        var increment = 10;
+      }
+      if (time == "05:30") {
+        var increment = 11;
+      }
+      if (time == "06:00") {
+        var increment = 12;
+      }
+      if (time == "06:30") {
+        var increment = 13;
+      }
+      if (time == "07:00") {
+        var increment = 14;
+      }
+      if (time == "07:30") {
+        var increment = 15;
+      }
+      if (time == "08:00") {
+        var increment = 16;
+      }
+      if (time == "08:30") {
+        var increment = 17;
+      }
+      if (time == "09:00") {
+        var increment = 18;
+      }
+      if (time == "09:30") {
+        var increment = 19;
+      }
+      if (time == "10:00") {
+        var increment = 20;
+      }
+      if (time == "10:30") {
+        var increment = 21;
+      }
+      if (time == "11:00") {
+        var increment = 22;
+      }
+      if (time == "11:30") {
+        var increment = 23;
+      }
+      if (time == "12:00") {
+        var increment = 24;
+      }
+      if (time == "12:30") {
+        var increment = 25;
+      }
+      if (time == "13:00") {
+        var increment = 26;
+      }
+      if (time == "13:30") {
+        var increment = 27;
+      }
+      if (time == "14:00") {
+        var increment = 28;
+      }
+      if (time == "14:30") {
+        var increment = 29;
+      }
+      if (time == "15:00") {
+        var increment = 30;
+      }
+      if (time == "15:30") {
+        var increment = 31;
+      }
+      if (time == "16:00") {
+        var increment = 32;
+      }
+      if (time == "16:30") {
+        var increment = 33;
+      }
+      if (time == "17:00") {
+        var increment = 34;
+      }
+      if (time == "17:30") {
+        var increment = 35;
+      }
+      if (time == "18:00") {
+        var increment = 36;
+      }
+      if (time == "18:30") {
+        var increment = 37;
+      }
+      if (time == "19:00") {
+        var increment = 38;
+      }
+      if (time == "19:30") {
+        var increment = 39;
+      }
+      if (time == "20:00") {
+        var increment = 40;
+      }
+      if (time == "20:30") {
+        var increment = 41;
+      }
+      if (time == "21:00") {
+        var increment = 42;
+      }
+      if (time == "21:30") {
+        var increment = 43;
+      }
+      if (time == "22:00") {
+        var increment = 44;
+      }
+      if (time == "22:30") {
+        var increment = 45;
+      }
+      if (time == "23:00") {
+        var increment = 46;
+      }
+      if (time == "23:30") {
+        var increment = 47;
+      }
+      return increment;
+    }
+    if (weekdayText == "Sun") {
+      var startCellID = findIncrement(startText) * 7 + 0;
+      var endCellID = findIncrement(endText) * 7 + 0;
+    }
+    if (weekdayText == "Mon") {
+      startCellID = findIncrement(startText) * 7 + 1;
+      endCellID = findIncrement(endText) * 7 + 1;
+    }
+    if (weekdayText == "Tues") {
+      startCellID = findIncrement(startText) * 7 + 2;
+      endCellID = findIncrement(endText) * 7 + 2;
+    }
+    if (weekdayText == "Wed") {
+      startCellID = findIncrement(startText) * 7 + 3;
+      endCellID = findIncrement(endText) * 7 + 3;
+    }
+    if (weekdayText == "Thur") {
+      startCellID = findIncrement(startText) * 7 + 4;
+      endCellID = findIncrement(endText) * 7 + 4;
+    }
+    if (weekdayText == "Fri") {
+      startCellID = findIncrement(startText) * 7 + 5;
+      endCellID = findIncrement(endText) * 7 + 5;
+    }
+    if (weekdayText == "Sat") {
+      startCellID = findIncrement(startText) * 7 + 6;
+      endCellID = findIncrement(endText) * 7 + 6;
+    }
+
+    for (var i = startCellID; i < endCellID; i = i + 7) {
+      document.getElementById(i).style.backgroundColor = "rgb(248, 248, 248)";
     }
   }
 
@@ -372,6 +552,9 @@ export default class Calendar extends React.Component {
             ></input>
             <button className="selectButton" onClick={this.selectClick}>
               Select
+            </button>
+            <button className="clearButton" onClick={this.selectClear}>
+              Clear
             </button>
             <div className="saveChanges">
               <SaveChanges save={this.save} />

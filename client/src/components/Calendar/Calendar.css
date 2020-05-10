@@ -166,6 +166,7 @@
 .startText,
 .endText {
   font-size: 10px;
+  width: 8%;
 }
 
 .weekdayText1 {
@@ -210,7 +211,7 @@
   border-radius: 20px;
   border: 1px solid grey;
   cursor: pointer;
-  margin-right: 40%;
+  margin-right: 2%;
 }
 
 .selectButton:hover {
@@ -222,6 +223,31 @@
 }
 
 .selectButton:focus {
+  outline: none;
+}
+
+.clearButton {
+  float: right;
+  position: center;
+  width: 75px;
+  height: 25px;
+  font-family: "Open Sans";
+  font-size: 13px;
+  border-radius: 20px;
+  border: 1px solid grey;
+  cursor: pointer;
+  margin-right: 27%;
+}
+
+.clearButton:hover {
+  font-weight: bold;
+}
+
+.clearButton:active {
+  background-color: rgb(182, 181, 181);
+}
+
+.clearButton:focus {
   outline: none;
 }
 
