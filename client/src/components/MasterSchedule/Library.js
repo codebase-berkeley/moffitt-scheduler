@@ -9,7 +9,6 @@ import error from "./MasterImages/error.svg";
 function dateObject(week, day, hour) {
   let newSameDate = new Date(week);
   newSameDate.setHours(hour, 0, 0, 0);
-  console.log("newdate", newSameDate);
   let newSetDate = newSameDate.setDate(newSameDate.getDate() + day);
   return newSetDate;
 }
@@ -24,7 +23,7 @@ export default class Library extends React.Component {
       wednesdayArray,
       thursdayArray,
       fridayArray,
-      saturdayArray
+      saturdayArray,
     ] = [[], [], [], [], [], [], []];
 
     this.state = {
@@ -36,8 +35,8 @@ export default class Library extends React.Component {
         wednesdayArray,
         thursdayArray,
         fridayArray,
-        saturdayArray
-      ]
+        saturdayArray,
+      ],
     };
     this.addEmployee = this.addEmployee.bind(this);
     this.removeEmployee = this.removeEmployee.bind(this);
@@ -63,28 +62,28 @@ export default class Library extends React.Component {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         employeeList = jsonResponse.allEmployees;
         this.setState({
-          allEmployees: jsonResponse.allEmployees
+          allEmployees: jsonResponse.allEmployees,
         });
         fetch("/masterschedule/" + this.props.currWeek, {
           method: "GET",
           headers: {
             Accept: "application/json",
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         })
-          .then(response => {
+          .then((response) => {
             return response.json();
           })
-          .then(jsonResponse => {
+          .then((jsonResponse) => {
             let items = jsonResponse.items;
 
             let newAllDaysOfWeek = [[], [], [], [], [], [], []];
@@ -189,18 +188,18 @@ export default class Library extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         sleId: sle_id,
         shiftId: shift_id,
-        currHour: currTime
-      })
+        currHour: currTime,
+      }),
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         setIsOpen(false);
         console.log(jsonResponse);
 
@@ -256,19 +255,19 @@ export default class Library extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         sleId: sle_id,
         currHour: currTime,
         currDate: date,
-        loc: this.props.location
-      })
+        loc: this.props.location,
+      }),
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
         setIsOpen(false);
 
         let clonedAllDaysOfWeek = this.state.allDaysOfWeek.slice(0);
@@ -372,7 +371,7 @@ function formatNames(names) {
 }
 
 function Box(props) {
-  if (props.allEmp.length == 0) {
+  if (isError(props.location, props.names) == 0) {
     return (
       <div>
         <div className="boxWithoutError">
@@ -436,36 +435,34 @@ function displayError(typeOfError) {
   }
 }
 
-function isError(props) {
-  if (props.location === "Moffitt3") {
-    if (props.employee.length < 1) {
+function isError(location, nameArray) {
+  if (location === "Moffitt3") {
+    if (nameArray.length < 1) {
       return -1;
-    } else if (props.employee.length > 2) {
+    } else if (nameArray.length > 2) {
       return 1;
     } else {
       return 0;
     }
-  } else if (props.location === "Moffitt4") {
-    if (props.employee.length < 2) {
+  } else if (location === "Moffitt4") {
+    if (nameArray.length < 2) {
       return -1;
-    } else if (props.employee.length > 3) {
+    } else if (nameArray.length > 3) {
       return 1;
     } else {
       return 0;
     }
   } else {
     //Doe
-    if (props.employee.length < 3) {
+    if (nameArray.length < 3) {
       return -1;
-    } else if (props.employee.length > 5) {
+    } else if (nameArray.length > 5) {
       return 1;
     } else {
       return 0;
     }
   }
 }
-
-
 
 function EditSchedule(props) {
   function afterOpenModal() {
@@ -495,8 +492,8 @@ function EditSchedule(props) {
       overflowY: "scroll",
       border: "0px",
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-      borderRadius: "20px"
-    }
+      borderRadius: "20px",
+    },
   };
 
   function CurrEmployee(props) {
@@ -550,7 +547,7 @@ function EditSchedule(props) {
       4: "Thursday",
       5: "Friday",
       6: "Saturday",
-      7: "Sunday"
+      7: "Sunday",
     };
     return dayOfWeek[props];
   }
@@ -580,7 +577,7 @@ function EditSchedule(props) {
       20: "8 PM",
       21: "9 PM",
       22: "10 PM",
-      23: "11 PM"
+      23: "11 PM",
     };
     return timeOfDay[props];
   }
@@ -595,7 +592,6 @@ function EditSchedule(props) {
     }
   }
 
-  console.log("location: ", props.location);
   return (
     <div>
       <button className="pencilIcon" onClick={openModal}>
@@ -612,7 +608,7 @@ function EditSchedule(props) {
           <div className="AllText">
             <h1
               className="AddEmpText"
-              ref={_subtitle => (subtitle = _subtitle)}
+              ref={(_subtitle) => (subtitle = _subtitle)}
             >
               Edit Master Schedule Shift
             </h1>
@@ -625,9 +621,10 @@ function EditSchedule(props) {
                   {displayDay(props.day)}, {displayTime(props.time)}
                 </h3>
               </div>
-
             </div>
-            <div className="error">{displayError(isError(props))}</div>
+            <div className="error">
+              {displayError(isError(props.location, props.employee))}
+            </div>
             <h3 className="CurrentEmployees">Current Employees</h3>
             <div className="currEmployees">
               <CurrEmployee
