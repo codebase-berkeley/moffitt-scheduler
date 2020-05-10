@@ -101,147 +101,102 @@ export default class Calendar extends React.Component {
     function findIncrement(time) {
       if (time == "00:00") {
         var increment = 0;
-      }
-      if (time == "00:30") {
+      } else if (time == "00:30") {
         var increment = 1;
-      }
-      if (time == "01:00") {
+      } else if (time == "01:00") {
         var increment = 2;
-      }
-      if (time == "01:30") {
+      } else if (time == "01:30") {
         var increment = 3;
-      }
-      if (time == "02:00") {
+      } else if (time == "02:00") {
         var increment = 4;
-      }
-      if (time == "02:30") {
+      } else if (time == "02:30") {
         var increment = 5;
-      }
-      if (time == "03:00") {
+      } else if (time == "03:00") {
         var increment = 6;
-      }
-      if (time == "03:30") {
+      } else if (time == "03:30") {
         var increment = 7;
-      }
-      if (time == "04:00") {
+      } else if (time == "04:00") {
         var increment = 8;
-      }
-      if (time == "04:30") {
+      } else if (time == "04:30") {
         var increment = 9;
-      }
-      if (time == "05:00") {
+      } else if (time == "05:00") {
         var increment = 10;
-      }
-      if (time == "05:30") {
+      } else if (time == "05:30") {
         var increment = 11;
-      }
-      if (time == "06:00") {
+      } else if (time == "06:00") {
         var increment = 12;
-      }
-      if (time == "06:30") {
+      } else if (time == "06:30") {
         var increment = 13;
-      }
-      if (time == "07:00") {
+      } else if (time == "07:00") {
         var increment = 14;
-      }
-      if (time == "07:30") {
+      } else if (time == "07:30") {
         var increment = 15;
-      }
-      if (time == "08:00") {
+      } else if (time == "08:00") {
         var increment = 16;
-      }
-      if (time == "08:30") {
+      } else if (time == "08:30") {
         var increment = 17;
-      }
-      if (time == "09:00") {
+      } else if (time == "09:00") {
         var increment = 18;
-      }
-      if (time == "09:30") {
+      } else if (time == "09:30") {
         var increment = 19;
-      }
-      if (time == "10:00") {
+      } else if (time == "10:00") {
         var increment = 20;
-      }
-      if (time == "10:30") {
+      } else if (time == "10:30") {
         var increment = 21;
-      }
-      if (time == "11:00") {
+      } else if (time == "11:00") {
         var increment = 22;
-      }
-      if (time == "11:30") {
+      } else if (time == "11:30") {
         var increment = 23;
-      }
-      if (time == "12:00") {
+      } else if (time == "12:00") {
         var increment = 24;
-      }
-      if (time == "12:30") {
+      } else if (time == "12:30") {
         var increment = 25;
-      }
-      if (time == "13:00") {
+      } else if (time == "13:00") {
         var increment = 26;
-      }
-      if (time == "13:30") {
+      } else if (time == "13:30") {
         var increment = 27;
-      }
-      if (time == "14:00") {
+      } else if (time == "14:00") {
         var increment = 28;
-      }
-      if (time == "14:30") {
+      } else if (time == "14:30") {
         var increment = 29;
-      }
-      if (time == "15:00") {
+      } else if (time == "15:00") {
         var increment = 30;
-      }
-      if (time == "15:30") {
+      } else if (time == "15:30") {
         var increment = 31;
-      }
-      if (time == "16:00") {
+      } else if (time == "16:00") {
         var increment = 32;
-      }
-      if (time == "16:30") {
+      } else if (time == "16:30") {
         var increment = 33;
-      }
-      if (time == "17:00") {
+      } else if (time == "17:00") {
         var increment = 34;
-      }
-      if (time == "17:30") {
+      } else if (time == "17:30") {
         var increment = 35;
-      }
-      if (time == "18:00") {
+      } else if (time == "18:00") {
         var increment = 36;
-      }
-      if (time == "18:30") {
+      } else if (time == "18:30") {
         var increment = 37;
-      }
-      if (time == "19:00") {
+      } else if (time == "19:00") {
         var increment = 38;
-      }
-      if (time == "19:30") {
+      } else if (time == "19:30") {
         var increment = 39;
-      }
-      if (time == "20:00") {
+      } else if (time == "20:00") {
         var increment = 40;
-      }
-      if (time == "20:30") {
+      } else if (time == "20:30") {
         var increment = 41;
-      }
-      if (time == "21:00") {
+      } else if (time == "21:00") {
         var increment = 42;
-      }
-      if (time == "21:30") {
+      } else if (time == "21:30") {
         var increment = 43;
-      }
-      if (time == "22:00") {
+      } else if (time == "22:00") {
         var increment = 44;
-      }
-      if (time == "22:30") {
+      } else if (time == "22:30") {
         var increment = 45;
-      }
-      if (time == "23:00") {
+      } else if (time == "23:00") {
         var increment = 46;
-      }
-      if (time == "23:30") {
+      } else if (time == "23:30") {
         var increment = 47;
+      } else {
+        alert("Please select start and end times in half hour increments!");
       }
       return increment;
     }
@@ -270,7 +225,7 @@ export default class Calendar extends React.Component {
       endCellID = findIncrement(endText) * 7 + 6;
     }
     if (startCellID > endCellID) {
-      alert("Invalid start time and end time!");
+      alert("Invalid start and end time!");
     }
     for (var i = startCellID; i < endCellID; i = i + 7) {
       document.getElementById(i).style.backgroundColor = "rgb(176, 233, 194)";
@@ -286,147 +241,102 @@ export default class Calendar extends React.Component {
     function findIncrement(time) {
       if (time == "00:00") {
         var increment = 0;
-      }
-      if (time == "00:30") {
+      } else if (time == "00:30") {
         var increment = 1;
-      }
-      if (time == "01:00") {
+      } else if (time == "01:00") {
         var increment = 2;
-      }
-      if (time == "01:30") {
+      } else if (time == "01:30") {
         var increment = 3;
-      }
-      if (time == "02:00") {
+      } else if (time == "02:00") {
         var increment = 4;
-      }
-      if (time == "02:30") {
+      } else if (time == "02:30") {
         var increment = 5;
-      }
-      if (time == "03:00") {
+      } else if (time == "03:00") {
         var increment = 6;
-      }
-      if (time == "03:30") {
+      } else if (time == "03:30") {
         var increment = 7;
-      }
-      if (time == "04:00") {
+      } else if (time == "04:00") {
         var increment = 8;
-      }
-      if (time == "04:30") {
+      } else if (time == "04:30") {
         var increment = 9;
-      }
-      if (time == "05:00") {
+      } else if (time == "05:00") {
         var increment = 10;
-      }
-      if (time == "05:30") {
+      } else if (time == "05:30") {
         var increment = 11;
-      }
-      if (time == "06:00") {
+      } else if (time == "06:00") {
         var increment = 12;
-      }
-      if (time == "06:30") {
+      } else if (time == "06:30") {
         var increment = 13;
-      }
-      if (time == "07:00") {
+      } else if (time == "07:00") {
         var increment = 14;
-      }
-      if (time == "07:30") {
+      } else if (time == "07:30") {
         var increment = 15;
-      }
-      if (time == "08:00") {
+      } else if (time == "08:00") {
         var increment = 16;
-      }
-      if (time == "08:30") {
+      } else if (time == "08:30") {
         var increment = 17;
-      }
-      if (time == "09:00") {
+      } else if (time == "09:00") {
         var increment = 18;
-      }
-      if (time == "09:30") {
+      } else if (time == "09:30") {
         var increment = 19;
-      }
-      if (time == "10:00") {
+      } else if (time == "10:00") {
         var increment = 20;
-      }
-      if (time == "10:30") {
+      } else if (time == "10:30") {
         var increment = 21;
-      }
-      if (time == "11:00") {
+      } else if (time == "11:00") {
         var increment = 22;
-      }
-      if (time == "11:30") {
+      } else if (time == "11:30") {
         var increment = 23;
-      }
-      if (time == "12:00") {
+      } else if (time == "12:00") {
         var increment = 24;
-      }
-      if (time == "12:30") {
+      } else if (time == "12:30") {
         var increment = 25;
-      }
-      if (time == "13:00") {
+      } else if (time == "13:00") {
         var increment = 26;
-      }
-      if (time == "13:30") {
+      } else if (time == "13:30") {
         var increment = 27;
-      }
-      if (time == "14:00") {
+      } else if (time == "14:00") {
         var increment = 28;
-      }
-      if (time == "14:30") {
+      } else if (time == "14:30") {
         var increment = 29;
-      }
-      if (time == "15:00") {
+      } else if (time == "15:00") {
         var increment = 30;
-      }
-      if (time == "15:30") {
+      } else if (time == "15:30") {
         var increment = 31;
-      }
-      if (time == "16:00") {
+      } else if (time == "16:00") {
         var increment = 32;
-      }
-      if (time == "16:30") {
+      } else if (time == "16:30") {
         var increment = 33;
-      }
-      if (time == "17:00") {
+      } else if (time == "17:00") {
         var increment = 34;
-      }
-      if (time == "17:30") {
+      } else if (time == "17:30") {
         var increment = 35;
-      }
-      if (time == "18:00") {
+      } else if (time == "18:00") {
         var increment = 36;
-      }
-      if (time == "18:30") {
+      } else if (time == "18:30") {
         var increment = 37;
-      }
-      if (time == "19:00") {
+      } else if (time == "19:00") {
         var increment = 38;
-      }
-      if (time == "19:30") {
+      } else if (time == "19:30") {
         var increment = 39;
-      }
-      if (time == "20:00") {
+      } else if (time == "20:00") {
         var increment = 40;
-      }
-      if (time == "20:30") {
+      } else if (time == "20:30") {
         var increment = 41;
-      }
-      if (time == "21:00") {
+      } else if (time == "21:00") {
         var increment = 42;
-      }
-      if (time == "21:30") {
+      } else if (time == "21:30") {
         var increment = 43;
-      }
-      if (time == "22:00") {
+      } else if (time == "22:00") {
         var increment = 44;
-      }
-      if (time == "22:30") {
+      } else if (time == "22:30") {
         var increment = 45;
-      }
-      if (time == "23:00") {
+      } else if (time == "23:00") {
         var increment = 46;
-      }
-      if (time == "23:30") {
+      } else if (time == "23:30") {
         var increment = 47;
+      } else {
+        alert("Please select start and end times in half hour increments!");
       }
       return increment;
     }
@@ -453,7 +363,7 @@ export default class Calendar extends React.Component {
       endCellID = findIncrement(endText) * 7 + 6;
     }
     if (startCellID > endCellID) {
-      alert("Please select a valid start and end time!");
+      alert("Invalid start and end time!");
     }
     for (var i = startCellID; i < endCellID; i = i + 7) {
       document.getElementById(i).style.backgroundColor = "rgb(248, 248, 248)";
