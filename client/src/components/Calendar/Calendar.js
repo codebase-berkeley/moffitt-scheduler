@@ -90,6 +90,7 @@ export default class Calendar extends React.Component {
       return response.json();
     });
   }
+
   selectClick() {
     var startText = document.getElementById("startText").value;
     console.log(startText);
@@ -244,35 +245,33 @@ export default class Calendar extends React.Component {
       }
       return increment;
     }
+    var startCellID = 0;
+    var endCellID = 0;
     if (weekdayText == "Sun") {
-      var startCellID = findIncrement(startText) * 7 + 0;
-      var endCellID = findIncrement(endText) * 7 + 0;
-    }
-    if (weekdayText == "Mon") {
+      startCellID = findIncrement(startText) * 7 + 0;
+      endCellID = findIncrement(endText) * 7 + 0;
+    } else if (weekdayText == "Mon") {
       startCellID = findIncrement(startText) * 7 + 1;
       endCellID = findIncrement(endText) * 7 + 1;
-    }
-    if (weekdayText == "Tues") {
+    } else if (weekdayText == "Tues") {
       startCellID = findIncrement(startText) * 7 + 2;
       endCellID = findIncrement(endText) * 7 + 2;
-    }
-    if (weekdayText == "Wed") {
+    } else if (weekdayText == "Wed") {
       startCellID = findIncrement(startText) * 7 + 3;
       endCellID = findIncrement(endText) * 7 + 3;
-    }
-    if (weekdayText == "Thur") {
+    } else if (weekdayText == "Thur") {
       startCellID = findIncrement(startText) * 7 + 4;
       endCellID = findIncrement(endText) * 7 + 4;
-    }
-    if (weekdayText == "Fri") {
+    } else if (weekdayText == "Fri") {
       startCellID = findIncrement(startText) * 7 + 5;
       endCellID = findIncrement(endText) * 7 + 5;
-    }
-    if (weekdayText == "Sat") {
+    } else if (weekdayText == "Sat") {
       startCellID = findIncrement(startText) * 7 + 6;
       endCellID = findIncrement(endText) * 7 + 6;
     }
-
+    if (startCellID > endCellID) {
+      alert("Invalid start time and end time!");
+    }
     for (var i = startCellID; i < endCellID; i = i + 7) {
       document.getElementById(i).style.backgroundColor = "rgb(176, 233, 194)";
     }
@@ -434,32 +433,28 @@ export default class Calendar extends React.Component {
     if (weekdayText == "Sun") {
       var startCellID = findIncrement(startText) * 7 + 0;
       var endCellID = findIncrement(endText) * 7 + 0;
-    }
-    if (weekdayText == "Mon") {
+    } else if (weekdayText == "Mon") {
       startCellID = findIncrement(startText) * 7 + 1;
       endCellID = findIncrement(endText) * 7 + 1;
-    }
-    if (weekdayText == "Tues") {
+    } else if (weekdayText == "Tues") {
       startCellID = findIncrement(startText) * 7 + 2;
       endCellID = findIncrement(endText) * 7 + 2;
-    }
-    if (weekdayText == "Wed") {
+    } else if (weekdayText == "Wed") {
       startCellID = findIncrement(startText) * 7 + 3;
       endCellID = findIncrement(endText) * 7 + 3;
-    }
-    if (weekdayText == "Thur") {
+    } else if (weekdayText == "Thur") {
       startCellID = findIncrement(startText) * 7 + 4;
       endCellID = findIncrement(endText) * 7 + 4;
-    }
-    if (weekdayText == "Fri") {
+    } else if (weekdayText == "Fri") {
       startCellID = findIncrement(startText) * 7 + 5;
       endCellID = findIncrement(endText) * 7 + 5;
-    }
-    if (weekdayText == "Sat") {
+    } else if (weekdayText == "Sat") {
       startCellID = findIncrement(startText) * 7 + 6;
       endCellID = findIncrement(endText) * 7 + 6;
     }
-
+    if (startCellID > endCellID) {
+      alert("Please select a valid start and end time!");
+    }
     for (var i = startCellID; i < endCellID; i = i + 7) {
       document.getElementById(i).style.backgroundColor = "rgb(248, 248, 248)";
     }
