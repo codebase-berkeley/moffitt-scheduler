@@ -40,8 +40,8 @@
   justify-content: space-between;
   margin-bottom: 0%;
   z-index: 100;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 30px;
+  font-weight: 1000;
   color: black;
 }
 
@@ -128,17 +128,19 @@
 }
 
 #saveButton {
-  float: left;
+  float: right;
   position: center;
-  width: 10%;
-  margin-left: 52%;
+  width: 125px;
+  margin-left: 50px;
   margin-top: 15px;
   height: 40px;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
   border-radius: 20px;
   background-color: white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-width: 0px;
+  border: 1px solid #3f3cc8;
+  color: #3f3cc8;
+  cursor: pointer;
 }
 
 #saveButton:hover {
@@ -146,7 +148,7 @@
 }
 
 #saveButton:active {
-  background-color: #b0e9c2;
+  background-color: #dcd3ff;
 }
 
 #saveButton:focus {
@@ -155,4 +157,74 @@
 
 .availButton:focus {
   background-color: green;
+}
+
+.emptySpace {
+  padding-left: 30px;
+}
+
+.startText,
+.endText {
+  font-size: 10px;
+}
+
+.weekdayText1 {
+  font-size: 10px;
+}
+
+.startEnd {
+  margin-left: 15.5%;
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+}
+
+.weekdayStuff {
+  margin-top: 1%;
+  margin-left: 15.3%;
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+}
+
+.startStuff {
+  margin-top: 18px;
+  margin-left: 15.3%;
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+}
+
+.separator {
+  padding-top: 1%;
+}
+
+.selectButton {
+  float: right;
+  position: center;
+  margin-left: 5%;
+  width: 75px;
+  height: 25px;
+  font-family: "Open Sans";
+  font-size: 13px;
+  border-radius: 20px;
+  border: 1px solid grey;
+  cursor: pointer;
+  margin-right: 40%;
+}
+
+.selectButton:hover {
+  font-weight: bold;
+}
+
+.selectButton:active {
+  background-color: rgb(182, 181, 181);
+}
+
+.selectButton:focus {
+  outline: none;
+}
+
+.emptySpace1 {
+  margin-left: 1%;
 }
