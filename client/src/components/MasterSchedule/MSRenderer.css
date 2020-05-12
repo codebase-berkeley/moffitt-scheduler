@@ -157,22 +157,6 @@
   color: #949494;
 }
 
-.box {
-  display: flex;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 95%;
-  height: 95.4px;
-  margin-bottom: 12px;
-  font-family: "Open Sans", sans-serif;
-  font-style: normal;
-  font-size: 14px;
-  text-align: center;
-  justify-content: space-between;
-  overflow-y: auto;
-}
-
 .weekdayColumns {
   display: flex;
   justify-content: space-between;

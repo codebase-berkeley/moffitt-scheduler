@@ -4,11 +4,11 @@ import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
+import error from "./MasterImages/error.svg";
 
 function dateObject(week, day, hour) {
   let newSameDate = new Date(week);
   newSameDate.setHours(hour, 0, 0, 0);
-  console.log("newdate", newSameDate);
   let newSetDate = newSameDate.setDate(newSameDate.getDate() + day);
   return newSetDate;
 }
@@ -230,6 +230,7 @@ export default class Library extends React.Component {
             date={date}
             addEmployee={addEmployee}
             removeEmployee={removeEmployee}
+            location={this.props.location}
           />
         );
         this.setState({ allDaysOfWeek: clonedAllDaysOfWeek });
@@ -292,6 +293,7 @@ export default class Library extends React.Component {
             date={date}
             addEmployee={addEmployee}
             removeEmployee={removeEmployee}
+            location={this.props.location}
           />
         );
         this.setState({ allDaysOfWeek: clonedAllDaysOfWeek });
@@ -369,26 +371,97 @@ function formatNames(names) {
 }
 
 function Box(props) {
-  return (
-    <div>
-      <div className="box">
-        <div className="boxText">{formatNames(props.names)}</div>
-        <EditSchedule
-          day={props.startDay}
-          time={props.curTime}
-          employee={props.names}
-          sleId={props.sleId}
-          shiftId={props.shiftId}
-          allEmp={props.allEmp}
-          currTime={props.curTime}
-          date={props.date}
-          addEmployee={props.addEmployee}
-          removeEmployee={props.removeEmployee}
-          location={props.location}
-        />
+  if (isError(props.location, props.names) == 0) {
+    return (
+      <div>
+        <div className="boxWithoutError">
+          <div className="boxText">{formatNames(props.names)}</div>
+          <EditSchedule
+            day={props.startDay}
+            time={props.curTime}
+            employee={props.names}
+            sleId={props.sleId}
+            shiftId={props.shiftId}
+            allEmp={props.allEmp}
+            currTime={props.curTime}
+            date={props.date}
+            addEmployee={props.addEmployee}
+            removeEmployee={props.removeEmployee}
+            location={props.location}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <div className="boxWithError">
+          <div className="boxText">{formatNames(props.names)}</div>
+          <EditSchedule
+            day={props.startDay}
+            time={props.curTime}
+            employee={props.names}
+            sleId={props.sleId}
+            shiftId={props.shiftId}
+            allEmp={props.allEmp}
+            currTime={props.curTime}
+            date={props.date}
+            addEmployee={props.addEmployee}
+            removeEmployee={props.removeEmployee}
+            location={props.location}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
+function displayError(typeOfError) {
+  if (typeOfError == 1) {
+    return (
+      <div className="errorText">
+        <img className="errorImg" src={error} alt="error" />
+        Warning: Too many employees
+      </div>
+    );
+  }
+  if (typeOfError == -1) {
+    return (
+      <div className="errorText">
+        <img className="errorImg" src={error} alt="error" />
+        Warning: Not enough employees
+      </div>
+    );
+  }
+}
+
+function isError(location, nameArray) {
+  if (location === "Moffitt3") {
+    if (nameArray.length < 1) {
+      return -1;
+    } else if (nameArray.length > 2) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else if (location === "Moffitt4") {
+    if (nameArray.length < 2) {
+      return -1;
+    } else if (nameArray.length > 3) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else {
+    //Doe
+    if (nameArray.length < 3) {
+      return -1;
+    } else if (nameArray.length > 5) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
 }
 
 function EditSchedule(props) {
@@ -411,10 +484,10 @@ function EditSchedule(props) {
 
   const customStyles = {
     content: {
-      top: "400px",
+      top: "330px",
       left: "50%",
       width: "450px",
-      height: "550px",
+      height: "460px",
       transform: "translate(-50%, -50%)",
       overflowY: "scroll",
       border: "0px",
@@ -548,6 +621,9 @@ function EditSchedule(props) {
                   {displayDay(props.day)}, {displayTime(props.time)}
                 </h3>
               </div>
+            </div>
+            <div className="error">
+              {displayError(isError(props.location, props.employee))}
             </div>
             <h3 className="CurrentEmployees">Current Employees</h3>
             <div className="currEmployees">
