@@ -3,6 +3,7 @@ import "./MSRenderer.css";
 import Library from "./Library";
 import leftArrow from "./MasterImages/leftarrow.svg";
 import rightArrow from "./MasterImages/rightarrow.svg";
+import { format, startOfWeek, addDays } from "date-fns";
 
 function dateObject(day, hour) {
   var dateObject = new Date();
@@ -12,6 +13,24 @@ function dateObject(day, hour) {
   var newDate = dateObject.getDate() - diff;
   dateObject.setDate(newDate);
   return dateObject;
+}
+
+function displayMonth(m) {
+  const month = {
+    1: "Jan",
+    2: "Feb",
+    3: "Mar",
+    4: "Apr",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "Aug",
+    9: "Sep",
+    10: "Oct",
+    11: "Nov",
+    12: "Dec",
+  };
+  return month[m];
 }
 
 export default class MSRenderer extends React.Component {
@@ -123,30 +142,44 @@ export default class MSRenderer extends React.Component {
       pending = null;
     }
 
+    const wkdays = [];
+    for (var i = 0; i < 7; i += 1) {
+      wkdays.push(
+        <div class="item-wday2">
+          {format(addDays(startOfWeek(this.state.currentWeek), i), "dd MM/DD")}
+        </div>
+      );
+    }
+
     let startMonth = this.state.currentWeek.getMonth() + 1;
     let startDate = this.state.currentWeek.getDate();
 
     let endDate = new Date(this.state.currentWeek);
     endDate.setDate(endDate.getDate() + 7);
 
-    let endDateNum = endDate.getDate();
+    let endDateNum = endDate.getDate() - 1;
     let endDateMonth = endDate.getMonth() + 1;
+
+    let year = this.state.currentWeek.getFullYear();
 
     return (
       <div className="everythingMS">
-        <div className="masterScheduleText">Master Schedule</div>
-        <div className="arrows">
-          <button className="buttonLeftArrow">
-            <img
-              className="leftArrow"
-              onClick={this.previousWeek}
-              src={leftArrow}
-              alt="leftArrow"
-            />
-          </button>
-          <div className="currWeekContainer">
-            <div className="currWeek">
-              {startMonth}/{startDate} - {endDateMonth}/{endDateNum}
+        <div classname="masterScheduleAndButtons">
+          <div className="masterScheduleText">Master Schedule</div>
+          <div className="arrows">
+            <button className="buttonLeftArrow">
+              <img
+                className="leftArrow"
+                onClick={this.previousWeek}
+                src={leftArrow}
+                alt="leftArrow"
+              />
+            </button>
+            <div className="currWeekContainer">
+              <div className="currWeek">
+                {displayMonth(startMonth)} {year}: {startMonth}/{startDate} -{" "}
+                {endDateMonth}/{endDateNum}
+              </div>
             </div>
           </div>
           <button className="buttonRightArrow">
@@ -198,15 +231,7 @@ export default class MSRenderer extends React.Component {
 
         <div className="Calendar">
           <div className="weekdayBox">
-            <div className="weekdayText">
-              <div className="sunday">Sunday</div>
-              <div className="monday">Monday</div>
-              <div className="tuesday">Tuesday</div>
-              <div className="wednesday">Wednesday</div>
-              <div className="thursday">Thursday</div>
-              <div className="friday">Friday</div>
-              <div className="saturday">Saturday</div>
-            </div>
+            <div className="weekdayText">{wkdays}</div>
           </div>
           <div className="boxesAndDates">
             <div className="hours">

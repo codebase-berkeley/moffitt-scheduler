@@ -254,3 +254,31 @@
 .emptySpace1 {
   margin-left: 1%;
 }
+
+#weekString {
+  text-align: center;
+  font-weight: lighter;
+  color: gray;
+  display: flex;
+}
+
+.arrowsAndTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrowLeftButton {
+  border: none;
+  cursor: pointer;
+}
+
+.arrowRightButton {
+  border: none;
+  cursor: pointer;
+}
+
+/* .availabilityHeader {
+  margin-left: 27.2%;
+} */

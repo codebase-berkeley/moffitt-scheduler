@@ -63,8 +63,12 @@ router.post("/save", (req, res) => {
 
 router.post("/staticcalendar/:userId", (req, res) => {
   let shifts = req.body.items;
+  let newCurrWeek = new Date(req.body.currWeek);
+  let currWeekStartDate = newCurrWeek.getTime();
+  let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
   pool.query(
-    "SELECT * FROM SHIFTS WHERE sle_id = $1",
+    `SELECT * FROM SHIFTS WHERE sle_id = $1 
+    AND start_time >= to_timestamp(${currWeekStartDate}/1000.0) AND end_time <= to_timestamp(${currWeekEndDate}/1000.0)`,
     [req.params.userId],
     (error, result) => {
       if (error) {
@@ -85,7 +89,6 @@ router.post("/staticcalendar/:userId", (req, res) => {
                 shifts[i].end <= currentRow.end_time.getHours()));
           if (sameStartEndValid || diffStartEndValid) {
             shifts[i].id = currentRow.shift_id;
-            console.log(currentRow.cover_requested);
             if (currentRow.location == "Moffitt3") {
               if (currentRow.cover_requested == "true") {
                 shifts[i].color = "#C187D3";
@@ -258,8 +261,6 @@ router.post("/openshifts/:userId", (req, res) => {
         throw error;
       }
       let wantedDates = [];
-      console.log(req.body.startOfWeek);
-      console.log(req.body.endOfWeek);
       for (var k = 0; k < result.rows.length; k++) {
         if (
           Date.parse(result.rows[k].start_time) >=
