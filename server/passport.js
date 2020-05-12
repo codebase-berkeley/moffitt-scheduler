@@ -69,9 +69,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, cb) => {
   console.log("Des id: " + id);
-  //   dbquery("SELECT id, name FROM sle WHERE id = $1", [parseInt(id)], (rows) => {
-  //     cb(null, rows[0]);
-  //   });
+  // dbquery("SELECT id, name FROM sle WHERE id = $1", [parseInt(id)], (rows) => {
+  //   cb(null, rows[0]);
+  // });
   cb(null, id);
 });
 

@@ -72,6 +72,9 @@ export default class StaticCalendar extends React.Component {
   }
 
   componentDidMount() {
+    console.log("Test cookie here:");
+    console.log(this.props.user);
+    console.log("End cookie here:");
     fetch("/staticcalendar/" + this.props.userId, {
       method: "POST",
       credentials: "include",

@@ -62,7 +62,11 @@ router.post("/save", (req, res) => {
 });
 
 router.post("/staticcalendar/:userId", (req, res) => {
-  console.log("User id: " + req.user);
+  if (!req.user) {
+    console.log("no session");
+  } else {
+    console.log("User id: " + req.user);
+  }
   let shifts = req.body.items;
   pool.query(
     "SELECT * FROM SHIFTS WHERE sle_id = $1",
