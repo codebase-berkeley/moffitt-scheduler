@@ -23,4 +23,10 @@ router.post("/login", function (req, res, next) {
   })(req, res, next);
 });
 
+router.get("/logout", function (req, res) {
+  req.logOut();
+  res.clearCookie("connect.sid");
+  return res.json({ logout: true });
+});
+
 module.exports = router;

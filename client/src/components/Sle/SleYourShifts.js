@@ -4,14 +4,26 @@ import "./SidebarElement.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
 import StaticCalendar from "../Calendar/StaticCalendar.js";
+import { Redirect } from "react-router-dom";
 
 export default class SleShifts extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { redirect: null };
     this.logOut = this.logOut.bind(this);
   }
   logOut() {
-    console.log("works?");
+    fetch("/logout", {
+      credentials: "include",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        if (jsonResponse.logout == true) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        }
+      });
   }
   render() {
     var shiftsLink = "/yourshifts";
@@ -20,6 +32,7 @@ export default class SleShifts extends React.Component {
 
     return (
       <div class="everything">
+        {this.state.redirect}
         <div class="line"></div>
         <div className="top-bar">
           <div class="user-box">

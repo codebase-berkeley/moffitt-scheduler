@@ -70,7 +70,6 @@ export default class Calendar extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        console.log("LOOK HERE SAHIL");
         if (jsonResponse.schedule == null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
