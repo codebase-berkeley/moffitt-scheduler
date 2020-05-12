@@ -2,6 +2,7 @@ import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
+import { Redirect } from "react-router-dom";
 let currentClicked = null;
 let currentClickedID = null;
 function Timeslot(props) {
@@ -55,7 +56,11 @@ var weekString =
 export default class StaticCalendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { shifts: initialShifts(), modalIsOpen: false };
+    this.state = {
+      shifts: initialShifts(),
+      modalIsOpen: false,
+      redirect: null,
+    };
     this.stateFixer = this.stateFixer.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -72,10 +77,7 @@ export default class StaticCalendar extends React.Component {
   }
 
   componentDidMount() {
-    console.log("Test cookie here:");
-    console.log(this.props.user);
-    console.log("End cookie here:");
-    fetch("/staticcalendar/" + this.props.userId, {
+    fetch("/staticcalendar/", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -92,8 +94,13 @@ export default class StaticCalendar extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        console.log(jsonResponse.shifts);
-        this.setState({ shifts: jsonResponse.shifts });
+        if (jsonResponse.shifts == null) {
+          console.log("redirect pls");
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          console.log(jsonResponse.shifts);
+          this.setState({ shifts: jsonResponse.shifts });
+        }
       });
   }
 
@@ -211,6 +218,7 @@ export default class StaticCalendar extends React.Component {
 
     return (
       <div id="overall-container">
+        {this.state.redirect}
         <h1 id="yourshifts">Your Shifts</h1>
         <Modal
           // className="box"

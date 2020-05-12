@@ -61,60 +61,59 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.post("/staticcalendar/:userId", (req, res) => {
+router.post("/staticcalendar", (req, res) => {
   if (!req.user) {
-    console.log("no session");
+    return res.json({ shifts: null });
   } else {
-    console.log("User id: " + req.user);
-  }
-  let shifts = req.body.items;
-  pool.query(
-    "SELECT * FROM SHIFTS WHERE sle_id = $1",
-    [req.params.userId],
-    (error, result) => {
-      if (error) {
-        throw error;
-      }
-      for (var i = 0; i < 168; i += 1) {
-        for (var j = 0; j < result.rows.length; j += 1) {
-          let currentRow = result.rows[j];
-          let sameStartEndValid =
-            shifts[i].day == currentRow.start_time.getDay() &&
-            shifts[i].start >= currentRow.start_time.getHours() &&
-            shifts[i].end <= currentRow.end_time.getHours();
-          let diffStartEndValid =
-            currentRow.start_time.getDay() != currentRow.end_time.getDay() &&
-            ((shifts[i].day == currentRow.start_time.getDay() &&
-              shifts[i].start >= currentRow.start_time.getHours()) ||
-              (shifts[i].day == currentRow.end_time.getDay() &&
-                shifts[i].end <= currentRow.end_time.getHours()));
-          if (sameStartEndValid || diffStartEndValid) {
-            shifts[i].id = currentRow.shift_id;
-            if (currentRow.location == "Moffitt3") {
-              if (currentRow.cover_requested == "true") {
-                shifts[i].color = "#C187D3";
-              } else {
-                shifts[i].color = "#ff8d06";
-              }
-            } else if (currentRow.location == "Doe") {
-              if (currentRow.cover_requested == "true") {
-                shifts[i].color = "#C187D3";
-              } else {
-                shifts[i].color = "#d7269b";
-              }
-            } else if (currentRow.location == "Moffitt4") {
-              if (currentRow.cover_requested == "true") {
-                shifts[i].color = "#C187D3";
-              } else {
-                shifts[i].color = "#04b17e";
+    let shifts = req.body.items;
+    pool.query(
+      "SELECT * FROM SHIFTS WHERE sle_id = $1",
+      [req.user],
+      (error, result) => {
+        if (error) {
+          throw error;
+        }
+        for (var i = 0; i < 168; i += 1) {
+          for (var j = 0; j < result.rows.length; j += 1) {
+            let currentRow = result.rows[j];
+            let sameStartEndValid =
+              shifts[i].day == currentRow.start_time.getDay() &&
+              shifts[i].start >= currentRow.start_time.getHours() &&
+              shifts[i].end <= currentRow.end_time.getHours();
+            let diffStartEndValid =
+              currentRow.start_time.getDay() != currentRow.end_time.getDay() &&
+              ((shifts[i].day == currentRow.start_time.getDay() &&
+                shifts[i].start >= currentRow.start_time.getHours()) ||
+                (shifts[i].day == currentRow.end_time.getDay() &&
+                  shifts[i].end <= currentRow.end_time.getHours()));
+            if (sameStartEndValid || diffStartEndValid) {
+              shifts[i].id = currentRow.shift_id;
+              if (currentRow.location == "Moffitt3") {
+                if (currentRow.cover_requested == "true") {
+                  shifts[i].color = "#C187D3";
+                } else {
+                  shifts[i].color = "#ff8d06";
+                }
+              } else if (currentRow.location == "Doe") {
+                if (currentRow.cover_requested == "true") {
+                  shifts[i].color = "#C187D3";
+                } else {
+                  shifts[i].color = "#d7269b";
+                }
+              } else if (currentRow.location == "Moffitt4") {
+                if (currentRow.cover_requested == "true") {
+                  shifts[i].color = "#C187D3";
+                } else {
+                  shifts[i].color = "#04b17e";
+                }
               }
             }
           }
         }
+        return res.json({ shifts: shifts });
       }
-      return res.json({ shifts: shifts });
-    }
-  );
+    );
+  }
 });
 
 router.post("/save", (req, res) => {

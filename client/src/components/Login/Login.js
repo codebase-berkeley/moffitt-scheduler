@@ -13,7 +13,7 @@ class Login extends React.Component {
 
   handleIsSle = (resp) => {
     if (resp != null && resp != undefined) {
-      var linkString = `/yourshifts/${resp}`;
+      var linkString = `/yourshifts`;
       this.setState({ redirect: <Redirect push to={linkString} /> });
     }
   };

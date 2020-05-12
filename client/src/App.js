@@ -26,7 +26,7 @@ class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/staticCalendar" component={StaticCalendar} />
-          <Route exact path="/yourshifts/:userId" component={SleYourShifts} />
+          <Route exact path="/yourshifts" component={SleYourShifts} />
           <Route
             exact
             path="/availability/:userId"
