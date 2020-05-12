@@ -27,6 +27,7 @@ export default class Calendar extends React.Component {
   save() {
     fetch("/save", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -62,7 +63,9 @@ export default class Calendar extends React.Component {
   };
 
   componentDidMount() {
-    fetch("/availability")
+    fetch("/availability", {
+      credentials: "include",
+    })
       .then((response) => {
         return response.json();
       })

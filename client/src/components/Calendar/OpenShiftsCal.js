@@ -194,6 +194,7 @@ export default class OpenShiftsCal extends React.Component {
   componentDidMount() {
     fetch("/openshifts", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -232,6 +233,7 @@ export default class OpenShiftsCal extends React.Component {
       format(endOfWeek(currStartDate), "MM/DD");
     fetch("/openshifts", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -268,6 +270,7 @@ export default class OpenShiftsCal extends React.Component {
       format(endOfWeek(currStartDate), "MM/DD");
     fetch("/openshifts", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
