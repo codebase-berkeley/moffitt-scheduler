@@ -64,7 +64,12 @@ export default class Calendar extends React.Component {
 
   componentDidMount() {
     fetch("/availability", {
+      method: "POST",
       credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => {
         return response.json();

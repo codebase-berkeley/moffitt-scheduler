@@ -18,7 +18,7 @@ class Login extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        console.log("Session/Cookies cleared");
+        console.log("Session/Cookies cleared: " + jsonResponse.logout);
       });
   }
   handleIsSle = (resp) => {

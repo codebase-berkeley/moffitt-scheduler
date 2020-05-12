@@ -72,6 +72,7 @@ export default class Profile extends React.Component {
   componentDidMount() {
     fetch("/staticcalendar", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -92,12 +93,27 @@ export default class Profile extends React.Component {
           this.setState({ shifts: jsonResponse.shifts });
         }
       });
-    fetch("/availability/" + this.props.match.params.userId)
+    fetch("/availability", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: this.props.match.params.userId,
+      }),
+    })
       .then((response) => {
         return response.json();
       })
       .then((jsonResponse) => {
-        this.setState({ schedule: jsonResponse.schedule });
+        if (jsonResponse.schedule == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          console.log("LOOK HERE");
+          this.setState({ schedule: jsonResponse.schedule });
+        }
       });
     fetch("/profilehours/" + this.props.match.params.userId)
       .then((response) => {

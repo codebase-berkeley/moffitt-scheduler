@@ -144,17 +144,27 @@ router.get("/shifts", function (req, res) {
   });
 });
 
-router.get("/availability", (req, res) => {
+router.post("/availability", (req, res) => {
   var selected = [];
   var curr_day = new Date();
   var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
   if (!req.user) {
     return res.json({ schedule: null });
   } else {
+    let currentUser;
+    if (req.body.userId) {
+      if (req.user != 0 && req.body.userId != req.user) {
+        return res.json({ schedule: null });
+      } else {
+        currentUser = req.body.userId;
+      }
+    } else {
+      currentUser = req.user;
+    }
     pool.query(
       `SELECT start_time AS t, day_of_week AS d FROM AVAILABILITY 
      WHERE sle_id = $1`,
-      [req.user],
+      [currentUser],
       (error, result) => {
         if (error) {
           throw error;
