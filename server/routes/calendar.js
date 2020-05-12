@@ -69,10 +69,20 @@ router.post("/staticcalendar", (req, res) => {
   if (!req.user) {
     return res.json({ shifts: null });
   } else {
+    let currentUser;
+    if (req.body.userId) {
+      if (req.user != 0 && req.body.userId != req.user) {
+        return res.json({ shifts: null });
+      } else {
+        currentUser = req.body.userId;
+      }
+    } else {
+      currentUser = req.user;
+    }
     let shifts = req.body.items;
     pool.query(
       "SELECT * FROM SHIFTS WHERE sle_id = $1",
-      [req.user],
+      [currentUser],
       (error, result) => {
         if (error) {
           throw error;

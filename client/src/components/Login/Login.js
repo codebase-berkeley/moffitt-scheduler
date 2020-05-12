@@ -10,7 +10,17 @@ class Login extends React.Component {
     this.loginClick = this.loginClick.bind(this);
     this.state = { redirect: null, isError: false };
   }
-
+  componentDidMount() {
+    fetch("/logout", {
+      credentials: "include",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log("Session/Cookies cleared");
+      });
+  }
   handleIsSle = (resp) => {
     if (resp != null && resp != undefined) {
       var linkString = `/yourshifts`;
