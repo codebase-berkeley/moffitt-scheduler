@@ -5,8 +5,8 @@ import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
 
 function Sle(props) {
-  var shiftsLink = "/yourshifts/" + props.match.params.userId;
-  var availabilityLink = "/availability/" + props.match.params.userId;
+  var shiftsLink = "/yourshifts";
+  var availabilityLink = "/availability";
 
   return (
     <div class="everything">

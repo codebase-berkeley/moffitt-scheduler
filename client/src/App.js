@@ -32,7 +32,7 @@ class App extends React.Component {
             path="/availability/:userId"
             component={SleAvailability}
           />
-          <Route exact path="/openshifts/:userId" component={SleOpenShifts} />
+          <Route exact path="/openshifts" component={SleOpenShifts} />
           <Route exact path="/employees" component={SupervisorEmployees} />
           <Route exact path="/profile/:userId" component={Profile} />
           <Route exact path="/cover" component={SupervisorCover} />

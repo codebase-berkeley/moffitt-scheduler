@@ -186,6 +186,7 @@ export default class OpenShiftsCal extends React.Component {
       currentDate: currentDate,
       weekString: weekString,
       emptyShifts: emptyShifts,
+      redirect: null,
     };
     this.previousWeek = this.previousWeek.bind(this);
     this.nextWeek = this.nextWeek.bind(this);
@@ -193,7 +194,7 @@ export default class OpenShiftsCal extends React.Component {
 
   componentDidMount() {
     /** Use current week variable to edit this. */
-    fetch("/openshifts/" + this.props.userId, {
+    fetch("/openshifts", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -211,7 +212,11 @@ export default class OpenShiftsCal extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        this.setState({ shifts: jsonResponse.shifts });
+        if (jsonResponse.shifts == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ shifts: jsonResponse.shifts });
+        }
       });
   }
   previousWeek() {
@@ -228,7 +233,7 @@ export default class OpenShiftsCal extends React.Component {
       format(startOfWeek(currStartDate), "MM/DD") +
       " - " +
       format(endOfWeek(currStartDate), "MM/DD");
-    fetch("/openshifts/" + this.props.userId, {
+    fetch("/openshifts", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -265,14 +270,14 @@ export default class OpenShiftsCal extends React.Component {
       format(startOfWeek(currStartDate), "MM/DD") +
       " - " +
       format(endOfWeek(currStartDate), "MM/DD");
-    fetch("/openshifts/" + this.props.userId, {
+    fetch("/openshifts", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        items: this.state.shifts,
+        items: this.state.emptyShifts,
         userId: this.props.userId,
         currentDate: currStartDate,
         startOfWeek: startOfWeek(currStartDate),
@@ -386,6 +391,7 @@ export default class OpenShiftsCal extends React.Component {
 
     return (
       <div id="overall-container1">
+        {this.state.redirect}
         <h1 id="yourshifts1">Open Shifts</h1>
         <div id="schedule-container-st1">
           <div id="frontWords1">

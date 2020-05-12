@@ -86,7 +86,6 @@ export default class StaticCalendar extends React.Component {
       },
       body: JSON.stringify({
         items: this.state.shifts,
-        userId: this.props.userId,
       }),
     })
       .then((response) => {
@@ -95,10 +94,8 @@ export default class StaticCalendar extends React.Component {
       })
       .then((jsonResponse) => {
         if (jsonResponse.shifts == null) {
-          console.log("redirect pls");
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
-          console.log(jsonResponse.shifts);
           this.setState({ shifts: jsonResponse.shifts });
         }
       });

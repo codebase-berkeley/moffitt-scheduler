@@ -11,9 +11,9 @@ export default class SleCalendar extends React.Component {
   }
 
   render() {
-    var shiftsLink = "/yourshifts/" + this.props.match.params.userId;
-    var availabilityLink = "/availability/" + this.props.match.params.userId;
-    var openshiftsLink = "/openshifts/" + this.props.match.params.userId;
+    var shiftsLink = "/yourshifts";
+    var availabilityLink = "/availability";
+    var openshiftsLink = "/openshifts";
 
     return (
       <div class="everything">
