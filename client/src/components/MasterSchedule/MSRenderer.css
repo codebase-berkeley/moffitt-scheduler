@@ -55,18 +55,16 @@
 }
 
 .masterScheduleText {
-  top: 150px;
   position: fixed;
   margin-left: 10%;
-  margin-bottom: 20px;
   width: 215px;
   height: 25px;
   font-family: "Open Sans";
   font-style: normal;
   font-weight: bold;
   font-size: 25px;
-  line-height: 25px;
   color: #000000;
+  padding-top: 1.5%;
 }
 
 .currentWeek {
@@ -105,15 +103,11 @@
 }
 
 .buttons {
-  top: 230px;
+  padding-top: 0.5%;
   align-content: space-between;
   display: flex;
   position: fixed;
   right: 100px;
-}
-
-.msmoffitt {
-  padding-left: 30%;
 }
 
 .weekdayBox {
@@ -122,13 +116,13 @@
   left: 380px;
   top: 250px;
   right: 100px;
+  width: 67.5%;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   color: #9e9e9e;
-  padding-top: 8px;
-  margin-top: 35px;
-  margin-bottom: 20px;
+  margin-top: 3%;
+  padding-top: 0.5%;
 }
 
 .boxesAndDates {
@@ -231,6 +225,8 @@
   display: flex;
   margin-top: 60px;
   margin-left: 35%;
+  padding-top: 2%;
+  padding-bottom: 2%;
   font-family: "Open Sans", sans-serif;
   display: inline-block;
 }

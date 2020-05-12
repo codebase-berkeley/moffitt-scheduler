@@ -50,7 +50,7 @@ router.post("/save", (req, res) => {
   );
   for (var i = 0; i < items.length; i += 1) {
     pool.query(
-      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i][0]}, ${items[i][1]})`,
+      `INSERT INTO AVAILABILITY (sle_id, start_time, day_of_week) VALUES (${userId}, ${items[i].start}, ${items[i].day})`,
       (error, result) => {
         if (error) {
           throw error;
@@ -130,12 +130,38 @@ router.get("/shifts", function (req, res) {
   });
 });
 
+class Shift {
+  constructor(color, id, start, end, day, sleid, location) {
+    this.color = color;
+    this.id = id;
+    this.start = start;
+    this.end = end;
+    this.day = day;
+    this.sleid = sleid;
+  }
+}
+
+function initialShifts() {
+  let a = [];
+  for (var i = 0; i < 336; i += 1) {
+    a.push(new Shift("rgb(248, 248, 248)", null, null, null, null, null, null));
+  }
+  let count = 0;
+  for (var i = 0; i <= 23; i += 0.5) {
+    for (var j = 0; j <= 6; j += 1) {
+      a[count].start = i;
+      a[count].end = i + 0.5;
+      a[count].day = j;
+      count += 1;
+    }
+  }
+  return a;
+}
+
 router.get("/availability/:userId", (req, res) => {
-  var selected = [];
-  var curr_day = new Date();
-  var curr_week_sunday = curr_day.getDate() - curr_day.getDay();
+  var selected = initialShifts();
   pool.query(
-    `SELECT start_time AS t, day_of_week AS d FROM AVAILABILITY 
+    `SELECT start_time, day_of_week FROM AVAILABILITY 
      WHERE sle_id = $1`,
     [req.params.userId],
     (error, result) => {
@@ -143,20 +169,14 @@ router.get("/availability/:userId", (req, res) => {
         throw error;
       } else {
         for (var r = 0; r < result.rows.length; r++) {
-          var row = result.rows[r];
-          var t = result.rows[r].t;
-          var d = result.rows[r].d;
-          selected.push(
-            new Date(
-              curr_day.getFullYear(),
-              curr_day.getMonth(),
-              d + curr_week_sunday,
-              t,
-              0,
-              0,
-              0
-            )
-          );
+          for (var s = 0; s < selected.length; s++) {
+            if (
+              result.rows[r].day_of_week == selected[s].day &&
+              result.rows[r].start_time == selected[s].start
+            ) {
+              selected[s].color = "rgb(176, 233, 194)";
+            }
+          }
         }
       }
       return res.json({ schedule: selected });
