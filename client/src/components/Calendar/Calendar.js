@@ -2,11 +2,12 @@ import React from "react";
 import ScheduleSelector from "react-schedule-selector";
 import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, getDay, getHours } from "date-fns";
+import { Redirect } from "react-router-dom";
 
 export default class Calendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { schedule: [], formattedSchedule: [] };
+    this.state = { schedule: [], formattedSchedule: [], redirect: null };
 
     this.deselectCell = <div class="deselectCell"></div>;
     this.selectCell = <div class="selectCell"></div>;
@@ -31,12 +32,17 @@ export default class Calendar extends React.Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: this.props.userId,
         items: this.state.formattedSchedule,
       }),
-    }).then((response) => {
-      return response.json();
-    });
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        if (jsonResponse.schedule == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        }
+      });
   }
 
   handleChange = (newSchedule) => {
@@ -56,18 +62,24 @@ export default class Calendar extends React.Component {
   };
 
   componentDidMount() {
-    fetch("/availability/" + this.props.userId)
+    fetch("/availability")
       .then((response) => {
         return response.json();
       })
       .then((jsonResponse) => {
-        this.setState({ schedule: jsonResponse.schedule });
+        console.log("LOOK HERE SAHIL");
+        if (jsonResponse.schedule == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ schedule: jsonResponse.schedule });
+        }
       });
   }
 
   render() {
     return (
       <div id="overall-container">
+        {this.state.redirect}
         <h1 className="availabilityHeader" id="selectavail">
           Select Availabilities
         </h1>

@@ -39,7 +39,6 @@ function Timeslot(props) {
     }
 
     function afterOpenModal() {
-      // references are now sync'd and can be accessed.
       subtitle.style.color = "#black";
     }
 
@@ -193,7 +192,6 @@ export default class OpenShiftsCal extends React.Component {
   }
 
   componentDidMount() {
-    /** Use current week variable to edit this. */
     fetch("/openshifts", {
       method: "POST",
       headers: {
@@ -202,7 +200,6 @@ export default class OpenShiftsCal extends React.Component {
       },
       body: JSON.stringify({
         items: this.state.emptyShifts,
-        userId: this.props.userId,
         currentDate: this.state.currentDate,
         startOfWeek: startOfWeek(this.state.currentDate),
         endOfWeek: endOfWeek(this.state.currentDate),
@@ -241,7 +238,6 @@ export default class OpenShiftsCal extends React.Component {
       },
       body: JSON.stringify({
         items: this.state.emptyShifts,
-        userId: this.props.userId,
         currentDate: currStartDate,
         startOfWeek: startOfWeek(currStartDate),
         endOfWeek: endOfWeek(currStartDate),
@@ -278,7 +274,6 @@ export default class OpenShiftsCal extends React.Component {
       },
       body: JSON.stringify({
         items: this.state.emptyShifts,
-        userId: this.props.userId,
         currentDate: currStartDate,
         startOfWeek: startOfWeek(currStartDate),
         endOfWeek: endOfWeek(currStartDate),
