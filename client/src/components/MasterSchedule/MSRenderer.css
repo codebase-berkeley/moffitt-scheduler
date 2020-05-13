@@ -98,7 +98,8 @@
 
 .currWeek {
   text-align: center;
-  font-size: 18px;
+  font-size: 19px;
+  font-weight: 600;
 }
 
 .secondRow {
