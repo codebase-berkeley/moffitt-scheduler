@@ -203,24 +203,26 @@ export default class MSRenderer extends React.Component {
               </button>
             </div>
             <div className="form">
-              <form action="/action_page.php">
-                <label for="startDate">Start Date</label>
-                <input
-                  type="date"
-                  id="startDate"
-                  className="startDate"
-                  placeholder="Start Date"
-                  defaultValue="2020-05-07"
-                ></input>
-                <label for="endDate">End Date</label>
-                <input
-                  type="date"
-                  id="endDate"
-                  className="endDate"
-                  placeholder="End Date"
-                  defaultValue="2020-05-08"
-                ></input>
-              </form>
+              <div className="formdiv">
+                <form action="/action_page.php">
+                  <label for="startDate">Start Date</label>
+                  <input
+                    type="date"
+                    id="startDate"
+                    className="startDate"
+                    placeholder="Start Date"
+                    defaultValue="2020-05-07"
+                  ></input>
+                  <label for="endDate">End Date</label>
+                  <input
+                    type="date"
+                    id="endDate"
+                    className="endDate"
+                    placeholder="End Date"
+                    defaultValue="2020-05-08"
+                  ></input>
+                </form>
+              </div>
               <div className="leftButtons">
                 <button className="schedGenerator" onClick={this.generate}>
                   <h1>Generate</h1>
