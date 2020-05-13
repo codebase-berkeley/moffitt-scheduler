@@ -2,6 +2,7 @@ import React from "react";
 import "./Doe.css";
 import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
+import { Redirect } from "react-router-dom";
 
 export default class Doe extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ export default class Doe extends React.Component {
         fridayArray,
         saturdayArray,
       ],
+      redirect: null,
     };
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
       for (let j = 0; j < 24; j++) {
@@ -45,6 +47,12 @@ export default class Doe extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
+        if (jsonResponse.items == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        }
+        if (jsonResponse.items == null) {
+          return;
+        }
         this.setState({
           items: jsonResponse.items,
         });
@@ -66,7 +74,8 @@ export default class Doe extends React.Component {
               //If shifts runs across the same day
               for (let i = start_hour; i < end_hour; i++) {
                 console.log("i: ", i);
-                let previousState = this.state.allDaysOfWeek[start_time_date][i].props.text;
+                let previousState = this.state.allDaysOfWeek[start_time_date][i]
+                  .props.text;
                 console.log("pS", previousState);
                 if (previousState == null) {
                   newAllDaysOfWeek[start_time_date][i] = (
@@ -150,6 +159,7 @@ export default class Doe extends React.Component {
   render() {
     return (
       <div className="weekdayColumns">
+        {this.state.redirect}
         <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
         <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
         <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>

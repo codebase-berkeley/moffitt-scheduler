@@ -2,6 +2,7 @@ import React from "react";
 import "./Moffitt.css";
 import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
+import { Redirect } from "react-router-dom";
 
 export default class Moffitt4 extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export default class Moffitt4 extends React.Component {
         saturdayArray,
       ],
       employeesInShift: [],
+      redirect: null,
     };
 
     for (let i = 0; i < this.state.allDaysOfWeek.length; i++) {
@@ -47,6 +49,12 @@ export default class Moffitt4 extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
+        if (jsonResponse.items == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        }
+        if (jsonResponse.items == null) {
+          return;
+        }
         this.setState({
           items: jsonResponse.items,
         });
@@ -107,6 +115,7 @@ export default class Moffitt4 extends React.Component {
   render() {
     return (
       <div className="weekdayColumns">
+        {this.state.redirect}
         <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
         <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
         <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>

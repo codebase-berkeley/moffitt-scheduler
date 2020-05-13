@@ -32,7 +32,8 @@ passport.use(
             result.rows[0]["password"] ==
             converter(password, result.rows[0]["salt"])
           ) {
-            cb(null, { id: 0 });
+            let num = 0;
+            cb(null, { id: num.toString() });
           } else {
             cb(null, false);
           }
@@ -53,7 +54,8 @@ passport.use(
             result.rows[0]["password"] ==
             converter(password, result.rows[0]["salt"])
           ) {
-            cb(null, { id: 0 });
+            let num = 0;
+            cb(null, { id: num.toString() });
           } else {
             cb(null, false);
           }
@@ -68,10 +70,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, cb) => {
-  console.log("Des id: " + id);
-  // dbquery("SELECT id, name FROM sle WHERE id = $1", [parseInt(id)], (rows) => {
-  //   cb(null, rows[0]);
-  // });
+  // console.log("Des id: " + id);
   cb(null, id);
 });
 

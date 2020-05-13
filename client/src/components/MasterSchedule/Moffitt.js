@@ -4,6 +4,7 @@ import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
+import { Redirect } from "react-router-dom";
 
 function dateObject(week, day, hour) {
   let newSameDate = new Date(week);
@@ -37,6 +38,7 @@ export default class Moffitt extends React.Component {
         fridayArray,
         saturdayArray,
       ],
+      redirect: null,
     };
     this.addEmployee = this.addEmployee.bind(this);
     this.removeEmployee = this.removeEmployee.bind(this);
@@ -81,6 +83,12 @@ export default class Moffitt extends React.Component {
             return response.json();
           })
           .then((jsonResponse) => {
+            if (jsonResponse.items == null) {
+              this.setState({ redirect: <Redirect push to="/login" /> });
+            }
+            if (jsonResponse.items == null) {
+              return;
+            }
             let items = jsonResponse.items;
 
             let newAllDaysOfWeek = [[], [], [], [], [], [], []];
@@ -296,6 +304,7 @@ export default class Moffitt extends React.Component {
   render() {
     return (
       <div className="weekdayColumns">
+        {this.state.redirect}
         <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
         <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
         <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>
