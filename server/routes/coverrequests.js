@@ -36,6 +36,9 @@ router.post("/pendingsupervisor", (req, res) => {
 });
 
 router.get("/requesthistory", (req, res) => {
+  if (!req.user || req.user != 0) {
+    return res.json({ items: null });
+  }
   pool.query(
     `SELECT s1.name AS covername, s2.name AS needname, supervisor_status AS approval, shifts.start_time AS time, shifts.location AS loc
     FROM coverrequests, sle AS s1, sle AS s2, shifts
@@ -104,6 +107,9 @@ router.get("/requesthistory", (req, res) => {
 });
 
 router.get("/pendingsupervisor", (req, res) => {
+  if (!req.user || req.user != 0) {
+    return res.json({ items: null });
+  }
   pool.query(
     `SELECT s1.name AS covername, s2.name AS needname, supervisor_status AS approval, shifts.start_time AS time, 
     shifts.location AS loc, request_id AS requestid
@@ -126,6 +132,9 @@ router.get("/pendingsupervisor", (req, res) => {
 });
 
 router.get("/pendingcoverage", (req, res) => {
+  if (!req.user || req.user != 0) {
+    return res.json({ items: null });
+  }
   pool.query(
     `select * from sle as c, shifts as a left join coverrequests as b on a.shift_id = b.shift_id where a.cover_requested = 'true' and  c.id = a.sle_id and request_id is null`,
     (error, result) => {
