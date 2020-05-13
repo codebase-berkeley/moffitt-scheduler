@@ -233,10 +233,11 @@ export default class MSRenderer extends React.Component {
               </div>
             </div>
           </div>
-          <div className="weekdayBox">
-            <div className="weekdayText">{wkdays}</div>
-          </div>
         </div>
+        <div className="weekdayBox">
+          <div className="weekdayText">{wkdays}</div>
+        </div>
+        <div className="extraSpace"></div>
 
         <div className="MSCalendar">
           <div className="boxesAndDates">

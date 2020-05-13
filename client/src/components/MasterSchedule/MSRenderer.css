@@ -59,11 +59,12 @@
 .masterScheduleText {
   position: fixed;
   margin-top: 12px;
-  margin-left: 85px;
+  /* margin-left: 85px; */
+  margin-left: 7%;
   font-family: "Open Sans";
   font-style: normal;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 22px;
   color: #000000;
 }
 
@@ -106,7 +107,8 @@
   flex-direction: row;
   justify-content: space-between;
   margin-top: 15px;
-  margin-left: 80px;
+  /* margin-left: 80px; */
+  margin-left: 7%;
   /* width: 1000px; */
   width: 67%;
   align-items: center;
@@ -132,25 +134,34 @@
 .weekdayBox {
   position: fixed;
   height: 44px;
-  margin-top: 145px;
-  margin-left: 80px;
+  margin-top: 130px;
+  /* margin-left: 80px; */
+  margin-left: 7%;
   /* width: 1000px; */
   width: 68%;
   background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
   border-radius: 10px;
   color: #9e9e9e;
   padding-top: 0.5%;
+}
+
+.extraSpace {
+  height: 7px;
+  position: fixed;
+  margin-left: 6%;
+  margin-top: 174px;
+  width: 1000px;
+  background-color: #f5f5fd;
 }
 
 .MSCalendar {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* width: 1250px; */
   width: 100%;
-  margin-top: 200px;
-  margin-left: 80px;
+  margin-top: 210px;
+  margin-left: 7%;
 }
 
 .boxesAndDates {
