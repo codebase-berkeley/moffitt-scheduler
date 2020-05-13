@@ -29,4 +29,12 @@ router.get("/logout", function (req, res) {
   return res.json({ logout: true });
 });
 
+router.get("/homepage", function (req, res) {
+  if (!req.user) {
+    return res.json({ user: null });
+  } else {
+    return res.json({ user: req.user });
+  }
+});
+
 module.exports = router;
