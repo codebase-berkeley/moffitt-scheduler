@@ -38,6 +38,7 @@ export default class Doe extends React.Component {
   componentDidMount() {
     fetch("/masterschedule", {
       method: "GET",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

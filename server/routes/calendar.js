@@ -192,7 +192,6 @@ router.post("/availability", (req, res) => {
   }
 });
 router.get("/totalhours/:userId", (req, res) => {
-  //Accouting for daylight savings
   var now = new Date();
   var start = new Date(now.getFullYear(), 0, 0);
   var diff =

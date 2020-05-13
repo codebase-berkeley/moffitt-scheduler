@@ -74,6 +74,7 @@ export default class Moffitt extends React.Component {
         });
         fetch("/masterschedule/" + this.props.currWeek, {
           method: "GET",
+          credentials: "include",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
