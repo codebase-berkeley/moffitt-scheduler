@@ -59,7 +59,6 @@
 .masterScheduleText {
   position: fixed;
   margin-top: 12px;
-  /* margin-left: 85px; */
   margin-left: 7%;
   font-family: "Open Sans";
   font-style: normal;
@@ -135,9 +134,7 @@
   position: fixed;
   height: 44px;
   margin-top: 130px;
-  /* margin-left: 80px; */
   margin-left: 7%;
-  /* width: 1000px; */
   width: 68%;
   background: #ffffff;
   /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
@@ -175,8 +172,8 @@
   margin-top: 3px;
   display: flex;
   justify-content: space-between;
-  margin-left: 9%;
-  margin-right: 5.5%;
+  margin-left: 8%;
+  margin-right: 7%;
   overflow: hidden;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
@@ -243,13 +240,11 @@
 }
 
 .hours {
-  /* min-width: 80px; */
   width: 7%;
   height: 450px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* margin-left: 50px; */
 }
 .monday {
   padding-left: 25px;
