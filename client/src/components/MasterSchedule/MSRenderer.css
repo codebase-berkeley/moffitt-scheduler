@@ -54,14 +54,10 @@
 .masterScheduleAndButtons {
   display: flex;
   justify-content: space-between;
-  /* position: fixed; */
 }
 
 .masterScheduleText {
   position: fixed;
-  /* margin-left: 10%; */
-  /* width: 215px;
-  height: 25px; */
   margin-top: 20px;
   margin-left: 105px;
   font-family: "Open Sans";
@@ -69,7 +65,6 @@
   font-weight: bold;
   font-size: 25px;
   color: #000000;
-  /* padding-top: 1%; */
 }
 
 .currentWeek {
@@ -77,18 +72,14 @@
   margin-top: 4%;
   display: flex;
   font-family: "Open Sans", sans-serif;
-  /* position: fixed; */
 }
 
 .MSarrows {
-  /* margin-top: 3%;
-  margin-left: 30%; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 28%;
-  /* position: fixed; */
 }
 
 .buttonLeftArrow {
@@ -108,7 +99,6 @@
 .currWeek {
   text-align: center;
   font-size: 18px;
-  /* width: 100%; */
 }
 
 .secondRow {
@@ -133,12 +123,8 @@
   align-content: space-between;
   display: flex;
   align-items: flex-end;
-  width: 30%;
-  margin-top: 60px;
-  /* position: fixed; */
-  /* margin-left: 100px;
-  margin-top: 100px; */
-  /* right: 100px; */
+  width: 28%;
+  margin-top: 58px;
 }
 
 .weekdayBox {
@@ -146,9 +132,6 @@
   height: 44px;
   margin-top: 120px;
   margin-left: 100px;
-  /* left: 380px; */
-  /* top: 250px; */
-  /* right: 100px; */
   width: 1000px;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -288,7 +271,6 @@
 
 label {
   display: inline-flex;
-  /* justify-content: flex-end; */
   width: 80px;
   margin-right: 45px;
   font-size: 13px;
