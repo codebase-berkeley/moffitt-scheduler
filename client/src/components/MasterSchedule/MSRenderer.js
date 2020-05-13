@@ -166,73 +166,77 @@ export default class MSRenderer extends React.Component {
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
           <div className="masterScheduleText">Master Schedule</div>
-          <div className="arrows">
-            <button className="buttonLeftArrow">
-              <img
-                className="leftArrow"
-                onClick={this.previousWeek}
-                src={leftArrow}
-                alt="leftArrow"
-              />
-            </button>
-            <div className="currWeekContainer">
-              <div className="currWeek">
-                {displayMonth(startMonth)} {year}: {startMonth}/{startDate} -{" "}
-                {endDateMonth}/{endDateNum}
+          <div className="secondRow">
+            <div className="rightButtons">
+              <button className={moffitt3} onClick={this.showMoffitt}>
+                <h1>Moffitt 3rd</h1>
+              </button>
+              <button className={moffitt4} onClick={this.showMoffitt4}>
+                <h1>Moffitt 4th</h1>
+              </button>
+              <button className={doe} onClick={this.showDoe}>
+                <h1>Doe</h1>
+              </button>
+            </div>
+            <div className="MSarrows">
+              <button className="buttonLeftArrow">
+                <img
+                  className="leftArrow"
+                  onClick={this.previousWeek}
+                  src={leftArrow}
+                  alt="leftArrow"
+                />
+              </button>
+              <div className="currWeekContainer">
+                <div className="currWeek">
+                  {displayMonth(startMonth)} {year}: {startMonth}/{startDate} -{" "}
+                  {endDateMonth}/{endDateNum}
+                </div>
+              </div>
+              <button className="buttonRightArrow">
+                <img
+                  className="rightArrow"
+                  onClick={this.nextWeek}
+                  src={rightArrow}
+                  alt="rightArrow"
+                />
+              </button>
+            </div>
+            <div className="form">
+              <form action="/action_page.php">
+                <label for="startDate">Start Date</label>
+                <input
+                  type="date"
+                  id="startDate"
+                  className="startDate"
+                  placeholder="Start Date"
+                  defaultValue="2020-05-07"
+                ></input>
+                <label for="endDate">End Date</label>
+                <input
+                  type="date"
+                  id="endDate"
+                  className="endDate"
+                  placeholder="End Date"
+                  defaultValue="2020-05-08"
+                ></input>
+              </form>
+              <div className="leftButtons">
+                <button className="schedGenerator" onClick={this.generate}>
+                  <h1>Generate</h1>
+                </button>
+                <button className="confirmButton" onClick={this.confirm}>
+                  <h1>Confirm</h1>
+                </button>
               </div>
             </div>
           </div>
-          <button className="buttonRightArrow">
-            <img
-              className="rightArrow"
-              onClick={this.nextWeek}
-              src={rightArrow}
-              alt="rightArrow"
-            />
-          </button>
-        </div>
-        <div className="form">
-          <form action="/action_page.php">
-            <label for="startDate">Start Date</label>
-            <input
-              type="date"
-              id="startDate"
-              className="startDate"
-              placeholder="Start Date"
-              defaultValue="2020-05-07"
-            ></input>
-            <label for="endDate">End Date</label>
-            <input
-              type="date"
-              id="endDate"
-              className="endDate"
-              placeholder="End Date"
-              defaultValue="2020-05-08"
-            ></input>
-          </form>
-          <div className="buttons">
-            <button className="schedGenerator" onClick={this.generate}>
-              <h1>Generate</h1>
-            </button>
-            <button className="confirmButton" onClick={this.confirm}>
-              <h1>Confirm</h1>
-            </button>
-            <button className={moffitt3} onClick={this.showMoffitt}>
-              <h1>Moffitt 3rd</h1>
-            </button>
-            <button className={moffitt4} onClick={this.showMoffitt4}>
-              <h1>Moffitt 4th</h1>
-            </button>
-            <button className={doe} onClick={this.showDoe}>
-              <h1>Doe</h1>
-            </button>
-          </div>
-        </div>
-
-        <div className="Calendar">
           <div className="weekdayBox">
             <div className="weekdayText">{wkdays}</div>
           </div>
+        </div>
+
+        <div className="MSCalendar">
           <div className="boxesAndDates">
             <div className="hours">
               <div className="hour">12 AM</div>

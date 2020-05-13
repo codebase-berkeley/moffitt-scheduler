@@ -10,15 +10,16 @@
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
-  font-size: 8px;
+  font-size: 6px;
   color: #949494;
-  width: 101px;
-  top: 200px;
+  width: 90px;
+  height: 34px;
   line-height: 19px;
   text-align: center;
   margin-right: 18px;
   padding-right: 7px;
   padding-left: 7px;
+  align-self: flex-end;
 }
 
 .confirmButton {
@@ -28,15 +29,16 @@
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
-  font-size: 8px;
+  font-size: 6px;
   color: #949494;
-  width: 101px;
-  top: 200px;
+  width: 90px;
+  height: 34px;
   line-height: 19px;
   text-align: center;
   margin-right: 18px;
   padding-right: 7px;
   padding-left: 7px;
+  align-self: flex-end;
 }
 
 .schedGenerator:active {
@@ -52,19 +54,22 @@
 .masterScheduleAndButtons {
   display: flex;
   justify-content: space-between;
+  /* position: fixed; */
 }
 
 .masterScheduleText {
   position: fixed;
-  margin-left: 10%;
-  width: 215px;
-  height: 25px;
+  /* margin-left: 10%; */
+  /* width: 215px;
+  height: 25px; */
+  margin-top: 20px;
+  margin-left: 105px;
   font-family: "Open Sans";
   font-style: normal;
   font-weight: bold;
   font-size: 25px;
   color: #000000;
-  padding-top: 1.5%;
+  /* padding-top: 1%; */
 }
 
 .currentWeek {
@@ -72,16 +77,18 @@
   margin-top: 4%;
   display: flex;
   font-family: "Open Sans", sans-serif;
-  position: fixed;
+  /* position: fixed; */
 }
 
-.arrows {
+.MSarrows {
   /* margin-top: 3%;
   margin-left: 30%; */
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  width: 15%;
-  position: fixed;
+  align-items: center;
+  width: 28%;
+  /* position: fixed; */
 }
 
 .buttonLeftArrow {
@@ -100,44 +107,77 @@
 
 .currWeek {
   text-align: center;
+  font-size: 18px;
+  /* width: 100%; */
 }
 
-.buttons {
-  padding-top: 0.5%;
+.secondRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-left: 100px;
+  width: 1000px;
+  align-items: center;
+  position: fixed;
+}
+
+.leftButtons {
+  padding-top: 5%;
   align-content: space-between;
   display: flex;
-  position: fixed;
-  right: 100px;
+  align-self: flex-end;
+}
+
+.rightButtons {
+  align-content: space-between;
+  display: flex;
+  align-items: flex-end;
+  width: 30%;
+  margin-top: 60px;
+  /* position: fixed; */
+  /* margin-left: 100px;
+  margin-top: 100px; */
+  /* right: 100px; */
 }
 
 .weekdayBox {
   position: fixed;
   height: 44px;
-  left: 380px;
-  top: 250px;
-  right: 100px;
-  width: 67.5%;
+  margin-top: 120px;
+  margin-left: 100px;
+  /* left: 380px; */
+  /* top: 250px; */
+  /* right: 100px; */
+  width: 1000px;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   color: #9e9e9e;
-  margin-top: 3%;
   padding-top: 0.5%;
 }
 
-.boxesAndDates {
-  margin-right: 77px;
+.MSCalendar {
   display: flex;
-  margin-top: 160px;
+  flex-direction: column;
+  justify-content: center;
+  width: 1250px;
+  margin-top: 200px;
+  margin-left: 100px;
+}
+
+.boxesAndDates {
+  display: flex;
   height: 450px;
   overflow-y: scroll;
+  width: 80%;
 }
 
 .weekdayText {
   margin-top: 3px;
   display: flex;
   justify-content: space-between;
-  margin-left: 5%;
+  margin-left: 9.5%;
   margin-right: 4%;
   overflow: hidden;
   font-family: "Open Sans", sans-serif;
@@ -197,12 +237,21 @@
 }
 
 .hour {
-  margin-bottom: 85px;
+  margin-top: 35.7px;
+  margin-bottom: 54.7px;
+  color: #949494;
+  font-size: 12px;
+  align-self: center;
 }
 
 .hours {
-  min-width: 100px;
-  margin-left: 50px;
+  /* min-width: 80px; */
+  width: 7%;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* margin-left: 50px; */
 }
 .monday {
   padding-left: 25px;
@@ -221,28 +270,30 @@
 }
 
 .form {
-  position: fixed;
   display: flex;
-  margin-top: 60px;
-  margin-left: 35%;
-  padding-top: 2%;
-  padding-bottom: 2%;
+  flex-direction: column;
   font-family: "Open Sans", sans-serif;
-  display: inline-block;
+  width: 28%;
 }
 
-.endDate,
 .startDate {
+  font-family: "Open Sans", sans-serif;
+  text-align: right;
+}
+
+.endDate {
   font-family: "Open Sans", sans-serif;
   text-align: right;
 }
 
 label {
   display: inline-flex;
-  justify-content: flex-end;
-  width: 150px;
+  /* justify-content: flex-end; */
+  width: 80px;
+  margin-right: 45px;
+  font-size: 13px;
 }
 
 input {
-  margin-left: 15px;
+  margin-left: 5px;
 }
