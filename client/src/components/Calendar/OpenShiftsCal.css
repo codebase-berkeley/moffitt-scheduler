@@ -26,6 +26,7 @@
   height: 116%;
   width: 65%;
   resize: auto;
+  overflow-y: scroll;
 }
 
 #yourshifts1 {
