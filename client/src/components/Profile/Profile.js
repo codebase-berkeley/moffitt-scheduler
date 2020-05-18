@@ -15,6 +15,16 @@ function Timeslot(props) {
   );
 }
 
+function dateObject(day, hour) {
+  var dateObject = new Date();
+  dateObject.setHours(hour, 0, 0, 0);
+  var dayOfWeek = dateObject.getDay();
+  var diff = dayOfWeek - day;
+  var newDate = dateObject.getDate() - diff;
+  dateObject.setDate(newDate);
+  return dateObject;
+}
+
 class Shift {
   constructor(color, id, start, end, day) {
     this.color = color;
@@ -77,7 +87,8 @@ export default class Profile extends React.Component {
       },
       body: JSON.stringify({
         items: this.state.shifts,
-        userId: this.props.userId
+        userId: this.props.userId,
+        currWeek: dateObject(0, 0)
       })
     })
       .then(response => {
