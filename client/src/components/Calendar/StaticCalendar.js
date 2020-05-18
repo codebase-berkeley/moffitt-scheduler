@@ -3,8 +3,12 @@ import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
 import { Redirect } from "react-router-dom";
+import leftArrow from "./Arrows/leftarrow.svg";
+import rightArrow from "./Arrows/rightarrow.svg";
+
 let currentClicked = null;
 let currentClickedID = null;
+
 function Timeslot(props) {
   return (
     <div
@@ -43,15 +47,15 @@ function initialShifts() {
   return a;
 }
 
-var currentDate = new Date();
-var weekString =
-  format(currentDate, "MMMM") +
-  " " +
-  format(currentDate, "YYYY") +
-  ": " +
-  format(startOfWeek(currentDate), "MM/DD") +
-  " - " +
-  format(endOfWeek(currentDate), "MM/DD");
+function dateObject(day, hour) {
+  var dateObject = new Date();
+  dateObject.setHours(hour, 0, 0, 0);
+  var dayOfWeek = dateObject.getDay();
+  var diff = dayOfWeek - day;
+  var newDate = dateObject.getDate() - diff;
+  dateObject.setDate(newDate);
+  return dateObject;
+}
 
 export default class StaticCalendar extends React.Component {
   constructor(props) {
@@ -60,12 +64,27 @@ export default class StaticCalendar extends React.Component {
       shifts: initialShifts(),
       modalIsOpen: false,
       redirect: null,
+      currentWeek: dateObject(0, 0)
     };
     this.stateFixer = this.stateFixer.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
     this.submitClick = this.submitClick.bind(this);
     this.cancelClick = this.cancelClick.bind(this);
+    this.previousWeek = this.previousWeek.bind(this);
+    this.nextWeek = this.nextWeek.bind(this);
+  }
+
+  previousWeek() {
+    let currStartDate = new Date(this.state.currentWeek);
+    currStartDate.setDate(currStartDate.getDate() - 7);
+    this.setState({ currentWeek: currStartDate }, this.fetchData);
+  }
+
+  nextWeek() {
+    let currStartDate = new Date(this.state.currentWeek);
+    currStartDate.setDate(currStartDate.getDate() + 7);
+    this.setState({ currentWeek: currStartDate }, this.fetchData);
   }
 
   closeModal() {
@@ -82,17 +101,19 @@ export default class StaticCalendar extends React.Component {
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         items: this.state.shifts,
-      }),
+        userId: this.props.userId,
+        currWeek: this.state.currentWeek
+      })
     })
-      .then((response) => {
+      .then(response => {
         console.log("response");
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         if (jsonResponse.shifts == null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
@@ -121,18 +142,18 @@ export default class StaticCalendar extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         coverage: true,
         shiftID: currentClickedID,
-        sentNotes: notes,
-      }),
+        sentNotes: notes
+      })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         let newShifts = this.state.shifts;
         for (let i = 0; i < newShifts.length; i++) {
           if (newShifts[i].id == currentClickedID) {
@@ -172,7 +193,7 @@ export default class StaticCalendar extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm",
+      "11pm"
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -197,7 +218,7 @@ export default class StaticCalendar extends React.Component {
     for (var i = 0; i < 7; i += 1) {
       wkdays.push(
         <div class="item-wday">
-          {format(addDays(startOfWeek(currentDate), i), "dd MM/DD")}
+          {format(addDays(startOfWeek(this.state.currentWeek), i), "dd MM/DD")}
         </div>
       );
     }
@@ -209,9 +230,37 @@ export default class StaticCalendar extends React.Component {
         width: "450px",
         height: "400px",
         transform: "translate(-50%, -50%)",
-        overflow: 0,
-      },
+        overflow: 0
+      }
     };
+
+    function displayMonth(m) {
+      const month = {
+        1: "January",
+        2: "February",
+        3: "March",
+        4: "April",
+        5: "May",
+        6: "June",
+        7: "July",
+        8: "August",
+        9: "September",
+        10: "October",
+        11: "November",
+        12: "December"
+      };
+      return month[m];
+    }
+
+    let startMonth = this.state.currentWeek.getMonth() + 1;
+    let startDate = this.state.currentWeek.getDate();
+    let year = this.state.currentWeek.getFullYear();
+
+    let endDate = new Date(this.state.currentWeek);
+    endDate.setDate(endDate.getDate() + 7);
+
+    let endDateNum = endDate.getDate() - 1;
+    let endDateMonth = endDate.getMonth() + 1;
 
     return (
       <div id="overall-container">
@@ -248,8 +297,33 @@ export default class StaticCalendar extends React.Component {
           </div>
         </Modal>
         <div id="schedule-container-st">
-          <div id="frontWords">
-            <h1 id="weekString">{weekString}</h1>
+          <div className="arrowsAndTitle">
+            <div>
+              <button className="arrowLeftButton">
+                <img
+                  className="arrowLeft"
+                  onClick={this.previousWeek}
+                  src={leftArrow}
+                  alt="arrowLeft"
+                />
+              </button>
+            </div>
+            <div id="frontWords">
+              <h1 id="weekString">
+                {displayMonth(startMonth)} {year}: {startMonth}/{startDate} -{" "}
+                {endDateMonth}/{endDateNum}
+              </h1>
+            </div>
+            <div>
+              <button className="arrowRightButton">
+                <img
+                  className="arrowRight"
+                  onClick={this.nextWeek}
+                  src={rightArrow}
+                  alt="arrowRight"
+                />
+              </button>
+            </div>
           </div>
           <div id="legend">
             <div id="libtag">

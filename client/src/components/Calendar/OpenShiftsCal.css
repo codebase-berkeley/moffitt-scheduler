@@ -204,11 +204,12 @@
   line-height: 100%;
 }
 .arrows {
+  padding-top: 1.2%;
   margin-top: 3%;
-  margin-left: 30%;
+  margin-left: 10%;
   display: flex;
   justify-content: space-between;
-  width: 15%;
+  width: 13%;
   position: fixed;
   display: flex;
   flex-direction: row;

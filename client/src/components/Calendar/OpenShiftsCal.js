@@ -18,17 +18,17 @@ function Timeslot(props) {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           sleID: props.userid,
-          shiftID: props.id,
-        }),
+          shiftID: props.id
+        })
       })
-        .then((response) => {
+        .then(response => {
           return response.json();
         })
-        .then((jsonResponse) => {
+        .then(jsonResponse => {
           console.log(jsonResponse);
         });
       function cancelClick() {
@@ -61,8 +61,8 @@ function Timeslot(props) {
         width: "25%",
         height: "35%",
         transform: "translate(-50%, -50%)",
-        overflow: 0,
-      },
+        overflow: 0
+      }
     };
 
     function timeStringify(num) {
@@ -93,7 +93,7 @@ function Timeslot(props) {
             <div>
               <h1
                 className="AddEmpText"
-                ref={(_subtitle) => (subtitle = _subtitle)}
+                ref={_subtitle => (subtitle = _subtitle)}
               ></h1>
             </div>
             <div className="question">Would you like to cover this shift?</div>
@@ -185,7 +185,7 @@ export default class OpenShiftsCal extends React.Component {
       currentDate: currentDate,
       weekString: weekString,
       emptyShifts: emptyShifts,
-      redirect: null,
+      redirect: null
     };
     this.previousWeek = this.previousWeek.bind(this);
     this.nextWeek = this.nextWeek.bind(this);
@@ -197,19 +197,19 @@ export default class OpenShiftsCal extends React.Component {
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         items: this.state.emptyShifts,
         currentDate: this.state.currentDate,
         startOfWeek: startOfWeek(this.state.currentDate),
-        endOfWeek: endOfWeek(this.state.currentDate),
-      }),
+        endOfWeek: endOfWeek(this.state.currentDate)
+      })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         if (jsonResponse.shifts == null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
@@ -236,23 +236,23 @@ export default class OpenShiftsCal extends React.Component {
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         items: this.state.emptyShifts,
         currentDate: currStartDate,
         startOfWeek: startOfWeek(currStartDate),
-        endOfWeek: endOfWeek(currStartDate),
-      }),
+        endOfWeek: endOfWeek(currStartDate)
+      })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         this.setState({
           shifts: jsonResponse.shifts,
           currentDate: currStartDate,
-          weekString: weekStringg,
+          weekString: weekStringg
         });
       });
   }
@@ -273,23 +273,24 @@ export default class OpenShiftsCal extends React.Component {
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         items: this.state.emptyShifts,
+        userId: this.props.userId,
         currentDate: currStartDate,
         startOfWeek: startOfWeek(currStartDate),
-        endOfWeek: endOfWeek(currStartDate),
-      }),
+        endOfWeek: endOfWeek(currStartDate)
+      })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         this.setState({
           shifts: jsonResponse.shifts,
           currentDate: currStartDate,
-          weekString: weekStringg,
+          weekString: weekStringg
         });
       });
   }
@@ -318,7 +319,7 @@ export default class OpenShiftsCal extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm",
+      "11pm"
     ];
 
     /* Displays the wkdays header.
@@ -343,7 +344,7 @@ export default class OpenShiftsCal extends React.Component {
           shiftGrouper[this.state.shifts[i].id] = [
             this.state.shifts[i].start,
             this.state.shifts[i].end,
-            this.state.shifts[i].location,
+            this.state.shifts[i].location
           ];
         }
       }

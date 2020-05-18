@@ -20,6 +20,11 @@ passport.use(
       "SELECT id, password, salt FROM supervisor WHERE email = $1";
     const values2 = [email];
     pool.query(sleSelect, values2, (error, result) => {
+      if (result.rows.length > 0) {
+        console.log(result.rows[0]["salt"]);
+        console.log(result.rows[0]);
+      }
+
       if (error) {
         throw error;
       } else if (result.rows.length == 0) {
