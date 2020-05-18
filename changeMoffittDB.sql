@@ -18,7 +18,7 @@ CREATE TABLE schedule (
 
 -- insert the following avails from availabilites.js into the availability table
 
-
+"hi"
 INSERT INTO availability (
     availability_id,
     sle_id,
