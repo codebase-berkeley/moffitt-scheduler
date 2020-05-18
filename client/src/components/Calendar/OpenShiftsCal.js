@@ -67,14 +67,23 @@ function Timeslot(props) {
     };
 
     function timeStringify(num) {
+      console.log(num);
       if (num == 0) {
         return "12:00AM";
-      } else if (num > 12) {
-        return (num % 12) + ":00PM";
-      } else if (num == 12) {
+      } else if (num > 24) {
+        if (num % 2 == 0) {
+          return ((num / 2) % 12) + ":00PM";
+        } else {
+          return (((num - 1) / 2) % 12) + ":30PM";
+        }
+      } else if (num == 24) {
         return "12:00PM";
       } else {
-        return num + ":00AM";
+        if (num % 2 == 0) {
+          return num / 2 + ":00AM";
+        } else {
+          return (num - 1) / 2 + ":30AM";
+        }
       }
     }
     if (props.valid) {
@@ -355,8 +364,9 @@ export default class OpenShiftsCal extends React.Component {
 
     /* Maps shift ids to their collective starttimes, endtimes, and locations
      */
+
     var shiftGrouper = {};
-    for (var i = 0; i < 336; i += 1) {
+    for (var i = 0; i < 300; i += 1) {
       if (this.state.shifts[i] != null && this.state.shifts[i].id != null) {
         if (this.state.shifts[i].id in shiftGrouper) {
           shiftGrouper[this.state.shifts[i].id][1] += 1;
@@ -364,6 +374,7 @@ export default class OpenShiftsCal extends React.Component {
           shiftGrouper[this.state.shifts[i].id] = [
             this.state.shifts[i].start,
             this.state.shifts[i].end,
+
             this.state.shifts[i].location,
           ];
         }
@@ -385,7 +396,7 @@ export default class OpenShiftsCal extends React.Component {
         ) {
           timeslots.push(
             <Timeslot
-              color={this.state.shifts[ti].color}
+              color={"this.state.shifts[ti].color"}
               id={this.state.shifts[ti].id}
               userid={this.props.userId}
               valid={false}
