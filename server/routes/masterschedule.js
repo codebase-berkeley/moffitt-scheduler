@@ -308,9 +308,11 @@ function insertShifts(realShifts, res) {
 }
 
 var moffitt3Hours = config.moffitt3Hours;
-var mainHours = config.mainHours;
+var moffitt4Hours = config.moffitt4Hours;
+var doeHours = config.doeHours;
 var minEmployeesMoffitt3 = config.minEmployeesMoffitt3;
-var minEmployeesMain = config.minEmployeesMain;
+var minEmployeesMoffitt4 = config.minEmployeesMoffitt4;
+var minEmployeesDOe = config.minEmployeesDoe;
 var minShiftLength = config.minShiftLength;
 var maxShiftLength = config.maxShiftLength;
 var maxWeeklyShifts = config.maxWeeklyShifts;
@@ -343,9 +345,9 @@ router.get("/generatesched", function (req, res) {
         } else {
           employeeList.push({
             id: result.rows[i].id,
-            tMoffitt3: result.rows[i].training_level_moffitt,
-            tMoffitt4: null, //NOT IN DATABASE ?
-            tMain: result.rows[i].training_level_doe,
+            tMoffitt3: result.rows[i].training_level_moffitt3,
+            tMoffitt4: result.rows[i].training_level_moffitt4,
+            tDoe: result.rows[i].training_level_doe,
             avails: [
               {
                 day: weekdayMap[result.rows[i].day_of_week],
@@ -405,11 +407,11 @@ function finalSchedule(employeeList) {
    *  availShifts will contain concurrent shifts at different locations
    */
   class Sle {
-    constructor(id, tMoffitt3, tMoffitt4, tMain, avails, shiftsLeft) {
+    constructor(id, tMoffitt3, tMoffitt4, tDoe, avails, shiftsLeft) {
       this.id = id;
       this.tMoffitt3 = tMoffitt3;
       this.tMoffitt4 = tMoffitt4;
-      this.tMain = tMain;
+      this.tDoe = tDoe;
       this.avails = avails;
       this.shiftsLeft = shiftsLeft;
       this.availShifts = [];
@@ -476,7 +478,7 @@ function finalSchedule(employeeList) {
     }
     return retShifts;
   }
-  allShifts = initShifts([mainHours, moffitt3Hours]);
+  allShifts = initShifts([doeHours, moffitt3Hours, moffitt4Hours]);
   /** Initialize a list of all SLEs using the info from imported avails. */
   function initSles(availInfo) {
     var retSLEs = [];
@@ -487,7 +489,7 @@ function finalSchedule(employeeList) {
         sleObj.id,
         sleObj.tMoffitt3,
         sleObj.tMoffitt4,
-        sleObj.tMain,
+        sleObj.tDoe,
         sleObj.avails,
         maxWeeklyShifts
       );
@@ -504,8 +506,8 @@ function finalSchedule(employeeList) {
           case "Moffitt 4":
             trained = currentSle.tMoffitt4 > 0;
             break;
-          case "Main":
-            trained = currentSle.tMain > 0;
+          case "Doe":
+            trained = currentSle.tDoe > 0;
             break;
         }
         if (trained) {
@@ -617,8 +619,10 @@ function finalSchedule(employeeList) {
       function locationFull(shift) {
         if (shift.location == "Moffitt 3") {
           return shift.assignedSles.length >= minEmployeesMoffitt3;
-        } else if (shift.location == "Main") {
-          return shift.assignedSles.length >= minEmployeesMain;
+        } else if (shift.location == "Doe") {
+          return shift.assignedSles.length >= minEmployeesDoe;
+        } else if (shift.location == "Moffitt 4") {
+          return shift.assignedSles.length >= minEmployeesMoffitt4;
         }
       }
       /** Checks whether the SLE is already working another shift at the same time. */
