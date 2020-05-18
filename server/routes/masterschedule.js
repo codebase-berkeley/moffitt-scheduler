@@ -23,10 +23,15 @@ function sameWeekAsCurrent(date) {
   }
 }
 
-router.get("/masterschedule/:currWeek", function (req, res) {
+router.get("/masterschedule/:currWeek", function(req, res) {
   let newCurrWeek = new Date(req.params.currWeek);
+
+  console.log("newCurrWeek", newCurrWeek);
   let currWeekStartDate = newCurrWeek.getTime();
   let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
+  console.log("endDate:", currWeekEndDate);
+
+  console.log("In here");
 
   pool.query(
     `SELECT name, start_time, end_time, location, shift_id, sle_id FROM shifts, sle 
@@ -35,7 +40,9 @@ router.get("/masterschedule/:currWeek", function (req, res) {
       if (error) {
         throw error;
       }
-      for (let i = 0; i < result.rows.length; i += 1) {
+
+      console.log("Result:", result.rows);
+      /* for (let i = 0; i < result.rows.length; i += 1) {
         //some shifts will cover more than one week (saturday night through sunday morning)
         //in these cases, set the not-in-week start_time or end_time to be 12AM or 11:59PM of the in-week time, respectively
         if (
@@ -55,19 +62,22 @@ router.get("/masterschedule/:currWeek", function (req, res) {
           result.rows[i].start_time = new Date(result.rows[i].end_time);
           result.rows[i].start_time.setHours(0, 0, 0, 0);
         }
-      }
+      } */
       var resultInWeek = [];
       for (let i = 0; i < result.rows.length; i += 1) {
+        console.log("result.rows[i]", result.rows[i]);
         if (result.rows[i] != null) {
           resultInWeek.push(result.rows[i]);
         }
       }
+      console.log("resultInWeek", resultInWeek);
+
       return res.json({ items: resultInWeek });
     }
   );
 });
 
-router.get("/otheremployees", function (req, res) {
+router.get("/otheremployees", function(req, res) {
   pool.query("SELECT name, id FROM sle", (error, result) => {
     if (error) {
       throw error;
@@ -244,7 +254,7 @@ router.post("/generateshifts", (req, res) => {
               loc: currRow.location,
               s: currRow.start_time,
               e: currRow.end_time,
-              day: currRow.day_of_week,
+              day: currRow.day_of_week
             });
           } else {
             newgroup.e += 0.5;
@@ -265,7 +275,7 @@ router.post("/generateshifts", (req, res) => {
               sle_id: shiftGroups[i].sle_id,
               location: shiftGroups[i].loc,
               start_time: new Date(startDate),
-              end_time: new Date(startDate),
+              end_time: new Date(startDate)
             };
             if (shiftGroups[i].s % 1 == 0) {
               next.start_time.setHours(shiftGroups[i].s);
@@ -300,7 +310,7 @@ function insertShifts(realShifts, res) {
         realShifts[i].sle_id,
         realShifts[i].location,
         realShifts[i].start_time,
-        realShifts[i].end_time,
+        realShifts[i].end_time
       ]
     );
   }
@@ -315,7 +325,8 @@ var minShiftLength = config.minShiftLength;
 var maxShiftLength = config.maxShiftLength;
 var maxWeeklyShifts = config.maxWeeklyShifts;
 
-router.get("/generatesched", function (req, res) {
+router.get("/generatesched", function(req, res) {
+  console.log("In generate sched");
   pool.query(
     "SELECT * from AVAILABILITY inner join SLE on AVAILABILITY.sle_id = SLE.id",
     (error, result) => {
@@ -338,7 +349,7 @@ router.get("/generatesched", function (req, res) {
         if (idExists) {
           currEmployee.avails.push({
             day: weekdayMap[result.rows[i].day_of_week],
-            slot: result.rows[i].start_time,
+            slot: result.rows[i].start_time
           });
         } else {
           employeeList.push({
@@ -349,9 +360,9 @@ router.get("/generatesched", function (req, res) {
             avails: [
               {
                 day: weekdayMap[result.rows[i].day_of_week],
-                slot: result.rows[i].start_time,
-              },
-            ],
+                slot: result.rows[i].start_time
+              }
+            ]
           });
         }
       }
@@ -375,7 +386,7 @@ function insertSchedule(algoSchedule, res) {
       current.location,
       current.start_time,
       current.end_time,
-      current.coverrequested,
+      current.coverrequested
     ]);
   }
   return res.json({ items: algoSchedule });

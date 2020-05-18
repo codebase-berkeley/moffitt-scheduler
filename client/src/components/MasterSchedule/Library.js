@@ -23,7 +23,7 @@ export default class Library extends React.Component {
       wednesdayArray,
       thursdayArray,
       fridayArray,
-      saturdayArray,
+      saturdayArray
     ] = [[], [], [], [], [], [], []];
 
     this.state = {
@@ -35,8 +35,8 @@ export default class Library extends React.Component {
         wednesdayArray,
         thursdayArray,
         fridayArray,
-        saturdayArray,
-      ],
+        saturdayArray
+      ]
     };
     this.addEmployee = this.addEmployee.bind(this);
     this.removeEmployee = this.removeEmployee.bind(this);
@@ -62,28 +62,30 @@ export default class Library extends React.Component {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         employeeList = jsonResponse.allEmployees;
         this.setState({
-          allEmployees: jsonResponse.allEmployees,
+          allEmployees: jsonResponse.allEmployees
         });
         fetch("/masterschedule/" + this.props.currWeek, {
           method: "GET",
           headers: {
             Accept: "application/json",
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         })
-          .then((response) => {
+          .then(response => {
             return response.json();
           })
-          .then((jsonResponse) => {
+          .then(jsonResponse => {
+            console.log("jsonResponse:", jsonResponse);
+
             let items = jsonResponse.items;
 
             let newAllDaysOfWeek = [[], [], [], [], [], [], []];
@@ -188,18 +190,18 @@ export default class Library extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         sleId: sle_id,
         shiftId: shift_id,
-        currHour: currTime,
-      }),
+        currHour: currTime
+      })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         setIsOpen(false);
         console.log(jsonResponse);
 
@@ -255,19 +257,19 @@ export default class Library extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         sleId: sle_id,
         currHour: currTime,
         currDate: date,
-        loc: this.props.location,
-      }),
+        loc: this.props.location
+      })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         setIsOpen(false);
 
         let clonedAllDaysOfWeek = this.state.allDaysOfWeek.slice(0);
@@ -492,8 +494,8 @@ function EditSchedule(props) {
       overflowY: "scroll",
       border: "0px",
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-      borderRadius: "20px",
-    },
+      borderRadius: "20px"
+    }
   };
 
   function CurrEmployee(props) {
@@ -547,7 +549,7 @@ function EditSchedule(props) {
       4: "Thursday",
       5: "Friday",
       6: "Saturday",
-      7: "Sunday",
+      7: "Sunday"
     };
     return dayOfWeek[props];
   }
@@ -577,7 +579,7 @@ function EditSchedule(props) {
       20: "8 PM",
       21: "9 PM",
       22: "10 PM",
-      23: "11 PM",
+      23: "11 PM"
     };
     return timeOfDay[props];
   }
@@ -608,7 +610,7 @@ function EditSchedule(props) {
           <div className="AllText">
             <h1
               className="AddEmpText"
-              ref={(_subtitle) => (subtitle = _subtitle)}
+              ref={_subtitle => (subtitle = _subtitle)}
             >
               Edit Master Schedule Shift
             </h1>

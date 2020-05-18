@@ -87,6 +87,20 @@ ALTER SEQUENCE public.coverrequests_request_id_seq OWNED BY public.coverrequests
 
 
 --
+-- Name: schedule; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.schedule (
+    sle_id integer,
+    day_of_week character varying(30),
+    location character varying(30),
+    start_time double precision,
+    end_time double precision,
+    coverrequested boolean
+);
+
+
+--
 -- Name: shifts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -131,7 +145,8 @@ CREATE TABLE public.sle (
     training_level_moffitt3 integer,
     email character varying(40),
     password character varying(40),
-    training_level_moffitt4 integer
+    training_level_moffitt4 integer,
+    salt character varying(40)
 );
 
 
@@ -163,7 +178,8 @@ CREATE TABLE public.supervisor (
     id integer NOT NULL,
     name character varying(30),
     email character varying(30),
-    password character varying(30)
+    password character varying(30),
+    salt character varying(40)
 );
 
 
@@ -227,14 +243,20 @@ ALTER TABLE ONLY public.supervisor ALTER COLUMN id SET DEFAULT nextval('public.s
 --
 
 COPY public.availability (availability_id, sle_id, start_time, day_of_week) FROM stdin;
-1	1	9	1
-2	1	10	1
-3	1	11	1
-4	1	12	1
-5	1	8	2
-6	1	9	2
 7	2	14	3
 8	2	15	3
+46	1	4	2
+47	1	2	3
+48	1	1	1
+49	1	9	1
+50	1	3	3
+51	1	9	2
+52	1	6	2
+53	1	5	2
+54	1	12	1
+55	1	8	2
+56	1	11	1
+57	1	10	1
 \.
 
 
@@ -245,6 +267,17 @@ COPY public.availability (availability_id, sle_id, start_time, day_of_week) FROM
 COPY public.coverrequests (request_id, coverer_id, coveree_id, shift_id, supervisor_status, notes) FROM stdin;
 12	2	1	20	Approved	I want to
 13	2	1	4	Denied	I feel like it
+14	\N	2	41	\N	
+15	\N	2	44	\N	
+16	\N	2	46	\N	
+\.
+
+
+--
+-- Data for Name: schedule; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.schedule (sle_id, day_of_week, location, start_time, end_time, coverrequested) FROM stdin;
 \.
 
 
@@ -253,31 +286,6 @@ COPY public.coverrequests (request_id, coverer_id, coveree_id, shift_id, supervi
 --
 
 COPY public.shifts (shift_id, sle_id, location, start_time, end_time, cover_requested) FROM stdin;
-17	2	Doe	2019-03-03 00:00:00	2019-03-03 10:00:00	false
-5	1	Doe	2019-03-06 02:00:00	2019-03-06 12:00:00	false
-6	2	Doe	2019-03-07 02:00:00	2019-03-07 12:00:00	false
-4	1	Doe	2019-03-05 02:00:00	2019-03-05 04:00:00	true
-8	2	Moffitt3	2019-03-05 00:00:00	2019-03-05 10:00:00	false
-12	3	Moffitt3	2019-03-08 00:00:00	2019-03-08 14:00:00	false
-13	4	Moffitt3	2019-03-03 03:00:00	2019-03-08 14:00:00	false
-14	4	Moffitt3	2019-03-04 03:00:00	2019-03-04 14:00:00	false
-15	5	Moffitt3	2019-03-05 03:00:00	2019-03-05 14:00:00	false
-16	5	Moffitt3	2019-03-06 03:00:00	2019-03-06 14:00:00	false
-9	\N	Moffitt3	2019-03-07 00:00:00	2019-03-07 10:00:00	false
-7	\N	Moffitt3	2019-03-03 00:00:00	2019-03-03 10:00:00	false
-20	2	Moffitt3	2019-03-04 04:00:00	2019-03-04 06:00:00	true
-21	4	Moffitt3	2019-03-02 21:00:00	2019-03-02 22:00:00	\N
-22	4	Moffitt3	2019-03-02 23:00:00	2019-03-03 07:00:00	\N
-23	1	Moffitt3	2020-04-19 21:00:00	2020-04-19 22:00:00	\N
-24	1	Moffitt3	2020-04-19 21:00:00	2020-04-19 22:00:00	\N
-25	3	Moffitt3	2019-03-03 21:00:00	2019-03-04 00:00:00	\N
-26	3	Moffitt3	2019-03-04 01:00:00	2019-03-04 07:00:00	\N
-27	1	Moffitt3	2020-04-20 21:00:00	2020-04-20 22:00:00	\N
-28	3	Moffitt3	2019-03-05 22:00:00	2019-03-06 07:00:00	\N
-29	3	Moffitt3	2020-04-20 22:00:00	2020-04-20 23:00:00	\N
-30	1	Moffitt3	2020-04-23 21:00:00	2020-04-23 22:00:00	\N
-31	1	Moffitt3	2020-04-19 02:00:00	2020-04-19 03:00:00	\N
-32	2	Moffitt3	2020-04-19 02:00:00	2020-04-19 03:00:00	\N
 \.
 
 
@@ -285,12 +293,12 @@ COPY public.shifts (shift_id, sle_id, location, start_time, end_time, cover_requ
 -- Data for Name: sle; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.sle (id, name, training_level_doe, training_level_moffitt3, email, password, training_level_moffitt4) FROM stdin;
-1	brian	3	3	bdeleonardis@berkeley.edu	bripass	2
-2	bianca	1	1	biancalee@berkeley.edu	biapass	2
-3	Sahil	3	2	sahil@berkeley.edu	sahil	2
-4	Kat	3	2	Kat@berkeley.edu	Kat	2
-5	Kerry	2	2	Kerry@berkeley.edu	Kerry	2
+COPY public.sle (id, name, training_level_doe, training_level_moffitt3, email, password, training_level_moffitt4, salt) FROM stdin;
+3	Sahil	3	2	sahil@berkeley.edu	sahil	2	\N
+4	Kat	3	2	Kat@berkeley.edu	Kat	2	\N
+5	Kerry	2	2	Kerry@berkeley.edu	Kerry	2	\N
+1	brian	3	3	bdeleonardis@berkeley.edu	03cfcbde3dd7935586d568631cc32eab6519262	2	BQlVGbJvO0P+EzBwGsWKa4SniPflBKsCrrVdcMG
+2	bianca	1	1	biancalee@berkeley.edu	75b9cb426d6a55360f6e0ae51d72a9e6fa989b5	2	eZouQWoMPXVIOQTFPF4EEcYIBzNRkKoqtei/Vs+
 \.
 
 
@@ -298,9 +306,9 @@ COPY public.sle (id, name, training_level_doe, training_level_moffitt3, email, p
 -- Data for Name: supervisor; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.supervisor (id, name, email, password) FROM stdin;
-1	nancy	nancy@berkeley.edu	nancyisboss
-2	joey	joeyjoey@berkeley.edu	joeyiscool
+COPY public.supervisor (id, name, email, password, salt) FROM stdin;
+1	nancy	nancy@berkeley.edu	nancyisboss	\N
+2	joey	joeyjoey@berkeley.edu	joeyiscool	\N
 \.
 
 
@@ -308,21 +316,21 @@ COPY public.supervisor (id, name, email, password) FROM stdin;
 -- Name: availability_availability_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.availability_availability_id_seq', 8, true);
+SELECT pg_catalog.setval('public.availability_availability_id_seq', 57, true);
 
 
 --
 -- Name: coverrequests_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.coverrequests_request_id_seq', 13, true);
+SELECT pg_catalog.setval('public.coverrequests_request_id_seq', 16, true);
 
 
 --
 -- Name: shifts_shift_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.shifts_shift_id_seq', 32, true);
+SELECT pg_catalog.setval('public.shifts_shift_id_seq', 51, true);
 
 
 --
