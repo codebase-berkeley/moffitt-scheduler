@@ -145,8 +145,7 @@ CREATE TABLE public.sle (
     training_level_moffitt3 integer,
     email character varying(40),
     password character varying(40),
-    training_level_moffitt4 integer,
-    salt character varying(40)
+    training_level_moffitt4 integer
 );
 
 
@@ -178,8 +177,7 @@ CREATE TABLE public.supervisor (
     id integer NOT NULL,
     name character varying(30),
     email character varying(30),
-    password character varying(30),
-    salt character varying(40)
+    password character varying(30)
 );
 
 
@@ -243,20 +241,34 @@ ALTER TABLE ONLY public.supervisor ALTER COLUMN id SET DEFAULT nextval('public.s
 --
 
 COPY public.availability (availability_id, sle_id, start_time, day_of_week) FROM stdin;
-7	2	14	3
-8	2	15	3
-46	1	4	2
-47	1	2	3
-48	1	1	1
-49	1	9	1
-50	1	3	3
-51	1	9	2
-52	1	6	2
-53	1	5	2
-54	1	12	1
-55	1	8	2
-56	1	11	1
-57	1	10	1
+1	1	13	0
+2	1	13.5	0
+3	1	14	0
+4	1	14.5	0
+5	2	13	0
+6	2	13.5	0
+7	2	14	0
+8	2	14.5	0
+9	2	15	0
+10	2	15.5	0
+11	2	16	0
+12	2	16.5	0
+13	3	14	0
+14	3	14.5	0
+15	3	15	0
+16	3	15.5	0
+17	3	16	0
+18	3	16.5	0
+19	3	9	1
+20	3	9.5	1
+21	3	10	1
+22	3	10.5	1
+23	3	11	1
+24	3	11.5	1
+25	3	12	1
+26	3	12.5	1
+27	3	13	1
+28	3	13.5	1
 \.
 
 
@@ -265,11 +277,7 @@ COPY public.availability (availability_id, sle_id, start_time, day_of_week) FROM
 --
 
 COPY public.coverrequests (request_id, coverer_id, coveree_id, shift_id, supervisor_status, notes) FROM stdin;
-12	2	1	20	Approved	I want to
-13	2	1	4	Denied	I feel like it
-14	\N	2	41	\N	
-15	\N	2	44	\N	
-16	\N	2	46	\N	
+14	\N	1	701	\N	\N
 \.
 
 
@@ -278,6 +286,24 @@ COPY public.coverrequests (request_id, coverer_id, coveree_id, shift_id, supervi
 --
 
 COPY public.schedule (sle_id, day_of_week, location, start_time, end_time, coverrequested) FROM stdin;
+1	sun	Main	14	14.5	f
+1	sun	Main	14.5	15	f
+2	sun	Main	16	16.5	f
+2	sun	Main	15.5	16	f
+2	sun	Main	15	15.5	f
+2	sun	Main	16.5	17	f
+3	mon	Main	9	9.5	f
+2	sun	Main	14.5	15	f
+2	sun	Main	14	14.5	f
+3	mon	Main	10	10.5	f
+3	mon	Main	9.5	10	f
+3	mon	Main	11	11.5	f
+3	mon	Main	10.5	11	f
+3	mon	Main	11.5	12	f
+3	mon	Main	12	12.5	f
+3	mon	Main	12.5	13	f
+3	sun	Main	15	15.5	f
+3	sun	Main	15.5	16	f
 \.
 
 
@@ -286,6 +312,14 @@ COPY public.schedule (sle_id, day_of_week, location, start_time, end_time, cover
 --
 
 COPY public.shifts (shift_id, sle_id, location, start_time, end_time, cover_requested) FROM stdin;
+715	1	Doe	2020-05-10 14:00:00	2020-05-10 15:00:00	\N
+716	2	Doe	2020-05-10 14:00:00	2020-05-10 17:00:00	\N
+717	3	Doe	2020-05-10 15:00:00	2020-05-10 16:00:00	\N
+718	3	Doe	2020-05-11 09:00:00	2020-05-11 13:00:00	\N
+719	1	Doe	2020-05-17 14:00:00	2020-05-17 15:00:00	\N
+720	3	Doe	2020-05-17 15:00:00	2020-05-17 16:00:00	\N
+721	3	Doe	2020-05-18 09:00:00	2020-05-18 13:00:00	\N
+722	2	Doe	2020-05-17 14:00:00	2020-05-17 17:00:00	\N
 \.
 
 
@@ -293,12 +327,12 @@ COPY public.shifts (shift_id, sle_id, location, start_time, end_time, cover_requ
 -- Data for Name: sle; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.sle (id, name, training_level_doe, training_level_moffitt3, email, password, training_level_moffitt4, salt) FROM stdin;
-3	Sahil	3	2	sahil@berkeley.edu	sahil	2	\N
-4	Kat	3	2	Kat@berkeley.edu	Kat	2	\N
-5	Kerry	2	2	Kerry@berkeley.edu	Kerry	2	\N
-1	brian	3	3	bdeleonardis@berkeley.edu	03cfcbde3dd7935586d568631cc32eab6519262	2	BQlVGbJvO0P+EzBwGsWKa4SniPflBKsCrrVdcMG
-2	bianca	1	1	biancalee@berkeley.edu	75b9cb426d6a55360f6e0ae51d72a9e6fa989b5	2	eZouQWoMPXVIOQTFPF4EEcYIBzNRkKoqtei/Vs+
+COPY public.sle (id, name, training_level_doe, training_level_moffitt3, email, password, training_level_moffitt4) FROM stdin;
+1	brian	3	3	bdeleonardis@berkeley.edu	bripass	2
+2	bianca	1	1	biancalee@berkeley.edu	biapass	2
+3	Sahil	3	2	sahil@berkeley.edu	sahil	2
+4	Kat	3	2	Kat@berkeley.edu	Kat	2
+5	Kerry	2	2	Kerry@berkeley.edu	Kerry	2
 \.
 
 
@@ -306,9 +340,9 @@ COPY public.sle (id, name, training_level_doe, training_level_moffitt3, email, p
 -- Data for Name: supervisor; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.supervisor (id, name, email, password, salt) FROM stdin;
-1	nancy	nancy@berkeley.edu	nancyisboss	\N
-2	joey	joeyjoey@berkeley.edu	joeyiscool	\N
+COPY public.supervisor (id, name, email, password) FROM stdin;
+1	nancy	nancy@berkeley.edu	nancyisboss
+2	joey	joeyjoey@berkeley.edu	joeyiscool
 \.
 
 
@@ -316,21 +350,21 @@ COPY public.supervisor (id, name, email, password, salt) FROM stdin;
 -- Name: availability_availability_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.availability_availability_id_seq', 57, true);
+SELECT pg_catalog.setval('public.availability_availability_id_seq', 881, true);
 
 
 --
 -- Name: coverrequests_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.coverrequests_request_id_seq', 16, true);
+SELECT pg_catalog.setval('public.coverrequests_request_id_seq', 14, true);
 
 
 --
 -- Name: shifts_shift_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.shifts_shift_id_seq', 51, true);
+SELECT pg_catalog.setval('public.shifts_shift_id_seq', 722, true);
 
 
 --
