@@ -62,6 +62,7 @@ router.post("/save", (req, res) => {
 });
 
 router.post("/staticcalendar/:userId", (req, res) => {
+  console.log("req.params.userId", req.params.userId);
   let shifts = req.body.items;
   let newCurrWeek = new Date(req.body.currWeek);
   let currWeekStartDate = newCurrWeek.getTime();
@@ -121,7 +122,7 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.get("/shifts", function (req, res) {
+router.get("/shifts", function(req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;
@@ -302,7 +303,7 @@ router.post("/openshifts/:userId", (req, res) => {
   );
 });
 
-router.post("/updateopenshifts", function (req, res) {
+router.post("/updateopenshifts", function(req, res) {
   let sleID = req.body.sleID;
   let shiftID = req.body.shiftID;
   pool.query(
