@@ -69,20 +69,12 @@ function Timeslot(props) {
     function timeStringify(num) {
       if (num == 0) {
         return "12:00AM";
-      } else if (num > 24) {
-        if (num % 2 == 0) {
-          return (num % 24) + ":00PM";
-        } else {
-          return (num % 24) + ":30PM";
-        }
-      } else if (num == 24) {
+      } else if (num > 12) {
+        return (num % 12) + ":00PM";
+      } else if (num == 12) {
         return "12:00PM";
       } else {
-        if (num % 2 == 0) {
-          return num + ":00PM";
-        } else {
-          return num + ":30PM";
-        }
+        return num + ":00AM";
       }
     }
     if (props.valid) {
@@ -364,7 +356,7 @@ export default class OpenShiftsCal extends React.Component {
     /* Maps shift ids to their collective starttimes, endtimes, and locations
      */
     var shiftGrouper = {};
-    for (var i = 0; i < 168; i += 1) {
+    for (var i = 0; i < 336; i += 1) {
       if (this.state.shifts[i] != null && this.state.shifts[i].id != null) {
         if (this.state.shifts[i].id in shiftGrouper) {
           shiftGrouper[this.state.shifts[i].id][1] += 1;
