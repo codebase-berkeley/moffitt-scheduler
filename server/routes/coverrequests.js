@@ -132,20 +132,23 @@ router.get("/pendingsupervisor", (req, res) => {
 });
 
 router.get("/pendingcoverage", (req, res) => {
+  console.log("are we in pendingcoverage");
   if (!req.user || req.user != 0) {
     return res.json({ items: null });
   }
   pool.query(
-    `select * from sle as c, shifts as a left join coverrequests as b on a.shift_id = b.shift_id where a.cover_requested = 'true' and  c.id = a.sle_id and request_id is null`,
+    `select * from sle as c, shifts as a left join coverrequests as b on a.shift_id = b.shift_id where a.cover_requested = 'true' and  c.id = a.sle_id and coverer_id is null`,
     (error, result) => {
       if (error) {
         throw error;
       } else {
+        console.log("result.rows.length", result.rows);
+
         var options = {
           weekday: "long",
           year: "numeric",
           month: "long",
-          day: "numeric",
+          day: "numeric"
         };
         for (var i = 0; i < result.rows.length; i++) {
           var startHours = result.rows[i].start_time.getHours();
