@@ -155,9 +155,11 @@
 
 .boxesAndDates {
   display: flex;
-  height: 420px;
+  height: 400px;
   overflow-y: scroll;
-  width: 80%;
+  margin-top: 200px;
+  width: 70%;
+  position: fixed;
 }
 
 .weekdayText {
