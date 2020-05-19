@@ -282,42 +282,43 @@ router.post("/openshifts", (req, res) => {
           console.log(error);
           throw error;
         }
-      }
-      result.rows = wantedDates;
-      let shiftid_to_color = {};
-      for (var j = 0; j < result.rows.length; j += 1) {
-        let currentRow1 = result.rows[j];
-        if (!(currentRow1.shift_id in shiftid_to_color)) {
-          shiftid_to_color[currentRow1.shift_id] = coverColors[j % 4];
-        }
-        console.log(currentRow1.start_time);
-        for (var i = 0; i < 336; i += 1) {
-          let sameStartEndValid =
-            shifts[i].day == currentRow1.start_time.getDay() &&
-            shifts[i].start >=
-              currentRow1.start_time.getHours() * 2 +
-                currentRow1.start_time.getMinutes() / 30 &&
-            shifts[i].end <=
-              currentRow1.end_time.getHours() * 2 +
-                currentRow1.end_time.getMinutes() / 30;
-          let diffStartEndValid =
-            currentRow1.start_time.getDay() != currentRow1.end_time.getDay() &&
-            ((shifts[i].day == currentRow1.start_time.getDay() &&
+        result.rows = wantedDates;
+        let shiftid_to_color = {};
+        for (var j = 0; j < result.rows.length; j += 1) {
+          let currentRow1 = result.rows[j];
+          if (!(currentRow1.shift_id in shiftid_to_color)) {
+            shiftid_to_color[currentRow1.shift_id] = coverColors[j % 4];
+          }
+          console.log(currentRow1.start_time);
+          for (var i = 0; i < 336; i += 1) {
+            let sameStartEndValid =
+              shifts[i].day == currentRow1.start_time.getDay() &&
               shifts[i].start >=
                 currentRow1.start_time.getHours() * 2 +
-                  currentRow1.start_time.getMinutes() / 30) ||
-              (shifts[i].day == currentRow1.end_time.getDay() &&
-                shifts[i].end <=
-                  currentRow1.end_time.getHours() * 2 +
-                    currentRow1.end_time.getMinutes() / 30));
-          if (sameStartEndValid || diffStartEndValid) {
-            shifts[i].id = currentRow1.shift_id;
-            shifts[i].color = shiftid_to_color[shifts[i].id];
-            shifts[i].sleid = currentRow1.sle_id;
-            shifts[i].location = currentRow1.location;
+                  currentRow1.start_time.getMinutes() / 30 &&
+              shifts[i].end <=
+                currentRow1.end_time.getHours() * 2 +
+                  currentRow1.end_time.getMinutes() / 30;
+            let diffStartEndValid =
+              currentRow1.start_time.getDay() !=
+                currentRow1.end_time.getDay() &&
+              ((shifts[i].day == currentRow1.start_time.getDay() &&
+                shifts[i].start >=
+                  currentRow1.start_time.getHours() * 2 +
+                    currentRow1.start_time.getMinutes() / 30) ||
+                (shifts[i].day == currentRow1.end_time.getDay() &&
+                  shifts[i].end <=
+                    currentRow1.end_time.getHours() * 2 +
+                      currentRow1.end_time.getMinutes() / 30));
+            if (sameStartEndValid || diffStartEndValid) {
+              shifts[i].id = currentRow1.shift_id;
+              shifts[i].color = shiftid_to_color[shifts[i].id];
+              shifts[i].sleid = currentRow1.sle_id;
+              shifts[i].location = currentRow1.location;
+            }
           }
+          return res.json({ shifts: shifts });
         }
-        return res.json({ shifts: shifts });
       }
     );
   }
