@@ -8,8 +8,8 @@ const connectionPool = newPool({
   port: 5432
 });
 var username = "brian";
-var password = "nancyisboss";
-var email = "bdeleonardis@berkeley.edu";
+var password = "kerrypass";
+var email = "sahil@berkeley.edu";
 var training_level_doe = 3;
 var training_level_moffitt3 = 3;
 var training_level_moffitt4 = 2;
@@ -23,7 +23,7 @@ var hashedPwd = crypto
   .substring(0, 39);
 
 connectionPool.query(
-  "update supervisor set salt = $1, password = $2 where id = 1",
+  "update sle set salt = $1, password = $2 where id = 5",
   [salt, hashedPwd],
   (error, result) => {
     if (error) {

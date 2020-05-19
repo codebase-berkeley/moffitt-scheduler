@@ -34,7 +34,6 @@ export default function SupervisorMS(props) {
           <SidebarElement title="Schedule" link="/masterschedule" />
           <SidebarElement title="Cover Requests" link="/cover" />
           <SidebarElement title="Employees" link="/employees" />
-          <SidebarElement title="Schedule Requests" />
         </div>
         <div class="coverz">
           <MSRenderer />

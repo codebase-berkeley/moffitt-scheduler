@@ -31,7 +31,6 @@ export default function SupervisorEmployees(props) {
         <SidebarElement title="Schedule" link="/masterschedule" />
         <SidebarElement title="Cover Requests" link="/cover" />
         <SidebarElement title="Employees" link="/employees" />
-        <SidebarElement title="Schedule Requests" />
       </div>
       <div class="employees">
         <Employees />
