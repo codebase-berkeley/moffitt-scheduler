@@ -271,57 +271,68 @@ const coverColors = ["#ffff42", "#ffaf0f", "#ffc34d", "#4eb548"];
 
 router.post("/openshifts", (req, res) => {
   let shifts = req.body.items;
-  if (!req.user) {
-    return res.json({ shifts: null });
-  } else {
-    pool.query(
-      "select * from coverrequests inner join shifts on coverrequests.shift_id = shifts.shift_id where coverer_id is not distinct from null and sle_id != $1",
-      [req.user],
-      (error, result) => {
-        if (error) {
-          console.log(error);
-          throw error;
-        }
-        result.rows = wantedDates;
-        let shiftid_to_color = {};
-        for (var j = 0; j < result.rows.length; j += 1) {
-          let currentRow1 = result.rows[j];
-          if (!(currentRow1.shift_id in shiftid_to_color)) {
-            shiftid_to_color[currentRow1.shift_id] = coverColors[j % 4];
-          }
-          console.log(currentRow1.start_time);
-          for (var i = 0; i < 336; i += 1) {
-            let sameStartEndValid =
-              shifts[i].day == currentRow1.start_time.getDay() &&
-              shifts[i].start >=
-                currentRow1.start_time.getHours() * 2 +
-                  currentRow1.start_time.getMinutes() / 30 &&
-              shifts[i].end <=
-                currentRow1.end_time.getHours() * 2 +
-                  currentRow1.end_time.getMinutes() / 30;
-            let diffStartEndValid =
-              currentRow1.start_time.getDay() !=
-                currentRow1.end_time.getDay() &&
-              ((shifts[i].day == currentRow1.start_time.getDay() &&
-                shifts[i].start >=
-                  currentRow1.start_time.getHours() * 2 +
-                    currentRow1.start_time.getMinutes() / 30) ||
-                (shifts[i].day == currentRow1.end_time.getDay() &&
-                  shifts[i].end <=
-                    currentRow1.end_time.getHours() * 2 +
-                      currentRow1.end_time.getMinutes() / 30));
-            if (sameStartEndValid || diffStartEndValid) {
-              shifts[i].id = currentRow1.shift_id;
-              shifts[i].color = shiftid_to_color[shifts[i].id];
-              shifts[i].sleid = currentRow1.sle_id;
-              shifts[i].location = currentRow1.location;
-            }
-          }
-          return res.json({ shifts: shifts });
+
+  console.log("USERUSER:", req.user);
+  pool.query(
+    "select * from coverrequests inner join shifts on coverrequests.shift_id = shifts.shift_id where coverer_id is null and sle_id != $1",
+    [req.user],
+    (error, result) => {
+      console.log("Length", result.rows.length);
+
+      if (error) {
+        console.log(error);
+        throw error;
+      }
+      let wantedDates = [];
+      for (var k = 0; k < result.rows.length; k++) {
+        if (
+          Date.parse(result.rows[k].start_time) >=
+            Date.parse(req.body.startOfWeek) &&
+          Date.parse(result.rows[k].start_time) < Date.parse(req.body.endOfWeek)
+        ) {
+          wantedDates.push(result.rows[k]);
         }
       }
-    );
-  }
+      console.log("wantedDates", wantedDates);
+
+      result.rows = wantedDates;
+      let shiftid_to_color = {};
+      for (var j = 0; j < result.rows.length; j += 1) {
+        let currentRow1 = result.rows[j];
+        if (!(currentRow1.shift_id in shiftid_to_color)) {
+          shiftid_to_color[currentRow1.shift_id] = coverColors[j % 4];
+        }
+        console.log(currentRow1.start_time);
+        for (var i = 0; i < 336; i += 1) {
+          let sameStartEndValid =
+            shifts[i].day == currentRow1.start_time.getDay() &&
+            shifts[i].start >=
+              currentRow1.start_time.getHours() * 2 +
+                currentRow1.start_time.getMinutes() / 30 &&
+            shifts[i].end <=
+              currentRow1.end_time.getHours() * 2 +
+                currentRow1.end_time.getMinutes() / 30;
+          let diffStartEndValid =
+            currentRow1.start_time.getDay() != currentRow1.end_time.getDay() &&
+            ((shifts[i].day == currentRow1.start_time.getDay() &&
+              shifts[i].start >=
+                currentRow1.start_time.getHours() * 2 +
+                  currentRow1.start_time.getMinutes() / 30) ||
+              (shifts[i].day == currentRow1.end_time.getDay() &&
+                shifts[i].end <=
+                  currentRow1.end_time.getHours() * 2 +
+                    currentRow1.end_time.getMinutes() / 30));
+          if (sameStartEndValid || diffStartEndValid) {
+            shifts[i].id = currentRow1.shift_id;
+            shifts[i].color = shiftid_to_color[shifts[i].id];
+            shifts[i].sleid = currentRow1.sle_id;
+            shifts[i].location = currentRow1.location;
+          }
+        }
+      }
+      return res.json({ shifts: shifts });
+    }
+  );
 });
 
 router.post("/updateopenshifts", function(req, res) {

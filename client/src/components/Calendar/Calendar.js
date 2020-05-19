@@ -465,7 +465,7 @@ export default class Calendar extends React.Component {
               id="endText"
               type="time"
               step="1800"
-              defaultValue="18:00"
+              defaultValue="10:00"
             ></input>
             <button className="selectButton" onClick={this.selectClick}>
               Select
