@@ -14,14 +14,15 @@ function Timeslot(props) {
     }
 
     function yesClick() {
+      console.log("In yes click");
       fetch("http://localhost:8000/updateopenshifts", {
         method: "POST",
+        credentials: "include",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          sleID: props.userid,
           shiftID: props.id
         })
       })

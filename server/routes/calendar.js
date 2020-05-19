@@ -330,8 +330,11 @@ router.post("/openshifts", (req, res) => {
 });
 
 router.post("/updateopenshifts", function(req, res) {
-  let sleID = req.body.sleID;
+  let sleID = req.user;
   let shiftID = req.body.shiftID;
+
+  console.log("shiftID", shiftID);
+  console.log("sleID", sleID);
   pool.query(
     "update coverrequests set coverer_id = $1 where shift_id = $2",
     [sleID, shiftID],
