@@ -67,14 +67,23 @@ function Timeslot(props) {
     };
 
     function timeStringify(num) {
+      console.log(num);
       if (num == 0) {
         return "12:00AM";
-      } else if (num > 12) {
-        return (num % 12) + ":00PM";
-      } else if (num == 12) {
+      } else if (num > 24) {
+        if (num % 2 == 0) {
+          return ((num / 2) % 12) + ":00PM";
+        } else {
+          return (((num - 1) / 2) % 12) + ":30PM";
+        }
+      } else if (num == 24) {
         return "12:00PM";
       } else {
-        return num + ":00AM";
+        if (num % 2 == 0) {
+          return num / 2 + ":00AM";
+        } else {
+          return (num - 1) / 2 + ":30AM";
+        }
       }
     }
     if (props.valid) {
@@ -151,11 +160,11 @@ class Shift {
 
 function initialShifts() {
   let a = [];
-  for (var i = 0; i < 168; i += 1) {
+  for (var i = 0; i < 336; i += 1) {
     a.push(new Shift("#f8f8f8", null, null, null, null, null, null));
   }
   let count = 0;
-  for (var i = 0; i <= 23; i += 1) {
+  for (var i = 0; i <= 47; i += 1) {
     for (var j = 0; j <= 6; j += 1) {
       a[count].start = i;
       a[count].end = i + 1;
@@ -297,30 +306,54 @@ export default class OpenShiftsCal extends React.Component {
   }
   render() {
     const hours = [
-      "12am",
-      "1am",
-      "2am",
-      "3am",
-      "4am",
-      "5am",
-      "6am",
-      "7am",
-      "8am",
-      "9am",
-      "10am",
-      "11am",
-      "12pm",
-      "1pm",
-      "2pm",
-      "3pm",
-      "4pm",
-      "5pm",
-      "6pm",
-      "7pm",
-      "8pm",
-      "9pm",
-      "10pm",
-      "11pm"
+      "12:00am",
+      "12:30am",
+      "1:00am",
+      "1:30am",
+      "2:00am",
+      "2:30am",
+      "3:00am",
+      "3:30am",
+      "4:00am",
+      "4:30am",
+      "5:00am",
+      "5:30am",
+      "6:00am",
+      "6:30am",
+      "7:00am",
+      "7:30am",
+      "8:00am",
+      "8:30am",
+      "9:00am",
+      "9:30am",
+      "10:00am",
+      "10:30am",
+      "11:00am",
+      "11:30am",
+      "12:00pm",
+      "12:30pm",
+      "1:00pm",
+      "1:30pm",
+      "2:00pm",
+      "2:30pm",
+      "3:00pm",
+      "3:30pm",
+      "4:00pm",
+      "4:30pm",
+      "5:00pm",
+      "5:30pm",
+      "6:00pm",
+      "6:30pm",
+      "7:00pm",
+      "7:30pm",
+      "8:00pm",
+      "8:30pm",
+      "9:00pm",
+      "9:30pm",
+      "10:00pm",
+      "10:30pm",
+      "11:00pm",
+      "11:30pm",
     ];
 
     /* Displays the wkdays header.
@@ -336,8 +369,9 @@ export default class OpenShiftsCal extends React.Component {
 
     /* Maps shift ids to their collective starttimes, endtimes, and locations
      */
+
     var shiftGrouper = {};
-    for (var i = 0; i < 168; i += 1) {
+    for (var i = 0; i < 300; i += 1) {
       if (this.state.shifts[i] != null && this.state.shifts[i].id != null) {
         if (this.state.shifts[i].id in shiftGrouper) {
           shiftGrouper[this.state.shifts[i].id][1] += 1;
@@ -356,7 +390,7 @@ export default class OpenShiftsCal extends React.Component {
       The valid prop tracks if the Timeslot is a clickable, colored cell belonging to a shift or not.
     */
     var timeslots = [];
-    for (var i = 0, ti = 0; i < 192; i += 1) {
+    for (var i = 0, ti = 0; i < 384; i += 1) {
       if (i % 8 == 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
       } else {
@@ -366,7 +400,7 @@ export default class OpenShiftsCal extends React.Component {
         ) {
           timeslots.push(
             <Timeslot
-              color={this.state.shifts[ti].color}
+              color={"this.state.shifts[ti].color"}
               id={this.state.shifts[ti].id}
               userid={this.props.userId}
               valid={false}

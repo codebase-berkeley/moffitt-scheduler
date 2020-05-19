@@ -147,10 +147,10 @@ VALUES
 
 /** This query tests that master schedule correctly displays shifts within the current week. */
 INSERT INTO shifts (
-    sle_id, location, start_time, end_time
+    sle_id, location, start_time, end_time, cover_requested
 )
 VALUES 
-    (1, 'Moffitt', '2020-04-21 10:00:00', '2020-04-21 12:00:00'),
+    (1, 'Moffitt', '2020-04-21 10:00:00', '2020-04-21 12:00:00', true);
     (2, 'Moffitt', '2020-04-24 05:00:00', '2020-04-24 09:00:00'),
     (2, 'Doe', '2020-04-23 16:00:00', '2020-04-23 17:30:00'),
     (1, 'Moffitt', '2020-04-18 22:00:00', '2020-04-19 02:00:00'),
