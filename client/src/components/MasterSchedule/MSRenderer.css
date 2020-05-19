@@ -155,7 +155,7 @@
 
 .boxesAndDates {
   display: flex;
-  height: 450px;
+  height: 420px;
   overflow-y: scroll;
   width: 80%;
 }

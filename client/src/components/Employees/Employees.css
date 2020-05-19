@@ -78,18 +78,22 @@
 
 .LastName {
   display: flex;
-  align-items: center;
-  margin-left: 70%;
+  margin-left: 52%;
 }
 
-.FirstNameInput {
-  float: left;
+.addEmpModalInput {
+  display: flex;
+  width: 320px;
+  justify-content: space-between;
+}
+
+.FirstNameInput1 {
+  /* float: left; */
   display: flex;
   align-items: center;
 }
 
-.LastNameInput {
-  margin-left: 70%;
+.LastNameInput1 {
   display: flex;
   align-items: center;
 }
