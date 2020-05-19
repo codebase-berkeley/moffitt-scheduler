@@ -4,7 +4,6 @@ import Library from "./Library";
 import leftArrow from "./MasterImages/leftarrow.svg";
 import rightArrow from "./MasterImages/rightarrow.svg";
 import { format, startOfWeek, addDays } from "date-fns";
-// import { ScrollLocky } from "react-scroll-locky";
 
 function dateObject(day, hour) {
   var dateObject = new Date();
@@ -164,7 +163,6 @@ export default class MSRenderer extends React.Component {
     let year = this.state.currentWeek.getFullYear();
 
     return (
-      // <ScrollLocky>
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
           <div className="masterScheduleText">Master Schedule</div>
@@ -269,10 +267,10 @@ export default class MSRenderer extends React.Component {
               <div className="hour">11 PM</div>
             </div>
             {pending}
+            <div className="bottomPadding"></div>
           </div>
         </div>
       </div>
-      // </ScrollLocky>
     );
   }
 }

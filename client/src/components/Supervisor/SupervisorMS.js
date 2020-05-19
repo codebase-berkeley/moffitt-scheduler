@@ -5,11 +5,11 @@ import "./SupervisorMS.css";
 import "./SidebarElement.js";
 import SidebarElement from "./SidebarElement";
 import MSRenderer from "../MasterSchedule/MSRenderer";
-import { ScrollLocky } from "react-scroll-locky";
+import ScrollLock, { TouchScrollable } from "react-scrolllock";
 
 export default function SupervisorMS(props) {
   return (
-    <ScrollLocky>
+    <ScrollLock>
       <div class="everything">
         <div class="line"></div>
         <div className="top-bar">
@@ -40,6 +40,6 @@ export default function SupervisorMS(props) {
           <MSRenderer />
         </div>
       </div>
-    </ScrollLocky>
+    </ScrollLock>
   );
 }
