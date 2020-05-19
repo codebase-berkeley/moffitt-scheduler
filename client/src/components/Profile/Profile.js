@@ -4,6 +4,7 @@ import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import ScheduleSelector from "react-schedule-selector";
 import starImage from "./baseline_grade_white_18dp.png";
 import DisplayLibs from "./DisplayLibs";
+import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
   return (
@@ -69,7 +70,8 @@ export default class Profile extends React.Component {
       schedule: [],
       items: [],
       profileHours: [],
-      totalhours: []
+      totalhours: [],
+      redirect: null
     };
     this.currentDate = new Date();
     this.deselectCell = <div class="deselectCell"></div>;
@@ -78,16 +80,16 @@ export default class Profile extends React.Component {
     this.processData = this.processData.bind(this);
   }
   componentDidMount() {
-    console.log("User id", this.props.match.params.userId);
-    fetch("/staticcalendar/" + this.props.match.params.userId, {
+    fetch("/staticcalendar", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         items: this.state.shifts,
-        userId: this.props.userId,
+        userId: this.props.match.params.userId,
         currWeek: dateObject(0, 0)
       })
     })
@@ -96,15 +98,33 @@ export default class Profile extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        console.log(jsonResponse.shifts);
-        this.setState({ shifts: jsonResponse.shifts });
+        if (jsonResponse.shifts == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ shifts: jsonResponse.shifts });
+        }
       });
-    fetch("/availability/" + this.props.match.params.userId)
+    fetch("/availability", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId: this.props.match.params.userId
+      })
+    })
       .then(response => {
         return response.json();
       })
       .then(jsonResponse => {
-        this.setState({ schedule: jsonResponse.schedule });
+        if (jsonResponse.schedule == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          console.log("LOOK HERE");
+          this.setState({ schedule: jsonResponse.schedule });
+        }
       });
     fetch("/profilehours/" + this.props.match.params.userId)
       .then(response => {
@@ -291,6 +311,7 @@ export default class Profile extends React.Component {
 
     return (
       <div>
+        {this.state.redirect}
         <div>
           <div className="everything">
             <div className="myProfile">

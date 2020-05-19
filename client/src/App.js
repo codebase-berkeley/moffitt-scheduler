@@ -26,13 +26,9 @@ class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/staticCalendar" component={StaticCalendar} />
-          <Route exact path="/yourshifts/:userId" component={SleYourShifts} />
-          <Route
-            exact
-            path="/availability/:userId"
-            component={SleAvailability}
-          />
-          <Route exact path="/openshifts/:userId" component={SleOpenShifts} />
+          <Route exact path="/yourshifts" component={SleYourShifts} />
+          <Route exact path="/availability" component={SleAvailability} />
+          <Route exact path="/openshifts" component={SleOpenShifts} />
           <Route exact path="/employees" component={SupervisorEmployees} />
           <Route exact path="/profile/:userId" component={Profile} />
           <Route exact path="/cover" component={SupervisorCover} />

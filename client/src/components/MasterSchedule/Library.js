@@ -4,6 +4,7 @@ import pencil from "./MasterImages/pencil.svg";
 import Modal from "react-modal";
 import deleteButton from "./MasterImages/delete.svg";
 import addButton from "./MasterImages/add.svg";
+import { Redirect } from "react-router-dom";
 import error from "./MasterImages/error.svg";
 
 function dateObject(week, day, hour) {
@@ -36,7 +37,8 @@ export default class Library extends React.Component {
         thursdayArray,
         fridayArray,
         saturdayArray
-      ]
+      ],
+      redirect: null
     };
     this.addEmployee = this.addEmployee.bind(this);
     this.removeEmployee = this.removeEmployee.bind(this);
@@ -75,6 +77,7 @@ export default class Library extends React.Component {
         });
         fetch("/masterschedule/" + this.props.currWeek, {
           method: "GET",
+          credentials: "include",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -84,8 +87,12 @@ export default class Library extends React.Component {
             return response.json();
           })
           .then(jsonResponse => {
-            console.log("jsonResponse:", jsonResponse);
-
+            if (jsonResponse.items == null) {
+              this.setState({ redirect: <Redirect push to="/login" /> });
+            }
+            if (jsonResponse.items == null) {
+              return;
+            }
             let items = jsonResponse.items;
 
             let newAllDaysOfWeek = [[], [], [], [], [], [], []];
@@ -305,6 +312,7 @@ export default class Library extends React.Component {
   render() {
     return (
       <div className="weekdayColumns">
+        {this.state.redirect}
         <div className="sundayColumn">{this.state.allDaysOfWeek[0]}</div>
         <div className="mondayColumn">{this.state.allDaysOfWeek[1]}</div>
         <div className="tuesdayColumn">{this.state.allDaysOfWeek[2]}</div>

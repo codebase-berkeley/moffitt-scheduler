@@ -10,10 +10,20 @@ class Login extends React.Component {
     this.loginClick = this.loginClick.bind(this);
     this.state = { redirect: null, isError: false };
   }
-
+  componentDidMount() {
+    fetch("/logout", {
+      credentials: "include",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        console.log("Session/Cookies cleared: " + jsonResponse.logout);
+      });
+  }
   handleIsSle = (resp) => {
     if (resp != null && resp != undefined) {
-      var linkString = `/yourshifts/${resp}`;
+      var linkString = `/yourshifts`;
       this.setState({ redirect: <Redirect push to={linkString} /> });
     }
   };
@@ -80,11 +90,12 @@ class Login extends React.Component {
     console.log(passwordText);
     fetch("http://localhost:8000/login", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: emailText, password: passwordText }),
+      body: JSON.stringify({ username: emailText, password: passwordText }),
     })
       .then((response) => {
         return response.json();
@@ -102,8 +113,11 @@ class Login extends React.Component {
             this.setState({ isError: true });
           }
         }
-        this.handleIsSle(jsonResponse.isSle);
-        this.handleIsSupervisor(jsonResponse.isSupervisor);
+        if (jsonResponse.isSle) {
+          this.handleIsSle(jsonResponse.id);
+        } else {
+          this.handleIsSupervisor(jsonResponse.isSupervisor);
+        }
         console.log(jsonResponse);
       });
   }
