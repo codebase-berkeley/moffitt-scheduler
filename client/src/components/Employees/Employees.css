@@ -83,24 +83,13 @@
 
 .addEmpModalInput {
   display: flex;
-  width: 320px;
+  width: 350px;
   justify-content: space-between;
-}
-
-.FirstNameInput1 {
-  /* float: left; */
-  display: flex;
-  align-items: center;
-}
-
-.LastNameInput1 {
-  display: flex;
-  align-items: center;
 }
 
 .FirstNameInput,
 .LastNameInput {
-  width: 50%;
+  width: 48%;
   height: 30px;
   left: 519px;
   top: 287px;
