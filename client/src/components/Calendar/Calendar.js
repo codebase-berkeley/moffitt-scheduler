@@ -1,6 +1,7 @@
 import React from "react";
 import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
   function timeslotClick() {
@@ -57,12 +58,17 @@ export default class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/availability/" + this.props.userId)
+    console.log("In here");
+    fetch("/availability", { credentials: "include" })
       .then(response => {
         return response.json();
       })
       .then(jsonResponse => {
-        this.setState({ schedule: jsonResponse.schedule });
+        if (jsonResponse.schedule == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ schedule: jsonResponse.schedule });
+        }
       });
   }
 
@@ -75,6 +81,8 @@ export default class Calendar extends React.Component {
         this.state.saved.push(this.state.schedule[i]);
       }
     }
+    console.log("saved", this.state.saved);
+
     console.log(this.state.saved);
     fetch("/save", {
       method: "POST",
@@ -371,6 +379,10 @@ export default class Calendar extends React.Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return this.state.redirect;
+    }
+
     const hours = [];
     for (let i = 0, hr = 12; i < 48; i += 1) {
       i % 2 == 1 ? hours.push(hr + ":30") : hours.push(hr + ":00");
