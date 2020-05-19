@@ -237,7 +237,6 @@ export default class MSRenderer extends React.Component {
         <div className="weekdayBox">
           <div className="weekdayText">{wkdays}</div>
         </div>
-        <div className="extraSpace"></div>
 
         <div className="MSCalendar">
           <div className="boxesAndDates">
@@ -268,6 +267,7 @@ export default class MSRenderer extends React.Component {
               <div className="hour">11 PM</div>
             </div>
             {pending}
+            <div className="bottomPadding"></div>
           </div>
         </div>
       </div>

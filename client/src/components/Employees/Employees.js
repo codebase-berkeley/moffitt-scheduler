@@ -229,8 +229,10 @@ class Employees extends React.Component {
                   <div className="EmployeeName">
                     <h3 className="FirstName">First Name</h3>
                     <h3 className="LastName">Last Name</h3>
-                    <input className="FirstNameInput" id="firstName" />
-                    <input className="LastNameInput" id="lastName" />
+                    <div className="addEmpModalInput">
+                      <input className="FirstNameInput" id="firstName" />
+                      <input className="LastNameInput" id="lastName" />
+                    </div>
                   </div>
                   <div className="EmployeeEmail">
                     <h3 className="Email">Email</h3>
