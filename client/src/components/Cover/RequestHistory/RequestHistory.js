@@ -1,6 +1,7 @@
 import React from "react";
 import "./RequestHistory.css";
 import WithCheck from "../NonClickWithCheck";
+import { Redirect } from "react-router-dom";
 
 function processData(database) {
   const listItems = database.map((entry, index) => (
@@ -19,23 +20,28 @@ function processData(database) {
 class RequestHistory extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [] };
+    this.state = { items: [], redirect: null };
   }
 
   componentDidMount() {
     fetch("/requesthistory", {
       method: "GET",
+      credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(jsonResponse => {
+      .then((jsonResponse) => {
+        if (jsonResponse.items == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+          return;
+        }
         this.setState({
-          items: jsonResponse.items
+          items: jsonResponse.items,
         });
         console.log(this.state.items);
       });
@@ -44,6 +50,7 @@ class RequestHistory extends React.Component {
   render() {
     return (
       <div>
+        {this.state.redirect}
         <div className="middleWordsss">
           <h2 className="msame1">Time and Location</h2>
           <h2 className="msame">Needing Coverage</h2>

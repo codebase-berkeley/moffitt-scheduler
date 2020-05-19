@@ -2,6 +2,7 @@ import React from "react";
 import "./StaticCalendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import Modal from "react-modal";
+import { Redirect } from "react-router-dom";
 import leftArrow from "./Arrows/leftarrow.svg";
 import rightArrow from "./Arrows/rightarrow.svg";
 
@@ -62,7 +63,8 @@ export default class StaticCalendar extends React.Component {
     this.state = {
       shifts: initialShifts(),
       modalIsOpen: false,
-      currentWeek: dateObject(0, 0),
+      redirect: null,
+      currentWeek: dateObject(0, 0)
     };
     this.stateFixer = this.stateFixer.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -71,7 +73,6 @@ export default class StaticCalendar extends React.Component {
     this.cancelClick = this.cancelClick.bind(this);
     this.previousWeek = this.previousWeek.bind(this);
     this.nextWeek = this.nextWeek.bind(this);
-    this.fetchData = this.fetchData.bind(this);
   }
 
   previousWeek() {
@@ -95,29 +96,29 @@ export default class StaticCalendar extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
-  }
-
-  fetchData() {
-    fetch("/staticcalendar/" + this.props.userId, {
+    fetch("/staticcalendar/", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        items: initialShifts(),
+        items: this.state.shifts,
         userId: this.props.userId,
-        currWeek: this.state.currentWeek,
-      }),
+        currWeek: this.state.currentWeek
+      })
     })
-      .then((response) => {
+      .then(response => {
         console.log("response");
         return response.json();
       })
-      .then((jsonResponse) => {
-        console.log(jsonResponse.shifts);
-        this.setState({ shifts: jsonResponse.shifts });
+      .then(jsonResponse => {
+        if (jsonResponse.shifts == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ shifts: jsonResponse.shifts });
+        }
       });
   }
 
@@ -141,18 +142,18 @@ export default class StaticCalendar extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         coverage: true,
         shiftID: currentClickedID,
-        sentNotes: notes,
-      }),
+        sentNotes: notes
+      })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         let newShifts = this.state.shifts;
         for (let i = 0; i < newShifts.length; i++) {
           if (newShifts[i].id == currentClickedID) {
@@ -192,7 +193,7 @@ export default class StaticCalendar extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm",
+      "11pm"
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -229,8 +230,8 @@ export default class StaticCalendar extends React.Component {
         width: "450px",
         height: "400px",
         transform: "translate(-50%, -50%)",
-        overflow: 0,
-      },
+        overflow: 0
+      }
     };
 
     function displayMonth(m) {
@@ -246,7 +247,7 @@ export default class StaticCalendar extends React.Component {
         9: "September",
         10: "October",
         11: "November",
-        12: "December",
+        12: "December"
       };
       return month[m];
     }
@@ -263,6 +264,7 @@ export default class StaticCalendar extends React.Component {
 
     return (
       <div id="overall-container">
+        {this.state.redirect}
         <h1 id="yourshifts">Your Shifts</h1>
         <Modal
           // className="box"

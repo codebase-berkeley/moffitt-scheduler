@@ -5,17 +5,18 @@
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
-  font-size: 7px;
+  font-size: 6px;
   color: #ffffff;
-  width: 101px;
+  width: 80px;
   top: 200px;
   line-height: 19px;
   text-align: center;
-  margin-left: 10px;
+  height: 34px;
+  margin-left: 5px;
 }
 
 .nonClickedButton {
-  width: 101px;
+  width: 80px;
   height: 34px;
   left: 1136px;
   top: 200px;
@@ -24,11 +25,11 @@
   box-sizing: border-box;
   border-radius: 6px;
   color: #3f3cc8;
-  font-size: 7px;
+  font-size: 6px;
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
-  margin-left: 10px;
+  margin-left: 5px;
   cursor: pointer;
 }
 
@@ -116,11 +117,6 @@
   margin-right: 7px;
 }
 
-.boxesAndDates {
-  display: flex;
-  flex-direction: row;
-}
-
 .pencilIcon {
   border: none;
   background-color: white;
@@ -178,6 +174,7 @@
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
+  margin-top: 4px;
 }
 
 .NotInShift {

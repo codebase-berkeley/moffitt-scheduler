@@ -1,5 +1,6 @@
 import React from "react";
 import "./PendingCoverage.css";
+import { Redirect } from "react-router-dom";
 
 function processData(database) {
   const listItems = database.map((entry, index) => (
@@ -60,12 +61,13 @@ class PendingCoverageItem extends React.Component {
 class PendingCoverage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [] };
+    this.state = { items: [], redirect: null };
   }
 
   componentDidMount() {
     fetch("/pendingcoverage", {
       method: "GET",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -75,6 +77,10 @@ class PendingCoverage extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
+        if (jsonResponse.items == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+          return;
+        }
         this.setState({
           items: jsonResponse.items,
         });
@@ -85,6 +91,7 @@ class PendingCoverage extends React.Component {
   render() {
     return (
       <div className="all">
+        {this.state.redirect}
         <div className="middleWordssss">
           <h2 className="msame01">Time and Location</h2>
           <h2 className="msame00">Needing Coverage</h2>

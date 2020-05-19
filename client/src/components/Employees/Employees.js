@@ -21,7 +21,7 @@ class EachEmployee extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />;
+      return <Redirect push to={this.state.redirect} />;
     }
     return (
       <div
@@ -65,8 +65,9 @@ class Employees extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/allemployees", {
+    fetch("/allemployeesupervisor", {
       method: "GET",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -76,6 +77,10 @@ class Employees extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
+        if (jsonResponse.items == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+          return;
+        }
         this.setState({
           items: jsonResponse.items,
         });
@@ -207,6 +212,7 @@ class Employees extends React.Component {
     return (
       <div>
         <div className="topWordss">
+          {this.state.redirect}
           <h1 className="header">Employees</h1>
           <div className="AddEmployee">
             <button className="AddButton" onClick={this.openModal}>
@@ -223,8 +229,10 @@ class Employees extends React.Component {
                   <div className="EmployeeName">
                     <h3 className="FirstName">First Name</h3>
                     <h3 className="LastName">Last Name</h3>
-                    <input className="FirstNameInput" id="firstName" />
-                    <input className="LastNameInput" id="lastName" />
+                    <div className="addEmpModalInput">
+                      <input className="FirstNameInput" id="firstName" />
+                      <input className="LastNameInput" id="lastName" />
+                    </div>
                   </div>
                   <div className="EmployeeEmail">
                     <h3 className="Email">Email</h3>

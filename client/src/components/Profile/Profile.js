@@ -4,6 +4,7 @@ import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import ScheduleSelector from "react-schedule-selector";
 import starImage from "./baseline_grade_white_18dp.png";
 import DisplayLibs from "./DisplayLibs";
+import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
   return (
@@ -13,6 +14,16 @@ function Timeslot(props) {
       id={props.id}
     ></div>
   );
+}
+
+function dateObject(day, hour) {
+  var dateObject = new Date();
+  dateObject.setHours(hour, 0, 0, 0);
+  var dayOfWeek = dateObject.getDay();
+  var diff = dayOfWeek - day;
+  var newDate = dateObject.getDate() - diff;
+  dateObject.setDate(newDate);
+  return dateObject;
 }
 
 class Shift {
@@ -60,6 +71,7 @@ export default class Profile extends React.Component {
       items: [],
       profileHours: [],
       totalhours: [],
+      redirect: null
     };
     this.currentDate = new Date();
     this.deselectCell = <div class="deselectCell"></div>;
@@ -68,59 +80,79 @@ export default class Profile extends React.Component {
     this.processData = this.processData.bind(this);
   }
   componentDidMount() {
-    fetch("/staticcalendar/" + this.props.match.params.userId, {
+    fetch("/staticcalendar", {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         items: this.state.shifts,
-        userId: this.props.userId,
-      }),
+        userId: this.props.match.params.userId,
+        currWeek: dateObject(0, 0)
+      })
     })
-      .then((response) => {
+      .then(response => {
         console.log("response");
         return response.json();
       })
-      .then((jsonResponse) => {
-        console.log(jsonResponse.shifts);
-        this.setState({ shifts: jsonResponse.shifts });
+      .then(jsonResponse => {
+        if (jsonResponse.shifts == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ shifts: jsonResponse.shifts });
+        }
       });
-    fetch("/availability/" + this.props.match.params.userId)
-      .then((response) => {
+    fetch("/availability", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId: this.props.match.params.userId
+      })
+    })
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
-        this.setState({ schedule: jsonResponse.schedule });
+      .then(jsonResponse => {
+        if (jsonResponse.schedule == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          console.log("LOOK HERE");
+          this.setState({ schedule: jsonResponse.schedule });
+        }
       });
     fetch("/profilehours/" + this.props.match.params.userId)
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         this.setState({ profileHours: jsonResponse.profileHours });
       });
     fetch("/totalhours/" + this.props.match.params.userId)
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         this.setState({ totalhours: jsonResponse.totalhours });
       });
     fetch("/allemployees", {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         this.setState({
-          items: jsonResponse.items,
+          items: jsonResponse.items
         });
         console.log(this.state.items);
         let newItems;
@@ -130,7 +162,7 @@ export default class Profile extends React.Component {
           }
         }
         this.setState({
-          items: newItems,
+          items: newItems
         });
       });
   }
@@ -166,7 +198,7 @@ export default class Profile extends React.Component {
       m3L = [
         <img src={starImage} />,
         <img src={starImage} />,
-        <img src={starImage} />,
+        <img src={starImage} />
       ];
     }
     if (m4L == 1) {
@@ -177,7 +209,7 @@ export default class Profile extends React.Component {
       m4L = [
         <img src={starImage} />,
         <img src={starImage} />,
-        <img src={starImage} />,
+        <img src={starImage} />
       ];
     }
     if (dL == 1) {
@@ -188,7 +220,7 @@ export default class Profile extends React.Component {
       dL = [
         <img src={starImage} />,
         <img src={starImage} />,
-        <img src={starImage} />,
+        <img src={starImage} />
       ];
     }
     return (
@@ -236,7 +268,7 @@ export default class Profile extends React.Component {
       "8pm",
       "9pm",
       "10pm",
-      "11pm",
+      "11pm"
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -273,12 +305,13 @@ export default class Profile extends React.Component {
         width: "450px",
         height: "400px",
         transform: "translate(-50%, -50%)",
-        overflow: 0,
-      },
+        overflow: 0
+      }
     };
 
     return (
       <div>
+        {this.state.redirect}
         <div>
           <div className="everything">
             <div className="myProfile">

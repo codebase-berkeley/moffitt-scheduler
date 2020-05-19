@@ -1,6 +1,7 @@
 import React from "react";
 import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
   function timeslotClick() {
@@ -51,18 +52,23 @@ export default class Calendar extends React.Component {
       schedule: [],
       currentDate: currentDate,
       // weekString: weekString,
-      saved: [],
+      saved: []
     };
     this.save = this.save.bind(this);
   }
 
   componentDidMount() {
-    fetch("/availability/" + this.props.userId)
-      .then((response) => {
+    console.log("In here");
+    fetch("/availability", { credentials: "include" })
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
-        this.setState({ schedule: jsonResponse.schedule });
+      .then(jsonResponse => {
+        if (jsonResponse.schedule == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ schedule: jsonResponse.schedule });
+        }
       });
   }
 
@@ -75,18 +81,20 @@ export default class Calendar extends React.Component {
         this.state.saved.push(this.state.schedule[i]);
       }
     }
+    console.log("saved", this.state.saved);
+
     console.log(this.state.saved);
     fetch("/save", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         userId: this.props.userId,
-        items: this.state.saved,
-      }),
-    }).then((response) => {
+        items: this.state.saved
+      })
+    }).then(response => {
       return response.json();
     });
   }
@@ -371,6 +379,10 @@ export default class Calendar extends React.Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return this.state.redirect;
+    }
+
     const hours = [];
     for (let i = 0, hr = 12; i < 48; i += 1) {
       i % 2 == 1 ? hours.push(hr + ":30") : hours.push(hr + ":00");
