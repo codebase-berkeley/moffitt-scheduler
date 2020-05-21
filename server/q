@@ -1,9 +1,0 @@
- id |  name  | training_level_doe | training_level_moffitt3 |           email           | password | training_level_moffitt4 | salt 
-----+--------+--------------------+-------------------------+---------------------------+----------+-------------------------+------
-  1 | brian  |                  3 |                       3 | bdeleonardis@berkeley.edu | bripass  |                       2 | 
-  2 | bianca |                  1 |                       1 | biancalee@berkeley.edu    | biapass  |                       2 | 
-  3 | Sahil  |                  3 |                       2 | sahil@berkeley.edu        | sahil    |                       2 | 
-  4 | Kat    |                  3 |                       2 | Kat@berkeley.edu          | Kat      |                       2 | 
-  5 | Kerry  |                  2 |                       2 | Kerry@berkeley.edu        | Kerry    |                       2 | 
-(5 rows)
-
