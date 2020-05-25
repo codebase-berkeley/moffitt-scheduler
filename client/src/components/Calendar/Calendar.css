@@ -166,7 +166,7 @@
 .startText,
 .endText {
   font-size: 10px;
-  width: 8%;
+  width: 10%;
 }
 
 .weekdayText1 {
@@ -279,6 +279,11 @@
   cursor: pointer;
 }
 
+.endInput {
+  margin-left: 22px;
+  width: 175px;
+  padding-right: 0;
+}
 /* .availabilityHeader {
   margin-left: 27.2%;
 } */

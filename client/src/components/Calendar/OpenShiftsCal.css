@@ -26,6 +26,7 @@
   height: 116%;
   width: 65%;
   resize: auto;
+  overflow-y: scroll;
 }
 
 #yourshifts1 {
@@ -51,6 +52,30 @@
   grid-row-gap: 6px;
   grid-template-areas:
     ". wday wday wday wday wday wday wday"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
+    "hours cell cell cell cell cell cell cell"
     "hours cell cell cell cell cell cell cell"
     "hours cell cell cell cell cell cell cell"
     "hours cell cell cell cell cell cell cell"

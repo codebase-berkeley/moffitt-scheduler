@@ -1,6 +1,7 @@
 import React from "react";
 import "./Calendar.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
   function timeslotClick() {
@@ -51,18 +52,23 @@ export default class Calendar extends React.Component {
       schedule: [],
       currentDate: currentDate,
       // weekString: weekString,
-      saved: [],
+      saved: []
     };
     this.save = this.save.bind(this);
   }
 
   componentDidMount() {
-    fetch("/availability/" + this.props.userId)
-      .then((response) => {
+    console.log("In here");
+    fetch("/availability", { credentials: "include" })
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
-        this.setState({ schedule: jsonResponse.schedule });
+      .then(jsonResponse => {
+        if (jsonResponse.schedule == null) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ schedule: jsonResponse.schedule });
+        }
       });
   }
 
@@ -75,18 +81,20 @@ export default class Calendar extends React.Component {
         this.state.saved.push(this.state.schedule[i]);
       }
     }
+    console.log("saved", this.state.saved);
+
     console.log(this.state.saved);
     fetch("/save", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         userId: this.props.userId,
-        items: this.state.saved,
-      }),
-    }).then((response) => {
+        items: this.state.saved
+      })
+    }).then(response => {
       return response.json();
     });
   }
@@ -98,123 +106,26 @@ export default class Calendar extends React.Component {
     console.log(endText);
     var weekdayText = document.getElementById("weekdayText").value;
     console.log(weekdayText);
-    function findIncrement(time) {
-      if (time == "00:00") {
-        var increment = 0;
-      } else if (time == "00:30") {
-        var increment = 1;
-      } else if (time == "01:00") {
-        var increment = 2;
-      } else if (time == "01:30") {
-        var increment = 3;
-      } else if (time == "02:00") {
-        var increment = 4;
-      } else if (time == "02:30") {
-        var increment = 5;
-      } else if (time == "03:00") {
-        var increment = 6;
-      } else if (time == "03:30") {
-        var increment = 7;
-      } else if (time == "04:00") {
-        var increment = 8;
-      } else if (time == "04:30") {
-        var increment = 9;
-      } else if (time == "05:00") {
-        var increment = 10;
-      } else if (time == "05:30") {
-        var increment = 11;
-      } else if (time == "06:00") {
-        var increment = 12;
-      } else if (time == "06:30") {
-        var increment = 13;
-      } else if (time == "07:00") {
-        var increment = 14;
-      } else if (time == "07:30") {
-        var increment = 15;
-      } else if (time == "08:00") {
-        var increment = 16;
-      } else if (time == "08:30") {
-        var increment = 17;
-      } else if (time == "09:00") {
-        var increment = 18;
-      } else if (time == "09:30") {
-        var increment = 19;
-      } else if (time == "10:00") {
-        var increment = 20;
-      } else if (time == "10:30") {
-        var increment = 21;
-      } else if (time == "11:00") {
-        var increment = 22;
-      } else if (time == "11:30") {
-        var increment = 23;
-      } else if (time == "12:00") {
-        var increment = 24;
-      } else if (time == "12:30") {
-        var increment = 25;
-      } else if (time == "13:00") {
-        var increment = 26;
-      } else if (time == "13:30") {
-        var increment = 27;
-      } else if (time == "14:00") {
-        var increment = 28;
-      } else if (time == "14:30") {
-        var increment = 29;
-      } else if (time == "15:00") {
-        var increment = 30;
-      } else if (time == "15:30") {
-        var increment = 31;
-      } else if (time == "16:00") {
-        var increment = 32;
-      } else if (time == "16:30") {
-        var increment = 33;
-      } else if (time == "17:00") {
-        var increment = 34;
-      } else if (time == "17:30") {
-        var increment = 35;
-      } else if (time == "18:00") {
-        var increment = 36;
-      } else if (time == "18:30") {
-        var increment = 37;
-      } else if (time == "19:00") {
-        var increment = 38;
-      } else if (time == "19:30") {
-        var increment = 39;
-      } else if (time == "20:00") {
-        var increment = 40;
-      } else if (time == "20:30") {
-        var increment = 41;
-      } else if (time == "21:00") {
-        var increment = 42;
-      } else if (time == "21:30") {
-        var increment = 43;
-      } else if (time == "22:00") {
-        var increment = 44;
-      } else if (time == "22:30") {
-        var increment = 45;
-      } else if (time == "23:00") {
-        var increment = 46;
-      } else if (time == "23:30") {
-        var increment = 47;
-      } else {
-        alert("Please select start and end times in half hour increments!");
-      }
-      return increment;
-    }
+
     var startCellID = 0;
     var endCellID = 0;
+
+    console.log("Start increment:", findIncrement(startText));
+    console.log("End increment:", findIncrement(endText));
+
     if (weekdayText == "Sun") {
       startCellID = findIncrement(startText) * 7 + 0;
       endCellID = findIncrement(endText) * 7 + 0;
     } else if (weekdayText == "Mon") {
       startCellID = findIncrement(startText) * 7 + 1;
       endCellID = findIncrement(endText) * 7 + 1;
-    } else if (weekdayText == "Tues") {
+    } else if (weekdayText == "Tue") {
       startCellID = findIncrement(startText) * 7 + 2;
       endCellID = findIncrement(endText) * 7 + 2;
     } else if (weekdayText == "Wed") {
       startCellID = findIncrement(startText) * 7 + 3;
       endCellID = findIncrement(endText) * 7 + 3;
-    } else if (weekdayText == "Thur") {
+    } else if (weekdayText == "Thu") {
       startCellID = findIncrement(startText) * 7 + 4;
       endCellID = findIncrement(endText) * 7 + 4;
     } else if (weekdayText == "Fri") {
@@ -227,10 +138,14 @@ export default class Calendar extends React.Component {
     if (startCellID > endCellID) {
       alert("Invalid start and end time!");
     }
+    console.log("startCellID", startCellID);
+    console.log("endCellID", endCellID);
+
     for (var i = startCellID; i < endCellID; i = i + 7) {
       document.getElementById(i).style.backgroundColor = "rgb(176, 233, 194)";
     }
   }
+
   selectClear() {
     var startText = document.getElementById("startText").value;
     console.log(startText);
@@ -238,121 +153,20 @@ export default class Calendar extends React.Component {
     console.log(endText);
     var weekdayText = document.getElementById("weekdayText").value;
     console.log(weekdayText);
-    function findIncrement(time) {
-      if (time == "00:00") {
-        var increment = 0;
-      } else if (time == "00:30") {
-        var increment = 1;
-      } else if (time == "01:00") {
-        var increment = 2;
-      } else if (time == "01:30") {
-        var increment = 3;
-      } else if (time == "02:00") {
-        var increment = 4;
-      } else if (time == "02:30") {
-        var increment = 5;
-      } else if (time == "03:00") {
-        var increment = 6;
-      } else if (time == "03:30") {
-        var increment = 7;
-      } else if (time == "04:00") {
-        var increment = 8;
-      } else if (time == "04:30") {
-        var increment = 9;
-      } else if (time == "05:00") {
-        var increment = 10;
-      } else if (time == "05:30") {
-        var increment = 11;
-      } else if (time == "06:00") {
-        var increment = 12;
-      } else if (time == "06:30") {
-        var increment = 13;
-      } else if (time == "07:00") {
-        var increment = 14;
-      } else if (time == "07:30") {
-        var increment = 15;
-      } else if (time == "08:00") {
-        var increment = 16;
-      } else if (time == "08:30") {
-        var increment = 17;
-      } else if (time == "09:00") {
-        var increment = 18;
-      } else if (time == "09:30") {
-        var increment = 19;
-      } else if (time == "10:00") {
-        var increment = 20;
-      } else if (time == "10:30") {
-        var increment = 21;
-      } else if (time == "11:00") {
-        var increment = 22;
-      } else if (time == "11:30") {
-        var increment = 23;
-      } else if (time == "12:00") {
-        var increment = 24;
-      } else if (time == "12:30") {
-        var increment = 25;
-      } else if (time == "13:00") {
-        var increment = 26;
-      } else if (time == "13:30") {
-        var increment = 27;
-      } else if (time == "14:00") {
-        var increment = 28;
-      } else if (time == "14:30") {
-        var increment = 29;
-      } else if (time == "15:00") {
-        var increment = 30;
-      } else if (time == "15:30") {
-        var increment = 31;
-      } else if (time == "16:00") {
-        var increment = 32;
-      } else if (time == "16:30") {
-        var increment = 33;
-      } else if (time == "17:00") {
-        var increment = 34;
-      } else if (time == "17:30") {
-        var increment = 35;
-      } else if (time == "18:00") {
-        var increment = 36;
-      } else if (time == "18:30") {
-        var increment = 37;
-      } else if (time == "19:00") {
-        var increment = 38;
-      } else if (time == "19:30") {
-        var increment = 39;
-      } else if (time == "20:00") {
-        var increment = 40;
-      } else if (time == "20:30") {
-        var increment = 41;
-      } else if (time == "21:00") {
-        var increment = 42;
-      } else if (time == "21:30") {
-        var increment = 43;
-      } else if (time == "22:00") {
-        var increment = 44;
-      } else if (time == "22:30") {
-        var increment = 45;
-      } else if (time == "23:00") {
-        var increment = 46;
-      } else if (time == "23:30") {
-        var increment = 47;
-      } else {
-        alert("Please select start and end times in half hour increments!");
-      }
-      return increment;
-    }
+
     if (weekdayText == "Sun") {
       var startCellID = findIncrement(startText) * 7 + 0;
       var endCellID = findIncrement(endText) * 7 + 0;
     } else if (weekdayText == "Mon") {
       startCellID = findIncrement(startText) * 7 + 1;
       endCellID = findIncrement(endText) * 7 + 1;
-    } else if (weekdayText == "Tues") {
+    } else if (weekdayText == "Tue") {
       startCellID = findIncrement(startText) * 7 + 2;
       endCellID = findIncrement(endText) * 7 + 2;
     } else if (weekdayText == "Wed") {
       startCellID = findIncrement(startText) * 7 + 3;
       endCellID = findIncrement(endText) * 7 + 3;
-    } else if (weekdayText == "Thur") {
+    } else if (weekdayText == "Thu") {
       startCellID = findIncrement(startText) * 7 + 4;
       endCellID = findIncrement(endText) * 7 + 4;
     } else if (weekdayText == "Fri") {
@@ -371,6 +185,10 @@ export default class Calendar extends React.Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return this.state.redirect;
+    }
+
     const hours = [];
     for (let i = 0, hr = 12; i < 48; i += 1) {
       i % 2 == 1 ? hours.push(hr + ":30") : hours.push(hr + ":00");
@@ -453,7 +271,7 @@ export default class Calendar extends React.Component {
               id="endText"
               type="time"
               step="1800"
-              defaultValue="18:00"
+              defaultValue="10:00"
             ></input>
             <button className="selectButton" onClick={this.selectClick}>
               Select
@@ -475,6 +293,109 @@ export default class Calendar extends React.Component {
       </div>
     );
   }
+}
+
+function findIncrement(time) {
+  if (time == "00:00") {
+    var increment = 0;
+  } else if (time == "00:30") {
+    var increment = 1;
+  } else if (time == "01:00") {
+    var increment = 2;
+  } else if (time == "01:30") {
+    var increment = 3;
+  } else if (time == "02:00") {
+    var increment = 4;
+  } else if (time == "02:30") {
+    var increment = 5;
+  } else if (time == "03:00") {
+    var increment = 6;
+  } else if (time == "03:30") {
+    var increment = 7;
+  } else if (time == "04:00") {
+    var increment = 8;
+  } else if (time == "04:30") {
+    var increment = 9;
+  } else if (time == "05:00") {
+    var increment = 10;
+  } else if (time == "05:30") {
+    var increment = 11;
+  } else if (time == "06:00") {
+    var increment = 12;
+  } else if (time == "06:30") {
+    var increment = 13;
+  } else if (time == "07:00") {
+    var increment = 14;
+  } else if (time == "07:30") {
+    var increment = 15;
+  } else if (time == "08:00") {
+    var increment = 16;
+  } else if (time == "08:30") {
+    var increment = 17;
+  } else if (time == "09:00") {
+    var increment = 18;
+  } else if (time == "09:30") {
+    var increment = 19;
+  } else if (time == "10:00") {
+    var increment = 20;
+  } else if (time == "10:30") {
+    var increment = 21;
+  } else if (time == "11:00") {
+    var increment = 22;
+  } else if (time == "11:30") {
+    var increment = 23;
+  } else if (time == "12:00") {
+    var increment = 24;
+  } else if (time == "12:30") {
+    var increment = 25;
+  } else if (time == "13:00") {
+    var increment = 26;
+  } else if (time == "13:30") {
+    var increment = 27;
+  } else if (time == "14:00") {
+    var increment = 28;
+  } else if (time == "14:30") {
+    var increment = 29;
+  } else if (time == "15:00") {
+    var increment = 30;
+  } else if (time == "15:30") {
+    var increment = 31;
+  } else if (time == "16:00") {
+    var increment = 32;
+  } else if (time == "16:30") {
+    var increment = 33;
+  } else if (time == "17:00") {
+    var increment = 34;
+  } else if (time == "17:30") {
+    var increment = 35;
+  } else if (time == "18:00") {
+    var increment = 36;
+  } else if (time == "18:30") {
+    var increment = 37;
+  } else if (time == "19:00") {
+    var increment = 38;
+  } else if (time == "19:30") {
+    var increment = 39;
+  } else if (time == "20:00") {
+    var increment = 40;
+  } else if (time == "20:30") {
+    var increment = 41;
+  } else if (time == "21:00") {
+    var increment = 42;
+  } else if (time == "21:30") {
+    var increment = 43;
+  } else if (time == "22:00") {
+    var increment = 44;
+  } else if (time == "22:30") {
+    var increment = 45;
+  } else if (time == "23:00") {
+    var increment = 46;
+  } else if (time == "23:30") {
+    var increment = 47;
+  } else {
+    alert("Please select start and end times in half hour increments!");
+  }
+  return increment;
 }
 
 // import React from "react";

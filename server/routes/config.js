@@ -1,18 +1,36 @@
 constants = {
   minEmployeesMoffitt3: 2,
-  minEmployeesMain: 3,
+  minEmployeesMoffitt4: 2,
+  minEmployeesDoe: 2,
   minShiftLength: 2,
-  maxShiftLength: 8,
-  maxWeeklyShifts: 10,
+  maxShiftLength: 12,
+  maxWeeklyShifts: 4000,
   moffitt3Hours: [
-    { day: "sun", start: 13, end: 16, location: "Moffitt 3" },
-    { day: "mon", start: 10, end: 14, location: "Moffitt 3" },
-    { day: "tue", start: 10, end: 14, location: "Moffitt 3" },
+    { day: "sun", start: 0, end: 23, location: "Moffitt3" },
+    { day: "mon", start: 0, end: 23, location: "Moffitt3" },
+    { day: "tue", start: 0, end: 23, location: "Moffitt3" },
+    { day: "wed", start: 0, end: 23, location: "Moffitt3" },
+    { day: "thu", start: 0, end: 23, location: "Moffitt3" },
+    { day: "fri", start: 0, end: 23, location: "Moffitt3" },
+    { day: "sat", start: 0, end: 23, location: "Moffitt3" }
   ],
-  mainHours: [
-    { day: "sun", start: 14, end: 17, location: "Main" },
-    { day: "mon", start: 9, end: 13, location: "Main" },
-    { day: "tue", start: 9, end: 12, location: "Main" },
+  moffitt4Hours: [
+    { day: "sun", start: 0, end: 23, location: "Moffitt4" },
+    { day: "mon", start: 0, end: 23, location: "Moffitt4" },
+    { day: "tue", start: 0, end: 23, location: "Moffitt4" },
+    { day: "wed", start: 0, end: 23, location: "Moffitt4" },
+    { day: "thu", start: 0, end: 23, location: "Moffitt4" },
+    { day: "fri", start: 0, end: 23, location: "Moffitt4" },
+    { day: "sat", start: 0, end: 23, location: "Moffitt4" }
   ],
+  doeHours: [
+    { day: "sun", start: 0, end: 23, location: "Doe" },
+    { day: "mon", start: 0, end: 23, location: "Doe" },
+    { day: "tue", start: 0, end: 23, location: "Doe" },
+    { day: "wed", start: 0, end: 23, location: "Doe" },
+    { day: "thu", start: 0, end: 23, location: "Doe" },
+    { day: "fri", start: 0, end: 23, location: "Doe" },
+    { day: "sat", start: 0, end: 23, location: "Doe" }
+  ]
 };
 module.exports = constants;

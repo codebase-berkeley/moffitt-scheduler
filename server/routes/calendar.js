@@ -36,9 +36,14 @@ router.post("/changecoverage", (req, res) => {
   );
   return res.json({ Successful: true });
 });
+
 router.post("/save", (req, res) => {
+  if (!req.user) {
+    return res.json({ schedule: null });
+  }
+
   items = req.body.items;
-  var userId = req.body.userId;
+  var userId = req.user;
   pool.query(
     "DELETE FROM AVAILABILITY WHERE sle_id=$1",
     [userId],
@@ -61,19 +66,18 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-router.post("/staticcalendar/:userId", (req, res) => {
-  let shifts = req.body.items;
-  let newCurrWeek = new Date(req.body.currWeek);
-  let currWeekStartDate = newCurrWeek.getTime();
-  let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
-  pool.query(
-    `SELECT * FROM SHIFTS WHERE sle_id = $1 
-    AND start_time >= to_timestamp(${currWeekStartDate}/1000.0) AND end_time <= to_timestamp(${currWeekEndDate}/1000.0)`,
-    [req.params.userId],
-    (error, result) => {
-      if (error) {
-        throw error;
+router.post("/staticcalendar", (req, res) => {
+  if (!req.user) {
+    return res.json({ shifts: null });
+  } else {
+    let currentUser;
+    if (req.body.userId) {
+      if (req.user != 0 && req.body.userId != req.user) {
+        return res.json({ shifts: null });
+      } else {
+        currentUser = req.body.userId;
       }
+
       for (var i = 0; i < 336; i += 1) {
         for (var j = 0; j < result.rows.length; j += 1) {
           let currentRow = result.rows[j];
@@ -110,18 +114,13 @@ router.post("/staticcalendar/:userId", (req, res) => {
             }
           }
         }
+        return res.json({ shifts: shifts });
       }
-      return res.json({ shifts: shifts });
-    }
-  );
+    );
+  }
 });
 
-router.post("/save", (req, res) => {
-  items = req.body.items;
-  return res.json({ schedule: items });
-});
-
-router.get("/shifts", function (req, res) {
+router.get("/shifts", function(req, res) {
   pool.query("SELECT * FROM SHIFTS", (error, result) => {
     if (error) {
       throw error;
@@ -158,12 +157,21 @@ function initialShifts() {
   return a;
 }
 
-router.get("/availability/:userId", (req, res) => {
+router.get("/availability", (req, res) => {
+  if (!req.user) {
+    return res.json({ schedule: null });
+  }
+
+  var userId = req.user;
+
+  console.log("userId", userId);
+
   var selected = initialShifts();
+
   pool.query(
     `SELECT start_time, day_of_week FROM AVAILABILITY 
      WHERE sle_id = $1`,
-    [req.params.userId],
+    [userId],
     (error, result) => {
       if (error) {
         throw error;
@@ -183,8 +191,8 @@ router.get("/availability/:userId", (req, res) => {
     }
   );
 });
+
 router.get("/totalhours/:userId", (req, res) => {
-  //Accouting for daylight savings
   var now = new Date();
   var start = new Date(now.getFullYear(), 0, 0);
   var diff =
@@ -250,12 +258,16 @@ router.get("/profilehours/:userId", (req, res) => {
 
 const coverColors = ["#ffff42", "#ffaf0f", "#ffc34d", "#4eb548"];
 
-router.post("/openshifts/:userId", (req, res) => {
+router.post("/openshifts", (req, res) => {
   let shifts = req.body.items;
+
+  console.log("USERUSER:", req.user);
   pool.query(
-    "select * from coverrequests inner join shifts on coverrequests.shift_id = shifts.shift_id where coverer_id is not distinct from null and sle_id != $1",
-    [req.body.userId],
+    "select * from coverrequests inner join shifts on coverrequests.shift_id = shifts.shift_id where coverer_id is null and sle_id != $1",
+    [req.user],
     (error, result) => {
+      console.log("Length", result.rows.length);
+
       if (error) {
         console.log(error);
         throw error;
@@ -270,25 +282,35 @@ router.post("/openshifts/:userId", (req, res) => {
           wantedDates.push(result.rows[k]);
         }
       }
+      console.log("wantedDates", wantedDates);
+
       result.rows = wantedDates;
-      console.log(result.rows);
       let shiftid_to_color = {};
       for (var j = 0; j < result.rows.length; j += 1) {
         let currentRow1 = result.rows[j];
         if (!(currentRow1.shift_id in shiftid_to_color)) {
           shiftid_to_color[currentRow1.shift_id] = coverColors[j % 4];
         }
-        for (var i = 0; i < 168; i += 1) {
+        console.log(currentRow1.start_time);
+        for (var i = 0; i < 336; i += 1) {
           let sameStartEndValid =
             shifts[i].day == currentRow1.start_time.getDay() &&
-            shifts[i].start >= currentRow1.start_time.getHours() &&
-            shifts[i].end <= currentRow1.end_time.getHours();
+            shifts[i].start >=
+              currentRow1.start_time.getHours() * 2 +
+                currentRow1.start_time.getMinutes() / 30 &&
+            shifts[i].end <=
+              currentRow1.end_time.getHours() * 2 +
+                currentRow1.end_time.getMinutes() / 30;
           let diffStartEndValid =
             currentRow1.start_time.getDay() != currentRow1.end_time.getDay() &&
             ((shifts[i].day == currentRow1.start_time.getDay() &&
-              shifts[i].start >= currentRow1.start_time.getHours()) ||
+              shifts[i].start >=
+                currentRow1.start_time.getHours() * 2 +
+                  currentRow1.start_time.getMinutes() / 30) ||
               (shifts[i].day == currentRow1.end_time.getDay() &&
-                shifts[i].end <= currentRow1.end_time.getHours()));
+                shifts[i].end <=
+                  currentRow1.end_time.getHours() * 2 +
+                    currentRow1.end_time.getMinutes() / 30));
           if (sameStartEndValid || diffStartEndValid) {
             shifts[i].id = currentRow1.shift_id;
             shifts[i].color = shiftid_to_color[shifts[i].id];
@@ -302,9 +324,12 @@ router.post("/openshifts/:userId", (req, res) => {
   );
 });
 
-router.post("/updateopenshifts", function (req, res) {
-  let sleID = req.body.sleID;
+router.post("/updateopenshifts", function(req, res) {
+  let sleID = req.user;
   let shiftID = req.body.shiftID;
+
+  console.log("shiftID", shiftID);
+  console.log("sleID", sleID);
   pool.query(
     "update coverrequests set coverer_id = $1 where shift_id = $2",
     [sleID, shiftID],
