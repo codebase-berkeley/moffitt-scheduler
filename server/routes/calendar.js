@@ -77,50 +77,39 @@ router.post("/staticcalendar", (req, res) => {
       } else {
         currentUser = req.body.userId;
       }
-    } else {
-      currentUser = req.user;
-    }
-    let shifts = req.body.items;
-    pool.query(
-      "SELECT * FROM SHIFTS WHERE sle_id = $1",
-      [currentUser],
-      (error, result) => {
-        if (error) {
-          throw error;
-        }
-        for (var i = 0; i < 168; i += 1) {
-          for (var j = 0; j < result.rows.length; j += 1) {
-            let currentRow = result.rows[j];
-            let sameStartEndValid =
-              shifts[i].day == currentRow.start_time.getDay() &&
-              shifts[i].start >= currentRow.start_time.getHours() &&
-              shifts[i].end <= currentRow.end_time.getHours();
-            let diffStartEndValid =
-              currentRow.start_time.getDay() != currentRow.end_time.getDay() &&
-              ((shifts[i].day == currentRow.start_time.getDay() &&
-                shifts[i].start >= currentRow.start_time.getHours()) ||
-                (shifts[i].day == currentRow.end_time.getDay() &&
-                  shifts[i].end <= currentRow.end_time.getHours()));
-            if (sameStartEndValid || diffStartEndValid) {
-              shifts[i].id = currentRow.shift_id;
-              if (currentRow.location == "Moffitt3") {
-                if (currentRow.cover_requested == "true") {
-                  shifts[i].color = "#C187D3";
-                } else {
-                  shifts[i].color = "#ff8d06";
-                }
-              } else if (currentRow.location == "Doe") {
-                if (currentRow.cover_requested == "true") {
-                  shifts[i].color = "#C187D3";
-                } else {
-                  shifts[i].color = "#d7269b";
-                }
-              } else if (currentRow.location == "Moffitt4") {
-                if (currentRow.cover_requested == "true") {
-                  shifts[i].color = "#C187D3";
-                } else {
-                  shifts[i].color = "#04b17e";
-                }
+
+      for (var i = 0; i < 336; i += 1) {
+        for (var j = 0; j < result.rows.length; j += 1) {
+          let currentRow = result.rows[j];
+          let sameStartEndValid =
+            shifts[i].day == currentRow.start_time.getDay() &&
+            shifts[i].start >= 2 * currentRow.start_time.getHours() &&
+            shifts[i].end <= 2 * currentRow.end_time.getHours();
+          let diffStartEndValid =
+            currentRow.start_time.getDay() != currentRow.end_time.getDay() &&
+            ((shifts[i].day == currentRow.start_time.getDay() &&
+              shifts[i].start >= 2 * currentRow.start_time.getHours()) ||
+              (shifts[i].day == currentRow.end_time.getDay() &&
+                shifts[i].end <= 2 * currentRow.end_time.getHours()));
+          if (sameStartEndValid || diffStartEndValid) {
+            shifts[i].id = currentRow.shift_id;
+            if (currentRow.location == "Moffitt3") {
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#ff8d06";
+              }
+            } else if (currentRow.location == "Doe") {
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#d7269b";
+              }
+            } else if (currentRow.location == "Moffitt4") {
+              if (currentRow.cover_requested == "true") {
+                shifts[i].color = "#C187D3";
+              } else {
+                shifts[i].color = "#04b17e";
               }
             }
           }
@@ -228,8 +217,8 @@ router.get("/totalhours/:userId", (req, res) => {
             currentRow -
             startt +
             (startt.getTimezoneOffset() - currentRow.getTimezoneOffset()) *
-              60 *
-              1000;
+            60 *
+            1000;
           var oneDayy = 1000 * 60 * 60 * 24;
           var lastDay = Math.floor(difff / oneDayy);
           if (lastDay < currentDay) {
@@ -287,7 +276,7 @@ router.post("/openshifts", (req, res) => {
       for (var k = 0; k < result.rows.length; k++) {
         if (
           Date.parse(result.rows[k].start_time) >=
-            Date.parse(req.body.startOfWeek) &&
+          Date.parse(req.body.startOfWeek) &&
           Date.parse(result.rows[k].start_time) < Date.parse(req.body.endOfWeek)
         ) {
           wantedDates.push(result.rows[k]);
