@@ -7,17 +7,17 @@ var passport = require("../passport");
 router.post("/login", function (req, res, next) {
   passport.authenticate("local", function (err, user, info) {
     if (err || !user) {
-      console.log("no user");
-      return res.json({ successful: false, isSupervisor: false, isSle: null });
+      return res.json({ isSupervisor: false, isSle: false });
     }
+
     req.logIn(user, function (err) {
       if (err) {
-        return res.json({ successful: false });
+        return res.json({ isSupervisor: false, isSle: false });
       }
       if (user.id == 0) {
-        return res.json({ successful: true, isSupervisor: true });
+        return res.json({ isSupervisor: true, isSle: false });
       } else {
-        return res.json({ successful: true, isSle: true, id: user.id });
+        return res.json({ isSupervisor: false, isSle: true, id: user.id });
       }
     });
   })(req, res, next);

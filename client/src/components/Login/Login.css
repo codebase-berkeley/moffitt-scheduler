@@ -1,96 +1,37 @@
 .loginBox {
-  width: 400px;
   margin: auto;
+  margin-top: 50px;
+  width: 40%;
   background: #ffffff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
-  transform: translate(0%, 50%);
 }
 
-.loginBoxUpperPart {
-  width: 100%;
-  padding: 1%;
-  margin-left: 0%;
-  background: #3f3cc8;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
-  border-radius: 15px 15px 0px 0px;
-}
-
-.login {
-  height: 10%;
+h1 {  
   font-family: "Open Sans", sans-serif;
-  font-size: 95%;
-  line-height: 160%;
   text-align: center;
-  color: #ffffff;
-  padding: 6%;
+  padding-top: 20px;
+  color: #3f3cc8;
 }
 
 .errorBox {
   font-family: "Open Sans", sans-serif;
-  font-size: 6px;
-  margin-top: 5%;
-  margin-left: 15%;
-  margin-right: 15%;
-  padding: 1.5%;
-  width: 70%;
+  font-size: 0.7em;
+  width: 85%;
+  margin-top: 5px;
+  height: 30px;
+  padding-top: 5px;
+  text-align: center;
+  margin-left: 7.5%;
   color: #fa6969;
   border: 2px solid #fa6969;
   border-radius: 5px;
   background-color: rgba(255, 0, 0, 0.1);
 }
 
-.emailBox {
-  width: 80%;
-  height: 50px;
-  background: #ffffff;
-  border: 1px solid #c6c4c4;
-  box-sizing: content-box;
-  border-radius: 8px;
-  margin-top: 5%;
-  margin-left: 10%;
-}
-
-.emailBox:hover {
-  color: gray;
-}
-.passwordBox {
-  width: 80%;
-  height: 50px;
-  background: #ffffff;
-  border: 1px solid #c6c4c4;
-  box-sizing: content-box;
-  border-radius: 8px;
-  margin-top: 7%;
-  margin-left: 10%;
-}
-
-.email {
-  font-family: "Open Sans", sans-serif;
-  font-style: "normal";
-  font-weight: "normal";
-  font-size: 72%;
-  line-height: 25%;
-  color: #828383;
-  margin-left: 9%;
-  padding-top: 1%;
-}
-
-.password {
-  font-family: "Open Sans", sans-serif;
-  font-style: "normal";
-  font-weight: "normal";
-  font-size: 72%;
-  line-height: 25%;
-  color: #828383;
-  margin-left: 9%;
-  margin-top: 1%;
-}
-
 .logInButton {
-  height: 50px;
-  padding-left: 15px;
-  padding-right: 15px;
+  width: 85%;
+  height: 40px;
   background: #3f3cc8;
   border-radius: 6px;
   align-items: center;
@@ -99,49 +40,13 @@
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 1.2em;
   color: #ffffff;
   /* padding-right: 200px; */
 }
 
 .logInButton:hover {
-  background-color: #ffffff;
-  border-radius: 6px;
-  color: #3f3cc8;
-  cursor: pointer;
-  border: 2px solid #3f3cc8;
-  margin: 0;
-}
-
-.createAccountButton:hover {
-  background-color: #3f3cc8;
-  color: #ffffff;
-}
-
-.logInButtonText:hover {
-  color: #3f3cc8;
-}
-
-.createAccountButtonText:hover {
-  color: #ffffff;
-}
-
-.createAccountButton {
-  background: #ffffff;
-  border: 1px solid #3f3cc8;
-  box-sizing: border-box;
-  border-radius: 6px;
-  cursor: pointer;
-  padding-left: 15px;
-  padding-right: 15px;
-  height: 50px;
-  font-family: "Open Sans", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  text-align: center;
-  color: #3f3cc8;
-  margin-left: 20px;
+  background-color: #0f0524;
 }
 
 .loginButtons {
@@ -149,32 +54,22 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 8%;
   padding-bottom: 30px;
   padding-left: 0px;
+  margin-top: 20px;
 }
 
-input[type="text"] {
-  width: 300px;
-  border: none;
-  font-size: 14px;
+#email, #password {
+  display: block;
+  width: 85%;
+  height: 40px;
+  border: 1px solid #e6ede8;
+  
+  margin: auto;
   margin-top: 15px;
-  margin-left: 15px;
-}
+  padding-left: 5px;
 
-input[type="password"] {
-  width: 300px;
-  border: none;
-  margin-top: 15px;
-  margin-left: 15px;
   font-size: 14px;
-  background-color: transparent;
-}
-
-input:focus {
-  outline: none;
-}
-
-button:focus {
-  outline: 0;
+  
+  border-radius: 5px;
 }
