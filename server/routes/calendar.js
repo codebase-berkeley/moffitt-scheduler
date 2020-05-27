@@ -68,16 +68,26 @@ router.post("/save", (req, res) => {
 
 router.post("/staticcalendar", (req, res) => {
   if (!req.user) {
-    return res.json({ shifts: null });
-  } else {
-    let currentUser;
-    if (req.body.userId) {
-      if (req.user != 0 && req.body.userId != req.user) {
-        return res.json({ shifts: null });
-      } else {
-        currentUser = req.body.userId;
-      }
+    return res.json({shifts: null});
+  }
 
+  let shifts = req.body.items;
+  let newCurrWeek = new Date(req.body.currWeek);
+  let currWeekStartDate = newCurrWeek.getTime();
+  let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
+
+  console.log("currWeekStartDate", currWeekStartDate);
+  console.log("currWeekEndDate", currWeekEndDate);
+
+  pool.query(
+    `SELECT * FROM SHIFTS WHERE sle_id = $1 
+    AND start_time >= to_timestamp(${currWeekStartDate}/1000.0) AND end_time <= to_timestamp(${currWeekEndDate}/1000.0)`,
+    [req.user],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      console.log("result.rows", result.rows);
       for (var i = 0; i < 336; i += 1) {
         for (var j = 0; j < result.rows.length; j += 1) {
           let currentRow = result.rows[j];
@@ -114,19 +124,10 @@ router.post("/staticcalendar", (req, res) => {
             }
           }
         }
-        return res.json({ shifts: shifts });
       }
-    );
-  }
-});
-
-router.get("/shifts", function(req, res) {
-  pool.query("SELECT * FROM SHIFTS", (error, result) => {
-    if (error) {
-      throw error;
+      return res.json({ shifts: shifts });
     }
-    res.json(result.rows);
-  });
+  );
 });
 
 class Shift {
