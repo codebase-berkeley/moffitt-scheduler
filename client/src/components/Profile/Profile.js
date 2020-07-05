@@ -98,7 +98,7 @@ export default class Profile extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        if (jsonResponse.shifts == null) {
+        if (jsonResponse.shifts === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
           this.setState({ shifts: jsonResponse.shifts });
@@ -119,7 +119,7 @@ export default class Profile extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        if (jsonResponse.schedule == null) {
+        if (jsonResponse.schedule === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
           console.log("LOOK HERE");
@@ -157,7 +157,7 @@ export default class Profile extends React.Component {
         console.log(this.state.items);
         let newItems;
         for (let i = 0; i < this.state.items.length; i++) {
-          if (this.state.items[i].id == this.props.match.params.userId) {
+          if (this.state.items[i].id === this.props.match.params.userId) {
             newItems = this.state.items[i];
           }
         }
@@ -175,48 +175,48 @@ export default class Profile extends React.Component {
     let cm3;
     let cm4;
     let cd;
-    if (m3L == 0) {
+    if (m3L === 0) {
       cm3 = "trainingLevelsNoMoffittThird";
     } else {
       cm3 = "trainingLevelsMoffittThird";
     }
-    if (m4L == 0) {
+    if (m4L === 0) {
       cm4 = "trainingLevelsNoMoffittFourth";
     } else {
       cm4 = "trainingLevelsMoffittFourth";
     }
-    if (cd == 0) {
+    if (cd === 0) {
       cd = "trainingLevelsNoDoe";
     } else {
       cd = "trainingLevelsDoe";
     }
-    if (m3L == 1) {
+    if (m3L === 1) {
       m3L = <img src={starImage} />;
-    } else if (m3L == 2) {
+    } else if (m3L === 2) {
       m3L = [<img src={starImage} />, <img src={starImage} />];
-    } else if (m3L == 3) {
+    } else if (m3L === 3) {
       m3L = [
         <img src={starImage} />,
         <img src={starImage} />,
         <img src={starImage} />
       ];
     }
-    if (m4L == 1) {
+    if (m4L === 1) {
       m4L = <img src={starImage} />;
-    } else if (m4L == 2) {
+    } else if (m4L === 2) {
       m4L = [<img src={starImage} />, <img src={starImage} />];
-    } else if (m4L == 4) {
+    } else if (m4L === 4) {
       m4L = [
         <img src={starImage} />,
         <img src={starImage} />,
         <img src={starImage} />
       ];
     }
-    if (dL == 1) {
+    if (dL === 1) {
       dL = <img src={starImage} />;
-    } else if (dL == 2) {
+    } else if (dL === 2) {
       dL = [<img src={starImage} />, <img src={starImage} />];
-    } else if (dL == 3) {
+    } else if (dL === 3) {
       dL = [
         <img src={starImage} />,
         <img src={starImage} />,
@@ -275,7 +275,7 @@ export default class Profile extends React.Component {
       while every 1-7th element should be a shift cell.
     */
     for (var i = 0, ti = 0; i < 192; i += 1) {
-      if (i % 8 == 0) {
+      if (i % 8 === 0) {
         timeslots.push(<div className="item-hours">{hours[i / 8]}</div>);
       } else {
         timeslots.push(

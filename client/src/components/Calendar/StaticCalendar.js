@@ -114,7 +114,7 @@ export default class StaticCalendar extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        if (jsonResponse.shifts == null) {
+        if (jsonResponse.shifts === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
           this.setState({ shifts: jsonResponse.shifts });
@@ -156,7 +156,7 @@ export default class StaticCalendar extends React.Component {
       .then(jsonResponse => {
         let newShifts = this.state.shifts;
         for (let i = 0; i < newShifts.length; i++) {
-          if (newShifts[i].id == currentClickedID) {
+          if (newShifts[i].id === currentClickedID) {
             newShifts[i].color = "#C187D3";
           }
         }
@@ -224,7 +224,7 @@ export default class StaticCalendar extends React.Component {
       while every 1-7th element should be a shift cell.
     */
     for (var i = 0, ti = 0; i < 384; i += 1) {
-      if (i % 8 == 0) {
+      if (i % 8 === 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
       } else {
         timeslots.push(

@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4cc1d3b1.chunk.css",
+    "main.js": "/static/js/main.9d8da044.chunk.js",
+    "main.js.map": "/static/js/main.9d8da044.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.cea588d5.js",
+    "runtime-main.js.map": "/static/js/runtime-main.cea588d5.js.map",
+    "static/js/2.af5ba59d.chunk.js": "/static/js/2.af5ba59d.chunk.js",
+    "static/js/2.af5ba59d.chunk.js.map": "/static/js/2.af5ba59d.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.f75e405d60c729fd12a3c9b99491274b.js": "/precache-manifest.f75e405d60c729fd12a3c9b99491274b.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.4cc1d3b1.chunk.css.map": "/static/css/main.4cc1d3b1.chunk.css.map",
+    "static/js/2.af5ba59d.chunk.js.LICENSE.txt": "/static/js/2.af5ba59d.chunk.js.LICENSE.txt",
+    "static/media/add.svg": "/static/media/add.75c0f6e5.svg",
+    "static/media/check_fill.svg": "/static/media/check_fill.e186d233.svg",
+    "static/media/check_nofill.svg": "/static/media/check_nofill.ba35534f.svg",
+    "static/media/delete.svg": "/static/media/delete.81e1c424.svg",
+    "static/media/deny_fill.svg": "/static/media/deny_fill.c3fcf05f.svg",
+    "static/media/deny_nofill.svg": "/static/media/deny_nofill.7beef16d.svg",
+    "static/media/error.svg": "/static/media/error.eabe7468.svg",
+    "static/media/leftarrow.svg": "/static/media/leftarrow.b2d8727d.svg",
+    "static/media/pencil.svg": "/static/media/pencil.0e7e40ca.svg",
+    "static/media/rightarrow.svg": "/static/media/rightarrow.f6db1bb0.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cea588d5.js",
+    "static/js/2.af5ba59d.chunk.js",
+    "static/css/main.4cc1d3b1.chunk.css",
+    "static/js/main.9d8da044.chunk.js"
+  ]
+}

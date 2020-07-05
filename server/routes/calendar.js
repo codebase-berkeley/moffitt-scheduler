@@ -92,31 +92,31 @@ router.post("/staticcalendar", (req, res) => {
         for (var j = 0; j < result.rows.length; j += 1) {
           let currentRow = result.rows[j];
           let sameStartEndValid =
-            shifts[i].day == currentRow.start_time.getDay() &&
+            shifts[i].day === currentRow.start_time.getDay() &&
             shifts[i].start >= 2 * currentRow.start_time.getHours() &&
             shifts[i].end <= 2 * currentRow.end_time.getHours();
           let diffStartEndValid =
             currentRow.start_time.getDay() != currentRow.end_time.getDay() &&
-            ((shifts[i].day == currentRow.start_time.getDay() &&
+            ((shifts[i].day === currentRow.start_time.getDay() &&
               shifts[i].start >= 2 * currentRow.start_time.getHours()) ||
-              (shifts[i].day == currentRow.end_time.getDay() &&
+              (shifts[i].day === currentRow.end_time.getDay() &&
                 shifts[i].end <= 2 * currentRow.end_time.getHours()));
           if (sameStartEndValid || diffStartEndValid) {
             shifts[i].id = currentRow.shift_id;
-            if (currentRow.location == "Moffitt3") {
-              if (currentRow.cover_requested == "true") {
+            if (currentRow.location === "Moffitt3") {
+              if (currentRow.cover_requested === "true") {
                 shifts[i].color = "#C187D3";
               } else {
                 shifts[i].color = "#ff8d06";
               }
-            } else if (currentRow.location == "Doe") {
-              if (currentRow.cover_requested == "true") {
+            } else if (currentRow.location === "Doe") {
+              if (currentRow.cover_requested === "true") {
                 shifts[i].color = "#C187D3";
               } else {
                 shifts[i].color = "#d7269b";
               }
-            } else if (currentRow.location == "Moffitt4") {
-              if (currentRow.cover_requested == "true") {
+            } else if (currentRow.location === "Moffitt4") {
+              if (currentRow.cover_requested === "true") {
                 shifts[i].color = "#C187D3";
               } else {
                 shifts[i].color = "#04b17e";
@@ -180,8 +180,8 @@ router.get("/availability", (req, res) => {
         for (var r = 0; r < result.rows.length; r++) {
           for (var s = 0; s < selected.length; s++) {
             if (
-              result.rows[r].day_of_week == selected[s].day &&
-              result.rows[r].start_time == selected[s].start
+              result.rows[r].day_of_week === selected[s].day &&
+              result.rows[r].start_time === selected[s].start
             ) {
               selected[s].color = "rgb(176, 233, 194)";
             }
@@ -229,7 +229,7 @@ router.get("/totalhours/:userId", (req, res) => {
             let end_time_date = start_time.getDay();
             let start_hour = start_time.getHours();
             let end_hour = end_time.getHours();
-            if (start_time_date == end_time_date) {
+            if (start_time_date === end_time_date) {
               allHours = allHours + (end_hour - start_hour);
             } else {
               allHours = allHours + (24 - start_hour) + end_hour;
@@ -295,7 +295,7 @@ router.post("/openshifts", (req, res) => {
         console.log(currentRow1.start_time);
         for (var i = 0; i < 336; i += 1) {
           let sameStartEndValid =
-            shifts[i].day == currentRow1.start_time.getDay() &&
+            shifts[i].day === currentRow1.start_time.getDay() &&
             shifts[i].start >=
               currentRow1.start_time.getHours() * 2 +
                 currentRow1.start_time.getMinutes() / 30 &&
@@ -304,11 +304,11 @@ router.post("/openshifts", (req, res) => {
                 currentRow1.end_time.getMinutes() / 30;
           let diffStartEndValid =
             currentRow1.start_time.getDay() != currentRow1.end_time.getDay() &&
-            ((shifts[i].day == currentRow1.start_time.getDay() &&
+            ((shifts[i].day === currentRow1.start_time.getDay() &&
               shifts[i].start >=
                 currentRow1.start_time.getHours() * 2 +
                   currentRow1.start_time.getMinutes() / 30) ||
-              (shifts[i].day == currentRow1.end_time.getDay() &&
+              (shifts[i].day === currentRow1.end_time.getDay() &&
                 shifts[i].end <=
                   currentRow1.end_time.getHours() * 2 +
                     currentRow1.end_time.getMinutes() / 30));

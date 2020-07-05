@@ -49,47 +49,47 @@ router.get("/requesthistory", (req, res) => {
       } else {
         for (var i = 0; i < result.rows.length; i++) {
           var day = result.rows[i].time.getDay();
-          if (day == 0) {
+          if (day === 0) {
             day = "Sunday, ";
-          } else if (day == 1) {
+          } else if (day === 1) {
             day = "Monday, ";
-          } else if (day == 2) {
+          } else if (day === 2) {
             day = "Tuesday, ";
-          } else if (day == 3) {
+          } else if (day === 3) {
             day = "Wednesday, ";
-          } else if (day == 4) {
+          } else if (day === 4) {
             day = "Thursday, ";
-          } else if (day == 5) {
+          } else if (day === 5) {
             day = "Friday, ";
-          } else if (day == 6) {
+          } else if (day === 6) {
             day = "Saturday, ";
-          } else if (day == 7) {
+          } else if (day === 7) {
             day = "Sunday, ";
           }
           var month = result.rows[i].time.getMonth();
-          if (month == 1) {
+          if (month === 1) {
             month = "January ";
-          } else if (month == 2) {
+          } else if (month === 2) {
             month = "February ";
-          } else if (month == 3) {
+          } else if (month === 3) {
             month = "March ";
-          } else if (month == 4) {
+          } else if (month === 4) {
             month = "April ";
-          } else if (month == 5) {
+          } else if (month === 5) {
             month = "May ";
-          } else if (month == 6) {
+          } else if (month === 6) {
             month = "June ";
-          } else if (month == 7) {
+          } else if (month === 7) {
             month = "July ";
-          } else if (month == 8) {
+          } else if (month === 8) {
             month = "August ";
-          } else if (month == 9) {
+          } else if (month === 9) {
             month = "September ";
-          } else if (month == 10) {
+          } else if (month === 10) {
             month = "October ";
-          } else if (month == 11) {
+          } else if (month === 11) {
             month = "November ";
-          } else if (month == 12) {
+          } else if (month === 12) {
             month = "December ";
           }
           var date = result.rows[i].time.getDate();

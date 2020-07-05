@@ -27,11 +27,11 @@ passport.use(
 
       if (error) {
         throw error;
-      } else if (result.rows.length == 0) {
+      } else if (result.rows.length === 0) {
         pool.query(supSelect, values2, (error, result) => {
           if (error) {
             cb(null, false);
-          } else if (result.rows.length == 0) {
+          } else if (result.rows.length === 0) {
             cb(null, false);
           } else if (
             result.rows[0]["password"] ==
@@ -53,7 +53,7 @@ passport.use(
         pool.query(supSelect, values2, (error, result) => {
           if (error) {
             cb(null, false);
-          } else if (result.rows.length == 0) {
+          } else if (result.rows.length === 0) {
             cb(null, false);
           } else if (
             result.rows[0]["password"] ==

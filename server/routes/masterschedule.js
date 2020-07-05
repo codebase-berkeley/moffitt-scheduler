@@ -14,8 +14,8 @@ function getWeekNumber(d) {
 function sameWeekAsCurrent(date) {
   var currentDay = new Date();
   if (
-    getWeekNumber(date) == getWeekNumber(currentDay) &&
-    date.getYear() == currentDay.getYear()
+    getWeekNumber(date) === getWeekNumber(currentDay) &&
+    date.getYear() === currentDay.getYear()
   ) {
     return true;
   } else {
@@ -231,10 +231,10 @@ router.post("/generateshifts", (req, res) => {
         let dup = false;
         for (let j = 0; j < duplicateTracker.length; j += 1) {
           if (
-            currRow.sle_id == duplicateTracker[j].sle_id &&
-            currRow.day_of_week == duplicateTracker[j].day_of_week &&
-            currRow.location == duplicateTracker[j].location &&
-            currRow.start_time == duplicateTracker[j].start_time
+            currRow.sle_id === duplicateTracker[j].sle_id &&
+            currRow.day_of_week === duplicateTracker[j].day_of_week &&
+            currRow.location === duplicateTracker[j].location &&
+            currRow.start_time === duplicateTracker[j].start_time
           ) {
             dup = true;
           }
@@ -244,14 +244,14 @@ router.post("/generateshifts", (req, res) => {
           let newgroup = null;
           for (let j = 0; j < shiftGroups.length; j += 1) {
             if (
-              shiftGroups[j].sle_id == currRow.sle_id &&
-              shiftGroups[j].loc == currRow.location &&
-              currRow.end_time == shiftGroups[j].e + 0.5
+              shiftGroups[j].sle_id === currRow.sle_id &&
+              shiftGroups[j].loc === currRow.location &&
+              currRow.end_time === shiftGroups[j].e + 0.5
             ) {
               newgroup = shiftGroups[j];
             }
           }
-          if (newgroup == null) {
+          if (newgroup === null) {
             shiftGroups.push({
               sle_id: currRow.sle_id,
               loc: currRow.location,
@@ -273,19 +273,19 @@ router.post("/generateshifts", (req, res) => {
         startDate.getMonth() != endDate.getMonth()
       ) {
         for (let i = 0; i < shiftGroups.length; i += 1) {
-          if (shiftGroups[i].day == weekdayMap[startDate.getDay()]) {
+          if (shiftGroups[i].day === weekdayMap[startDate.getDay()]) {
             let next = {
               sle_id: shiftGroups[i].sle_id,
               location: shiftGroups[i].loc,
               start_time: new Date(startDate),
               end_time: new Date(startDate)
             };
-            if (shiftGroups[i].s % 1 == 0) {
+            if (shiftGroups[i].s % 1 === 0) {
               next.start_time.setHours(shiftGroups[i].s);
             } else {
               next.start_time.setHours(shiftGroups[i].s, 30);
             }
-            if (shiftGroups[i].e % 1 == 0) {
+            if (shiftGroups[i].e % 1 === 0) {
               next.end_time.setHours(shiftGroups[i].e);
             } else {
               next.end_time.setHours(shiftGroups[i].e, 30);
@@ -344,7 +344,7 @@ router.get("/generatesched", function(req, res) {
         let idExists = false;
         let currEmployee = null;
         for (let j = 0; j < employeeList.length; j += 1) {
-          if (employeeList[j].id == result.rows[i].id) {
+          if (employeeList[j].id === result.rows[i].id) {
             idExists = true;
             currEmployee = employeeList[j];
             break;
@@ -456,9 +456,9 @@ function finalSchedule(employeeList) {
       var concurrents = [];
       for (let i = 0; i < allShifts.length; i += 1) {
         if (
-          allShifts[i].start == shift.start &&
-          allShifts[i].end == shift.end &&
-          allShifts[i].weekday == shift.weekday
+          allShifts[i].start === shift.start &&
+          allShifts[i].end === shift.end &&
+          allShifts[i].weekday === shift.weekday
         ) {
           concurrents.push(allShifts[i]);
         }
@@ -527,8 +527,8 @@ function finalSchedule(employeeList) {
         if (trained) {
           for (let k = 0; k < currentSle.avails.length; k += 1) {
             if (
-              currentSle.avails[k].day == currentShift.weekday &&
-              currentSle.avails[k].slot == currentShift.start
+              currentSle.avails[k].day === currentShift.weekday &&
+              currentSle.avails[k].slot === currentShift.start
             ) {
               currentSle.availShifts.push(currentShift);
             }
@@ -572,7 +572,7 @@ function finalSchedule(employeeList) {
     sortedShifts = [];
     for (let i = 0; i < sortedKeys.length; i += 1) {
       for (let j = 0; j < allShifts.length; j += 1) {
-        if (sortedKeys[i] == allShifts[j].id) {
+        if (sortedKeys[i] === allShifts[j].id) {
           sortedShifts.push(allShifts[j]);
           break;
         }
@@ -631,11 +631,11 @@ function finalSchedule(employeeList) {
       }
       /** Checks whether the shift is full. */
       function locationFull(shift) {
-        if (shift.location == "Moffitt 3") {
+        if (shift.location === "Moffitt 3") {
           return shift.assignedSles.length >= minEmployeesMoffitt3;
-        } else if (shift.location == "Doe") {
+        } else if (shift.location === "Doe") {
           return shift.assignedSles.length >= minEmployeesDoe;
-        } else if (shift.location == "Moffitt 4") {
+        } else if (shift.location === "Moffitt 4") {
           return shift.assignedSles.length >= minEmployeesMoffitt4;
         }
       }
@@ -662,8 +662,8 @@ function finalSchedule(employeeList) {
       nextShift = allShifts[nextShiftIndex];
       if (
         nextShift != null &&
-        currentShift.location == nextShift.location &&
-        currentShift.weekday == nextShift.weekday &&
+        currentShift.location === nextShift.location &&
+        currentShift.weekday === nextShift.weekday &&
         valid(sle, nextShift)
       ) {
         return true;
@@ -676,8 +676,8 @@ function finalSchedule(employeeList) {
       previousShift = allShifts[previousShiftIndex];
       if (
         previousShift != null &&
-        currentShift.location == previousShift.location &&
-        currentShift.weekday == previousShift.weekday &&
+        currentShift.location === previousShift.location &&
+        currentShift.weekday === previousShift.weekday &&
         valid(sle, previousShift)
       ) {
         return true;

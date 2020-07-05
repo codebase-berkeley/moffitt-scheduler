@@ -36,7 +36,7 @@ class RequestHistory extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        if (jsonResponse.items == null) {
+        if (jsonResponse.items === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
           return;
         }

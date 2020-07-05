@@ -87,10 +87,10 @@ export default class Library extends React.Component {
             return response.json();
           })
           .then(jsonResponse => {
-            if (jsonResponse.items == null) {
+            if (jsonResponse.items === null) {
               this.setState({ redirect: <Redirect push to="/login" /> });
             }
-            if (jsonResponse.items == null) {
+            if (jsonResponse.items === null) {
               return;
             }
             let items = jsonResponse.items;
@@ -327,7 +327,7 @@ export default class Library extends React.Component {
 
 function OtherEmployee(props) {
   var employees = [];
-  if (props == null) {
+  if (props === null) {
     return null;
   }
   var filteredEmployees = [];
@@ -381,7 +381,7 @@ function formatNames(names) {
 }
 
 function Box(props) {
-  if (isError(props.location, props.names) == 0) {
+  if (isError(props.location, props.names) === 0) {
     return (
       <div>
         <div className="boxWithoutError">
@@ -427,7 +427,7 @@ function Box(props) {
 }
 
 function displayError(typeOfError) {
-  if (typeOfError == 1) {
+  if (typeOfError === 1) {
     return (
       <div className="errorText">
         <img className="errorImg" src={error} alt="error" />
@@ -435,7 +435,7 @@ function displayError(typeOfError) {
       </div>
     );
   }
-  if (typeOfError == -1) {
+  if (typeOfError === -1) {
     return (
       <div className="errorText">
         <img className="errorImg" src={error} alt="error" />
@@ -507,7 +507,7 @@ function EditSchedule(props) {
   };
 
   function CurrEmployee(props) {
-    if (props == null) {
+    if (props === null) {
       return null;
     }
     var employees = [];

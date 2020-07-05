@@ -77,7 +77,7 @@ class Employees extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        if (jsonResponse.items == null) {
+        if (jsonResponse.items === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
           return;
         }
@@ -89,9 +89,9 @@ class Employees extends React.Component {
   }
   processData(database) {
     const listItems = database.map((entry, index) => {
-      if (entry.moffitt3TrainingLevel == 1) {
+      if (entry.moffitt3TrainingLevel === 1) {
         entry.moffitt3TrainingLevel = <img src={starImage} />;
-      } else if (entry.moffitt3TrainingLevel == 2) {
+      } else if (entry.moffitt3TrainingLevel === 2) {
         entry.moffitt3TrainingLevel = [
           <img src={starImage} />,
           <img src={starImage} />,
@@ -103,9 +103,9 @@ class Employees extends React.Component {
           <img src={starImage} />,
         ];
       }
-      if (entry.moffitt4TrainingLevel == 1) {
+      if (entry.moffitt4TrainingLevel === 1) {
         entry.moffitt4TrainingLevel = <img src={starImage} />;
-      } else if (entry.moffitt4TrainingLevel == 2) {
+      } else if (entry.moffitt4TrainingLevel === 2) {
         entry.moffitt4TrainingLevel = [
           <img src={starImage} />,
           <img src={starImage} />,
@@ -117,9 +117,9 @@ class Employees extends React.Component {
           <img src={starImage} />,
         ];
       }
-      if (entry.doeTrainingLevel == 1) {
+      if (entry.doeTrainingLevel === 1) {
         entry.doeTrainingLevel = <img src={starImage} />;
-      } else if (entry.doeTrainingLevel == 2) {
+      } else if (entry.doeTrainingLevel === 2) {
         entry.doeTrainingLevel = [
           <img src={starImage} />,
           <img src={starImage} />,

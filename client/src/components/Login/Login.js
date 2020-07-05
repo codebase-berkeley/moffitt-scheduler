@@ -12,7 +12,7 @@ class Login extends React.Component {
 
   render() {
     let displayError;
-    if (this.state.isError == true) {
+    if (this.state.isError === true) {
       displayError = <ErrorBox/>
     }
 
@@ -39,7 +39,7 @@ class Login extends React.Component {
   }
 
   enterPress(e) {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       this.loginClick();
     }
   }

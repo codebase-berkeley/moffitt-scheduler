@@ -32,9 +32,6 @@ function Timeslot(props) {
         .then(jsonResponse => {
           console.log(jsonResponse);
         });
-      function cancelClick() {
-        console.log("doesNothingForNow");
-      }
       window.location.reload();
       return;
     }
@@ -68,18 +65,18 @@ function Timeslot(props) {
 
     function timeStringify(num) {
       console.log(num);
-      if (num == 0) {
+      if (num === 0) {
         return "12:00AM";
       } else if (num > 24) {
-        if (num % 2 == 0) {
+        if (num % 2 === 0) {
           return ((num / 2) % 12) + ":00PM";
         } else {
           return (((num - 1) / 2) % 12) + ":30PM";
         }
-      } else if (num == 24) {
+      } else if (num === 24) {
         return "12:00PM";
       } else {
-        if (num % 2 == 0) {
+        if (num % 2 === 0) {
           return num / 2 + ":00AM";
         } else {
           return (num - 1) / 2 + ":30AM";
@@ -220,7 +217,7 @@ export default class OpenShiftsCal extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        if (jsonResponse.shifts == null) {
+        if (jsonResponse.shifts === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
           this.setState({ shifts: jsonResponse.shifts });
@@ -391,11 +388,11 @@ export default class OpenShiftsCal extends React.Component {
     */
     var timeslots = [];
     for (var i = 0, ti = 0; i < 384; i += 1) {
-      if (i % 8 == 0) {
+      if (i % 8 === 0) {
         timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
       } else {
         if (
-          this.state.shifts[ti].sleid == this.props.userId ||
+          this.state.shifts[ti].sleid === this.props.userId ||
           !(this.state.shifts[ti].id in shiftGrouper)
         ) {
           timeslots.push(

@@ -13,7 +13,7 @@ class NonClickWithCheck extends React.Component {
   render() {
     var approvalButton;
     var denialButton;
-    if (this.props.approval == "Approved") {
+    if (this.props.approval === "Approved") {
       approvalButton = <img className="check_fill" src={check_fill} />;
       denialButton = <img className="deny_nofill" src={deny_nofill} />;
       console.log("approval ture");

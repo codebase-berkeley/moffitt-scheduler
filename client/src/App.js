@@ -8,7 +8,6 @@ import SleAvailability from "./components/Sle/SleAvailability";
 import SleYourShifts from "./components/Sle/SleYourShifts";
 import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
 import SupervisorCover from "./components/Supervisor/SupervisorCover";
-import Cover from "./components/Cover/Cover";
 import MasterSchedule from "./components/Supervisor/SupervisorMS";
 import Profile from "./components/Profile/Profile";
 
@@ -16,9 +15,6 @@ import "./App.css";
 import SleOpenShifts from "./components/Sle/SleOpenShifts";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <BrowserRouter>

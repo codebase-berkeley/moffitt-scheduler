@@ -30,11 +30,11 @@ export default class Cover extends React.Component {
   render() {
     let typeOfPending = this.state.typeOfPending;
     let pending;
-    if (typeOfPending == "supervisor approval") {
+    if (typeOfPending === "supervisor approval") {
       pending = <PendingSupervisor />;
-    } else if (typeOfPending == "coverage") {
+    } else if (typeOfPending === "coverage") {
       pending = <PendingCoverage />;
-    } else if (typeOfPending == "history") {
+    } else if (typeOfPending === "history") {
       pending = <RequestHistory />;
     } else {
       pending = null;

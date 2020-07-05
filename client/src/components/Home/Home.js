@@ -18,9 +18,9 @@ class Home extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        if (jsonResponse.user == null) {
+        if (jsonResponse.user === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
-        } else if (jsonResponse.user == 0) {
+        } else if (jsonResponse.user === 0) {
           this.setState({ redirect: <Redirect push to="/masterschedule" /> });
         } else {
           this.setState({ redirect: <Redirect push to="/yourshifts" /> });

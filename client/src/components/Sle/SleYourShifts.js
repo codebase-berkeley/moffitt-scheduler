@@ -20,7 +20,7 @@ export default class SleShifts extends React.Component {
         return response.json();
       })
       .then((jsonResponse) => {
-        if (jsonResponse.logout == true) {
+        if (jsonResponse.logout === true) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         }
       });
