@@ -1,8 +1,6 @@
 import React from "react";
 import "./SleAvailability.css";
-import "./SidebarElement.css";
-import "./SidebarElement.js";
-import SidebarElement from "./SidebarElement";
+import Sidebar from "./Sidebar";
 import Calendar from "../Calendar/Calendar.js";
 import { Redirect } from "react-router-dom";
 
@@ -14,12 +12,12 @@ export default class SleCalendar extends React.Component {
   }
   logOut() {
     fetch("/logout", {
-      credentials: "include",
+      credentials: "include"
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         if (jsonResponse.logout === true) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         }
@@ -52,11 +50,7 @@ export default class SleCalendar extends React.Component {
             </div>
           </div>
         </div>
-        <div class="sidebar">
-          <SidebarElement title="Your Shifts" link={shiftsLink} />
-          <SidebarElement title="Open Shifts" link={openshiftsLink} />
-          <SidebarElement title="Availability" link={availabilityLink} />
-        </div>
+        <Sidebar />
         <div class="Calendar">
           <Calendar userId={this.props.match.params.userId} />
         </div>

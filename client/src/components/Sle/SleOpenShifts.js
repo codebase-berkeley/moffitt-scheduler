@@ -1,8 +1,6 @@
 import React from "react";
 import "./SleOpenShifts.css";
-import "./SidebarElement.css";
-import "./SidebarElement.js";
-import SidebarElement from "./SidebarElement";
+import Sidebar from "./Sidebar";
 import OpenShiftsCal from "../Calendar/OpenShiftsCal.js";
 import { Redirect } from "react-router-dom";
 
@@ -14,22 +12,18 @@ export default class SleOpenShifts extends React.Component {
   }
   logOut() {
     fetch("/logout", {
-      credentials: "include",
+      credentials: "include"
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         if (jsonResponse.logout === true) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         }
       });
   }
   render() {
-    var shiftsLink = "/yourshifts";
-    var availabilityLink = "/availability";
-    var openshiftsLink = "/openshifts";
-
     return (
       <div class="everything">
         {this.state.redirect}
@@ -52,11 +46,7 @@ export default class SleOpenShifts extends React.Component {
             </div>
           </div>
         </div>
-        <div class="sidebar">
-          <SidebarElement title="Your Shifts" link={shiftsLink} />
-          <SidebarElement title="Open Shifts" link={openshiftsLink} />
-          <SidebarElement title="Availability" link={availabilityLink} />
-        </div>
+        <Sidebar />
         <div class="OpenShiftsCal">
           <OpenShiftsCal userId={this.props.match.params.userId} />
         </div>
