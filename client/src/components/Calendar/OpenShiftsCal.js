@@ -15,7 +15,7 @@ function Timeslot(props) {
 
     function yesClick() {
       console.log("In yes click");
-      fetch("http://localhost:8000/updateopenshifts", {
+      fetch("/updateopenshifts", {
         method: "POST",
         credentials: "include",
         headers: {

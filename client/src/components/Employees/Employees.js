@@ -173,7 +173,7 @@ class Employees extends React.Component {
       document.getElementById("moffitt4level").value
     );
     var doeLevelNumber = parseInt(document.getElementById("doelevel").value);
-    fetch("http://localhost:8000/employees", {
+    fetch("/employees", {
       method: "POST",
       headers: {
         Accept: "application/json",

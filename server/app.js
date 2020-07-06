@@ -53,7 +53,6 @@ app.use("/", employeesRoutes);
 app.use("/", loginRoutes);
 app.use("/", masterScheduleRoutes);
 
-
 var port = process.env.PORT || 8000;
 
 app.listen(port, () => {

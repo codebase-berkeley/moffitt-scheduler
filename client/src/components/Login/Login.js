@@ -47,7 +47,7 @@ class Login extends React.Component {
   loginClick() {
     var emailText = document.getElementById("email").value;
     var passwordText = document.getElementById("password").value;
-    fetch("http://localhost:8000/login", {
+    fetch("/login", {
       method: "POST",
       credentials: "include",
       headers: {
