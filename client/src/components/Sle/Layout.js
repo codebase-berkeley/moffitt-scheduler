@@ -1,6 +1,25 @@
 import React from "react";
-import Sidebar from "./Sidebar";
 import { Redirect } from "react-router-dom";
+
+function SidebarElement(props) {
+  return (
+    <div className="SidebarElement">
+      <a className="title" href={props.link}>
+        {props.title}
+      </a>
+    </div>
+  );
+}
+
+function Sidebar(props) {
+  return (
+    <div class="sidebar">
+      <SidebarElement title="Your Shifts" link="/yourshifts" />
+      <SidebarElement title="Open Shifts" link="/openshifts" />
+      <SidebarElement title="Availability" link="/availability" />
+    </div>
+  );
+}
 
 export default class Layout extends React.Component {
   constructor(props) {
