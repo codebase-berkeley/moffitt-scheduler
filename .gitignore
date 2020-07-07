@@ -24,10 +24,9 @@ yarn-error.log*
 
 # editor
 */.vscode
+.vscode
 
 # custom
 create_account.js
 
-#
-.vscode
 
