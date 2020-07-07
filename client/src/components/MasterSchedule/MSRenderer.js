@@ -28,7 +28,7 @@ function displayMonth(m) {
     9: "Sep",
     10: "Oct",
     11: "Nov",
-    12: "Dec",
+    12: "Dec"
   };
   return month[m];
 }
@@ -39,7 +39,7 @@ export default class MSRenderer extends React.Component {
     this.state = {
       items: [{}],
       typeOfLibrary: "Moffitt3",
-      currentWeek: dateObject(0, 0),
+      currentWeek: dateObject(0, 0)
     };
     this.showMoffitt = this.showMoffitt.bind(this);
     this.showMoffitt4 = this.showMoffitt4.bind(this);
@@ -79,13 +79,13 @@ export default class MSRenderer extends React.Component {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         console.log(jsonResponse.items);
       });
   }
@@ -99,14 +99,14 @@ export default class MSRenderer extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ startDate: startDateText, endDate: endDateText }),
+      body: JSON.stringify({ startDate: startDateText, endDate: endDateText })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         console.log(jsonResponse);
       });
   }

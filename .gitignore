@@ -28,3 +28,6 @@ yarn-error.log*
 # custom
 create_account.js
 
+#
+.vscode
+

@@ -4,13 +4,13 @@ const crypto = require("crypto");
 var pool = require("../db/db");
 var passport = require("../passport");
 
-router.post("/login", function (req, res, next) {
-  passport.authenticate("local", function (err, user, info) {
+router.post("/login", function(req, res, next) {
+  passport.authenticate("local", function(err, user, info) {
     if (err || !user) {
       return res.json({ isSupervisor: false, isSle: false });
     }
 
-    req.logIn(user, function (err) {
+    req.logIn(user, function(err) {
       if (err) {
         return res.json({ isSupervisor: false, isSle: false });
       }
@@ -23,13 +23,15 @@ router.post("/login", function (req, res, next) {
   })(req, res, next);
 });
 
-router.get("/logout", function (req, res) {
+router.get("/logout", function(req, res) {
+  console.log("Logging out?");
   req.logOut();
+  console.log("After logout?");
   res.clearCookie("connect.sid");
   return res.json({ logout: true });
 });
 
-router.get("/homepage", function (req, res) {
+router.get("/homepage", function(req, res) {
   if (!req.user) {
     return res.json({ user: null });
   } else {
