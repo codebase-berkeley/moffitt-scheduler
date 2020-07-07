@@ -24,7 +24,7 @@ function sameWeekAsCurrent(date) {
 }
 
 router.get("/masterschedule/:currWeek", function(req, res) {
-  if (!req.user || req.user != 0) {
+  if (!req.user || !req.user.is_sup) {
     return res.json({ items: null });
   }
   let newCurrWeek = new Date(req.params.currWeek);

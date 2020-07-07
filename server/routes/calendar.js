@@ -43,7 +43,7 @@ router.post("/save", (req, res) => {
   }
 
   items = req.body.items;
-  var userId = req.user;
+  var userId = req.user.id;
   pool.query(
     "DELETE FROM AVAILABILITY WHERE sle_id=$1",
     [userId],
@@ -68,7 +68,7 @@ router.post("/save", (req, res) => {
 
 router.post("/staticcalendar", (req, res) => {
   if (!req.user) {
-    return res.json({shifts: null});
+    return res.json({ shifts: null });
   }
 
   let shifts = req.body.items;
@@ -76,13 +76,10 @@ router.post("/staticcalendar", (req, res) => {
   let currWeekStartDate = newCurrWeek.getTime();
   let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
 
-  console.log("currWeekStartDate", currWeekStartDate);
-  console.log("currWeekEndDate", currWeekEndDate);
-
   pool.query(
     `SELECT * FROM SHIFTS WHERE sle_id = $1 
     AND start_time >= to_timestamp(${currWeekStartDate}/1000.0) AND end_time <= to_timestamp(${currWeekEndDate}/1000.0)`,
-    [req.user],
+    [req.user.id],
     (error, result) => {
       if (error) {
         throw error;
@@ -163,9 +160,7 @@ router.get("/availability", (req, res) => {
     return res.json({ schedule: null });
   }
 
-  var userId = req.user;
-
-  console.log("userId", userId);
+  var userId = req.user.id;
 
   var selected = initialShifts();
 
@@ -218,8 +213,8 @@ router.get("/totalhours/:userId", (req, res) => {
             currentRow -
             startt +
             (startt.getTimezoneOffset() - currentRow.getTimezoneOffset()) *
-            60 *
-            1000;
+              60 *
+              1000;
           var oneDayy = 1000 * 60 * 60 * 24;
           var lastDay = Math.floor(difff / oneDayy);
           if (lastDay < currentDay) {
@@ -262,10 +257,9 @@ const coverColors = ["#ffff42", "#ffaf0f", "#ffc34d", "#4eb548"];
 router.post("/openshifts", (req, res) => {
   let shifts = req.body.items;
 
-  console.log("USERUSER:", req.user);
   pool.query(
     "select * from coverrequests inner join shifts on coverrequests.shift_id = shifts.shift_id where coverer_id is null and sle_id != $1",
-    [req.user],
+    [req.user.id],
     (error, result) => {
       console.log("Length", result.rows.length);
 
@@ -277,7 +271,7 @@ router.post("/openshifts", (req, res) => {
       for (var k = 0; k < result.rows.length; k++) {
         if (
           Date.parse(result.rows[k].start_time) >=
-          Date.parse(req.body.startOfWeek) &&
+            Date.parse(req.body.startOfWeek) &&
           Date.parse(result.rows[k].start_time) < Date.parse(req.body.endOfWeek)
         ) {
           wantedDates.push(result.rows[k]);
@@ -326,7 +320,7 @@ router.post("/openshifts", (req, res) => {
 });
 
 router.post("/updateopenshifts", function(req, res) {
-  let sleID = req.user;
+  let sleID = req.user.id;
   let shiftID = req.body.shiftID;
 
   console.log("shiftID", shiftID);

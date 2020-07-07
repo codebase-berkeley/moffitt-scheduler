@@ -5,7 +5,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirect: null,
+      redirect: null
     };
   }
 
@@ -14,13 +14,13 @@ class Home extends React.Component {
   }
   componentDidMount() {
     fetch("/homepage")
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         if (jsonResponse.user === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
-        } else if (jsonResponse.user === 0) {
+        } else if (jsonResponse.user.is_sup) {
           this.setState({ redirect: <Redirect push to="/masterschedule" /> });
         } else {
           this.setState({ redirect: <Redirect push to="/yourshifts" /> });

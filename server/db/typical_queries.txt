@@ -1,0 +1,2 @@
+insert into sle (name, email, is_sup) VALUES ('Nancy', 'nancy@berkeley.edu', true);
+

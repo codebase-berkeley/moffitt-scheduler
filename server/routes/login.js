@@ -14,11 +14,11 @@ router.post("/login", function(req, res, next) {
       if (err) {
         return res.json({ isSupervisor: false, isSle: false });
       }
-      if (user.id === 0) {
-        return res.json({ isSupervisor: true, isSle: false });
-      } else {
-        return res.json({ isSupervisor: false, isSle: true, id: user.id });
-      }
+      return res.json({
+        id: user.id,
+        isSupervisor: user.is_sup,
+        isSle: !user.is_sup
+      });
     });
   })(req, res, next);
 });

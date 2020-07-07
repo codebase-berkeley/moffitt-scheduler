@@ -13,7 +13,7 @@ class Login extends React.Component {
   render() {
     let displayError;
     if (this.state.isError === true) {
-      displayError = <ErrorBox/>
+      displayError = <ErrorBox />;
     }
 
     return (
@@ -21,9 +21,7 @@ class Login extends React.Component {
         {this.state.redirect}
         <div className="loginBox" onKeyDown={this.enterPress}>
           <h1>Login</h1>
-          <div className="error">
-            {displayError}
-          </div>
+          <div className="error">{displayError}</div>
 
           <input type="text" placeholder="Email" id="email"></input>
           <input type="password" placeholder="Password" id="password"></input>
@@ -52,22 +50,24 @@ class Login extends React.Component {
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ username: emailText, password: passwordText }),
+      body: JSON.stringify({ username: emailText, password: passwordText })
     })
-    .then((response) => {
-      return response.json();
-    })
-    .then((jsonResponse) => {
-      if (jsonResponse.isSle) {
-        this.setState({ redirect: <Redirect push to='/yourshifts' /> });
-      } else if (jsonResponse.isSupervisor) {
-        this.setState({ redirect: <Redirect push to="/masterschedule" /> });
-      } else {
-        this.setState({ isError: true });
-      }
-    });
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        console.log("loggging in jsonResponse", jsonResponse);
+        if (jsonResponse.isSle) {
+          this.setState({ redirect: <Redirect push to="/yourshifts" /> });
+        } else if (jsonResponse.isSupervisor) {
+          console.log("we are trying right?");
+          this.setState({ redirect: <Redirect push to="/masterschedule" /> });
+        } else {
+          this.setState({ isError: true });
+        }
+      });
   }
 }
 

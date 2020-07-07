@@ -36,7 +36,7 @@ router.post("/pendingsupervisor", (req, res) => {
 });
 
 router.get("/requesthistory", (req, res) => {
-  if (!req.user || req.user != 0) {
+  if (!req.user || !req.user.is_sup) {
     return res.json({ items: null });
   }
   pool.query(
@@ -107,7 +107,7 @@ router.get("/requesthistory", (req, res) => {
 });
 
 router.get("/pendingsupervisor", (req, res) => {
-  if (!req.user || req.user != 0) {
+  if (!req.user || !req.user.is_sup) {
     return res.json({ items: null });
   }
   pool.query(
@@ -133,7 +133,7 @@ router.get("/pendingsupervisor", (req, res) => {
 
 router.get("/pendingcoverage", (req, res) => {
   console.log("are we in pendingcoverage");
-  if (!req.user || req.user != 0) {
+  if (!req.user || !req.user.is_sup) {
     return res.json({ items: null });
   }
   pool.query(

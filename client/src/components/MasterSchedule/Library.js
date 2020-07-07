@@ -87,6 +87,7 @@ export default class Library extends React.Component {
             return response.json();
           })
           .then(jsonResponse => {
+            console.log("MS JSON:", jsonResponse);
             if (jsonResponse.items === null) {
               this.setState({ redirect: <Redirect push to="/login" /> });
             }

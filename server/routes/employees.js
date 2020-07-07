@@ -3,7 +3,7 @@ var router = express.Router();
 
 var pool = require("../db/db");
 
-router.post("/employees", function (req, res) {
+router.post("/employees", function(req, res) {
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
   var email = req.body.email;
@@ -15,7 +15,7 @@ router.post("/employees", function (req, res) {
   console.log("email", email);
   res.json({ successful: true });
   const text =
-    "INSERT INTO sle (name, training_level_doe, training_level_moffitt3, email, password, training_level_moffitt4) VALUES ($1, $2, $3, $4, $5, $6)";
+    "INSERT INTO sle (name, training_level_doe, training_level_moffitt3, email, password, training_level_moffitt4, is_sup) VALUES ($1, $2, $3, $4, $5, $6, false)";
   const values = [firstName + " " + lastName, dlev, m3lev, email, null, m4lev];
 
   pool.query(text, values, (error, result) => {
@@ -29,7 +29,7 @@ router.post("/employees", function (req, res) {
 module.exports = router;
 
 router.get("/allemployees", (req, res) => {
-  pool.query(`SELECT * FROM SLE;`, (error, result) => {
+  pool.query(`SELECT * FROM SLE where is_sup = false;`, (error, result) => {
     if (error) {
       throw error;
     } else {
@@ -65,10 +65,10 @@ router.get("/allemployees", (req, res) => {
 });
 
 router.get("/allemployeesupervisor", (req, res) => {
-  if (!req.user || req.user != 0) {
+  if (!req.user || !req.user.is_sup) {
     return res.json({ items: null });
   }
-  pool.query(`SELECT * FROM SLE;`, (error, result) => {
+  pool.query(`SELECT * FROM sle WHERE is_sup = false;`, (error, result) => {
     if (error) {
       throw error;
     } else {
