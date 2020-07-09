@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 // In production, just use the in memory store. In
 // development use mongo so that sessions persist through changes
-if (true || process.env.PRODUCTION === "true") {
+if (process.env.PRODUCTION === "true") {
   app.use(
     session({
       secret: "keyboard cat",

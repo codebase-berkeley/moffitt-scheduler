@@ -2,17 +2,13 @@
   background-color: #f5f5fd;
   width: 100%;
   height: 100%;
-  position: absolute;
   display: inline-block;
   z-index: 0;
-  margin-top: -2%;
 }
 
 #schedule-container-st1 {
   position: relative;
   display: inline-block;
-  left: 24.7%;
-  transform: scale(0.9, 0.9);
   width: 66%;
   font-family: "Open Sans";
   background-color: white;
@@ -22,7 +18,6 @@
   padding-right: 2%;
   padding-top: 1%;
   margin-bottom: 2%;
-  margin-top: -1.05%;
   height: 116%;
   width: 65%;
   resize: auto;

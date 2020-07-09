@@ -1,14 +1,12 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
-
 import "./Layout.css";
+
+import { Redirect } from "react-router-dom";
 
 function SidebarElement(props) {
   return (
-    <div className="SidebarElement">
-      <a className="title" href={props.link}>
-        {props.title}
-      </a>
+    <div className="sidebar-element">
+      <a href={props.link}>{props.title}</a>
     </div>
   );
 }
@@ -47,20 +45,20 @@ class Layout extends React.Component {
   }
   render() {
     return (
-      <div className="everything">
+      <div className="layout">
         {this.state.redirect}
-        <div className="line"></div>
         <div className="top-bar">
-          <div className="user-box">
-            <div className="user-id">
-              <div className="user-name" onClick={this.logOut}>
-                Log Out
-              </div>
-            </div>
+          <button className="logout" onClick={this.logOut}>
+            Log Out
+          </button>
+        </div>
+        <div className="main">
+          <Sidebar titles={this.props.titles} links={this.props.links} />
+          <div className="content">
+            <h1 class="title">{this.props.title}</h1>
+            <div class="center-content">{this.props.children}</div>
           </div>
         </div>
-        <Sidebar titles={this.props.titles} links={this.props.links} />
-        {this.props.children}
       </div>
     );
   }
@@ -71,7 +69,7 @@ var sleLinks = ["/yourshifts", "/openshifts", "/availability"];
 
 function SleLayout(props) {
   return (
-    <Layout titles={sleTitles} links={sleLinks}>
+    <Layout title={props.title} titles={sleTitles} links={sleLinks}>
       {props.children}
     </Layout>
   );
@@ -82,7 +80,11 @@ var supervisorLinks = ["/employees", "/cover", "/masterschedule"];
 
 function SupervisorLayout(props) {
   return (
-    <Layout titles={supervisorTitles} links={supervisorLinks}>
+    <Layout
+      title={props.title}
+      titles={supervisorTitles}
+      links={supervisorLinks}
+    >
       {props.children}
     </Layout>
   );

@@ -350,7 +350,7 @@ export default class OpenShiftsCal extends React.Component {
       "10:00pm",
       "10:30pm",
       "11:00pm",
-      "11:30pm",
+      "11:30pm"
     ];
 
     /* Displays the wkdays header.
@@ -423,7 +423,6 @@ export default class OpenShiftsCal extends React.Component {
     return (
       <div id="overall-container1">
         {this.state.redirect}
-        <h1 id="yourshifts1">Open Shifts</h1>
         <div id="schedule-container-st1">
           <div id="frontWords1">
             <button className="buttonLeftArrow">

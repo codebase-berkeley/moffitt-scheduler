@@ -217,7 +217,7 @@ export default class StaticCalendar extends React.Component {
       "10:00pm",
       "10:30pm",
       "11:00pm",
-      "11:30pm",
+      "11:30pm"
     ];
 
     /*Every 8th element should be an "item-hours" header,
@@ -289,7 +289,6 @@ export default class StaticCalendar extends React.Component {
     return (
       <div id="overall-container">
         {this.state.redirect}
-        <h1 id="yourshifts">Your Shifts</h1>
         <Modal
           // className="box"
           isOpen={this.state.modalIsOpen}

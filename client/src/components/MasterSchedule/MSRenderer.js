@@ -165,7 +165,6 @@ export default class MSRenderer extends React.Component {
     return (
       <div className="everythingMS">
         <div classname="masterScheduleAndButtons">
-          <div className="masterScheduleText">Master Schedule</div>
           <div className="secondRow">
             <div className="rightButtons">
               <button className={moffitt3} onClick={this.showMoffitt}>

@@ -9,7 +9,7 @@ class EachEmployee extends React.Component {
     super(props);
     this.state = {
       items: [{}],
-      redirect: null,
+      redirect: null
     };
     this.redirect = this.redirect.bind(this);
   }
@@ -56,7 +56,7 @@ class Employees extends React.Component {
     super(props);
     this.state = {
       items: [],
-      modalOpen: false,
+      modalOpen: false
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -70,19 +70,19 @@ class Employees extends React.Component {
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         if (jsonResponse.items === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
           return;
         }
         this.setState({
-          items: jsonResponse.items,
+          items: jsonResponse.items
         });
         console.log(this.state.items);
       });
@@ -94,13 +94,13 @@ class Employees extends React.Component {
       } else if (entry.moffitt3TrainingLevel === 2) {
         entry.moffitt3TrainingLevel = [
           <img src={starImage} />,
-          <img src={starImage} />,
+          <img src={starImage} />
         ];
       } else {
         entry.moffitt3TrainingLevel = [
           <img src={starImage} />,
           <img src={starImage} />,
-          <img src={starImage} />,
+          <img src={starImage} />
         ];
       }
       if (entry.moffitt4TrainingLevel === 1) {
@@ -108,13 +108,13 @@ class Employees extends React.Component {
       } else if (entry.moffitt4TrainingLevel === 2) {
         entry.moffitt4TrainingLevel = [
           <img src={starImage} />,
-          <img src={starImage} />,
+          <img src={starImage} />
         ];
       } else {
         entry.moffitt4TrainingLevel = [
           <img src={starImage} />,
           <img src={starImage} />,
-          <img src={starImage} />,
+          <img src={starImage} />
         ];
       }
       if (entry.doeTrainingLevel === 1) {
@@ -122,13 +122,13 @@ class Employees extends React.Component {
       } else if (entry.doeTrainingLevel === 2) {
         entry.doeTrainingLevel = [
           <img src={starImage} />,
-          <img src={starImage} />,
+          <img src={starImage} />
         ];
       } else {
         entry.doeTrainingLevel = [
           <img src={starImage} />,
           <img src={starImage} />,
-          <img src={starImage} />,
+          <img src={starImage} />
         ];
       }
       return (
@@ -159,13 +159,10 @@ class Employees extends React.Component {
   submitClick() {
     var firstName = document.getElementById("firstName");
     var firstNameText = firstName.value;
-    console.log(firstNameText);
     var lastName = document.getElementById("lastName");
     var lastNameText = lastName.value;
-    console.log(lastNameText);
     var email = document.getElementById("email");
     var emailText = email.value;
-    console.log(emailText);
     var moffitt3LevelNumber = parseInt(
       document.getElementById("moffitt3level").value
     );
@@ -177,7 +174,7 @@ class Employees extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         firstName: firstNameText,
@@ -185,13 +182,13 @@ class Employees extends React.Component {
         email: emailText,
         moffitt3Level: moffitt3LevelNumber,
         moffitt4Level: moffitt4LevelNumber,
-        doeLevel: doeLevelNumber,
-      }),
+        doeLevel: doeLevelNumber
+      })
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         console.log(jsonResponse);
       });
     this.closeModal();
@@ -205,15 +202,14 @@ class Employees extends React.Component {
         width: "500px",
         height: "400px",
         transform: "translate(-50%, -50%)",
-        overflow: 0,
-      },
+        overflow: 0
+      }
     };
 
     return (
       <div>
         <div className="topWordss">
           {this.state.redirect}
-          <h1 className="header">Employees</h1>
           <div className="AddEmployee">
             <button className="AddButton" onClick={this.openModal}>
               + Add Employee
