@@ -1,2 +1,3 @@
 insert into sle (name, email, is_sup) VALUES ('Nancy', 'nancy@berkeley.edu', true);
 
+insert into training (quizzes, main, moffitt3, moffitt4, psert, notes) VALUES (false, true, true, false, false, null);  
