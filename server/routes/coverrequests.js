@@ -181,26 +181,3 @@ router.get("/pendingcoverage", (req, res) => {
 });
 
 module.exports = router;
-//select * from sle as c, shifts as a left join coverrequests as b on a.shift_id = b.shift_id where a.cover_requested = 'true' and  c.id = a.sle_id and request_id is null;
-/*
-var database = {
-  items: [
-    {
-      desk: "Fourth Floor",
-      loc: "Moffitt",
-      date: "Wednesday, March 6, 2020",
-      time: "3:00 PM - 5:00 PM",
-      needname: "Broco Lee",
-      message: "Going home for the weekend",
-    },
-    {
-      desk: "Fourth Floor",
-      loc: "Moffitt",
-      date: "Thursday, March 7, 2020",
-      time: "3:00 PM - 5:00 PM",
-      needname: "Broco Lee",
-      message: "Need sleep. Very tired.",
-    },
-  ],
-};
-*/

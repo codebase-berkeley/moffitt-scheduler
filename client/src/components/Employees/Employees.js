@@ -49,10 +49,7 @@ var customStyles = {
 class Employees extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      employees: [],
-      modalOpen: false
-    };
+    this.state = { employees: [], modalOpen: false };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.makeEmployee = this.makeEmployee.bind(this);
@@ -66,8 +63,7 @@ class Employees extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("Employees", jsonResponse);
-        if (jsonResponse.items === null) {
+        if (jsonResponse.noAuth) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
           this.setState({ employees: jsonResponse.employees });

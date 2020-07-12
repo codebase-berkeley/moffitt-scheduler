@@ -1,0 +1,161 @@
+.sle-profile-page {
+  text-align: left;
+  padding-left: 50px;
+  padding-top: 20px;
+}
+
+.info h1 {
+  margin-left: -3px;
+}
+
+h2 {
+  font-size: 1.1em;
+}
+
+.info h3 {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 1em;
+}
+
+.train {
+  margin-top: 10px;
+}
+
+.train-cols {
+  display: flex;
+  margin-top: 3px;
+}
+
+.train-col input {
+  margin-top: 5px;
+  float: right;
+}
+
+.right {
+  margin-left: 20px;
+}
+
+.profile-buttons {
+  margin-top: 10px;
+  display: flex;
+}
+
+.profile-button {
+  background: #3f3cc8;
+  border-radius: 4px;
+  align-items: center;
+  border: 2px solid transparent;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 1em;
+  color: #ffffff;
+  border: 1px solid black;
+}
+
+.profile-button:hover {
+  background-color: #0f0524;
+  cursor: pointer;
+}
+
+.normal-view-buttons button {
+  width: 150px;
+  height: 30px;
+}
+
+.normal-view-buttons {
+  margin-top: 10px;
+}
+
+.normal-view-buttons button:first-child {
+  margin-right: 10px;
+}
+
+.user-profile-form,
+.user-password-form {
+  text-align: left;
+  width: 40%;
+}
+
+.user-profile-form input[type="text"],
+.user-password-form input[type="text"] {
+  width: 200px;
+  height: 20px;
+}
+
+.user-edit-buttons,
+.user-password-buttons {
+  margin-top: 10px;
+}
+
+.user-edit-button {
+  width: 145px;
+  height: 30px;
+}
+
+.user-password-button {
+  width: 180px;
+  height: 30px;
+}
+
+.user-edit-button:first-child,
+.user-password-button:first-child {
+  margin-right: 5px;
+}
+
+.sup-edit-view textarea {
+  width: 300px;
+  height: 50px;
+}
+
+.sup-edit-view h2 {
+  margin-top: 5px;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+.yes-label {
+  margin-right: 5px;
+}
+
+.sup-edit-buttons button {
+  width: 150px;
+}
+
+.sup-edit-buttons button:first-child {
+  margin-right: 5px;
+}
+
+.sup-edit-button {
+  width: 250px !important;
+}
+
+.delete-button {
+  background-color: #ed0c0c;
+  color: white;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid black;
+  font-size: 1em;
+  margin-top: 5px;
+}
+
+.delete-button:hover {
+  background-color: #940101;
+  cursor: pointer;
+}
+
+.user-delete {
+  width: 295px;
+}
+
+.sup-sle-delete {
+  width: 305px !important;
+}
+
+input[type="checkbox"] {
+  margin-left: 5px;
+}

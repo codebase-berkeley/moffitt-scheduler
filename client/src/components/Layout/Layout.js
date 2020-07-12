@@ -11,14 +11,25 @@ function SidebarElement(props) {
   );
 }
 
-function Sidebar(props) {
-  var elements = [];
-  for (var i = 0; i < props.titles.length; i++) {
-    elements.push(
-      <SidebarElement key={i} title={props.titles[i]} link={props.links[i]} />
-    );
-  }
-  return <div class="sidebar">{elements}</div>;
+function SleSidebar(props) {
+  return (
+    <div class="sidebar">
+      <SidebarElement key={0} title="Your Shifts" link="/yourshifts" />
+      <SidebarElement key={1} title="Open Shifts" link="/openshifts" />
+      <SidebarElement key={2} title="Availability" link="/availability" />
+      <SidebarElement key={3} title="Profile" link="/sleprofile" />
+    </div>
+  );
+}
+
+function SupervisorSidebar(props) {
+  return (
+    <div class="sidebar">
+      <SidebarElement key={0} title="Employees" link="/employees" />
+      <SidebarElement key={1} title="Cover Requests" link="/cover" />
+      <SidebarElement key={2} title="Master Schedule" link="/masterschedule" />
+    </div>
+  );
 }
 
 class Layout extends React.Component {
@@ -44,6 +55,13 @@ class Layout extends React.Component {
       });
   }
   render() {
+    var sidebar = null;
+    if (this.props.sle) {
+      sidebar = <SleSidebar />;
+    } else {
+      sidebar = <SupervisorSidebar />;
+    }
+
     return (
       <div className="layout">
         {this.state.redirect}
@@ -53,7 +71,7 @@ class Layout extends React.Component {
           </button>
         </div>
         <div className="main">
-          <Sidebar titles={this.props.titles} links={this.props.links} />
+          {sidebar}
           <div className="content">
             <h1 class="title">{this.props.title}</h1>
             <div class="center-content">{this.props.children}</div>
@@ -64,27 +82,17 @@ class Layout extends React.Component {
   }
 }
 
-var sleTitles = ["Your Shifts", "Open Shifts", "Availability"];
-var sleLinks = ["/yourshifts", "/openshifts", "/availability"];
-
 function SleLayout(props) {
   return (
-    <Layout title={props.title} titles={sleTitles} links={sleLinks}>
+    <Layout sle={true} title={props.title}>
       {props.children}
     </Layout>
   );
 }
 
-var supervisorTitles = ["Employees", "Cover Requests", "Master Schedule"];
-var supervisorLinks = ["/employees", "/cover", "/masterschedule"];
-
 function SupervisorLayout(props) {
   return (
-    <Layout
-      title={props.title}
-      titles={supervisorTitles}
-      links={supervisorLinks}
-    >
+    <Layout sle={false} title={props.title}>
       {props.children}
     </Layout>
   );

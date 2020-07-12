@@ -10,51 +10,6 @@ export default function SleCalendar(props) {
       <p>I'm a paragraph!</p>
       <p>I'm a paragraph!</p>
       <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
-      <p>I'm a paragraph!</p>
     </SleLayout>
   );
 }

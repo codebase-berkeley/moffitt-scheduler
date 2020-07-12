@@ -282,13 +282,9 @@
   text-align: right;
 }
 
-label {
+.everythingMS label {
   display: inline-flex;
   width: 25%;
   margin-right: 4%;
   font-size: 11px;
-}
-
-input {
-  margin-left: 5px;
 }

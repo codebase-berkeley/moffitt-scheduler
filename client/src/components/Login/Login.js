@@ -58,11 +58,10 @@ class Login extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("loggging in jsonResponse", jsonResponse);
         if (jsonResponse.isSle) {
+          document.cookie += "id=" + jsonResponse.id;
           this.setState({ redirect: <Redirect push to="/yourshifts" /> });
         } else if (jsonResponse.isSupervisor) {
-          console.log("we are trying right?");
           this.setState({ redirect: <Redirect push to="/masterschedule" /> });
         } else {
           this.setState({ isError: true });

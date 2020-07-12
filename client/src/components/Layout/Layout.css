@@ -2,14 +2,19 @@
   margin: 0;
 }
 
+html,
 body {
   height: 100%;
   width: 100%;
   font-family: "Open Sans", sans-serif;
 }
 
+.layout {
+  height: 100%;
+}
+
 .top-bar {
-  height: 100px;
+  height: 20%;
   background-color: white;
   display: flex;
 }
@@ -29,8 +34,14 @@ body {
   text-decoration: underline;
 }
 
+.logout:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .main {
   width: 100%;
+  min-height: 80%;
   display: flex;
 }
 

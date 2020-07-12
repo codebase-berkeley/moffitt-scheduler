@@ -10,6 +10,8 @@ import SleYourShifts from "./components/Sle/SleYourShifts";
 import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
 import SupervisorCover from "./components/Supervisor/SupervisorCover";
 import MasterSchedule from "./components/Supervisor/SupervisorMS";
+import SleProfile from "./components/Sle/SleProfile";
+import SupervisorSleProfile from "./components/Supervisor/SupervisorSleProfile";
 
 import "./App.css";
 import SleOpenShifts from "./components/Sle/SleOpenShifts";
@@ -29,6 +31,12 @@ class App extends React.Component {
           <Route exact path="/employees" component={SupervisorEmployees} />
           <Route exact path="/cover" component={SupervisorCover} />
           <Route exact path="/masterschedule" component={MasterSchedule} />
+          <Route exact path="/sleprofile" component={SleProfile} />
+          <Route
+            exact
+            path="/supsleprofile/:userId"
+            component={SupervisorSleProfile}
+          />
         </Switch>
       </BrowserRouter>
     );
