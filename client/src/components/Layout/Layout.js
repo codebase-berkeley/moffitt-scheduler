@@ -66,7 +66,7 @@ class Layout extends React.Component {
       <div className="layout">
         {this.state.redirect}
         <div className="top-bar">
-          <button className="logout" onClick={this.logOut}>
+          <button className="logout" id="logout" onClick={this.logOut}>
             Log Out
           </button>
         </div>

@@ -18,12 +18,22 @@ class Profile extends React.Component {
       quizzes: null,
       sup_view: null,
       editing: false,
-      change_password: false
+      change_password: false,
+      wrong_password: false,
+      redirect: null
     };
+
+    this.setName = this.setName.bind(this);
+    this.setEmail = this.setEmail.bind(this);
 
     this.normalView = this.normalView.bind(this);
     this.getFixedCheckbox = this.getFixedCheckbox.bind(this);
     this.getRegularCheckbox = this.getRegularCheckbox.bind(this);
+
+    this.userEditClick = this.userEditClick.bind(this);
+    this.supEditClick = this.supEditClick.bind(this);
+    this.userPasswordClick = this.userPasswordClick.bind(this);
+    this.deleteSelf = this.deleteSelf.bind(this);
   }
 
   componentDidMount() {
@@ -63,9 +73,9 @@ class Profile extends React.Component {
 
   getRegularCheckbox(name) {
     if (this.state[name]) {
-      return <input class={name} type="checkbox" checked />;
+      return <input class={name} id={name} type="checkbox" checked />;
     }
-    return <input class={name} type="checkbox" />;
+    return <input class={name} id={name} type="checkbox" />;
   }
 
   normalView() {
@@ -122,26 +132,128 @@ class Profile extends React.Component {
     );
   }
 
+  setName(e) {
+    this.setState({ name: e.target.value });
+  }
+
+  setEmail(e) {
+    this.setState({ email: e.target.value });
+  }
+
+  userEditClick() {
+    fetch("/sleedit", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({ name: this.state.name, email: this.state.email })
+    }).then(response => {
+      this.setState({ editing: false });
+    });
+  }
+
+  supEditClick() {
+    var workleader =
+      document.querySelector('input[name="workleader"]:checked').value ===
+      "yes";
+
+    var quizzes = document.getElementById("quizzes").checked;
+    var maindesk = document.getElementById("maindesk").checked;
+    var moffitt3 = document.getElementById("moffitt3").checked;
+    var moffitt4 = document.getElementById("moffitt4").checked;
+    var psert = document.getElementById("psert").checked;
+
+    var notes = document.getElementById("notes").value;
+
+    fetch("/supeditsle", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        workleader: workleader,
+        quizzes: quizzes,
+        maindesk: maindesk,
+        moffitt3: moffitt3,
+        moffitt4: moffitt4,
+        psert: psert,
+        notes: notes
+      })
+    }).then(response => {
+      this.setState({ editing: false });
+    });
+  }
+
+  userPasswordClick() {
+    var password = document.getElementById("user-password").value;
+    var confirm = document.getElementById("user-confirm").value;
+
+    if (password !== confirm) {
+      this.setState({ wrong_password: true });
+      return;
+    }
+
+    fetch("/changepassword", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({ password: password })
+    }).then(_ => {
+      this.setState({ change_password: false, wrong_password: false });
+    });
+  }
+
+  deleteSelf() {
+    fetch("/deleteself", { method: "POST", credentials: "include" }).then(_ => {
+      this.setState({ redirect: <Redirect push to="/login" /> });
+    });
+  }
+
   userEditView() {
     return (
       <div class="sle-profile-page">
+        {this.state.redirect}
         <h1>Edit Profile</h1>
         <table class="user-profile-form">
           <tr>
             <td>Name:</td>
             <td>
-              <input type="text" name="name" value={this.state.name} />
+              <input
+                id="user-name"
+                type="text"
+                name="name"
+                onChange={this.setName}
+                value={this.state.name}
+              />
             </td>
           </tr>
           <tr>
             <td>Email:</td>
             <td>
-              <input type="text" name="email" value={this.state.email} />
+              <input
+                id="user-email"
+                type="text"
+                name="email"
+                onChange={this.setEmail}
+                value={this.state.email}
+              />
             </td>
           </tr>
         </table>
         <div class="user-edit-buttons">
-          <button class="profile-button user-edit-button">Save Changes</button>
+          <button
+            class="profile-button user-edit-button"
+            onClick={this.userEditClick}
+          >
+            Save Changes
+          </button>
           <button
             class="profile-button user-edit-button"
             onClick={() => this.setState({ editing: false })}
@@ -149,7 +261,9 @@ class Profile extends React.Component {
             Cancel
           </button>
           <br />
-          <button class="delete-button user-delete">Delete SLE</button>
+          <button class="delete-button user-delete" onClick={this.deleteSelf}>
+            Delete SLE
+          </button>
         </div>
       </div>
     );
@@ -187,10 +301,12 @@ class Profile extends React.Component {
         </div>
         <div class="notes">
           <h2>Notes:</h2>
-          <textarea name="notes" value={this.state.notes} />
+          <textarea name="notes" id="notes" value={this.state.notes} />
         </div>
         <div class="sup-edit-buttons">
-          <button class="profile-button">Save Changes</button>
+          <button onClick={this.supEditClick} class="profile-button">
+            Save Changes
+          </button>
           <button
             class="profile-button"
             onClick={() => this.setState({ editing: false })}
@@ -215,7 +331,7 @@ class Profile extends React.Component {
                 <label>New Password:</label>
               </td>
               <td>
-                <input name="password" type="password" />
+                <input name="password" type="password" id="user-password" />
               </td>
             </tr>
             <tr>
@@ -223,13 +339,16 @@ class Profile extends React.Component {
                 <label>Confirm Password:</label>
               </td>
               <td>
-                <input name="confirm" type="password" />
+                <input name="confirm" type="password" id="user-confirm" />
               </td>
             </tr>
           </tbody>
         </table>
         <div class="user-password-buttons">
-          <button class="profile-button user-password-button">
+          <button
+            class="profile-button user-password-button"
+            onClick={this.userPasswordClick}
+          >
             Save Password
           </button>
           <button

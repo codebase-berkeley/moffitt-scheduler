@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const crypto = require("crypto");
 
 var pool = require("../db/db");
 
@@ -52,3 +53,71 @@ function profile(id, is_sup, cb) {
     }
   );
 }
+
+router.post("/sleedit", (req, res) => {
+  if (!req.user) {
+    return res.json({ noAuth: true });
+  }
+
+  pool.query(
+    "UPDATE sle set name=$1, email=$2 WHERE id=$3",
+    [req.body.name, req.body.email, req.user.id],
+    (err, _) => {
+      if (err) {
+        throw err;
+      }
+
+      return res.json({ successful: true });
+    }
+  );
+});
+
+router.post("/changepassword", (req, res) => {
+  if (!req.user) {
+    return res.json({ noAuth: true });
+  }
+
+  var salt = crypto
+    .randomBytes(256)
+    .toString("base64")
+    .substring(0, 39);
+  var hashedPwd = crypto
+    .pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`)
+    .toString(`hex`)
+    .substring(0, 39);
+
+  pool.query(
+    "UPDATE sle SET salt=$1, password=$2 WHERE id=$3",
+    [salt, hashedPwd, req.user.id],
+    (error, _) => {
+      if (error) {
+        throw error;
+      }
+
+      return res.json({ successful: true });
+    }
+  );
+});
+
+router.post("/deleteself", (req, res) => {
+  if (!req.user) {
+    return res.json({ noAuth: true });
+  }
+
+  var userId = req.user.id;
+
+  req.logOut();
+  res.clearCookie("connect.sid");
+
+  pool.query("DELETE FROM sle WHERE id=$1", [userId], (error, _) => {
+    if (error) {
+      throw error;
+    }
+
+    return res.json({ successful: true });
+  });
+});
+
+router.post("/supeditsle", (req, res) => {
+  console.log("SUPEDIT:", req.body);
+});

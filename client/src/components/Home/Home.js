@@ -10,7 +10,7 @@ class Home extends React.Component {
   }
 
   render() {
-    return <h1>{this.state.redirect}Loading...</h1>;
+    return this.state.redirect;
   }
   componentDidMount() {
     fetch("/homepage")
