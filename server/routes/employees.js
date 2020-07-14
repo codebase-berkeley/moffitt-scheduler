@@ -7,13 +7,12 @@ var pool = require("../db/db");
 module.exports = router;
 
 router.get("/employees", (req, res) => {
-  console.log("user", req.user);
   if (!req.user || !req.user.is_sup) {
     return res.json({ noAuth: true });
   }
 
   pool.query(
-    `SELECT name, email, quizzes, main, moffitt3, moffitt4, psert, notes, workleader FROM sle INNER JOIN training ON training=training.id WHERE is_sup = false;`,
+    `SELECT sle.id, name, email, quizzes, maindesk, moffitt3, moffitt4, psert, notes, workleader FROM sle INNER JOIN training ON training=training.id WHERE is_sup = false ORDER BY name`,
     (error, result) => {
       if (error) {
         throw error;
@@ -47,12 +46,35 @@ function profile(id, is_sup, cb) {
       if (error) {
         throw error;
       }
+
+      if (result.rows.length === 0) {
+        cb({});
+      }
+
       var employee = result.rows[0];
       employee.sup_view = is_sup;
       cb(employee);
     }
   );
 }
+
+router.get("/supprofile", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
+  pool.query(
+    "SELECT name, email FROM sle WHERE id=$1",
+    [req.user.id],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+
+      return res.json(result.rows[0]);
+    }
+  );
+});
 
 router.post("/sleedit", (req, res) => {
   if (!req.user) {
@@ -118,6 +140,58 @@ router.post("/deleteself", (req, res) => {
   });
 });
 
+router.post("/supdeletesle", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
+  console.log(req.body.id);
+
+  pool.query("DELETE FROM sle WHERE id=$1", [req.body.id], (error, _) => {
+    if (error) {
+      throw error;
+    }
+
+    return res.json({ successful: true });
+  });
+});
+
 router.post("/supeditsle", (req, res) => {
-  console.log("SUPEDIT:", req.body);
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
+  console.log("in supeditsle", req.user.id);
+
+  pool.query(
+    "SELECT training FROM sle WHERE id=$1",
+    [req.body.id],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+
+      var training_id = result.rows[0].training;
+      pool.query(
+        "UPDATE training set quizzes=$1, maindesk=$2, moffitt3=$3, moffitt4=$4, psert=$5, notes=$6, workleader=$7 WHERE id=$8",
+        [
+          req.body.quizzes,
+          req.body.maindesk,
+          req.body.moffitt3,
+          req.body.moffitt4,
+          req.body.psert,
+          req.body.notes,
+          req.body.workleader,
+          training_id
+        ],
+        (error, _) => {
+          if (error) {
+            throw error;
+          }
+
+          return res.json({ successful: true });
+        }
+      );
+    }
+  );
 });

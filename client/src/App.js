@@ -11,6 +11,7 @@ import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
 import SupervisorCover from "./components/Supervisor/SupervisorCover";
 import MasterSchedule from "./components/Supervisor/SupervisorMS";
 import SleProfile from "./components/Sle/SleProfile";
+import SupProfile from "./components/Supervisor/SupervisorProfile";
 import SupervisorSleProfile from "./components/Supervisor/SupervisorSleProfile";
 
 import "./App.css";
@@ -32,6 +33,7 @@ class App extends React.Component {
           <Route exact path="/cover" component={SupervisorCover} />
           <Route exact path="/masterschedule" component={MasterSchedule} />
           <Route exact path="/sleprofile" component={SleProfile} />
+          <Route exact path="/supprofile" component={SupProfile} />
           <Route
             exact
             path="/supsleprofile/:userId"

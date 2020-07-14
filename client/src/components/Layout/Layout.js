@@ -28,6 +28,7 @@ function SupervisorSidebar(props) {
       <SidebarElement key={0} title="Employees" link="/employees" />
       <SidebarElement key={1} title="Cover Requests" link="/cover" />
       <SidebarElement key={2} title="Master Schedule" link="/masterschedule" />
+      <SidebarElement key={3} title="Profile" link="/supprofile" />
     </div>
   );
 }

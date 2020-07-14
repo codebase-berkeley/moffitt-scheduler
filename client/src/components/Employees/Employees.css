@@ -36,7 +36,7 @@
   color: white;
 }
 
-.main-badge {
+.maindesk-badge {
   background-color: #3d74cc;
 }
 
@@ -72,4 +72,12 @@
   font-weight: normal;
   font-style: italic;
   font-size: 0.8em;
+}
+
+.employee-link {
+  text-decoration: none;
+}
+
+.employee-link:hover {
+  text-decoration: none;
 }

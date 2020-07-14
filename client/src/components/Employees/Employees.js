@@ -21,17 +21,19 @@ function Employee(props) {
   }
 
   return (
-    <div class="employee">
-      <div class="identity">
-        <h2>
-          {props.name}
-          {workleader}
-        </h2>
-        <h3 class="email">{props.email}</h3>
-      </div>
+    <a class="employee-link" href={"/supsleprofile/" + props.id}>
+      <div class="employee">
+        <div class="identity">
+          <h2>
+            {props.name}
+            {workleader}
+          </h2>
+          <h3 class="email">{props.email}</h3>
+        </div>
 
-      <div class="badges">{trainings}</div>
-    </div>
+        <div class="badges">{trainings}</div>
+      </div>
+    </a>
   );
 }
 
@@ -76,8 +78,8 @@ class Employees extends React.Component {
     if (e.quizzes) {
       trainings.push("Quizzes");
     }
-    if (e.main) {
-      trainings.push("Main");
+    if (e.maindesk) {
+      trainings.push("Main Desk");
     }
     if (e.moffitt3) {
       trainings.push("Moffitt 3");
@@ -91,6 +93,7 @@ class Employees extends React.Component {
 
     return (
       <Employee
+        id={e.id}
         name={e.name}
         email={e.email}
         workleader={e.workleader}

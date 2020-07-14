@@ -25,6 +25,9 @@ class Profile extends React.Component {
 
     this.setName = this.setName.bind(this);
     this.setEmail = this.setEmail.bind(this);
+    this.setNotes = this.setNotes.bind(this);
+    this.setWorkleader = this.setWorkleader.bind(this);
+    this.setTrainings = this.setTrainings.bind(this);
 
     this.normalView = this.normalView.bind(this);
     this.getFixedCheckbox = this.getFixedCheckbox.bind(this);
@@ -34,6 +37,7 @@ class Profile extends React.Component {
     this.supEditClick = this.supEditClick.bind(this);
     this.userPasswordClick = this.userPasswordClick.bind(this);
     this.deleteSelf = this.deleteSelf.bind(this);
+    this.supDeleteSle = this.supDeleteSle.bind(this);
   }
 
   componentDidMount() {
@@ -66,24 +70,37 @@ class Profile extends React.Component {
 
   getFixedCheckbox(name) {
     if (this.state[name]) {
-      return <input class={name} type="checkbox" checked disabled="disabled" />;
+      return (
+        <input
+          class={name}
+          type="checkbox"
+          defaultChecked
+          disabled="disabled"
+        />
+      );
     }
     return <input class={name} type="checkbox" disabled="disabled" />;
   }
 
   getRegularCheckbox(name) {
-    if (this.state[name]) {
-      return <input class={name} id={name} type="checkbox" checked />;
-    }
-    return <input class={name} id={name} type="checkbox" />;
+    return (
+      <input
+        name={name}
+        onChange={this.setTrainings}
+        class={name}
+        id={name}
+        type="checkbox"
+        checked={this.state[name]}
+      />
+    );
   }
 
   normalView() {
     var workleader = null;
     if (this.state.workleader) {
-      workleader = <h3>Not a workleader</h3>;
-    } else {
       workleader = <h3>Workleader</h3>;
+    } else {
+      workleader = <h3>Not a workleader</h3>;
     }
 
     return (
@@ -140,6 +157,26 @@ class Profile extends React.Component {
     this.setState({ email: e.target.value });
   }
 
+  setNotes(e) {
+    this.setState({ notes: e.value });
+  }
+
+  setWorkleader(e) {
+    if (e.target.value === "yes") {
+      this.setState({ workleader: true });
+    } else {
+      this.setState({ workleader: false });
+    }
+  }
+
+  setTrainings(e) {
+    var name = e.target.name;
+    var isChecked = e.target.checked;
+    var obj = {};
+    obj[name] = isChecked;
+
+    this.setState(obj);
+  }
   userEditClick() {
     fetch("/sleedit", {
       method: "POST",
@@ -165,7 +202,8 @@ class Profile extends React.Component {
     var moffitt4 = document.getElementById("moffitt4").checked;
     var psert = document.getElementById("psert").checked;
 
-    var notes = document.getElementById("notes").value;
+    var notes = document.getElementById("profile-notes").value;
+    this.setState({ notes: notes });
 
     fetch("/supeditsle", {
       method: "POST",
@@ -175,6 +213,7 @@ class Profile extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        id: this.props.userId,
         workleader: workleader,
         quizzes: quizzes,
         maindesk: maindesk,
@@ -183,7 +222,7 @@ class Profile extends React.Component {
         psert: psert,
         notes: notes
       })
-    }).then(response => {
+    }).then(_ => {
       this.setState({ editing: false });
     });
   }
@@ -214,6 +253,22 @@ class Profile extends React.Component {
     fetch("/deleteself", { method: "POST", credentials: "include" }).then(_ => {
       this.setState({ redirect: <Redirect push to="/login" /> });
     });
+  }
+
+  supDeleteSle() {
+    console.log("in sup delete");
+    fetch("/supdeletesle", {
+      method: "POST",
+      credentials: "include",
+      body: { id: this.props.userId }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(_ => {
+        console.log(_);
+        this.setState({ redirect: <Redirect to="/employees" /> });
+      });
   }
 
   userEditView() {
@@ -269,23 +324,58 @@ class Profile extends React.Component {
     );
   }
 
+  getWorkleaderButtons() {
+    var yesButton = null;
+    var noButton = null;
+
+    if (this.state.workleader) {
+      yesButton = (
+        <input
+          type="radio"
+          name="workleader"
+          id="workleader-yes"
+          value="yes"
+          defaultChecked
+        />
+      );
+
+      noButton = (
+        <input type="radio" name="workleader" id="workleader-no" value="no" />
+      );
+    } else {
+      yesButton = (
+        <input type="radio" name="workleader" id="workleader-yes" value="yes" />
+      );
+
+      noButton = (
+        <input
+          type="radio"
+          name="workleader"
+          id="workleader-no"
+          value="no"
+          defaultChecked
+        />
+      );
+    }
+
+    return (
+      <div onChange={this.setWorkleader} class="workleader">
+        <h2>Workleader:</h2>
+        {yesButton}
+        <label class="yes-label">Yes</label>
+        {noButton}
+        <label>No</label>
+      </div>
+    );
+  }
+
   supEditView() {
     return (
       <div class="sle-profile-page sup-edit-view">
-        <h1>Edit Training</h1>
-        <div class="workleader">
-          <h2>Workleader:</h2>
-          <input
-            type="radio"
-            name="workleader"
-            id="workleader-yes"
-            value="yes"
-          />
-          <label class="yes-label">Yes</label>
-          <input type="radio" name="workleader" id="workleader-no" value="no" />
-          <label>No</label>
-        </div>
+        {this.state.redirect}
+        <h1>Edit Training for {this.state.name}</h1>
         <div>
+          {this.getWorkleaderButtons()}
           <h2>Training information:</h2>
           <div class="train-cols">
             <div class="train-col">
@@ -301,7 +391,12 @@ class Profile extends React.Component {
         </div>
         <div class="notes">
           <h2>Notes:</h2>
-          <textarea name="notes" id="notes" value={this.state.notes} />
+          <textarea
+            name="notes"
+            id="profile-notes"
+            onChange={this.setNotes}
+            value={this.state.notes}
+          />
         </div>
         <div class="sup-edit-buttons">
           <button onClick={this.supEditClick} class="profile-button">
@@ -314,7 +409,12 @@ class Profile extends React.Component {
             Cancel
           </button>
           <br />
-          <button className="delete-button sup-sle-delete">Delete SLE</button>
+          <button
+            onClick={this.supDeleteSle}
+            className="delete-button sup-sle-delete"
+          >
+            Delete SLE
+          </button>
         </div>
       </div>
     );
@@ -323,6 +423,7 @@ class Profile extends React.Component {
   changePassword() {
     return (
       <div class="sle-profile-page">
+        {this.state.redirect}
         <h1>Change Password</h1>
         <table class="user-password-form">
           <tbody>
