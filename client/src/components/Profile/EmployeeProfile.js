@@ -2,6 +2,18 @@ import React from "react";
 
 import "./EmployeeProfile.css";
 import { Redirect } from "react-router-dom";
+import Modal from "react-modal";
+
+var modalStyles = {
+  content: {
+    top: "200px",
+    left: "50%",
+    width: "400px",
+    height: "200px",
+    transform: "translate(-50%, -50%)",
+    overflow: 0
+  }
+};
 
 class Profile extends React.Component {
   constructor(props) {
@@ -20,7 +32,10 @@ class Profile extends React.Component {
       editing: false,
       change_password: false,
       wrong_password: false,
-      redirect: null
+      self_modal: false,
+      sle_modal: false,
+      redirect: null,
+      dif_pwd: null
     };
 
     this.setName = this.setName.bind(this);
@@ -38,6 +53,10 @@ class Profile extends React.Component {
     this.userPasswordClick = this.userPasswordClick.bind(this);
     this.deleteSelf = this.deleteSelf.bind(this);
     this.supDeleteSle = this.supDeleteSle.bind(this);
+
+    this.closeSelfModal = this.closeSelfModal.bind(this);
+    this.closeSleModal = this.closeSleModal.bind(this);
+    this.getDeleteSelfModal = this.getDeleteSelfModal.bind(this);
   }
 
   componentDidMount() {
@@ -92,60 +111,6 @@ class Profile extends React.Component {
         type="checkbox"
         checked={this.state[name]}
       />
-    );
-  }
-
-  normalView() {
-    var workleader = null;
-    if (this.state.workleader) {
-      workleader = <h3>Workleader</h3>;
-    } else {
-      workleader = <h3>Not a workleader</h3>;
-    }
-
-    return (
-      <div class="sle-profile-page">
-        <div class="info">
-          <h1>{this.state.name}</h1>
-          <h2>{this.state.email}</h2>
-          {workleader}
-          <p>Notes: {this.state.notes}</p>
-        </div>
-        <div class="train">
-          <h2>Training information:</h2>
-          <div class="train-cols">
-            <div class="train-col">
-              Desk Quizzes {this.getFixedCheckbox("quizzes")} <br />
-              Main Desk {this.getFixedCheckbox("maindesk")} <br />
-              Moffitt 3 {this.getFixedCheckbox("moffitt3")} <br />
-            </div>
-            <div class="train-col right">
-              Moffitt 4 {this.getFixedCheckbox("moffitt4")} <br />
-              P-SERT {this.getFixedCheckbox("psert")}
-            </div>
-          </div>
-        </div>
-
-        <div class="normal-view-buttons">
-          <button
-            class={
-              "profile-button " +
-              (this.state.sup_view ? "sup-edit-button" : "none")
-            }
-            onClick={() => this.setState({ editing: true })}
-          >
-            Edit Profile
-          </button>
-          {!this.state.sup_view && (
-            <button
-              class="profile-button"
-              onClick={() => this.setState({ change_password: true })}
-            >
-              Change Password
-            </button>
-          ) /* Only the employee can change their password */}
-        </div>
-      </div>
     );
   }
 
@@ -232,8 +197,15 @@ class Profile extends React.Component {
     var confirm = document.getElementById("user-confirm").value;
 
     if (password !== confirm) {
-      this.setState({ wrong_password: true });
+      var errorBox = (
+        <div class="error-pwd">
+          <p>The passwords you entered are not the same.</p>
+        </div>
+      );
+      this.setState({ dif_pwd: errorBox });
       return;
+    } else {
+      this.setState({ dif_pwd: null });
     }
 
     fetch("/changepassword", {
@@ -256,69 +228,189 @@ class Profile extends React.Component {
   }
 
   supDeleteSle() {
-    console.log("in sup delete");
     fetch("/supdeletesle", {
       method: "POST",
       credentials: "include",
-      body: { id: this.props.userId }
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id: this.props.userId })
     })
       .then(response => {
         return response.json();
       })
       .then(_ => {
-        console.log(_);
         this.setState({ redirect: <Redirect to="/employees" /> });
       });
+  }
+
+  normalView() {
+    var workleader = null;
+    if (this.state.workleader) {
+      workleader = <h3>Workleader</h3>;
+    } else {
+      workleader = <h3>Not a workleader</h3>;
+    }
+
+    return (
+      <div class="sle-profile-page">
+        <div class="info">
+          <h1>{this.state.name}</h1>
+          <h2>{this.state.email}</h2>
+          {workleader}
+          <p>Notes: {this.state.notes}</p>
+        </div>
+        <div class="train">
+          <h2>Training information:</h2>
+          <div class="train-cols">
+            <div class="train-col">
+              Desk Quizzes {this.getFixedCheckbox("quizzes")} <br />
+              Main Desk {this.getFixedCheckbox("maindesk")} <br />
+              Moffitt 3 {this.getFixedCheckbox("moffitt3")} <br />
+            </div>
+            <div class="train-col right">
+              Moffitt 4 {this.getFixedCheckbox("moffitt4")} <br />
+              P-SERT {this.getFixedCheckbox("psert")}
+            </div>
+          </div>
+        </div>
+
+        <div class="normal-view-buttons">
+          <button
+            class={
+              "profile-button " +
+              (this.state.sup_view ? "sup-edit-button" : "none")
+            }
+            onClick={() => this.setState({ editing: true })}
+          >
+            Edit Profile
+          </button>
+          {!this.state.sup_view && (
+            <button
+              class="profile-button"
+              onClick={() => this.setState({ change_password: true })}
+            >
+              Change Password
+            </button>
+          ) /* Only the employee can change their password */}
+        </div>
+      </div>
+    );
+  }
+
+  closeSelfModal() {
+    this.setState({ self_modal: false });
+  }
+
+  closeSleModal() {
+    this.setState({ sle_modal: false });
+  }
+
+  getDeleteSelfModal() {
+    return (
+      <Modal
+        isOpen={this.state.self_modal}
+        onRequestClose={this.closeSelfModal}
+        style={modalStyles}
+        class="self-modal"
+      >
+        <h2>Are you sure you want to delete your account?</h2>
+        <h2>This is a permanent operation.</h2>
+        <div class="modal-buttons">
+          <button
+            class="profile-button"
+            onClick={() => this.setState({ self_modal: false })}
+          >
+            No
+          </button>
+          <button class="profile-button" onClick={this.deleteSelf}>
+            Yes
+          </button>
+        </div>
+      </Modal>
+    );
+  }
+
+  getDeleteSleModal() {
+    return (
+      <Modal
+        isOpen={this.state.sle_modal}
+        onRequestClose={this.closeSleModal}
+        style={modalStyles}
+        class="self-modal"
+      >
+        <h2>Are you sure you want to delete this SLE account?</h2>
+        <h2>This is a permanent operation.</h2>
+        <div class="modal-buttons">
+          <button
+            class="profile-button"
+            onClick={() => this.setState({ sle_modal: false })}
+          >
+            No
+          </button>
+          <button class="profile-button" onClick={this.supDeleteSle}>
+            Yes
+          </button>
+        </div>
+      </Modal>
+    );
   }
 
   userEditView() {
     return (
       <div class="sle-profile-page">
         {this.state.redirect}
-        <h1>Edit Profile</h1>
-        <table class="user-profile-form">
-          <tr>
-            <td>Name:</td>
-            <td>
-              <input
-                id="user-name"
-                type="text"
-                name="name"
-                onChange={this.setName}
-                value={this.state.name}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Email:</td>
-            <td>
-              <input
-                id="user-email"
-                type="text"
-                name="email"
-                onChange={this.setEmail}
-                value={this.state.email}
-              />
-            </td>
-          </tr>
-        </table>
-        <div class="user-edit-buttons">
-          <button
-            class="profile-button user-edit-button"
-            onClick={this.userEditClick}
-          >
-            Save Changes
-          </button>
-          <button
-            class="profile-button user-edit-button"
-            onClick={() => this.setState({ editing: false })}
-          >
-            Cancel
-          </button>
-          <br />
-          <button class="delete-button user-delete" onClick={this.deleteSelf}>
-            Delete SLE
-          </button>
+        {this.getDeleteSelfModal()}
+        <div>
+          <h1>Edit Profile</h1>
+          <table class="user-profile-form">
+            <tr>
+              <td>Name:</td>
+              <td>
+                <input
+                  id="user-name"
+                  type="text"
+                  name="name"
+                  onChange={this.setName}
+                  value={this.state.name}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>
+                <input
+                  id="user-email"
+                  type="text"
+                  name="email"
+                  onChange={this.setEmail}
+                  value={this.state.email}
+                />
+              </td>
+            </tr>
+          </table>
+          <div class="user-edit-buttons">
+            <button
+              class="profile-button user-edit-button"
+              onClick={this.userEditClick}
+            >
+              Save Changes
+            </button>
+            <button
+              class="profile-button user-edit-button"
+              onClick={() => this.setState({ editing: false })}
+            >
+              Cancel
+            </button>
+            <br />
+            <button
+              class="delete-button user-delete"
+              onClick={() => this.setState({ self_modal: true })}
+            >
+              Delete SLE
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -373,6 +465,7 @@ class Profile extends React.Component {
     return (
       <div class="sle-profile-page sup-edit-view">
         {this.state.redirect}
+        {this.getDeleteSleModal()}
         <h1>Edit Training for {this.state.name}</h1>
         <div>
           {this.getWorkleaderButtons()}
@@ -410,7 +503,7 @@ class Profile extends React.Component {
           </button>
           <br />
           <button
-            onClick={this.supDeleteSle}
+            onClick={() => this.setState({ sle_modal: true })}
             className="delete-button sup-sle-delete"
           >
             Delete SLE
@@ -425,6 +518,7 @@ class Profile extends React.Component {
       <div class="sle-profile-page">
         {this.state.redirect}
         <h1>Change Password</h1>
+        {this.state.dif_pwd}
         <table class="user-password-form">
           <tbody>
             <tr>
@@ -454,7 +548,9 @@ class Profile extends React.Component {
           </button>
           <button
             class="profile-button user-password-button"
-            onClick={() => this.setState({ change_password: false })}
+            onClick={() =>
+              this.setState({ change_password: false, dif_pwd: null })
+            }
           >
             Cancel
           </button>

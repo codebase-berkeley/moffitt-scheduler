@@ -3,6 +3,19 @@ import React from "react";
 import "./EmployeeProfile.css";
 import { Redirect } from "react-router-dom";
 
+import Modal from "react-modal";
+
+var modalStyles = {
+  content: {
+    top: "200px",
+    left: "50%",
+    width: "400px",
+    height: "200px",
+    transform: "translate(-50%, -50%)",
+    overflow: 0
+  }
+};
+
 class SupervisorProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +25,9 @@ class SupervisorProfile extends React.Component {
       email: null,
       editing: false,
       change_password: false,
-      redirect: null
+      redirect: null,
+      delete_modal: false,
+      dif_pwd: null
     };
 
     this.editClick = this.editClick.bind(this);
@@ -25,6 +40,8 @@ class SupervisorProfile extends React.Component {
     this.editView = this.editView.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.deleteSelf = this.deleteSelf.bind(this);
+
+    this.getDeleteModal = this.getDeleteModal.bind(this);
   }
 
   componentDidMount() {
@@ -67,8 +84,15 @@ class SupervisorProfile extends React.Component {
     var confirm = document.getElementById("user-confirm").value;
 
     if (password !== confirm) {
-      this.setState({ wrong_password: true });
+      var errorBox = (
+        <div class="error-pwd">
+          <p>The passwords you entered are not the same.</p>
+        </div>
+      );
+      this.setState({ dif_pwd: errorBox });
       return;
+    } else {
+      this.setState({ dif_pwd: null });
     }
 
     fetch("/changepassword", {
@@ -116,11 +140,40 @@ class SupervisorProfile extends React.Component {
     );
   }
 
+  closeModal() {
+    this.setState({ delete_modal: false });
+  }
+
+  getDeleteModal() {
+    return (
+      <Modal
+        isOpen={this.state.delete_modal}
+        onRequestClose={this.closeModal}
+        style={modalStyles}
+        class="self-modal"
+      >
+        <h2>Are you sure you want to delete your account?</h2>
+        <h2>This is a permanent operation.</h2>
+        <div class="modal-buttons">
+          <button
+            class="profile-button"
+            onClick={() => this.setState({ self_modal: false })}
+          >
+            No
+          </button>
+          <button class="profile-button" onClick={this.deleteSelf}>
+            Yes
+          </button>
+        </div>
+      </Modal>
+    );
+  }
+
   editView() {
-    console.log("In editView");
     return (
       <div class="sle-profile-page">
         {this.state.redirect}
+        {this.getDeleteModal()}
         <h1>Edit Profile</h1>
         <table class="user-profile-form">
           <tr>
@@ -162,8 +215,13 @@ class SupervisorProfile extends React.Component {
             Cancel
           </button>
           <br />
-          <button class="delete-button user-delete" onClick={this.deleteSelf}>
-            Delete SLE
+          <button
+            class="delete-button user-delete"
+            onClick={() => {
+              this.setState({ delete_modal: true });
+            }}
+          >
+            Delete Your Account
           </button>
         </div>
       </div>
@@ -171,11 +229,11 @@ class SupervisorProfile extends React.Component {
   }
 
   changePassword() {
-    console.log("In changePassword");
     return (
       <div class="sle-profile-page">
         {this.state.redirect}
         <h1>Change Password</h1>
+        {this.state.dif_pwd}
         <table class="user-password-form">
           <tbody>
             <tr>
@@ -205,7 +263,9 @@ class SupervisorProfile extends React.Component {
           </button>
           <button
             class="profile-button user-password-button"
-            onClick={() => this.setState({ change_password: false })}
+            onClick={() =>
+              this.setState({ change_password: false, dif_pwd: null })
+            }
           >
             Cancel
           </button>

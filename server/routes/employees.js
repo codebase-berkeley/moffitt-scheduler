@@ -48,7 +48,7 @@ function profile(id, is_sup, cb) {
       }
 
       if (result.rows.length === 0) {
-        cb({});
+        return cb({});
       }
 
       var employee = result.rows[0];
@@ -144,8 +144,6 @@ router.post("/supdeletesle", (req, res) => {
   if (!req.user || !req.user.is_sup) {
     return res.json({ noAuth: true });
   }
-
-  console.log(req.body.id);
 
   pool.query("DELETE FROM sle WHERE id=$1", [req.body.id], (error, _) => {
     if (error) {
