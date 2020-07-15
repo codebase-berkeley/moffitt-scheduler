@@ -159,8 +159,6 @@ router.post("/supeditsle", (req, res) => {
     return res.json({ noAuth: true });
   }
 
-  console.log("in supeditsle", req.user.id);
-
   pool.query(
     "SELECT training FROM sle WHERE id=$1",
     [req.body.id],

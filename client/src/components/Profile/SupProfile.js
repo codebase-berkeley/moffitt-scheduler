@@ -85,7 +85,7 @@ class SupervisorProfile extends React.Component {
 
     if (password !== confirm) {
       var errorBox = (
-        <div class="error-pwd">
+        <div className="error-pwd">
           <p>The passwords you entered are not the same.</p>
         </div>
       );
@@ -116,21 +116,21 @@ class SupervisorProfile extends React.Component {
 
   normalView() {
     return (
-      <div class="sle-profile-page">
+      <div className="sle-profile-page">
         {this.state.redirect}
-        <div class="info">
+        <div className="info">
           <h1>{this.state.name}</h1>
           <h2>{this.state.email}</h2>
         </div>
-        <div class="normal-view-buttons">
+        <div className="normal-view-buttons">
           <button
-            class="profile-button"
+            className="profile-button"
             onClick={() => this.setState({ editing: true })}
           >
             Edit Profile
           </button>
           <button
-            class="profile-button"
+            className="profile-button"
             onClick={() => this.setState({ change_password: true })}
           >
             Change Password
@@ -150,18 +150,18 @@ class SupervisorProfile extends React.Component {
         isOpen={this.state.delete_modal}
         onRequestClose={this.closeModal}
         style={modalStyles}
-        class="self-modal"
+        className="self-modal"
       >
         <h2>Are you sure you want to delete your account?</h2>
         <h2>This is a permanent operation.</h2>
-        <div class="modal-buttons">
+        <div className="modal-buttons">
           <button
-            class="profile-button"
+            className="profile-button"
             onClick={() => this.setState({ self_modal: false })}
           >
             No
           </button>
-          <button class="profile-button" onClick={this.deleteSelf}>
+          <button className="profile-button" onClick={this.deleteSelf}>
             Yes
           </button>
         </div>
@@ -171,52 +171,54 @@ class SupervisorProfile extends React.Component {
 
   editView() {
     return (
-      <div class="sle-profile-page">
+      <div className="sle-profile-page">
         {this.state.redirect}
         {this.getDeleteModal()}
         <h1>Edit Profile</h1>
-        <table class="user-profile-form">
-          <tr>
-            <td>Name:</td>
-            <td>
-              <input
-                id="user-name"
-                type="text"
-                name="name"
-                onChange={this.setName}
-                value={this.state.name}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Email:</td>
-            <td>
-              <input
-                id="user-email"
-                type="text"
-                name="email"
-                onChange={this.setEmail}
-                value={this.state.email}
-              />
-            </td>
-          </tr>
+        <table className="user-profile-form">
+          <tbody>
+            <tr>
+              <td>Name:</td>
+              <td>
+                <input
+                  id="user-name"
+                  type="text"
+                  name="name"
+                  onChange={this.setName}
+                  value={this.state.name}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>
+                <input
+                  id="user-email"
+                  type="text"
+                  name="email"
+                  onChange={this.setEmail}
+                  value={this.state.email}
+                />
+              </td>
+            </tr>
+          </tbody>
         </table>
-        <div class="user-edit-buttons">
+        <div className="user-edit-buttons">
           <button
-            class="profile-button user-edit-button"
+            className="profile-button user-edit-button"
             onClick={this.editClick}
           >
             Save Changes
           </button>
           <button
-            class="profile-button user-edit-button"
+            className="profile-button user-edit-button"
             onClick={() => this.setState({ editing: false })}
           >
             Cancel
           </button>
           <br />
           <button
-            class="delete-button user-delete"
+            className="delete-button user-delete"
             onClick={() => {
               this.setState({ delete_modal: true });
             }}
@@ -230,11 +232,11 @@ class SupervisorProfile extends React.Component {
 
   changePassword() {
     return (
-      <div class="sle-profile-page">
+      <div className="sle-profile-page">
         {this.state.redirect}
         <h1>Change Password</h1>
         {this.state.dif_pwd}
-        <table class="user-password-form">
+        <table className="user-password-form">
           <tbody>
             <tr>
               <td>
@@ -254,15 +256,15 @@ class SupervisorProfile extends React.Component {
             </tr>
           </tbody>
         </table>
-        <div class="user-password-buttons">
+        <div className="user-password-buttons">
           <button
-            class="profile-button user-password-button"
+            className="profile-button user-password-button"
             onClick={this.passwordClick}
           >
             Save Password
           </button>
           <button
-            class="profile-button user-password-button"
+            className="profile-button user-password-button"
             onClick={() =>
               this.setState({ change_password: false, dif_pwd: null })
             }
@@ -275,9 +277,7 @@ class SupervisorProfile extends React.Component {
   }
 
   render() {
-    console.log("this.state", this.state);
     if (this.state.change_password) {
-      console.log("In the if");
       return this.changePassword();
     }
 

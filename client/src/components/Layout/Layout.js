@@ -13,7 +13,7 @@ function SidebarElement(props) {
 
 function SleSidebar(props) {
   return (
-    <div class="sidebar">
+    <div className="sidebar">
       <SidebarElement key={0} title="Your Shifts" link="/yourshifts" />
       <SidebarElement key={1} title="Open Shifts" link="/openshifts" />
       <SidebarElement key={2} title="Availability" link="/availability" />
@@ -24,7 +24,7 @@ function SleSidebar(props) {
 
 function SupervisorSidebar(props) {
   return (
-    <div class="sidebar">
+    <div className="sidebar">
       <SidebarElement key={0} title="Employees" link="/employees" />
       <SidebarElement key={1} title="Cover Requests" link="/cover" />
       <SidebarElement key={2} title="Master Schedule" link="/masterschedule" />
@@ -74,8 +74,8 @@ class Layout extends React.Component {
         <div className="main">
           {sidebar}
           <div className="content">
-            <h1 class="title">{this.props.title}</h1>
-            <div class="center-content">{this.props.children}</div>
+            <h1 className="title">{this.props.title}</h1>
+            <div className="center-content">{this.props.children}</div>
           </div>
         </div>
       </div>

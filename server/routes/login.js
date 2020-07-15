@@ -24,9 +24,7 @@ router.post("/login", function(req, res, next) {
 });
 
 router.get("/logout", function(req, res) {
-  console.log("Logging out?");
   req.logOut();
-  console.log("After logout?");
   res.clearCookie("connect.sid");
   return res.json({ logout: true });
 });
