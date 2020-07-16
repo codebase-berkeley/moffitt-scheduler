@@ -48,7 +48,7 @@ class WithCheck extends React.Component {
   }
 
   approvalClick(reqID) {
-    fetch("/pendingsupervisor", {
+    fetch("/api/pendingsupervisor", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -67,7 +67,7 @@ class WithCheck extends React.Component {
 
   denialClick(reqID) {
     console.log("In click function");
-    fetch("/pendingsupervisor", {
+    fetch("/api/pendingsupervisor", {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -41,7 +41,7 @@ class Layout extends React.Component {
   }
   logOut() {
     console.log("In logout function");
-    fetch("http://localhost:8000/logout", {
+    fetch("/api/logout", {
       credentials: "include"
     })
       .then(response => {

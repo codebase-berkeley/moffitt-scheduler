@@ -59,7 +59,7 @@ export default class Calendar extends React.Component {
 
   componentDidMount() {
     console.log("In here");
-    fetch("/availability", { credentials: "include" })
+    fetch("/api/availability", { credentials: "include" })
       .then(response => {
         return response.json();
       })
@@ -83,7 +83,7 @@ export default class Calendar extends React.Component {
       }
     }
 
-    fetch("/save", {
+    fetch("/api/save", {
       method: "POST",
       headers: {
         Accept: "application/json",

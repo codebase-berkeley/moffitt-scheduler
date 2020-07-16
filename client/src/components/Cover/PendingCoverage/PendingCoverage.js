@@ -19,7 +19,7 @@ class PendingCoverageItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [{}],
+      items: [{}]
     };
   }
 
@@ -65,24 +65,24 @@ class PendingCoverage extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/pendingcoverage", {
+    fetch("/api/pendingcoverage", {
       method: "GET",
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         if (jsonResponse.items === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
           return;
         }
         this.setState({
-          items: jsonResponse.items,
+          items: jsonResponse.items
         });
         console.log(this.state.items);
       });

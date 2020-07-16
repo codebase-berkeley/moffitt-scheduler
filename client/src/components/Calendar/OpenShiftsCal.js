@@ -15,7 +15,7 @@ function Timeslot(props) {
 
     function yesClick() {
       console.log("In yes click");
-      fetch("/updateopenshifts", {
+      fetch("/api/updateopenshifts", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -199,7 +199,7 @@ export default class OpenShiftsCal extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/openshifts", {
+    fetch("/api/openshifts", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -238,7 +238,7 @@ export default class OpenShiftsCal extends React.Component {
       format(startOfWeek(currStartDate), "MM/DD") +
       " - " +
       format(endOfWeek(currStartDate), "MM/DD");
-    fetch("/openshifts", {
+    fetch("/api/openshifts", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -275,7 +275,7 @@ export default class OpenShiftsCal extends React.Component {
       format(startOfWeek(currStartDate), "MM/DD") +
       " - " +
       format(endOfWeek(currStartDate), "MM/DD");
-    fetch("/openshifts", {
+    fetch("/api/openshifts", {
       method: "POST",
       credentials: "include",
       headers: {

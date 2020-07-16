@@ -81,3 +81,61 @@
 .employee-link:hover {
   text-decoration: none;
 }
+
+.add-employee-info {
+  border-collapse: collapse;
+  margin-left: -2px; /* negates spacing from tables */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.add-employee-form input[type="radio"] {
+  margin-right: 2px;
+}
+
+.workleader-yes-label {
+  margin-right: 5px;
+}
+
+#add-notes {
+  width: 300px;
+  height: 100px;
+}
+
+.add-employee-info input[type="text"] {
+  margin-left: 5px;
+}
+
+.add-employee-buttons button {
+  width: 125px;
+}
+
+.add-sup-buttons button {
+  width: 150px;
+}
+
+.add-employee-buttons button:first-child,
+.add-sup-buttons button:first-child {
+  margin-right: 10px;
+}
+
+.employee-top-bar {
+  width: 70%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.employee-top-bar h4,
+.employee-top-bar button {
+  display: inline;
+}
+
+.add-button {
+  margin-bottom: 5px;
+  margin-left: 5px;
+  width: 150px;
+}
+
+.add-sup-buttons {
+  margin-top: 10px;
+}

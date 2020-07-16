@@ -60,7 +60,7 @@ export default class Library extends React.Component {
 
   fetchData() {
     var employeeList = [];
-    fetch("/otheremployees", {
+    fetch("/api/otheremployees", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -75,7 +75,7 @@ export default class Library extends React.Component {
         this.setState({
           allEmployees: jsonResponse.allEmployees
         });
-        fetch("/masterschedule/" + this.props.currWeek, {
+        fetch("/api/masterschedule/" + this.props.currWeek, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -194,7 +194,7 @@ export default class Library extends React.Component {
     date,
     addEmployee
   ) {
-    fetch("/removeemployee", {
+    fetch("/api/removeemployee", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -261,7 +261,7 @@ export default class Library extends React.Component {
     removeEmployee,
     employee
   ) {
-    fetch("/addemployee", {
+    fetch("/api/addemployee", {
       method: "POST",
       headers: {
         Accept: "application/json",

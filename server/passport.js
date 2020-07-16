@@ -13,6 +13,7 @@ function converter(password, salt) {
 passport.use(
   new LocalStrategy((username, password, cb) => {
     var email = username.trim();
+
     const sleSelect =
       "SELECT id, password, salt, is_sup FROM sle WHERE email = $1";
 
@@ -20,6 +21,7 @@ passport.use(
       if (error) {
         throw error;
       }
+
       if (result.rows.length > 0) {
         var first = result.rows[0];
         if (first["password"] == converter(password, first["salt"])) {

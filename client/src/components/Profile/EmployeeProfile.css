@@ -113,7 +113,7 @@ h2 {
   margin-top: 5px;
 }
 
-input[type="radio"] {
+.training-info input[type="radio"] {
   margin-right: 5px;
 }
 
@@ -158,16 +158,6 @@ input[type="radio"] {
 
 input[type="checkbox"] {
   margin-left: 5px;
-}
-
-.fade {
-  opacity: 0.8;
-  background: #000;
-  width: 50%;
-  height: 50%;
-  z-index: 10;
-  position: fixed;
-  margin: 0 auto;
 }
 
 .modal-buttons {

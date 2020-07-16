@@ -13,7 +13,7 @@ class Home extends React.Component {
     return this.state.redirect;
   }
   componentDidMount() {
-    fetch("/homepage")
+    fetch("/api/homepage")
       .then(response => {
         return response.json();
       })

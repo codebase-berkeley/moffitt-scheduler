@@ -8,30 +8,30 @@ class PendingSupervisor extends React.Component {
     super(props);
     this.state = {
       items: [],
-      redirect: null,
+      redirect: null
     };
     this.processData = this.processData.bind(this);
     this.removeFromState = this.removeFromState.bind(this);
   }
   componentDidMount() {
-    fetch("/pendingsupervisor", {
+    fetch("/api/pendingsupervisor", {
       method: "GET",
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((jsonResponse) => {
+      .then(jsonResponse => {
         if (jsonResponse.items === null) {
           this.setState({ redirect: <Redirect push to="/login" /> });
           return;
         }
         this.setState({
-          items: jsonResponse.items,
+          items: jsonResponse.items
         });
       });
   }

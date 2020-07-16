@@ -44,11 +44,11 @@ app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, "build")));
 
-app.use("/", calendarRoutes);
-app.use("/", coverRequestRoutes);
-app.use("/", employeesRoutes);
-app.use("/", loginRoutes);
-app.use("/", masterScheduleRoutes);
+app.use("/api", calendarRoutes);
+app.use("/api", coverRequestRoutes);
+app.use("/api", employeesRoutes);
+app.use("/api", loginRoutes);
+app.use("/api", masterScheduleRoutes);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));

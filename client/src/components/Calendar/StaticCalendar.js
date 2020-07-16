@@ -96,7 +96,7 @@ export default class StaticCalendar extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/staticcalendar/", {
+    fetch("/api/staticcalendar/", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -138,7 +138,7 @@ export default class StaticCalendar extends React.Component {
   submitClick() {
     let reason = document.getElementById("reason");
     let notes = reason.value;
-    fetch("/changecoverage", {
+    fetch("/api/changecoverage", {
       method: "POST",
       headers: {
         Accept: "application/json",

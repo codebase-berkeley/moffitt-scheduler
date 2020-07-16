@@ -75,7 +75,7 @@ export default class MSRenderer extends React.Component {
   }
 
   generate() {
-    fetch("/generatesched", {
+    fetch("/api/generatesched", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -95,7 +95,7 @@ export default class MSRenderer extends React.Component {
     console.log(startDateText);
     var endDateText = document.getElementById("endDate").value;
     console.log(endDateText);
-    fetch("/generateshifts", {
+    fetch("/api/generateshifts", {
       method: "POST",
       headers: {
         Accept: "application/json",

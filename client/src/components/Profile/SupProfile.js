@@ -7,11 +7,14 @@ import Modal from "react-modal";
 
 var modalStyles = {
   content: {
+    position: "absolute",
     top: "200px",
     left: "50%",
     width: "400px",
     height: "200px",
     transform: "translate(-50%, -50%)",
+    "padding-left": "5px",
+    "background-color": "white",
     overflow: 0
   }
 };
@@ -42,10 +45,11 @@ class SupervisorProfile extends React.Component {
     this.deleteSelf = this.deleteSelf.bind(this);
 
     this.getDeleteModal = this.getDeleteModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
-    fetch("/supprofile", { credentials: "include" })
+    fetch("/api/supprofile", { credentials: "include" })
       .then(response => {
         return response.json();
       })
@@ -66,7 +70,7 @@ class SupervisorProfile extends React.Component {
   }
 
   editClick() {
-    fetch("/sleedit", {
+    fetch("/api/sleedit", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -95,7 +99,7 @@ class SupervisorProfile extends React.Component {
       this.setState({ dif_pwd: null });
     }
 
-    fetch("/changepassword", {
+    fetch("/api/changepassword", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -109,9 +113,11 @@ class SupervisorProfile extends React.Component {
   }
 
   deleteSelf() {
-    fetch("/deleteself", { method: "POST", credentials: "include" }).then(_ => {
-      this.setState({ redirect: <Redirect push to="/login" /> });
-    });
+    fetch("/api/deleteself", { method: "POST", credentials: "include" }).then(
+      _ => {
+        this.setState({ redirect: <Redirect push to="/login" /> });
+      }
+    );
   }
 
   normalView() {
@@ -155,10 +161,7 @@ class SupervisorProfile extends React.Component {
         <h2>Are you sure you want to delete your account?</h2>
         <h2>This is a permanent operation.</h2>
         <div className="modal-buttons">
-          <button
-            className="profile-button"
-            onClick={() => this.setState({ self_modal: false })}
-          >
+          <button className="profile-button" onClick={this.closeModal}>
             No
           </button>
           <button className="profile-button" onClick={this.deleteSelf}>

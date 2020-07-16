@@ -191,3 +191,83 @@ router.post("/supeditsle", (req, res) => {
     }
   );
 });
+
+router.post("/addemployee", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
+  var d = req.body;
+
+  pool.query(
+    "INSERT INTO training(quizzes, maindesk, moffitt3, moffitt4, psert, notes, workleader) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+    [
+      d.quizzes,
+      d.maindesk,
+      d.moffitt3,
+      d.moffitt4,
+      d.psert,
+      d.notes,
+      d.workleader
+    ],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+
+      var training_id = result.rows[0].id;
+
+      var salt = crypto
+        .randomBytes(256)
+        .toString("base64")
+        .substring(0, 39);
+
+      var hashedPwd = crypto
+        .pbkdf2Sync("temporary", salt, 1000, 64, `sha512`)
+        .toString(`hex`)
+        .substring(0, 39);
+
+      pool.query(
+        "INSERT INTO sle(name, email, password, salt, is_sup, training) VALUES ($1, $2, $3, $4, $5, $6)",
+        [d.name, d.email, hashedPwd, salt, false, training_id],
+        (error, result) => {
+          if (error) {
+            throw error;
+          }
+
+          return res.json({ successful: true });
+        }
+      );
+    }
+  );
+});
+
+router.post("/addsupervisor", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
+  var d = req.body;
+
+  var salt = crypto
+    .randomBytes(256)
+    .toString("base64")
+    .substring(0, 39);
+
+  var hashedPwd = crypto
+    .pbkdf2Sync("temporary", salt, 1000, 64, `sha512`)
+    .toString(`hex`)
+    .substring(0, 39);
+
+  pool.query(
+    "INSERT INTO sle(name, email, password, salt, is_sup, training) VALUES ($1, $2, $3, $4, $5, $6)",
+    [d.name, d.email, hashedPwd, salt, true, null],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+
+      return res.json({ successful: true });
+    }
+  );
+});

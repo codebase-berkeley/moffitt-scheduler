@@ -6,11 +6,14 @@ import Modal from "react-modal";
 
 var modalStyles = {
   content: {
+    position: "absolute",
     top: "200px",
     left: "50%",
     width: "400px",
     height: "200px",
     transform: "translate(-50%, -50%)",
+    "padding-left": "5px",
+    "background-color": "white",
     overflow: 0
   }
 };
@@ -60,7 +63,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    var url = "/sleprofile";
+    var url = "/api/sleprofile";
     if (this.props.userId) {
       url += "/" + this.props.userId;
     }
@@ -143,7 +146,7 @@ class Profile extends React.Component {
     this.setState(obj);
   }
   userEditClick() {
-    fetch("/sleedit", {
+    fetch("/api/sleedit", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -170,7 +173,7 @@ class Profile extends React.Component {
     var notes = document.getElementById("profile-notes").value;
     this.setState({ notes: notes });
 
-    fetch("/supeditsle", {
+    fetch("/api/supeditsle", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -208,7 +211,7 @@ class Profile extends React.Component {
       this.setState({ dif_pwd: null });
     }
 
-    fetch("/changepassword", {
+    fetch("/api/changepassword", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -222,13 +225,15 @@ class Profile extends React.Component {
   }
 
   deleteSelf() {
-    fetch("/deleteself", { method: "POST", credentials: "include" }).then(_ => {
-      this.setState({ redirect: <Redirect push to="/login" /> });
-    });
+    fetch("/api/deleteself", { method: "POST", credentials: "include" }).then(
+      _ => {
+        this.setState({ redirect: <Redirect push to="/login" /> });
+      }
+    );
   }
 
   supDeleteSle() {
-    fetch("/supdeletesle", {
+    fetch("/api/supdeletesle", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -469,7 +474,7 @@ class Profile extends React.Component {
         {this.state.redirect}
         {this.getDeleteSleModal()}
         <h1>Edit Training for {this.state.name}</h1>
-        <div>
+        <div class="training-info">
           {this.getWorkleaderButtons()}
           <h2>Training information:</h2>
           <div className="train-cols">
