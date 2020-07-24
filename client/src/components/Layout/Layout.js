@@ -28,8 +28,8 @@ function SupervisorSidebar(props) {
       <SidebarElement key={0} title="Employees" link="/employees" />
       <SidebarElement key={1} title="Cover Requests" link="/cover" />
       <SidebarElement key={2} title="Master Schedule" link="/masterschedule" />
-      <SidebarElement key={3} title="Profile" link="/supprofile" />
       <SidebarElement key={4} title="Schedule Builder" link="/schedule" />
+      <SidebarElement key={3} title="Profile" link="/supprofile" />
     </div>
   );
 }
@@ -41,16 +41,13 @@ class Layout extends React.Component {
     this.logOut = this.logOut.bind(this);
   }
   logOut() {
-    console.log("In logout function");
     fetch("/api/logout", {
       credentials: "include"
     })
       .then(response => {
-        console.log("response", response);
         return response.json();
       })
       .then(jsonResponse => {
-        console.log("jsonResponse", jsonResponse);
         if (jsonResponse.logout === true) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         }

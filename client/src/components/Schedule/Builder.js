@@ -22,6 +22,9 @@ class Builder extends React.Component {
     this.moffitt3Click = this.moffitt3Click.bind(this);
     this.moffitt4Click = this.moffitt4Click.bind(this);
     this.mainClick = this.mainClick.bind(this);
+
+    this.loadClick = this.loadClick.bind(this);
+    this.saveClick = this.saveClick.bind(this);
   }
 
   /* Library change clicks */
@@ -37,11 +40,44 @@ class Builder extends React.Component {
     this.setState({ library: "main" });
   }
 
+  /* Load and save clicks */
+  loadClick() {
+    var schedule = document.getElementById("load-box").value;
+    console.log("In here:", schedule);
+
+    fetch("/api/loadschedule/" + schedule)
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        console.log("JSON:", json);
+      });
+  }
+
+  saveClick() {
+    var schedule = document.getElementById("save-box").value;
+
+    fetch("/api/saveschedule/" + schedule, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ schedule: { mon: 2 } })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        console.log("json:", json);
+      });
+  }
+
   render() {
     return (
       <div>
         <div className="options-bar">
-          <LoadAndSave />
+          <LoadAndSave lc={this.loadClick} sc={this.saveClick} />
           <Libraries
             selected={this.state.library}
             m3c={this.moffitt3Click}
@@ -162,10 +198,12 @@ function LoadAndSave(props) {
           <tr>
             <td>Load Schedule:</td>
             <td>
-              <input type="text" name="load-schedule" />
+              <input type="text" name="load-schedule" id="load-box" />
             </td>
             <td>
-              <button className="builder-button">Load</button>
+              <button className="builder-button" onClick={props.lc}>
+                Load
+              </button>
             </td>
           </tr>
           <tr>
@@ -173,10 +211,12 @@ function LoadAndSave(props) {
               <label>Save As: </label>
             </td>
             <td>
-              <input type="text" name="save-schedule" />
+              <input type="text" name="save-schedule" id="save-box" />
             </td>
             <td>
-              <button className="builder-button">Save</button>
+              <button className="builder-button" onClick={props.sc}>
+                Save
+              </button>
             </td>
           </tr>
         </tbody>

@@ -6,6 +6,7 @@ var coverRequestRoutes = require("./routes/coverrequests");
 var employeesRoutes = require("./routes/employees");
 var loginRoutes = require("./routes/login");
 var masterScheduleRoutes = require("./routes/masterschedule");
+var builderRoutes = require("./routes/builder");
 var passport = require("./passport");
 var cors = require("cors");
 var path = require("path");
@@ -49,6 +50,7 @@ app.use("/api", coverRequestRoutes);
 app.use("/api", employeesRoutes);
 app.use("/api", loginRoutes);
 app.use("/api", masterScheduleRoutes);
+app.use("/api", builderRoutes);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
