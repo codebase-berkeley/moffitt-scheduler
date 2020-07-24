@@ -46,6 +46,7 @@
 
 .logInButton:hover {
   background-color: #0f0524;
+  cursor: pointer;
 }
 
 .loginButtons {

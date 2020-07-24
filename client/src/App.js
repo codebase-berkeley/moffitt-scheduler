@@ -13,6 +13,7 @@ import MasterSchedule from "./components/Supervisor/SupervisorMS";
 import SleProfile from "./components/Sle/SleProfile";
 import SupProfile from "./components/Supervisor/SupervisorProfile";
 import SupervisorSleProfile from "./components/Supervisor/SupervisorSleProfile";
+import ScheduleBuilder from "./components/Supervisor/SupervisorBuilder";
 
 import "./App.css";
 import SleOpenShifts from "./components/Sle/SleOpenShifts";
@@ -39,6 +40,7 @@ class App extends React.Component {
             path="/supsleprofile/:userId"
             component={SupervisorSleProfile}
           />
+          <Route exact path="/schedule" component={ScheduleBuilder} />
         </Switch>
       </BrowserRouter>
     );

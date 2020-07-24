@@ -1,0 +1,41 @@
+.slot-cont,
+.day-cont,
+.time-cont {
+  width: 125px;
+  height: 50px;
+}
+
+.slot {
+  background-color: white;
+  border: 2px solid #3f3cc8;
+  border-radius: 3px;
+  height: 100%;
+}
+
+.slot:hover {
+  cursor: pointer;
+}
+
+.load-save {
+  margin-left: 30px;
+  text-align: left;
+}
+
+.builder-button {
+  background: #3f3cc8;
+  border-radius: 4px;
+  align-items: center;
+  border: 2px solid transparent;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 0.9em;
+  color: #ffffff;
+  border: 1px solid black;
+  width: 60px;
+}
+
+.builder-button:hover {
+  background-color: #0f0524;
+  cursor: pointer;
+}
