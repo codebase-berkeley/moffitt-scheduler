@@ -15,6 +15,26 @@ var abbrevs = {
 class Builder extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      library: "moffitt3"
+    };
+
+    this.moffitt3Click = this.moffitt3Click.bind(this);
+    this.moffitt4Click = this.moffitt4Click.bind(this);
+    this.mainClick = this.mainClick.bind(this);
+  }
+
+  /* Library change clicks */
+  moffitt3Click() {
+    this.setState({ library: "moffitt3" });
+  }
+
+  moffitt4Click() {
+    this.setState({ library: "moffitt4" });
+  }
+
+  mainClick() {
+    this.setState({ library: "main" });
   }
 
   render() {
@@ -22,7 +42,12 @@ class Builder extends React.Component {
       <div>
         <div className="options-bar">
           <LoadAndSave />
-          <Libraries selected="moffitt3" />
+          <Libraries
+            selected={this.state.library}
+            m3c={this.moffitt3Click}
+            m4c={this.moffitt4Click}
+            mac={this.mainClick}
+          />
         </div>
         <Calendar />
       </div>
@@ -163,13 +188,22 @@ function LoadAndSave(props) {
 function Libraries(props) {
   return (
     <div className="libraries">
-      <button className={props.selected === "moffitt3" ? "selected" : null}>
+      <button
+        className={props.selected === "moffitt3" ? "selected" : null}
+        onClick={props.m3c}
+      >
         Moffitt 3
       </button>
-      <button className={props.selected === "moffitt4" ? "selected" : null}>
+      <button
+        className={props.selected === "moffitt4" ? "selected" : null}
+        onClick={props.m4c}
+      >
         Moffitt 4
       </button>
-      <button className={props.selected === "main" ? "selected" : null}>
+      <button
+        className={props.selected === "main" ? "selected" : null}
+        onClick={props.mac}
+      >
         Main Stacks
       </button>
     </div>
