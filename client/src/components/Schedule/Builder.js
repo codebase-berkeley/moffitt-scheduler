@@ -20,7 +20,10 @@ class Builder extends React.Component {
   render() {
     return (
       <div>
-        <LoadAndSave />
+        <div className="options-bar">
+          <LoadAndSave />
+          <Libraries selected="moffitt3" />
+        </div>
         <Calendar />
       </div>
     );
@@ -128,30 +131,48 @@ function TimeLabel(props) {
 
 function LoadAndSave(props) {
   return (
-    <table className="load-save">
-      <tbody>
-        <tr>
-          <td>Load Schedule:</td>
-          <td>
-            <input type="text" name="load-schedule" />
-          </td>
-          <td>
-            <button className="builder-button">Load</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>Save As: </label>
-          </td>
-          <td>
-            <input type="text" name="save-schedule" />
-          </td>
-          <td>
-            <button className="builder-button">Save</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div className="load-save">
+      <table>
+        <tbody>
+          <tr>
+            <td>Load Schedule:</td>
+            <td>
+              <input type="text" name="load-schedule" />
+            </td>
+            <td>
+              <button className="builder-button">Load</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Save As: </label>
+            </td>
+            <td>
+              <input type="text" name="save-schedule" />
+            </td>
+            <td>
+              <button className="builder-button">Save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function Libraries(props) {
+  return (
+    <div className="libraries">
+      <button className={props.selected === "moffitt3" ? "selected" : null}>
+        Moffitt 3
+      </button>
+      <button className={props.selected === "moffitt4" ? "selected" : null}>
+        Moffitt 4
+      </button>
+      <button className={props.selected === "main" ? "selected" : null}>
+        Main Stacks
+      </button>
+    </div>
   );
 }
 

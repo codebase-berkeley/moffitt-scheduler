@@ -16,16 +16,28 @@
   cursor: pointer;
 }
 
-.load-save {
+.options-bar {
+  display: flex;
   margin-left: 30px;
+}
+
+.load-save {
+  float: right;
   text-align: left;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.libraries {
+  text-align: right;
+  flex: 1;
+  margin-right: 30px;
 }
 
 .builder-button {
-  background: #3f3cc8;
+  background-color: #3f3cc8;
   border-radius: 4px;
   align-items: center;
-  border: 2px solid transparent;
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
@@ -38,4 +50,31 @@
 .builder-button:hover {
   background-color: #0f0524;
   cursor: pointer;
+}
+
+.libraries button {
+  background-color: white;
+  border-radius: 4px;
+  align-items: center;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  color: #3f3cc8;
+  width: 110px;
+  height: 40px;
+  margin-right: 10px;
+  border: 1px solid #3f3cc8;
+  font-size: 1em;
+}
+
+.libraries button:hover {
+  background-color: #0f0524;
+  color: white;
+  cursor: pointer;
+}
+
+.libraries button.selected {
+  background-color: #0f0524;
+  color: white;
+  border: 0;
 }
