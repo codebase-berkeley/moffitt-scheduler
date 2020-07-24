@@ -40,7 +40,7 @@ class App extends React.Component {
             path="/supsleprofile/:userId"
             component={SupervisorSleProfile}
           />
-          <Route exact path="/schedule" component={ScheduleBuilder} />
+          <Route exact path="/builder" component={ScheduleBuilder} />
         </Switch>
       </BrowserRouter>
     );

@@ -12,11 +12,51 @@ var abbrevs = {
   Sunday: "sun"
 };
 
+var days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
 class Builder extends React.Component {
   constructor(props) {
     super(props);
+    var schedule = {
+      sun: {},
+      mon: {},
+      tue: {},
+      wed: {},
+      thu: {},
+      fri: {},
+      sat: {}
+    };
+    for (var d = 0; d < days.length; d++) {
+      var abbrev = abbrevs[days[d]];
+      for (var t = 0; t < 24; t += 0.5) {
+        // schedule[abbrev][t] = [];
+
+        // Below is just to temporarily add sample data until we have a backend
+        if (d % 2 === 0) {
+          schedule[abbrev][t] = ["Brian"];
+        } else if (d % 3 === 0) {
+          schedule[abbrev][t] = ["Brian", "Bianca"];
+        } else {
+          schedule[abbrev][t] = ["Brian", "Bianca", "Parth"];
+        }
+
+        if (d === 1) {
+          schedule[abbrev][t] = ["Brian", "Bianca", "Parth", "Elena"];
+        }
+      }
+    }
+
     this.state = {
-      library: "moffitt3"
+      library: "moffitt3",
+      schedule: schedule
     };
 
     this.moffitt3Click = this.moffitt3Click.bind(this);
@@ -43,15 +83,12 @@ class Builder extends React.Component {
   /* Load and save clicks */
   loadClick() {
     var schedule = document.getElementById("load-box").value;
-    console.log("In here:", schedule);
 
     fetch("/api/loadschedule/" + schedule)
       .then(response => {
         return response.json();
       })
-      .then(json => {
-        console.log("JSON:", json);
-      });
+      .then(json => {});
   }
 
   saveClick() {
@@ -68,9 +105,7 @@ class Builder extends React.Component {
       .then(response => {
         return response.json();
       })
-      .then(json => {
-        console.log("json:", json);
-      });
+      .then(json => {});
   }
 
   render() {
@@ -85,23 +120,13 @@ class Builder extends React.Component {
             mac={this.mainClick}
           />
         </div>
-        <Calendar />
+        <Calendar schedule={this.state.schedule} />
       </div>
     );
   }
 }
 
 function Calendar(props) {
-  var days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
-
   var dayLabels = [<th></th>]; // The first column is for time labels
   for (var i = 0; i < days.length; i++) {
     dayLabels.push(<DayLabel day={days[i]} />);
@@ -111,13 +136,8 @@ function Calendar(props) {
   for (var t = 0; t < 24; t += 0.5) {
     var time = [<TimeLabel time={t} />];
     for (var d = 0; d < days.length; d++) {
-      var names = ["Brian", "Bianca", "Parth"];
-      if (d % 2 !== 0) {
-        names = ["Brian", "Bianca"];
-      } else if (d % 3 !== 0 && t === 1) {
-        names = ["Brian", "Bianca", "Parth", "Elena"];
-      }
-
+      var abbrev = abbrevs[days[d]];
+      var names = props.schedule[abbrev][t];
       time.push(
         <Slot open={true} day={abbrevs[days[0]]} time={t} names={names} />
       );
