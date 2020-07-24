@@ -22,34 +22,68 @@ var days = [
   "Saturday"
 ];
 
+var libraries = ["moffitt3", "moffitt4", "main"];
+
 class Builder extends React.Component {
   constructor(props) {
     super(props);
     var schedule = {
-      sun: {},
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {}
+      moffitt3: {
+        sun: {},
+        mon: {},
+        tue: {},
+        wed: {},
+        thu: {},
+        fri: {},
+        sat: {}
+      },
+      moffitt4: {
+        sun: {},
+        mon: {},
+        tue: {},
+        wed: {},
+        thu: {},
+        fri: {},
+        sat: {}
+      },
+      main: {
+        sun: {},
+        mon: {},
+        tue: {},
+        wed: {},
+        thu: {},
+        fri: {},
+        sat: {}
+      }
     };
-    for (var d = 0; d < days.length; d++) {
-      var abbrev = abbrevs[days[d]];
-      for (var t = 0; t < 24; t += 0.5) {
-        // schedule[abbrev][t] = [];
+    for (var l = 0; l < libraries.length; l++) {
+      var library = libraries[l];
+      for (var d = 0; d < days.length; d++) {
+        var abbrev = abbrevs[days[d]];
+        for (var t = 0; t < 24; t += 0.5) {
+          // schedule[library][abbrev][t] = [];
 
-        // Below is just to temporarily add sample data until we have a backend
-        if (d % 2 === 0) {
-          schedule[abbrev][t] = ["Brian"];
-        } else if (d % 3 === 0) {
-          schedule[abbrev][t] = ["Brian", "Bianca"];
-        } else {
-          schedule[abbrev][t] = ["Brian", "Bianca", "Parth"];
-        }
+          // Below is just to temporarily add sample data until we have a backend
+          if (library === "moffitt4") {
+            schedule[library][abbrev][t] = ["Doug", "Polk"];
+            continue;
+          }
+          if (d % 2 === 0) {
+            schedule[library][abbrev][t] = ["Brian"];
+          } else if (d % 3 === 0) {
+            schedule[library][abbrev][t] = ["Brian", "Bianca"];
+          } else {
+            schedule[library][abbrev][t] = ["Brian", "Bianca", "Parth"];
+          }
 
-        if (d === 1) {
-          schedule[abbrev][t] = ["Brian", "Bianca", "Parth", "Elena"];
+          if (d === 1) {
+            schedule[library][abbrev][t] = [
+              "Brian",
+              "Bianca",
+              "Parth",
+              "Elena"
+            ];
+          }
         }
       }
     }
@@ -120,7 +154,7 @@ class Builder extends React.Component {
             mac={this.mainClick}
           />
         </div>
-        <Calendar schedule={this.state.schedule} />
+        <Calendar schedule={this.state.schedule[this.state.library]} />
       </div>
     );
   }
