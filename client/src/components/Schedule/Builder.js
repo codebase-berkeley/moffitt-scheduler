@@ -1,4 +1,5 @@
 import React from "react";
+import Modal from "react-modal";
 
 import "./Builder.css";
 
@@ -12,6 +13,16 @@ var abbrevs = {
   Sunday: "sun"
 };
 
+var revAbbrevs = {
+  mon: "Monday",
+  tue: "Tuesday",
+  wed: "Wednesday",
+  thu: "Thursday",
+  fri: "Friday",
+  sat: "Saturday",
+  sun: "Sunday"
+};
+
 var days = [
   "Sunday",
   "Monday",
@@ -21,6 +32,20 @@ var days = [
   "Friday",
   "Saturday"
 ];
+
+var modalStyles = {
+  content: {
+    position: "absolute",
+    top: "200px",
+    left: "50%",
+    width: "400px",
+    height: "200px",
+    transform: "translate(-50%, -50%)",
+    "padding-left": "5px",
+    "background-color": "white",
+    overflow: 0
+  }
+};
 
 var libraries = ["moffitt3", "moffitt4", "main"];
 
@@ -90,8 +115,29 @@ class Builder extends React.Component {
 
     this.state = {
       library: "moffitt3",
-      schedule: schedule
+      schedule: schedule,
+      modalDay: null,
+      modalTime: null,
+      modalAssigned: [],
+      modalIsOpen: false,
+      employees: [
+        "Brian",
+        "Bianca",
+        "Parth",
+        "Elena",
+        "Raymond",
+        "Julia",
+        "Tetsu",
+        "Sahil"
+      ]
     };
+
+    this.getModal = this.getModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.slotClick = this.slotClick.bind(this);
+    this.modalDelete = this.modalDelete.bind(this);
+    this.addEmployeeClick = this.addEmployeeClick.bind(this);
+    this.saveModalClick = this.saveModalClick.bind(this);
 
     this.moffitt3Click = this.moffitt3Click.bind(this);
     this.moffitt4Click = this.moffitt4Click.bind(this);
@@ -112,6 +158,18 @@ class Builder extends React.Component {
 
   mainClick() {
     this.setState({ library: "main" });
+  }
+
+  slotClick(day, time) {
+    console.log("Day:", day);
+    console.log("Time:", time);
+
+    this.setState({
+      modalDay: day,
+      modalTime: time,
+      modalAssigned: this.state.schedule[this.state.library][day][time],
+      modalIsOpen: true
+    });
   }
 
   /* Load and save clicks */
@@ -142,9 +200,87 @@ class Builder extends React.Component {
       .then(json => {});
   }
 
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
+
+  modalDelete(idx) {
+    var assigned = [...this.state.modalAssigned];
+
+    assigned.splice(idx, 1);
+
+    this.setState({ modalAssigned: assigned });
+  }
+
+  addEmployeeClick() {
+    var newEmp = document.getElementById("add-employee-box").value;
+
+    newEmp = newEmp.split('"').join("");
+    var assigned = [...this.state.modalAssigned];
+    assigned.push(newEmp);
+
+    this.setState({ modalAssigned: assigned });
+  }
+
+  saveModalClick() {
+    var sched = JSON.parse(JSON.stringify(this.state.schedule));
+
+    sched[this.state.library][this.state.modalDay][
+      this.state.modalTime
+    ] = this.state.modalAssigned;
+
+    this.setState({ schedule: sched, modalIsOpen: false });
+  }
+
+  getModal() {
+    var assigned = [];
+    for (var i = 0; i < this.state.modalAssigned.length; i++) {
+      assigned.push(
+        <AssignedEmp
+          name={this.state.modalAssigned[i]}
+          md={this.modalDelete}
+          idx={i}
+        />
+      );
+    }
+
+    var additions = [];
+    for (var i = 0; i < this.state.employees.length; i++) {
+      if (!this.state.modalAssigned.includes(this.state.employees[i])) {
+        var value = '"' + this.state.employees[i] + '"';
+        additions.push(
+          <option value={value}>{this.state.employees[i]}</option>
+        );
+      }
+    }
+    return (
+      <Modal
+        isOpen={this.state.modalIsOpen}
+        onRequestClose={this.closeModal}
+        style={modalStyles}
+        className="edit-modal"
+      >
+        <button className={"close-modal"} onClick={this.closeModal}>
+          X
+        </button>
+        <h2>
+          {revAbbrevs[this.state.modalDay]} from
+          {" " + timeToString(this.state.modalTime)} to
+          {" " + timeToString(this.state.modalTime + 0.5)}
+        </h2>
+        <h3>Assigned Employees:</h3>
+        <div className="assigned">{assigned}</div>
+        <select id="add-employee-box">{additions}</select>
+        <button onClick={this.addEmployeeClick}>Add Employee</button>
+        <button onClick={this.saveModalClick}>Save</button>
+      </Modal>
+    );
+  }
+
   render() {
     return (
       <div>
+        {this.getModal()}
         <div className="options-bar">
           <LoadAndSave lc={this.loadClick} sc={this.saveClick} />
           <Libraries
@@ -154,7 +290,10 @@ class Builder extends React.Component {
             mac={this.mainClick}
           />
         </div>
-        <Calendar schedule={this.state.schedule[this.state.library]} />
+        <Calendar
+          schedule={this.state.schedule[this.state.library]}
+          sc={this.slotClick}
+        />
       </div>
     );
   }
@@ -173,7 +312,13 @@ function Calendar(props) {
       var abbrev = abbrevs[days[d]];
       var names = props.schedule[abbrev][t];
       time.push(
-        <Slot open={true} day={abbrevs[days[0]]} time={t} names={names} />
+        <Slot
+          sc={props.sc}
+          open={true}
+          day={abbrevs[days[d]]}
+          time={t}
+          names={names}
+        />
       );
     }
     tableContents.push(<tr>{time}</tr>);
@@ -193,6 +338,7 @@ function Calendar(props) {
 // day: 3 lowercase letters for day of week (i.e mon)
 // time: number (in military) time, representing the time of the day (.5 used for half hour)
 // names: The names of the employees working that slot
+// sc: function to be called when a slot is clicked
 function Slot(props) {
   var names = [];
   for (var i = 0; i < props.names.length; i++) {
@@ -201,8 +347,21 @@ function Slot(props) {
 
   return (
     <td className="slot-cont">
-      <div className="slot">{names}</div>
+      <div onClick={() => props.sc(props.day, props.time)} className="slot">
+        {names}
+      </div>
     </td>
+  );
+}
+
+function AssignedEmp(props) {
+  return (
+    <div>
+      <p>
+        {props.name}
+        <button onClick={() => props.md(props.idx)}>X</button>
+      </p>
+    </div>
   );
 }
 
@@ -215,9 +374,7 @@ function DayLabel(props) {
   );
 }
 
-// time: the time of the day in military time
-function TimeLabel(props) {
-  var time = props.time;
+function timeToString(time) {
   var period = "AM";
   if (time >= 12) {
     period = "PM";
@@ -237,9 +394,14 @@ function TimeLabel(props) {
     minutes = "00";
   }
 
+  return hour + ":" + minutes + " " + period;
+}
+
+// time: the time of the day in military time
+function TimeLabel(props) {
   return (
     <td className="time-cont">
-      <div className="time-label">{hour + ":" + minutes + " " + period}</div>
+      <div className="time-label">{timeToString(props.time)}</div>
     </td>
   );
 }

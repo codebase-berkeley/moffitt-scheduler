@@ -78,3 +78,11 @@
   color: white;
   border: 0;
 }
+
+.close-modal {
+  float: right;
+}
+
+.close-modal {
+  cursor: pointer;
+}
