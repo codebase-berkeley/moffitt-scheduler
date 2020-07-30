@@ -33,6 +33,8 @@ var days = [
   "Saturday"
 ];
 
+var libraries = ["moffitt3", "moffitt4", "main"];
+
 var modalStyles = {
   content: {
     position: "absolute",
@@ -46,8 +48,6 @@ var modalStyles = {
     overflow: 0
   }
 };
-
-var libraries = ["moffitt3", "moffitt4", "main"];
 
 class Builder extends React.Component {
   constructor(props) {
@@ -86,29 +86,29 @@ class Builder extends React.Component {
       for (var d = 0; d < days.length; d++) {
         var abbrev = abbrevs[days[d]];
         for (var t = 0; t < 24; t += 0.5) {
-          // schedule[library][abbrev][t] = [];
+          schedule[library][abbrev][t] = [];
 
           // Below is just to temporarily add sample data until we have a backend
-          if (library === "moffitt4") {
-            schedule[library][abbrev][t] = ["Doug", "Polk"];
-            continue;
-          }
-          if (d % 2 === 0) {
-            schedule[library][abbrev][t] = ["Brian"];
-          } else if (d % 3 === 0) {
-            schedule[library][abbrev][t] = ["Brian", "Bianca"];
-          } else {
-            schedule[library][abbrev][t] = ["Brian", "Bianca", "Parth"];
-          }
+          //   if (library === "moffitt4") {
+          //     schedule[library][abbrev][t] = ["Doug", "Polk"];
+          //     continue;
+          //   }
+          //   if (d % 2 === 0) {
+          //     schedule[library][abbrev][t] = ["Brian"];
+          //   } else if (d % 3 === 0) {
+          //     schedule[library][abbrev][t] = ["Brian", "Bianca"];
+          //   } else {
+          //     schedule[library][abbrev][t] = ["Brian", "Bianca", "Parth"];
+          //   }
 
-          if (d === 1) {
-            schedule[library][abbrev][t] = [
-              "Brian",
-              "Bianca",
-              "Parth",
-              "Elena"
-            ];
-          }
+          //   if (d === 1) {
+          //     schedule[library][abbrev][t] = [
+          //       "Brian",
+          //       "Bianca",
+          //       "Parth",
+          //       "Elena"
+          //     ];
+          //   }
         }
       }
     }
@@ -147,6 +147,18 @@ class Builder extends React.Component {
     this.saveClick = this.saveClick.bind(this);
   }
 
+  componentDidMount() {
+    fetch("/api/employees", { credentials: "include" })
+      .then(response => response.json())
+      .then(json => {
+        var employees = {};
+        for (var i = 0; i < json.employees.length; i++) {
+          employees[json.employees[i].name] = json.employees[i].id;
+        }
+        this.setState({ employees: employees });
+      });
+  }
+
   /* Library change clicks */
   moffitt3Click() {
     this.setState({ library: "moffitt3" });
@@ -161,9 +173,6 @@ class Builder extends React.Component {
   }
 
   slotClick(day, time) {
-    console.log("Day:", day);
-    console.log("Time:", time);
-
     this.setState({
       modalDay: day,
       modalTime: time,
@@ -180,7 +189,9 @@ class Builder extends React.Component {
       .then(response => {
         return response.json();
       })
-      .then(json => {});
+      .then(json => {
+        this.setState({ schedule: json.schedule });
+      });
   }
 
   saveClick() {
@@ -192,7 +203,7 @@ class Builder extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ schedule: { mon: 2 } })
+      body: JSON.stringify({ schedule: this.state.schedule })
     })
       .then(response => {
         return response.json();
@@ -217,7 +228,7 @@ class Builder extends React.Component {
 
     newEmp = newEmp.split('"').join("");
     var assigned = [...this.state.modalAssigned];
-    assigned.push(newEmp);
+    assigned.push({ name: newEmp, id: this.state.employees[newEmp] });
 
     this.setState({ modalAssigned: assigned });
   }
@@ -232,12 +243,22 @@ class Builder extends React.Component {
     this.setState({ schedule: sched, modalIsOpen: false });
   }
 
+  inModalAssigned(name) {
+    for (var i = 0; i < this.state.modalAssigned.length; i++) {
+      if (this.state.modalAssigned[i].name === name) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   getModal() {
     var assigned = [];
     for (var i = 0; i < this.state.modalAssigned.length; i++) {
       assigned.push(
         <AssignedEmp
-          name={this.state.modalAssigned[i]}
+          name={this.state.modalAssigned[i].name}
           md={this.modalDelete}
           idx={i}
         />
@@ -245,12 +266,12 @@ class Builder extends React.Component {
     }
 
     var additions = [];
-    for (var i = 0; i < this.state.employees.length; i++) {
-      if (!this.state.modalAssigned.includes(this.state.employees[i])) {
-        var value = '"' + this.state.employees[i] + '"';
-        additions.push(
-          <option value={value}>{this.state.employees[i]}</option>
-        );
+    var employeeNames = Object.keys(this.state.employees);
+    console.log("employeeNames", employeeNames);
+    for (var i = 0; i < employeeNames.length; i++) {
+      if (!this.inModalAssigned(employeeNames[i])) {
+        var value = '"' + employeeNames[i] + '"';
+        additions.push(<option value={value}>{employeeNames[i]}</option>);
       }
     }
     return (
@@ -310,14 +331,14 @@ function Calendar(props) {
     var time = [<TimeLabel time={t} />];
     for (var d = 0; d < days.length; d++) {
       var abbrev = abbrevs[days[d]];
-      var names = props.schedule[abbrev][t];
+      var employees = props.schedule[abbrev][t];
       time.push(
         <Slot
           sc={props.sc}
           open={true}
           day={abbrevs[days[d]]}
           time={t}
-          names={names}
+          employees={employees}
         />
       );
     }
@@ -337,12 +358,12 @@ function Calendar(props) {
 // open: whether or not the library is currently open
 // day: 3 lowercase letters for day of week (i.e mon)
 // time: number (in military) time, representing the time of the day (.5 used for half hour)
-// names: The names of the employees working that slot
+// employees: The names and ids of the employees working that slot
 // sc: function to be called when a slot is clicked
 function Slot(props) {
   var names = [];
-  for (var i = 0; i < props.names.length; i++) {
-    names.push(<p>{props.names[i]}</p>);
+  for (var i = 0; i < props.employees.length; i++) {
+    names.push(<p>{props.employees[i].name}</p>);
   }
 
   return (

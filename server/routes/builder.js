@@ -3,17 +3,211 @@ var router = express.Router();
 
 var pool = require("../db/db");
 
-router.get("/loadschedule/:schedule", (req, res) => {
-  console.log("Received request for:", req.params.schedule);
+var abbrevs = {
+  Monday: "mon",
+  Tuesday: "tue",
+  Wednesday: "wed",
+  Thursday: "thu",
+  Friday: "fri",
+  Saturday: "sat",
+  Sunday: "sun"
+};
 
-  return res.json({ successful: true });
+var revAbbrevs = {
+  mon: "Monday",
+  tue: "Tuesday",
+  wed: "Wednesday",
+  thu: "Thursday",
+  fri: "Friday",
+  sat: "Saturday",
+  sun: "Sunday"
+};
+
+var days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
+var libraries = ["moffitt3", "moffitt4", "main"];
+
+var blankSchedule = {
+  moffitt3: {
+    sun: {},
+    mon: {},
+    tue: {},
+    wed: {},
+    thu: {},
+    fri: {},
+    sat: {}
+  },
+  moffitt4: {
+    sun: {},
+    mon: {},
+    tue: {},
+    wed: {},
+    thu: {},
+    fri: {},
+    sat: {}
+  },
+  main: {
+    sun: {},
+    mon: {},
+    tue: {},
+    wed: {},
+    thu: {},
+    fri: {},
+    sat: {}
+  }
+};
+
+for (var l = 0; l < libraries.length; l++) {
+  var library = libraries[l];
+  for (var d = 0; d < days.length; d++) {
+    var day = abbrevs[days[d]];
+    for (t = 0; t < 24; t += 0.5) {
+      blankSchedule[library][day][t] = [];
+    }
+  }
+}
+router.get("/loadschedule/:schedule", (req, res) => {
+  var schedule = JSON.parse(JSON.stringify(blankSchedule));
+
+  pool.query(
+    "select schedules.name, day, time, library, sle.name as emp_name, sle.id as emp_id from schedules INNER JOIN sle on employee=sle.id WHERE schedules.name=$1",
+    [req.params.schedule],
+    (err, result) => {
+      if (err) {
+        return schedule;
+      }
+
+      for (var i = 0; i < result.rows.length; i++) {
+        var row = result.rows[i];
+        schedule[row.library][row.day][row.time].push({
+          name: row.emp_name,
+          id: row.emp_id
+        });
+      }
+      return res.json({ schedule: schedule });
+    }
+  );
+
+  // for (var l = 0; l < libraries.length; l++) {
+  //   var library = libraries[l];
+  //   for (var d = 0; d < days.length; d++) {
+  //     var abbrev = abbrevs[days[d]];
+  //     for (var t = 0; t < 24; t += 0.5) {
+  //       // Temporary - will pull from database soon
+  //       if (library === "moffitt4") {
+  //         schedule[library][abbrev][t] = ["Doug", "Polk"];
+  //         continue;
+  //       }
+  //       if (d % 2 === 0) {
+  //         schedule[library][abbrev][t] = ["Brian"];
+  //       } else if (d % 3 === 0) {
+  //         schedule[library][abbrev][t] = ["Brian", "Bianca"];
+  //       } else {
+  //         schedule[library][abbrev][t] = ["Brian", "Bianca", "Parth"];
+  //       }
+
+  //       if (d === 1) {
+  //         schedule[library][abbrev][t] = ["Brian", "Bianca", "Parth", "Elena"];
+  //       }
+  //     }
+  //   }
+  // }
 });
+
+router.get("/sampledata/:name", (req, res) => {
+  sampleDataHelper(req.params.name).then(() => res.json({ successful: true }));
+});
+
+async function sampleDataHelper(name) {
+  var schedule = JSON.parse(JSON.stringify(blankSchedule));
+
+  for (var l = 0; l < libraries.length; l++) {
+    var library = libraries[l];
+    for (var d = 0; d < days.length; d++) {
+      var abbrev = abbrevs[days[d]];
+      for (var t = 0; t < 24; t += 0.5) {
+        // Temporary - will pull from database soon
+        if (library === "moffitt4") {
+          schedule[library][abbrev][t] = [3, 4];
+          continue;
+        }
+        if (d % 2 === 0) {
+          schedule[library][abbrev][t] = [1];
+        } else if (d % 3 === 0) {
+          schedule[library][abbrev][t] = [1, 2];
+        } else {
+          schedule[library][abbrev][t] = [1, 2, 3];
+        }
+
+        if (d === 1) {
+          schedule[library][abbrev][t] = [1, 2, 3, 4];
+        }
+      }
+    }
+  }
+
+  await pool.query("BEGIN");
+  for (var l = 0; l < libraries.length; l++) {
+    var library = libraries[l];
+    for (var d = 0; d < days.length; d++) {
+      var abbrev = abbrevs[days[d]];
+      for (var t = 0; t < 24; t += 0.5) {
+        for (var e = 0; e < schedule[library][abbrev][t].length; e++)
+          await pool.query(
+            "INSERT INTO schedules(name, day, time, library, employee) VALUES ($1, $2, $3, $4, $5)",
+            [name, abbrev, t, library, schedule[library][abbrev][t][e]]
+          );
+      }
+    }
+  }
+  await pool.query("COMMIT");
+}
 
 router.post("/saveschedule/:schedule", (req, res) => {
-  console.log("Saving:", req.params.schedule);
-  console.log("Schedule:", req.body.schedule);
-
-  return res.json({ successful: true });
+  console.log("Hit endpoint");
+  saveSchedule(req.params.schedule, req.body.schedule).then(
+    res.json({ successful: true })
+  );
 });
+
+async function saveSchedule(scheduleName, schedule) {
+  try {
+    await pool.query("BEGIN");
+    await pool.query("DELETE FROM schedules where name=$1", [scheduleName]);
+
+    for (var l = 0; l < libraries.length; l++) {
+      var library = libraries[l];
+      for (var d = 0; d < days.length; d++) {
+        var abbrev = abbrevs[days[d]];
+        for (var t = 0; t < 24; t += 0.5) {
+          for (var e = 0; e < schedule[library][abbrev][t].length; e++) {
+            await pool.query(
+              "INSERT INTO schedules(name, day, time, library, employee) VALUES ($1, $2, $3, $4, $5)",
+              [
+                scheduleName,
+                abbrev,
+                t,
+                library,
+                schedule[library][abbrev][t][e].id
+              ]
+            );
+          }
+        }
+      }
+    }
+    await pool.query("COMMIT");
+  } catch (e) {
+    console.error(e.stack);
+    await client.query("ROLLBACK");
+  }
+}
 
 module.exports = router;
