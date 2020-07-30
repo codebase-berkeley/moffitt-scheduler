@@ -86,3 +86,47 @@
 .close-modal {
   cursor: pointer;
 }
+
+.edit-modal h2 {
+  font-size: 1.2em;
+}
+
+.edit-modal h3 {
+  font-size: 1em;
+}
+
+.edit-modal .delete-emp,
+.edit-modal .close-modal {
+  background-color: transparent;
+  border: none;
+  color: red;
+}
+
+.edit-modal .close-modal {
+  padding-top: 5px;
+  padding-right: 5px;
+  font-size: 1em;
+}
+
+.edit-modal .delete-emp:hover,
+.edit-modal .close-modal:hover {
+  cursor: pointer;
+  color: maroon;
+  font-weight: bold;
+}
+
+.edit-modal {
+  border: 1px solid black;
+  transform: none !important;
+}
+
+.edit-modal .add-employee {
+  width: 125px;
+  margin-left: 5px;
+  font-size: 0.8em;
+}
+
+.edit-modal .save-changes {
+  margin-top: 10px;
+  width: 275px;
+}

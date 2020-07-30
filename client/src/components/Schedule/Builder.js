@@ -38,8 +38,8 @@ var libraries = ["moffitt3", "moffitt4", "main"];
 var modalStyles = {
   content: {
     position: "absolute",
-    top: "200px",
-    left: "50%",
+    top: "150px",
+    left: "40%",
     width: "400px",
     height: "200px",
     transform: "translate(-50%, -50%)",
@@ -87,28 +87,6 @@ class Builder extends React.Component {
         var abbrev = abbrevs[days[d]];
         for (var t = 0; t < 24; t += 0.5) {
           schedule[library][abbrev][t] = [];
-
-          // Below is just to temporarily add sample data until we have a backend
-          //   if (library === "moffitt4") {
-          //     schedule[library][abbrev][t] = ["Doug", "Polk"];
-          //     continue;
-          //   }
-          //   if (d % 2 === 0) {
-          //     schedule[library][abbrev][t] = ["Brian"];
-          //   } else if (d % 3 === 0) {
-          //     schedule[library][abbrev][t] = ["Brian", "Bianca"];
-          //   } else {
-          //     schedule[library][abbrev][t] = ["Brian", "Bianca", "Parth"];
-          //   }
-
-          //   if (d === 1) {
-          //     schedule[library][abbrev][t] = [
-          //       "Brian",
-          //       "Bianca",
-          //       "Parth",
-          //       "Elena"
-          //     ];
-          //   }
         }
       }
     }
@@ -267,7 +245,6 @@ class Builder extends React.Component {
 
     var additions = [];
     var employeeNames = Object.keys(this.state.employees);
-    console.log("employeeNames", employeeNames);
     for (var i = 0; i < employeeNames.length; i++) {
       if (!this.inModalAssigned(employeeNames[i])) {
         var value = '"' + employeeNames[i] + '"';
@@ -281,7 +258,7 @@ class Builder extends React.Component {
         style={modalStyles}
         className="edit-modal"
       >
-        <button className={"close-modal"} onClick={this.closeModal}>
+        <button className="close-modal" onClick={this.closeModal}>
           X
         </button>
         <h2>
@@ -290,10 +267,23 @@ class Builder extends React.Component {
           {" " + timeToString(this.state.modalTime + 0.5)}
         </h2>
         <h3>Assigned Employees:</h3>
-        <div className="assigned">{assigned}</div>
+        <table>
+          <tbody>{assigned}</tbody>
+        </table>
         <select id="add-employee-box">{additions}</select>
-        <button onClick={this.addEmployeeClick}>Add Employee</button>
-        <button onClick={this.saveModalClick}>Save</button>
+        <button
+          className="add-employee builder-button"
+          onClick={this.addEmployeeClick}
+        >
+          Add Employee
+        </button>
+        <br />
+        <button
+          className="save-changes builder-button"
+          onClick={this.saveModalClick}
+        >
+          Save
+        </button>
       </Modal>
     );
   }
@@ -377,12 +367,14 @@ function Slot(props) {
 
 function AssignedEmp(props) {
   return (
-    <div>
-      <p>
-        {props.name}
-        <button onClick={() => props.md(props.idx)}>X</button>
-      </p>
-    </div>
+    <tr>
+      <td>{props.name}</td>
+      <td>
+        <button className="delete-emp" onClick={() => props.md(props.idx)}>
+          X
+        </button>
+      </td>
+    </tr>
   );
 }
 
