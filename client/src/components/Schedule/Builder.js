@@ -43,8 +43,8 @@ var modalStyles = {
     width: "400px",
     height: "200px",
     transform: "translate(-50%, -50%)",
-    "padding-left": "5px",
-    "background-color": "white",
+    paddingLeft: "5px",
+    backgroundColor: "white",
     overflow: 0
   }
 };
@@ -126,6 +126,7 @@ class Builder extends React.Component {
   }
 
   componentDidMount() {
+    Modal.setAppElement("body");
     fetch("/api/employees", { credentials: "include" })
       .then(response => response.json())
       .then(json => {
@@ -233,9 +234,10 @@ class Builder extends React.Component {
 
   getModal() {
     var assigned = [];
-    for (var i = 0; i < this.state.modalAssigned.length; i++) {
+    for (let i = 0; i < this.state.modalAssigned.length; i++) {
       assigned.push(
         <AssignedEmp
+          key={i}
           name={this.state.modalAssigned[i].name}
           md={this.modalDelete}
           idx={i}
@@ -245,10 +247,14 @@ class Builder extends React.Component {
 
     var additions = [];
     var employeeNames = Object.keys(this.state.employees);
-    for (var i = 0; i < employeeNames.length; i++) {
+    for (let i = 0; i < employeeNames.length; i++) {
       if (!this.inModalAssigned(employeeNames[i])) {
         var value = '"' + employeeNames[i] + '"';
-        additions.push(<option value={value}>{employeeNames[i]}</option>);
+        additions.push(
+          <option key={i} value={value}>
+            {employeeNames[i]}
+          </option>
+        );
       }
     }
     return (
@@ -311,19 +317,20 @@ class Builder extends React.Component {
 }
 
 function Calendar(props) {
-  var dayLabels = [<th></th>]; // The first column is for time labels
+  var dayLabels = [<th key={-1}></th>]; // The first column is for time labels
   for (var i = 0; i < days.length; i++) {
-    dayLabels.push(<DayLabel day={days[i]} />);
+    dayLabels.push(<DayLabel key={i} day={days[i]} />);
   }
 
   var tableContents = [];
   for (var t = 0; t < 24; t += 0.5) {
-    var time = [<TimeLabel time={t} />];
+    var time = [<TimeLabel key={-1} time={t} />];
     for (var d = 0; d < days.length; d++) {
       var abbrev = abbrevs[days[d]];
       var employees = props.schedule[abbrev][t];
       time.push(
         <Slot
+          key={d}
           sc={props.sc}
           open={true}
           day={abbrevs[days[d]]}
@@ -332,7 +339,7 @@ function Calendar(props) {
         />
       );
     }
-    tableContents.push(<tr>{time}</tr>);
+    tableContents.push(<tr key={t}>{time}</tr>);
   }
 
   return (
@@ -353,7 +360,11 @@ function Calendar(props) {
 function Slot(props) {
   var names = [];
   for (var i = 0; i < props.employees.length; i++) {
-    names.push(<p>{props.employees[i].name}</p>);
+    var n = props.employees[i].name;
+    if (n.length > 14) {
+      n = n.substring(0, 13) + "...";
+    }
+    names.push(<p key={i}>{n}</p>);
   }
 
   return (
@@ -397,13 +408,13 @@ function timeToString(time) {
     time -= 12;
   }
 
-  if (time == 0 || time == 0.5) {
+  if (time === 0 || time === 0.5) {
     time += 12;
   }
 
   var minutes = "30";
   var hour = Math.floor(time);
-  if (hour == time) {
+  if (hour === time) {
     minutes = "00";
   }
 
