@@ -1,7 +1,8 @@
 import React from "react";
 import Modal from "react-modal";
 
-import "./Builder.css";
+import "../Schedule/Builder.css";
+import "./Master.css";
 
 var abbrevs = {
   Monday: "mon",
@@ -91,6 +92,10 @@ class Builder extends React.Component {
       }
     }
 
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+
     this.state = {
       library: "moffitt3",
       schedule: schedule,
@@ -98,7 +103,8 @@ class Builder extends React.Component {
       modalTime: null,
       modalAssigned: [],
       modalIsOpen: false,
-      employees: {}
+      employees: {},
+      week: startOfWeek
     };
 
     this.getModal = this.getModal.bind(this);
@@ -112,8 +118,8 @@ class Builder extends React.Component {
     this.moffitt4Click = this.moffitt4Click.bind(this);
     this.mainClick = this.mainClick.bind(this);
 
-    this.loadClick = this.loadClick.bind(this);
-    this.saveClick = this.saveClick.bind(this);
+    this.scrollLeftClick = this.scrollLeftClick.bind(this);
+    this.scrollRightClick = this.scrollRightClick.bind(this);
   }
 
   componentDidMount() {
@@ -149,36 +155,6 @@ class Builder extends React.Component {
       modalAssigned: this.state.schedule[this.state.library][day][time],
       modalIsOpen: true
     });
-  }
-
-  /* Load and save clicks */
-  loadClick() {
-    var schedule = document.getElementById("load-box").value;
-
-    fetch("/api/loadschedule/" + schedule)
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-        this.setState({ schedule: json.schedule });
-      });
-  }
-
-  saveClick() {
-    var schedule = document.getElementById("save-box").value;
-
-    fetch("/api/saveschedule/" + schedule, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ schedule: this.state.schedule })
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {});
   }
 
   closeModal() {
@@ -285,12 +261,35 @@ class Builder extends React.Component {
     );
   }
 
+  scrollLeftClick() {
+    var newWeek = new Date(this.state.week);
+    newWeek.setDate(newWeek.getDate() - 7);
+    this.setState({ week: newWeek });
+  }
+
+  scrollRightClick() {
+    var newWeek = new Date(this.state.week);
+    newWeek.setDate(newWeek.getDate() + 7);
+    this.setState({ week: newWeek });
+  }
+
   render() {
+    var startDate = this.state.week;
+    var endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 6);
     return (
       <div>
         {this.getModal()}
         <div className="options-bar">
-          <LoadAndSave lc={this.loadClick} sc={this.saveClick} />
+          <div className="date-scroll">
+            <button className="scroll" onClick={this.scrollLeftClick}>
+              &lt;
+            </button>
+            {dateToString(startDate)}-{dateToString(endDate)}
+            <button className="scroll" onClick={this.scrollRightClick}>
+              &gt;
+            </button>
+          </div>
           <Libraries
             selected={this.state.library}
             m3c={this.moffitt3Click}
@@ -299,6 +298,7 @@ class Builder extends React.Component {
           />
         </div>
         <Calendar
+          week={this.state.week}
           schedule={this.state.schedule[this.state.library]}
           sc={this.slotClick}
         />
@@ -307,10 +307,18 @@ class Builder extends React.Component {
   }
 }
 
+function getDatePlusX(date, x) {
+  var newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + x);
+  return newDate;
+}
+
 function Calendar(props) {
   var dayLabels = [<th key={-1}></th>]; // The first column is for time labels
   for (var i = 0; i < days.length; i++) {
-    dayLabels.push(<DayLabel key={i} day={days[i]} />);
+    dayLabels.push(
+      <DayLabel key={i} day={days[i]} date={getDatePlusX(props.week, i)} />
+    );
   }
 
   var tableContents = [];
@@ -384,7 +392,9 @@ function AssignedEmp(props) {
 function DayLabel(props) {
   return (
     <td className="day-cont">
-      <div className="day-label">{props.day}</div>
+      <div className="day-label">
+        {props.day} {props.date.getMonth()}/{props.date.getDate()}
+      </div>
     </td>
   );
 }
@@ -421,41 +431,6 @@ function TimeLabel(props) {
   );
 }
 
-function LoadAndSave(props) {
-  return (
-    <div className="load-save">
-      <table>
-        <tbody>
-          <tr>
-            <td>Load Schedule:</td>
-            <td>
-              <input type="text" name="load-schedule" id="load-box" />
-            </td>
-            <td>
-              <button className="builder-button" onClick={props.lc}>
-                Load
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>Save As: </label>
-            </td>
-            <td>
-              <input type="text" name="save-schedule" id="save-box" />
-            </td>
-            <td>
-              <button className="builder-button" onClick={props.sc}>
-                Save
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
 function Libraries(props) {
   return (
     <div className="libraries">
@@ -479,6 +454,10 @@ function Libraries(props) {
       </button>
     </div>
   );
+}
+
+function dateToString(d) {
+  return d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
 }
 
 export default Builder;
