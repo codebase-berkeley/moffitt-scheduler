@@ -1,3 +1,63 @@
+.apply-schedule {
+  flex: 3;
+  padding-left: 10px;
+}
+
 .date-scroll {
-  text-align: left;
+  flex: 3;
+}
+
+.master .libraries {
+  flex: 4;
+}
+
+.apply-schedule input,
+.apply-schedule p {
+  display: inline;
+}
+
+.apply-schedule input {
+  width: 150px;
+}
+
+.apply-schedule button {
+  width: 280px;
+  margin-top: 5px;
+}
+
+.master-options-bar {
+  display: flex;
+  justify-content: space-around;
+}
+
+.scroll {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.basic-button {
+  background-color: #3f3cc8;
+  border-radius: 4px;
+  align-items: center;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-size: 0.9em;
+  color: #ffffff;
+  border: 1px solid black;
+}
+
+.basic-button:hover {
+  background-color: #0f0524;
+  cursor: pointer;
+}
+
+.date-scroll {
+  padding-left: 15px; /* counteracts margin of library buttons */
+}
+
+.date-scroll .date {
+  display: inline;
+  font-size: 1.3em;
+  font-weight: bold;
 }

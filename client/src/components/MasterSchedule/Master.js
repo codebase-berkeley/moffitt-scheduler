@@ -278,15 +278,27 @@ class Builder extends React.Component {
     var endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 6);
     return (
-      <div>
+      <div className="master">
         {this.getModal()}
-        <div className="options-bar">
+        <div className="master-options-bar">
+          <div className="apply-schedule">
+            <p>Apply Schedule:</p> <input type="text" id="apply-box" /> <br />
+            <button className="basic-button">Apply</button>
+          </div>
           <div className="date-scroll">
-            <button className="scroll" onClick={this.scrollLeftClick}>
+            <button
+              className="scroll basic-button"
+              onClick={this.scrollLeftClick}
+            >
               &lt;
             </button>
-            {dateToString(startDate)}-{dateToString(endDate)}
-            <button className="scroll" onClick={this.scrollRightClick}>
+            <p className="date">
+              {dateToString(startDate)} - {dateToString(endDate)}
+            </p>
+            <button
+              className="scroll basic-button"
+              onClick={this.scrollRightClick}
+            >
               &gt;
             </button>
           </div>
