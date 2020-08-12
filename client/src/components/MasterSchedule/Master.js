@@ -120,6 +120,9 @@ class Builder extends React.Component {
 
     this.scrollLeftClick = this.scrollLeftClick.bind(this);
     this.scrollRightClick = this.scrollRightClick.bind(this);
+    this.setSchedule = this.setSchedule.bind(this);
+
+    this.applyClick = this.applyClick.bind(this);
   }
 
   componentDidMount() {
@@ -132,6 +135,25 @@ class Builder extends React.Component {
           employees[json.employees[i].name] = json.employees[i].id;
         }
         this.setState({ employees: employees });
+        this.setSchedule();
+      });
+  }
+
+  setSchedule() {
+    console.log("WEEK:", this.state.week);
+
+    fetch("/api/getmaster", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ week: this.state.week })
+    })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({ schedule: json.schedule });
       });
   }
 
@@ -264,13 +286,31 @@ class Builder extends React.Component {
   scrollLeftClick() {
     var newWeek = new Date(this.state.week);
     newWeek.setDate(newWeek.getDate() - 7);
-    this.setState({ week: newWeek });
+    this.setState({ week: newWeek }, this.setSchedule);
   }
 
   scrollRightClick() {
     var newWeek = new Date(this.state.week);
     newWeek.setDate(newWeek.getDate() + 7);
-    this.setState({ week: newWeek });
+    this.setState({ week: newWeek }, this.setSchedule);
+  }
+
+  applyClick() {
+    var schedName = document.getElementById("apply-box").value;
+    fetch("/api/applysched/" + schedName, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ week: this.state.week })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        /* apply schedule to frontend */
+      });
   }
 
   render() {
@@ -283,7 +323,9 @@ class Builder extends React.Component {
         <div className="master-options-bar">
           <div className="apply-schedule">
             <p>Apply Schedule:</p> <input type="text" id="apply-box" /> <br />
-            <button className="basic-button">Apply</button>
+            <button className="basic-button" onClick={this.applyClick}>
+              Apply
+            </button>
           </div>
           <div className="date-scroll">
             <button
@@ -405,7 +447,7 @@ function DayLabel(props) {
   return (
     <td className="day-cont">
       <div className="day-label">
-        {props.day} {props.date.getMonth()}/{props.date.getDate()}
+        {props.day} {props.date.getMonth() + 1}/{props.date.getDate()}
       </div>
     </td>
   );
@@ -469,7 +511,7 @@ function Libraries(props) {
 }
 
 function dateToString(d) {
-  return d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+  return d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
 }
 
 export default Builder;
