@@ -44,6 +44,16 @@ var modalStyles = {
   }
 };
 
+var abbrevToIndex = {
+  sun: 0,
+  mon: 1,
+  tue: 2,
+  wed: 3,
+  thu: 4,
+  fri: 5,
+  sat: 6
+};
+
 function getBlankSchedule() {
   var schedule = {
     moffitt3: {
@@ -87,4 +97,12 @@ function getBlankSchedule() {
   return schedule;
 }
 
-export { abbrevs, revAbbrevs, days, libraries, getBlankSchedule, modalStyles };
+export {
+  abbrevs,
+  revAbbrevs,
+  days,
+  libraries,
+  getBlankSchedule,
+  modalStyles,
+  abbrevToIndex
+};
