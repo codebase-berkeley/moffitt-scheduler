@@ -2,80 +2,10 @@ var express = require("express");
 var router = express.Router();
 
 var pool = require("../db/db");
+var utils = require("./utils");
 
-var abbrevs = {
-  Monday: "mon",
-  Tuesday: "tue",
-  Wednesday: "wed",
-  Thursday: "thu",
-  Friday: "fri",
-  Saturday: "sat",
-  Sunday: "sun"
-};
-
-var revAbbrevs = {
-  mon: "Monday",
-  tue: "Tuesday",
-  wed: "Wednesday",
-  thu: "Thursday",
-  fri: "Friday",
-  sat: "Saturday",
-  sun: "Sunday"
-};
-
-var days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
-
-var libraries = ["moffitt3", "moffitt4", "main"];
-
-var blankSchedule = {
-  moffitt3: {
-    sun: {},
-    mon: {},
-    tue: {},
-    wed: {},
-    thu: {},
-    fri: {},
-    sat: {}
-  },
-  moffitt4: {
-    sun: {},
-    mon: {},
-    tue: {},
-    wed: {},
-    thu: {},
-    fri: {},
-    sat: {}
-  },
-  main: {
-    sun: {},
-    mon: {},
-    tue: {},
-    wed: {},
-    thu: {},
-    fri: {},
-    sat: {}
-  }
-};
-
-for (var l = 0; l < libraries.length; l++) {
-  var library = libraries[l];
-  for (var d = 0; d < days.length; d++) {
-    var day = abbrevs[days[d]];
-    for (t = 0; t < 24; t += 0.5) {
-      blankSchedule[library][day][t] = [];
-    }
-  }
-}
 router.get("/loadschedule/:schedule", (req, res) => {
-  var schedule = JSON.parse(JSON.stringify(blankSchedule));
+  var schedule = utils.getBlankSchedule();
 
   pool.query(
     "select schedules.name, day, time, library, sle.name as emp_name, sle.id as emp_id from schedules INNER JOIN sle on employee=sle.id WHERE schedules.name=$1",
@@ -108,10 +38,10 @@ async function saveSchedule(scheduleName, schedule) {
     await pool.query("BEGIN");
     await pool.query("DELETE FROM schedules where name=$1", [scheduleName]);
 
-    for (var l = 0; l < libraries.length; l++) {
-      var library = libraries[l];
-      for (var d = 0; d < days.length; d++) {
-        var abbrev = abbrevs[days[d]];
+    for (var l = 0; l < utils.libraries.length; l++) {
+      var library = utils.libraries[l];
+      for (var d = 0; d < utils.abbrevs.length; d++) {
+        var abbrev = utils.abbrevs[d];
         for (var t = 0; t < 24; t += 0.5) {
           for (var e = 0; e < schedule[library][abbrev][t].length; e++) {
             await pool.query(
