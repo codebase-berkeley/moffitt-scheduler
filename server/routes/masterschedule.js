@@ -64,6 +64,18 @@ var blankSchedule = {
   }
 };
 
+var abbrevToIndex = {
+  sun: 0,
+  mon: 1,
+  tue: 2,
+  wed: 3,
+  thu: 4,
+  fri: 5,
+  sat: 6
+};
+
+var abbrevs = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
 var libraries = ["moffitt3", "moffitt4", "main"];
 
 for (var l = 0; l < libraries.length; l++) {
@@ -109,20 +121,12 @@ router.post("/applysched/:schedule", (req, res) => {
   var week = req.body.week;
   var schedule = req.params.schedule;
 
-  applySchedule(schedule, week).then();
+  applySchedule(schedule, week).then(() => {
+    getSchedule(week).then(schedule => {
+      res.json({ schedule: schedule });
+    });
+  });
 });
-
-var abbrevToIndex = {
-  sun: 0,
-  mon: 1,
-  tue: 2,
-  wed: 3,
-  thu: 4,
-  fri: 5,
-  sat: 6
-};
-
-var abbrevs = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
 async function applySchedule(scheduleName, firstDay) {
   var lastDay = new Date(firstDay);
@@ -147,6 +151,36 @@ async function applySchedule(scheduleName, firstDay) {
         [r.employee, r.library, date, r.time]
       );
     }
+    await pool.query("COMMIT");
+  } catch (e) {
+    console.error(e.stack);
+    await client.query("ROLLBACK");
+  }
+}
+
+router.post("/updatemaster", (req, res) => {
+  updateSchedule(
+    req.body.date,
+    req.body.time,
+    req.body.library,
+    req.body.assigned
+  ).then(res.json({ successful: true }));
+});
+
+async function updateSchedule(date, time, library, employees) {
+  try {
+    await pool.query("BEGIN");
+    await pool.query(
+      "DELETE FROM shifts WHERE date=$1 AND time=$2 AND location=$3",
+      [date, time, library]
+    );
+    for (let i = 0; i < employees.length; i++) {
+      await pool.query(
+        "INSERT INTO shifts(sle_id, location, cover_requested, date, time) VALUES ($1, $2, false, $3, $4)",
+        [employees[i].id, library, date, time]
+      );
+    }
+
     await pool.query("COMMIT");
   } catch (e) {
     console.error(e.stack);

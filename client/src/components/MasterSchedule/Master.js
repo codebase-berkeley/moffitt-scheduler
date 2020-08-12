@@ -24,6 +24,16 @@ var revAbbrevs = {
   sun: "Sunday"
 };
 
+var abbrevToIndex = {
+  sun: 0,
+  mon: 1,
+  tue: 2,
+  wed: 3,
+  thu: 4,
+  fri: 5,
+  sat: 6
+};
+
 var days = [
   "Sunday",
   "Monday",
@@ -208,6 +218,23 @@ class Builder extends React.Component {
       this.state.modalTime
     ] = this.state.modalAssigned;
 
+    var date = new Date(this.state.week);
+    date.setDate(date.getDate() + abbrevToIndex[this.state.modalDay]);
+
+    fetch("/api/updatemaster", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        library: this.state.library,
+        time: this.state.modalTime,
+        date: date,
+        assigned: this.state.modalAssigned
+      })
+    });
+
     this.setState({ schedule: sched, modalIsOpen: false });
   }
 
@@ -309,7 +336,8 @@ class Builder extends React.Component {
         return response.json();
       })
       .then(json => {
-        /* apply schedule to frontend */
+        console.log("Json:", json);
+        this.setState({ schedule: json.schedule });
       });
   }
 
