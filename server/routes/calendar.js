@@ -119,6 +119,34 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
+class Shift {
+  constructor(color, id, start, end, day, sleid, location) {
+    this.color = color;
+    this.id = id;
+    this.start = start;
+    this.end = end;
+    this.day = day;
+    this.sleid = sleid;
+  }
+}
+
+function initialShifts() {
+  let a = [];
+  for (var i = 0; i < 336; i += 1) {
+    a.push(new Shift("rgb(248, 248, 248)", null, null, null, null, null, null));
+  }
+  let count = 0;
+  for (var i = 0; i <= 23; i += 0.5) {
+    for (var j = 0; j <= 6; j += 1) {
+      a[count].start = i;
+      a[count].end = i + 0.5;
+      a[count].day = j;
+      count += 1;
+    }
+  }
+  return a;
+}
+
 router.get("/availability", (req, res) => {
   if (!req.user) {
     return res.json({ schedule: null });
