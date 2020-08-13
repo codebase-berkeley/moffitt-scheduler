@@ -104,10 +104,6 @@ class YourShifts extends React.Component {
         if (json.successful) {
           var schedule = JSON.parse(JSON.stringify(this.state.schedule));
 
-          console.log("Schedule:", schedule);
-          console.log("day:", this.state.modalDate.getDay());
-          console.log("abbrev", abbrevs[this.state.modalDate.getDay()]);
-
           schedule[abbrevs[days[this.state.modalDate.getDay()]]][
             this.state.modalTime
           ] = "cover";

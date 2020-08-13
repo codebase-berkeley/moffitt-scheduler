@@ -112,3 +112,11 @@
 .second-button {
   margin-left: 5px;
 }
+
+.cancel-button {
+  background-color: red !important;
+}
+
+.cancel-button:hover {
+  background-color: maroon !important;
+}
