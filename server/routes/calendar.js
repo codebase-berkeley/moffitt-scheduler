@@ -4,39 +4,48 @@ var router = express.Router();
 var utils = require("./utils");
 
 var pool = require("../db/db");
-router.post("/changecoverage", (req, res) => {
-  var coverage = req.body.coverage;
-  approve = true;
-  var shiftID = req.body.shiftID;
-  var notes = req.body.sentNotes;
+
+router.post("/yourshifts", (req, res) => {
+  var userId = req.user.id;
+  var firstDay = req.body.week;
+  var lastDay = new Date(firstDay);
+  lastDay.setDate(lastDay.getDate() + 6);
+
+  var schedule = utils.getBlankSleSchedule("none");
+
   pool.query(
-    "UPDATE shifts SET cover_requested = $1 WHERE shift_id = $2",
-    [approve, shiftID],
-    (error, result) => {
-      if (error) {
-        throw error;
+    "SELECT * FROM shifts WHERE sle_id=$1 AND date >= $2 and date <= $3",
+    [userId, firstDay, lastDay],
+    (err, result) => {
+      if (err) {
+        console.err(err.stack);
       }
-    }
-  );
-  pool.query(
-    "SELECT sle_id FROM shifts WHERE shift_id = $1",
-    [shiftID],
-    (error, result) => {
-      if (error) {
-        throw error;
-      }
-      pool.query(
-        "INSERT INTO coverrequests (coverer_id, coveree_id, shift_id, supervisor_status, notes) VALUES (null, $3, $1, null, $2)",
-        [shiftID, notes, result.rows[0].sle_id],
-        (error, result) => {
-          if (error) {
-            throw error;
-          }
+
+      for (let i = 0; i < result.rows.length; i++) {
+        let r = result.rows[i];
+        schedule[utils.abbrevs[r.date.getDay()]][r.time] = r.location;
+        if (r.cover_requested) {
+          schedule[utils.abbrevs[r.date.getDay()]][r.time] = "cover";
         }
-      );
+      }
+
+      return res.json({ schedule: schedule });
     }
   );
-  return res.json({ Successful: true });
+});
+
+router.post("/requestcover", (req, res) => {
+  var userId = req.user.id;
+  var date = req.body.date;
+  var time = req.body.time;
+
+  pool.query(
+    "UPDATE shifts SET cover_requested=true WHERE date=$1 AND time=$2 AND sle_id=$3",
+    [date, time, userId],
+    (err, result) => {
+      return res.json({ successful: true });
+    }
+  );
 });
 
 router.post("/save", (req, res) => {
@@ -66,36 +75,6 @@ router.post("/save", (req, res) => {
     );
   }
   return res.json({ schedule: items });
-});
-
-router.post("/yourshifts", (req, res) => {
-  var userId = req.user.id;
-  var firstDay = req.body.week;
-  var lastDay = new Date(firstDay);
-  lastDay.setDate(lastDay.getDate() + 6);
-
-  var schedule = utils.getBlankSleSchedule("none");
-
-  console.log("userId:", userId);
-  console.log("firstDay:", firstDay);
-  console.log("lastDay:", lastDay);
-
-  pool.query(
-    "SELECT * FROM shifts WHERE sle_id=$1 AND date >= $2 and date <= $3",
-    [userId, firstDay, lastDay],
-    (err, result) => {
-      if (err) {
-        console.err(err.stack);
-      }
-
-      for (let i = 0; i < result.rows.length; i++) {
-        let r = result.rows[i];
-        schedule[utils.abbrevs[r.date.getDay()]][r.time] = r.location;
-      }
-
-      return res.json({ schedule: schedule });
-    }
-  );
 });
 
 router.get("/availability", (req, res) => {

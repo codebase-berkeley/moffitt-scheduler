@@ -82,3 +82,33 @@
   float: right;
   margin-right: 30px;
 }
+
+.cover-modal p {
+  font-weight: bold;
+}
+
+.close-modal {
+  float: right;
+  color: red;
+  background-color: transparent;
+  font-size: 1.1em;
+  border: none;
+  outline: none;
+}
+
+.close-modal:hover {
+  color: maroon;
+}
+
+.cover-button {
+  margin-top: 5px;
+  width: 150px;
+}
+
+.cover-modal {
+  border: 1px solid black;
+}
+
+.second-button {
+  margin-left: 5px;
+}

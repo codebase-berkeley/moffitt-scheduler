@@ -141,6 +141,10 @@ function getStartOfWeek() {
 }
 
 function timeToString(time) {
+  if (time == null) {
+    return "";
+  }
+
   var period = "AM";
   if (time >= 12) {
     period = "PM";
@@ -169,6 +173,13 @@ function getDatePlusX(date, x) {
   return newDate;
 }
 
+function shortDate(date) {
+  if (date == null) {
+    return "";
+  }
+  return date.getMonth() + 1 + "/" + date.getDate();
+}
+
 export {
   abbrevs,
   revAbbrevs,
@@ -181,5 +192,6 @@ export {
   months,
   getStartOfWeek,
   timeToString,
-  getDatePlusX
+  getDatePlusX,
+  shortDate
 };

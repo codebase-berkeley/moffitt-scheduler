@@ -1,6 +1,8 @@
 import React from "react";
 import "./StaticCalendar.css";
 
+import Modal from "react-modal";
+
 import {
   getBlankSleSchedule,
   days,
@@ -8,7 +10,9 @@ import {
   months,
   getStartOfWeek,
   getDatePlusX,
-  timeToString
+  timeToString,
+  modalStyles,
+  shortDate
 } from "../../utils";
 
 class YourShifts extends React.Component {
@@ -17,12 +21,28 @@ class YourShifts extends React.Component {
 
     this.state = {
       schedule: getBlankSleSchedule("none"),
-      week: getStartOfWeek()
+      week: getStartOfWeek(),
+      modalOpen: false,
+      modalDate: null,
+      modalTime: null
     };
 
     this.leftScrollClick = this.leftScrollClick.bind(this);
     this.rightScrollClick = this.rightScrollClick.bind(this);
+    this.slotClick = this.slotClick.bind(this);
     this.fetchData = this.fetchData.bind(this);
+
+    this.getModal = this.getModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.submitModal = this.submitModal.bind(this);
+  }
+
+  slotClick(date, time, location) {
+    if (location === "none") {
+      return;
+    }
+
+    this.setState({ modalOpen: true, modalDate: date, modalTime: time });
   }
 
   leftScrollClick() {
@@ -58,16 +78,95 @@ class YourShifts extends React.Component {
     this.fetchData();
   }
 
+  closeModal() {
+    this.setState({ modalOpen: false });
+  }
+
+  submitModal() {
+    var reason = document.getElementById("cover-reason").value;
+
+    fetch("/api/requestcover", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        reason: reason,
+        date: this.state.modalDate,
+        time: this.state.modalTime
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        if (json.successful) {
+          var schedule = JSON.parse(JSON.stringify(this.state.schedule));
+
+          console.log("Schedule:", schedule);
+          console.log("day:", this.state.modalDate.getDay());
+          console.log("abbrev", abbrevs[this.state.modalDate.getDay()]);
+
+          schedule[abbrevs[days[this.state.modalDate.getDay()]]][
+            this.state.modalTime
+          ] = "cover";
+          this.setState({ schedule: schedule });
+        }
+      });
+
+    this.closeModal();
+  }
+
+  getModal() {
+    return (
+      <Modal
+        isOpen={this.state.modalOpen}
+        onRequestClose={this.closeModal}
+        style={modalStyles}
+        className="cover-modal"
+        ariaHideApp={false}
+      >
+        <button className="close-modal" onClick={this.closeModal}>
+          X
+        </button>
+        <p>
+          Request coverage for {shortDate(this.state.modalDate)} @{" "}
+          {timeToString(this.state.modalTime)}
+        </p>
+        <label>Reason: </label>
+        <input type="text" id="cover-reason" /> <br />
+        <button
+          className="basic-button cover-button"
+          onClick={this.submitModal}
+        >
+          Request Coverage
+        </button>
+        <button
+          className="basic-button cover-button second-button"
+          onClick={this.closeModal}
+        >
+          Cancel
+        </button>
+      </Modal>
+    );
+  }
+
   render() {
     return (
       <div>
+        {this.getModal()}
         <WeekLabel
           week={this.state.week}
           lc={this.leftScrollClick}
           rc={this.rightScrollClick}
         />
         <ColorKey />
-        <Calendar schedule={this.state.schedule} week={this.state.week} />
+        <Calendar
+          schedule={this.state.schedule}
+          week={this.state.week}
+          sc={this.slotClick}
+        />
       </div>
     );
   }
@@ -112,7 +211,10 @@ function Calendar(props) {
 function Slot(props) {
   return (
     <td className="sle-slot">
-      <div className={"sle-slot-back " + "slot-" + props.location}></div>
+      <div
+        onClick={() => props.sc(props.date, props.time, props.location)}
+        className={"sle-slot-back " + "slot-" + props.location}
+      ></div>
     </td>
   );
 }
@@ -178,10 +280,6 @@ function ColorKey(props) {
       <div className="color-box slot-cover"></div>
     </div>
   );
-}
-
-function shortDate(date) {
-  return date.getMonth() + 1 + "/" + date.getDate();
 }
 
 export default YourShifts;
