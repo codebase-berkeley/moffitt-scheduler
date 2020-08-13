@@ -8,7 +8,8 @@ import {
   revAbbrevs,
   days,
   abbrevs,
-  modalStyles
+  modalStyles,
+  timeToString
 } from "../../utils";
 
 class Builder extends React.Component {
@@ -17,7 +18,7 @@ class Builder extends React.Component {
 
     this.state = {
       library: "moffitt3",
-      schedule: getBlankSchedule(),
+      schedule: getBlankSchedule([]),
       modalDay: null,
       modalTime: null,
       modalAssigned: [],
@@ -311,29 +312,6 @@ function DayLabel(props) {
       <div className="day-label">{props.day}</div>
     </td>
   );
-}
-
-function timeToString(time) {
-  var period = "AM";
-  if (time >= 12) {
-    period = "PM";
-  }
-
-  if (time >= 13) {
-    time -= 12;
-  }
-
-  if (time === 0 || time === 0.5) {
-    time += 12;
-  }
-
-  var minutes = "30";
-  var hour = Math.floor(time);
-  if (hour === time) {
-    minutes = "00";
-  }
-
-  return hour + ":" + minutes + " " + period;
 }
 
 // time: the time of the day in military time

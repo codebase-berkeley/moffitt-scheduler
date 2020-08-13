@@ -9,26 +9,25 @@ import {
   revAbbrevs,
   days,
   modalStyles,
-  abbrevToIndex
+  abbrevToIndex,
+  getStartOfWeek,
+  getDatePlusX,
+  timeToString
 } from "../../utils";
 
 class Builder extends React.Component {
   constructor(props) {
     super(props);
 
-    var now = new Date();
-    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-
     this.state = {
       library: "moffitt3",
-      schedule: getBlankSchedule(),
+      schedule: getBlankSchedule([]),
       modalDay: null,
       modalTime: null,
       modalAssigned: [],
       modalIsOpen: false,
       employees: {},
-      week: startOfWeek
+      week: getStartOfWeek()
     };
 
     this.getModal = this.getModal.bind(this);
@@ -303,12 +302,6 @@ class Builder extends React.Component {
   }
 }
 
-function getDatePlusX(date, x) {
-  var newDate = new Date(date);
-  newDate.setDate(newDate.getDate() + x);
-  return newDate;
-}
-
 function Calendar(props) {
   var dayLabels = [<th key={-1}></th>]; // The first column is for time labels
   for (var i = 0; i < days.length; i++) {
@@ -393,29 +386,6 @@ function DayLabel(props) {
       </div>
     </td>
   );
-}
-
-function timeToString(time) {
-  var period = "AM";
-  if (time >= 12) {
-    period = "PM";
-  }
-
-  if (time >= 13) {
-    time -= 12;
-  }
-
-  if (time === 0 || time === 0.5) {
-    time += 12;
-  }
-
-  var minutes = "30";
-  var hour = Math.floor(time);
-  if (hour === time) {
-    minutes = "00";
-  }
-
-  return hour + ":" + minutes + " " + period;
 }
 
 // time: the time of the day in military time

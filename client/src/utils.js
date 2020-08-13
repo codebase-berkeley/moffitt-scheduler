@@ -28,6 +28,21 @@ var days = [
   "Saturday"
 ];
 
+var months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+
 var libraries = ["moffitt3", "moffitt4", "main"];
 
 var modalStyles = {
@@ -54,7 +69,7 @@ var abbrevToIndex = {
   sat: 6
 };
 
-function getBlankSchedule() {
+function getBlankSchedule(blank) {
   var schedule = {
     moffitt3: {
       sun: {},
@@ -89,12 +104,69 @@ function getBlankSchedule() {
     for (var d = 0; d < days.length; d++) {
       var abbrev = abbrevs[days[d]];
       for (var t = 0; t < 24; t += 0.5) {
-        schedule[library][abbrev][t] = [];
+        schedule[library][abbrev][t] = blank;
       }
+    }
+  }
+  return schedule;
+}
+
+function getBlankSleSchedule(blank) {
+  var schedule = {
+    sun: {},
+    mon: {},
+    tue: {},
+    wed: {},
+    thu: {},
+    fri: {},
+    sat: {}
+  };
+
+  for (var d = 0; d < days.length; d++) {
+    var abbrev = abbrevs[days[d]];
+    for (var t = 0; t < 24; t += 0.5) {
+      schedule[abbrev][t] = blank;
     }
   }
 
   return schedule;
+}
+
+function getStartOfWeek() {
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+
+  return startOfWeek;
+}
+
+function timeToString(time) {
+  var period = "AM";
+  if (time >= 12) {
+    period = "PM";
+  }
+
+  if (time >= 13) {
+    time -= 12;
+  }
+
+  if (time === 0 || time === 0.5) {
+    time += 12;
+  }
+
+  var minutes = "30";
+  var hour = Math.floor(time);
+  if (hour === time) {
+    minutes = "00";
+  }
+
+  return hour + ":" + minutes + " " + period;
+}
+
+function getDatePlusX(date, x) {
+  var newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + x);
+  return newDate;
 }
 
 export {
@@ -103,6 +175,11 @@ export {
   days,
   libraries,
   getBlankSchedule,
+  getBlankSleSchedule,
   modalStyles,
-  abbrevToIndex
+  abbrevToIndex,
+  months,
+  getStartOfWeek,
+  timeToString,
+  getDatePlusX
 };

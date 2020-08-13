@@ -66,54 +66,63 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
+function initialShifts() {
+  let a = [];
+  for (var i = 0; i < 336; i += 1) {
+    a.push(new Shift("#f8f8f8", null, null, null, null));
+  }
+  let count = 0;
+  for (var i = 0; i < 48; i += 1) {
+    for (var j = 0; j < 7; j += 1) {
+      a[count].start = i;
+      a[count].end = i + 1;
+      a[count].day = j;
+      count += 1;
+    }
+  }
+  return a;
+}
+
 router.post("/staticcalendar", (req, res) => {
   if (!req.user) {
     return res.json({ shifts: null });
   }
 
-  let shifts = req.body.items;
-  let newCurrWeek = new Date(req.body.currWeek);
-  let currWeekStartDate = newCurrWeek.getTime();
-  let currWeekEndDate = newCurrWeek.setDate(newCurrWeek.getDate() + 7);
+  let shifts = initialShifts();
+  let firstDay = new Date(req.body.currWeek);
+  let lastDay = new Date(firstDay);
+  lastDay.setDate(lastDay.getDate() + 6);
 
   pool.query(
     `SELECT * FROM SHIFTS WHERE sle_id = $1 
-    AND start_time >= to_timestamp(${currWeekStartDate}/1000.0) AND end_time <= to_timestamp(${currWeekEndDate}/1000.0)`,
-    [req.user.id],
+    AND date >= $2 AND date <= $3`,
+    [req.user.id, firstDay, lastDay],
     (error, result) => {
       if (error) {
         throw error;
       }
-      console.log("result.rows", result.rows);
       for (var i = 0; i < 336; i += 1) {
         for (var j = 0; j < result.rows.length; j += 1) {
           let currentRow = result.rows[j];
-          let sameStartEndValid =
-            shifts[i].day === currentRow.start_time.getDay() &&
-            shifts[i].start >= 2 * currentRow.start_time.getHours() &&
-            shifts[i].end <= 2 * currentRow.end_time.getHours();
-          let diffStartEndValid =
-            currentRow.start_time.getDay() != currentRow.end_time.getDay() &&
-            ((shifts[i].day === currentRow.start_time.getDay() &&
-              shifts[i].start >= 2 * currentRow.start_time.getHours()) ||
-              (shifts[i].day === currentRow.end_time.getDay() &&
-                shifts[i].end <= 2 * currentRow.end_time.getHours()));
-          if (sameStartEndValid || diffStartEndValid) {
+          if (
+            shifts[i].day === currentRow.date.getDay() &&
+            shifts[i].start == currentRow.time * 2
+          ) {
             shifts[i].id = currentRow.shift_id;
-            if (currentRow.location === "Moffitt3") {
-              if (currentRow.cover_requested === "true") {
+            if (currentRow.location === "moffitt3") {
+              if (currentRow.cover_requested === true) {
                 shifts[i].color = "#C187D3";
               } else {
                 shifts[i].color = "#ff8d06";
               }
-            } else if (currentRow.location === "Doe") {
-              if (currentRow.cover_requested === "true") {
+            } else if (currentRow.location === "doe") {
+              if (currentRow.cover_requested === true) {
                 shifts[i].color = "#C187D3";
               } else {
                 shifts[i].color = "#d7269b";
               }
-            } else if (currentRow.location === "Moffitt4") {
-              if (currentRow.cover_requested === "true") {
+            } else if (currentRow.location === "moffitt4") {
+              if (currentRow.cover_requested === true) {
                 shifts[i].color = "#C187D3";
               } else {
                 shifts[i].color = "#04b17e";
