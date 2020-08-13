@@ -1,6 +1,6 @@
 import React from "react";
 import "./Availability.css";
-import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import { format, startOfWeek, addDays } from "date-fns";
 import { Redirect } from "react-router-dom";
 
 function Timeslot(props) {
@@ -39,26 +39,16 @@ export default class Calendar extends React.Component {
   constructor(props) {
     var currentDate = new Date();
     currentDate.setDate(currentDate.getDate());
-    // var weekString =
-    //   format(currentDate, "MMMM") +
-    //   " " +
-    //   format(currentDate, "YYYY") +
-    //   ": " +
-    //   format(startOfWeek(currentDate), "MM/DD") +
-    //   " - " +
-    //   format(endOfWeek(currentDate), "MM/DD");
     super(props);
     this.state = {
       schedule: [],
       currentDate: currentDate,
-      // weekString: weekString,
       saved: []
     };
     this.save = this.save.bind(this);
   }
 
   componentDidMount() {
-    console.log("In here");
     fetch("/api/availability", { credentials: "include" })
       .then(response => {
         return response.json();
@@ -100,17 +90,11 @@ export default class Calendar extends React.Component {
 
   selectClick() {
     var startText = document.getElementById("startText").value;
-    console.log(startText);
     var endText = document.getElementById("endText").value;
-    console.log(endText);
     var weekdayText = document.getElementById("weekdayText").value;
-    console.log(weekdayText);
 
     var startCellID = 0;
     var endCellID = 0;
-
-    console.log("Start increment:", findIncrement(startText));
-    console.log("End increment:", findIncrement(endText));
 
     if (weekdayText === "Sun") {
       startCellID = findIncrement(startText) * 7 + 0;
@@ -206,7 +190,7 @@ export default class Calendar extends React.Component {
     var wkdays = [];
     for (var i = 0; i < 7; i += 1) {
       wkdays.push(
-        <div class="item-wday">
+        <div key={i} className="item-wday">
           {format(addDays(startOfWeek(this.state.currentDate), i), "ddd")}
         </div>
       );
@@ -219,10 +203,14 @@ export default class Calendar extends React.Component {
     var timeslots = [];
     for (var i = 0, ti = 0; i < 384; i += 1) {
       if (i % 8 === 0) {
-        timeslots.push(<div class="item-hours">{hours[i / 8]}</div>);
+        timeslots.push(
+          <div key={i} className="item-hours">
+            {hours[i / 8]}
+          </div>
+        );
       } else if (this.state.schedule.length > 0) {
         timeslots.push(
-          <Timeslot color={this.state.schedule[ti].color} id={ti} />
+          <Timeslot key={i} color={this.state.schedule[ti].color} id={ti} />
         );
         ti += 1;
       }
@@ -231,7 +219,6 @@ export default class Calendar extends React.Component {
     return (
       <div id="overall-container">
         <div id="schedule-container">
-          {/* <h1 id="weekString">{this.state.weekString}</h1> */}
           <div className="weekdayStuff">
             <div className="weekdayText1">Weekday</div>
             <div className="emptySpace"></div>
