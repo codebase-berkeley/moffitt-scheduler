@@ -209,7 +209,7 @@ function Slot(props) {
     <td className="sle-slot">
       <div
         onClick={() => props.sc(props.date, props.time, props.location)}
-        className={"sle-slot-back " + "slot-" + props.location}
+        className={"sle-slot-back slot-" + props.location}
       ></div>
     </td>
   );

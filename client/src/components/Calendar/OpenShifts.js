@@ -217,7 +217,7 @@ function Slot(props) {
         onClick={() =>
           props.sc(props.date, props.time, props.location, props.shift)
         }
-        className={"sle-slot-back " + "slot-" + props.location}
+        className={"sle-slot-back slot-" + props.location}
       ></div>
     </td>
   );
