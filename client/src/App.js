@@ -3,9 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
-import StaticCalendar from "./components/Calendar/StaticCalendar";
 import SleAvailability from "./components/Sle/SleAvailability";
-import SleTest from "./components/Sle/SleTest";
 import SleYourShifts from "./components/Sle/SleYourShifts";
 import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
 import SupervisorCover from "./components/Supervisor/SupervisorCover";
@@ -25,10 +23,8 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/staticCalendar" component={StaticCalendar} />
           <Route exact path="/yourshifts" component={SleYourShifts} />
           <Route exact path="/availability" component={SleAvailability} />
-          <Route exact path="/test" component={SleTest} />
           <Route exact path="/openshifts" component={SleOpenShifts} />
           <Route exact path="/employees" component={SupervisorEmployees} />
           <Route exact path="/cover" component={SupervisorCover} />

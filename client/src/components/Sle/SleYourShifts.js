@@ -1,11 +1,11 @@
 import React from "react";
 import { SleLayout } from "../Layout/Layout.js";
-import StaticCalendar from "../Calendar/StaticCalendar";
+import YourShifts from "../Calendar/YourShifts";
 
 export default function SleCalendar(props) {
   return (
     <SleLayout title="Your Shifts">
-      <StaticCalendar userId={props.match.params.userId} />
+      <YourShifts userId={props.match.params.userId} />
     </SleLayout>
   );
 }

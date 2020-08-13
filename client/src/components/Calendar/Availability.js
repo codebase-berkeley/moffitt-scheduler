@@ -1,5 +1,5 @@
 import React from "react";
-import "./Calendar.css";
+import "./Availability.css";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import { Redirect } from "react-router-dom";
 
