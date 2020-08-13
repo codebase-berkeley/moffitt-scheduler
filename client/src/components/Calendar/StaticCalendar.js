@@ -19,12 +19,53 @@ class YourShifts extends React.Component {
       schedule: getBlankSleSchedule("none"),
       week: getStartOfWeek()
     };
+
+    this.leftScrollClick = this.leftScrollClick.bind(this);
+    this.rightScrollClick = this.rightScrollClick.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+  }
+
+  leftScrollClick() {
+    var newWeek = new Date(this.state.week);
+    newWeek.setDate(newWeek.getDate() - 7);
+    this.setState({ week: newWeek }, this.fetchData);
+  }
+
+  rightScrollClick() {
+    var newWeek = new Date(this.state.week);
+    newWeek.setDate(newWeek.getDate() + 7);
+    this.setState({ week: newWeek }, this.fetchData);
+  }
+
+  fetchData() {
+    fetch("/api/yourshifts", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ week: this.state.week })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        this.setState({ schedule: json.schedule });
+      });
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   render() {
     return (
       <div>
-        <WeekLabel week={this.state.week} />
+        <WeekLabel
+          week={this.state.week}
+          lc={this.leftScrollClick}
+          rc={this.rightScrollClick}
+        />
         <ColorKey />
         <Calendar schedule={this.state.schedule} week={this.state.week} />
       </div>
@@ -101,6 +142,9 @@ function WeekLabel(props) {
 
   return (
     <div className="week-label">
+      <button className="left-scroll" onClick={props.lc}>
+        &lt;
+      </button>
       <h2>
         {months[startDay.getMonth()] +
           " " +
@@ -110,6 +154,9 @@ function WeekLabel(props) {
           " - " +
           shortDate(lastDay)}
       </h2>
+      <button className="right-scroll" onClick={props.rc}>
+        &gt;
+      </button>
     </div>
   );
 }

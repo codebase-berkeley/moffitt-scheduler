@@ -86,6 +86,27 @@ function getBlankSchedule() {
   return JSON.parse(JSON.stringify(blankSchedule));
 }
 
+function getBlankSleSchedule(blank) {
+  var schedule = {
+    sun: {},
+    mon: {},
+    tue: {},
+    wed: {},
+    thu: {},
+    fri: {},
+    sat: {}
+  };
+
+  for (var d = 0; d < days.length; d++) {
+    var abbrev = abbrevs[d];
+    for (var t = 0; t < 24; t += 0.5) {
+      schedule[abbrev][t] = blank;
+    }
+  }
+
+  return schedule;
+}
+
 module.exports = {
   dayToAbbrevs: dayToAbbrevs,
   revAbbrevs: revAbbrevs,
@@ -93,5 +114,6 @@ module.exports = {
   abbrevToIndex: abbrevToIndex,
   abbrevs: abbrevs,
   libraries: libraries,
-  getBlankSchedule: getBlankSchedule
+  getBlankSchedule: getBlankSchedule,
+  getBlankSleSchedule: getBlankSleSchedule
 };

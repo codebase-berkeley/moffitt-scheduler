@@ -53,3 +53,32 @@
   margin-left: 5px;
   margin-right: 20px;
 }
+
+.week-label button {
+  display: inline-block;
+  background-color: none;
+  border: none;
+  vertical-align: middle;
+  margin-top: 5px;
+  height: 50px;
+  font-size: 1.4em;
+}
+
+.week-label button:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.week-label h2 {
+  display: inline-block;
+}
+
+.week-label .left-scroll {
+  float: left;
+  margin-left: 30px;
+}
+
+.week-label .right-scroll {
+  float: right;
+  margin-right: 30px;
+}

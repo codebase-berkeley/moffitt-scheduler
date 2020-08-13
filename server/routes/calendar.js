@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
+var utils = require("./utils");
+
 var pool = require("../db/db");
 router.post("/changecoverage", (req, res) => {
   var coverage = req.body.coverage;
@@ -66,103 +68,35 @@ router.post("/save", (req, res) => {
   return res.json({ schedule: items });
 });
 
-function initialShifts() {
-  let a = [];
-  for (var i = 0; i < 336; i += 1) {
-    a.push(new Shift("#f8f8f8", null, null, null, null));
-  }
-  let count = 0;
-  for (var i = 0; i < 48; i += 1) {
-    for (var j = 0; j < 7; j += 1) {
-      a[count].start = i;
-      a[count].end = i + 1;
-      a[count].day = j;
-      count += 1;
-    }
-  }
-  return a;
-}
-
-router.post("/staticcalendar", (req, res) => {
-  if (!req.user) {
-    return res.json({ shifts: null });
-  }
-
-  let shifts = initialShifts();
-  let firstDay = new Date(req.body.currWeek);
-  let lastDay = new Date(firstDay);
+router.post("/yourshifts", (req, res) => {
+  var userId = req.user.id;
+  var firstDay = req.body.week;
+  var lastDay = new Date(firstDay);
   lastDay.setDate(lastDay.getDate() + 6);
 
+  var schedule = utils.getBlankSleSchedule("none");
+
+  console.log("userId:", userId);
+  console.log("firstDay:", firstDay);
+  console.log("lastDay:", lastDay);
+
   pool.query(
-    `SELECT * FROM SHIFTS WHERE sle_id = $1 
-    AND date >= $2 AND date <= $3`,
-    [req.user.id, firstDay, lastDay],
-    (error, result) => {
-      if (error) {
-        throw error;
+    "SELECT * FROM shifts WHERE sle_id=$1 AND date >= $2 and date <= $3",
+    [userId, firstDay, lastDay],
+    (err, result) => {
+      if (err) {
+        console.err(err.stack);
       }
-      for (var i = 0; i < 336; i += 1) {
-        for (var j = 0; j < result.rows.length; j += 1) {
-          let currentRow = result.rows[j];
-          if (
-            shifts[i].day === currentRow.date.getDay() &&
-            shifts[i].start == currentRow.time * 2
-          ) {
-            shifts[i].id = currentRow.shift_id;
-            if (currentRow.location === "moffitt3") {
-              if (currentRow.cover_requested === true) {
-                shifts[i].color = "#C187D3";
-              } else {
-                shifts[i].color = "#ff8d06";
-              }
-            } else if (currentRow.location === "doe") {
-              if (currentRow.cover_requested === true) {
-                shifts[i].color = "#C187D3";
-              } else {
-                shifts[i].color = "#d7269b";
-              }
-            } else if (currentRow.location === "moffitt4") {
-              if (currentRow.cover_requested === true) {
-                shifts[i].color = "#C187D3";
-              } else {
-                shifts[i].color = "#04b17e";
-              }
-            }
-          }
-        }
+
+      for (let i = 0; i < result.rows.length; i++) {
+        let r = result.rows[i];
+        schedule[utils.abbrevs[r.date.getDay()]][r.time] = r.location;
       }
-      return res.json({ shifts: shifts });
+
+      return res.json({ schedule: schedule });
     }
   );
 });
-
-class Shift {
-  constructor(color, id, start, end, day, sleid, location) {
-    this.color = color;
-    this.id = id;
-    this.start = start;
-    this.end = end;
-    this.day = day;
-    this.sleid = sleid;
-  }
-}
-
-function initialShifts() {
-  let a = [];
-  for (var i = 0; i < 336; i += 1) {
-    a.push(new Shift("rgb(248, 248, 248)", null, null, null, null, null, null));
-  }
-  let count = 0;
-  for (var i = 0; i <= 23; i += 0.5) {
-    for (var j = 0; j <= 6; j += 1) {
-      a[count].start = i;
-      a[count].end = i + 0.5;
-      a[count].day = j;
-      count += 1;
-    }
-  }
-  return a;
-}
 
 router.get("/availability", (req, res) => {
   if (!req.user) {
