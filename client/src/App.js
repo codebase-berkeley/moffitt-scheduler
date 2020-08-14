@@ -6,7 +6,9 @@ import Login from "./components/Login/Login";
 import SleAvailability from "./components/Sle/SleAvailability";
 import SleYourShifts from "./components/Sle/SleYourShifts";
 import SupervisorEmployees from "./components/Supervisor/SupervisorEmployees";
-import SupervisorCover from "./components/Supervisor/SupervisorCover";
+import SupervisorPendingCoverage from "./components/Supervisor/SupervisorPendingCoverage";
+import SupervisorPendingApproval from "./components/Supervisor/SupervisorPendingApproval";
+import SupervisorRequestHistory from "./components/Supervisor/SupervisorRequestHistory";
 import MasterSchedule from "./components/Supervisor/SupervisorMS";
 import SleProfile from "./components/Sle/SleProfile";
 import SupProfile from "./components/Supervisor/SupervisorProfile";
@@ -27,7 +29,21 @@ class App extends React.Component {
           <Route exact path="/availability" component={SleAvailability} />
           <Route exact path="/openshifts" component={SleOpenShifts} />
           <Route exact path="/employees" component={SupervisorEmployees} />
-          <Route exact path="/cover" component={SupervisorCover} />
+          <Route
+            exact
+            path="/pendingcoverage"
+            component={SupervisorPendingCoverage}
+          />
+          <Route
+            exact
+            path="/pendingapproval"
+            component={SupervisorPendingApproval}
+          />
+          <Route
+            exact
+            path="/requesthistory"
+            component={SupervisorRequestHistory}
+          />
           <Route exact path="/masterschedule" component={MasterSchedule} />
           <Route exact path="/sleprofile" component={SleProfile} />
           <Route exact path="/supprofile" component={SupProfile} />

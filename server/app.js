@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var calendarRoutes = require("./routes/calendar");
-var coverRequestRoutes = require("./routes/coverrequests");
+var coverRoutes = require("./routes/cover");
 var employeesRoutes = require("./routes/employees");
 var loginRoutes = require("./routes/login");
 var masterScheduleRoutes = require("./routes/masterschedule");
@@ -46,7 +46,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, "build")));
 
 app.use("/api", calendarRoutes);
-app.use("/api", coverRequestRoutes);
+app.use("/api", coverRoutes);
 app.use("/api", employeesRoutes);
 app.use("/api", loginRoutes);
 app.use("/api", masterScheduleRoutes);
