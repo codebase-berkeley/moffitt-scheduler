@@ -70,6 +70,7 @@ class YourShifts extends React.Component {
         return response.json();
       })
       .then(json => {
+        console.log("json.schedule", json.schedule);
         this.setState({ schedule: json.schedule });
       });
   }

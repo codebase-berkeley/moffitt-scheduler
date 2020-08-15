@@ -16,7 +16,21 @@ async function getSchedule(firstDay) {
   lastDay.setDate(lastDay.getDate() + 6);
 
   var result = await pool.query(
-    "SELECT date, time, location, sle.name as emp_name, sle.id as emp_id FROM shifts INNER JOIN sle on sle_id=sle.id WHERE date >= $1 and date <= $2",
+    "SELECT date, time, location, sle.name as emp_name, sle.id as emp_id FROM shifts INNER JOIN sle on sle_id=sle.id WHERE date >= $1 and date <= $2 and (sup_status is null or sup_status!='approved')",
+    [firstDay, lastDay]
+  );
+
+  for (let i = 0; i < result.rows.length; i++) {
+    let r = result.rows[i];
+    let day = utils.abbrevs[r.date.getDay()];
+    schedule[r.location][day][r.time].push({
+      name: r.emp_name,
+      id: r.emp_id
+    });
+  }
+
+  result = await pool.query(
+    "SELECT date, time, location, sle.name as emp_name, sle.id as emp_id FROM shifts INNER JOIN sle on coverer_id=sle.id WHERE date >= $1 and date <= $2 and sup_status='approved'",
     [firstDay, lastDay]
   );
 

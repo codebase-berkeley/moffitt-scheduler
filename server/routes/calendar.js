@@ -14,7 +14,7 @@ router.post("/yourshifts", (req, res) => {
   var schedule = utils.getBlankSleSchedule("none");
 
   pool.query(
-    "SELECT * FROM shifts WHERE sle_id=$1 AND date >= $2 and date <= $3",
+    "SELECT * FROM shifts WHERE sle_id=$1 AND date >= $2 and date <= $3 and (cover_requested=false or sup_status is null or sup_status != 'approved')",
     [userId, firstDay, lastDay],
     (err, result) => {
       if (err) {
@@ -29,19 +29,35 @@ router.post("/yourshifts", (req, res) => {
         }
       }
 
-      return res.json({ schedule: schedule });
+      pool.query(
+        "SELECT * FROM shifts WHERE coverer_id=$1 AND date >= $2 and date <= $3 and sup_status='approved'",
+        [userId, firstDay, lastDay],
+        (err, result) => {
+          if (err) {
+            console.error(err.stack);
+          }
+
+          for (let i = 0; i < result.rows.length; i++) {
+            let r = result.rows[i];
+            schedule[utils.abbrevs[r.date.getDay()]][r.time] = r.location;
+          }
+
+          return res.json({ schedule: schedule });
+        }
+      );
     }
   );
 });
 
 router.post("/requestcover", (req, res) => {
+  var reason = req.body.reason;
   var userId = req.user.id;
   var date = req.body.date;
   var time = req.body.time;
 
   pool.query(
-    "UPDATE shifts SET cover_requested=true WHERE date=$1 AND time=$2 AND sle_id=$3",
-    [date, time, userId],
+    "UPDATE shifts SET cover_requested=true, notes=$1, sup_status=null WHERE date=$2 AND time=$3 AND sle_id=$4",
+    [reason, date, time, userId],
     (err, result) => {
       return res.json({ successful: true });
     }
