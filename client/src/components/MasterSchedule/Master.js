@@ -12,10 +12,16 @@ import {
   abbrevToIndex,
   getStartOfWeek,
   getDatePlusX,
-  timeToString
+  shortDate,
+  timeToString,
+  pAbbrevs
 } from "../../utils";
 
 import sheets from "./sheets.png";
+
+import * as Excel from "exceljs/dist/exceljs";
+
+import { saveAs } from "file-saver";
 
 class Builder extends React.Component {
   constructor(props) {
@@ -255,25 +261,7 @@ class Builder extends React.Component {
   }
 
   spreadsheetClick() {
-    console.log("In here");
-
-    fetch("/api/spreadsheet/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        week: this.state.week,
-        schedule: this.state.schedule
-      })
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-        console.log("jSoN:", json);
-      });
+    spreadsheetGen(this.state.week, this.state.schedule);
   }
 
   render() {
@@ -455,6 +443,51 @@ function Libraries(props) {
 
 function dateToString(d) {
   return d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
+}
+
+async function spreadsheetGen(date, schedule) {
+  const wb = new Excel.Workbook();
+
+  const ws = wb.addWorksheet();
+
+  addHeader(ws, date);
+  addLocationLabels(ws);
+  addDayLabels(ws, date);
+
+  const buf = await wb.xlsx.writeBuffer();
+
+  saveAs(new Blob([buf]), "abc.xlsx");
+}
+
+function addHeader(ws, firstDay) {
+  var lastDay = getDatePlusX(firstDay, 6);
+
+  ws.addRow([shortDate(firstDay) + " - " + shortDate(lastDay)]);
+  ws.mergeCells("A1:W1");
+}
+
+function addLocationLabels(ws) {
+  var row_values = [];
+  row_values[0] = "Main Stacks";
+  row_values[8] = "Moffitt 3rd";
+  row_values[16] = "Moffitt 4th";
+  ws.insertRow(2, row_values);
+  ws.mergeCells("A2:G2");
+  ws.mergeCells("I2:O2");
+  ws.mergeCells("Q2:W2");
+}
+
+function addDayLabels(ws, firstDay) {
+  var row = [];
+  // three different locations
+  for (let i = 0; i < 3; i++) {
+    for (let d = 0; d < 7; d++) {
+      row.push(pAbbrevs[d] + " " + shortDate(getDatePlusX(firstDay, d)));
+    }
+    row.push("");
+  }
+
+  ws.addRow(row);
 }
 
 export default Builder;

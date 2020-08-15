@@ -43,6 +43,8 @@ var months = [
   "December"
 ];
 
+var pAbbrevs = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 var libraries = ["moffitt3", "moffitt4", "main"];
 
 var modalStyles = {
@@ -213,5 +215,6 @@ export {
   getDatePlusX,
   shortDate,
   longDate,
-  locToString
+  locToString,
+  pAbbrevs
 };

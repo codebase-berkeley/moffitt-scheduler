@@ -146,9 +146,6 @@ async function main(authClient) {
   };
 
   try {
-    const response = (await sheets.spreadsheets.create(request)).data;
-    // TODO: Change code below to process the `response` object:
-    console.log(JSON.stringify(response, null, 2));
   } catch (err) {
     console.error(err);
   }
