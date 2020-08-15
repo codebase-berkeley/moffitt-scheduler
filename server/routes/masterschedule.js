@@ -3,6 +3,12 @@ var router = express.Router();
 var pool = require("../db/db");
 var utils = require("./utils");
 
+const { google } = require("googleapis");
+const sheets = google.sheets("v4");
+
+const fs = require("fs");
+const readline = require("readline");
+
 router.post("/getmaster", (req, res) => {
   var firstDay = req.body.week;
 
@@ -115,6 +121,56 @@ async function updateSchedule(date, time, library, employees) {
     console.error(e.stack);
     await client.query("ROLLBACK");
   }
+}
+
+// Spreadsheet download stuff
+
+router.post("/spreadsheet", (req, res) => {
+  authorize(main);
+});
+
+// If modifying these scopes, delete token.json.
+const SCOPES = ["https://www.googleapis.com/auth/drive"];
+// The file token.json stores the user's access and refresh tokens, and is
+// created automatically when the authorization flow completes for the first
+// time.
+const TOKEN_PATH = "token.json";
+
+async function main(authClient) {
+  const request = {
+    resource: {
+      // TODO: Add desired properties to the request body.
+    },
+
+    auth: authClient
+  };
+
+  try {
+    const response = (await sheets.spreadsheets.create(request)).data;
+    // TODO: Change code below to process the `response` object:
+    console.log(JSON.stringify(response, null, 2));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function authorize(callback) {
+  const oAuth2Client = new google.auth.OAuth2(
+    process.env.MCLIENT_ID,
+    process.env.MCLIENTT_SECRET,
+    process.env.MREDIRECT_URI
+  );
+
+  token = {
+    access_token: process.env.MACCESS_TOKEN,
+    refresh_token: process.env.MREFRESH_TOKEN,
+    token_type: "Bearer",
+    expiry_date: 1597522551713
+  };
+
+  oAuth2Client.setCredentials(token);
+
+  callback(oAuth2Client);
 }
 
 module.exports = router;

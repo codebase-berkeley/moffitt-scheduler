@@ -5,7 +5,7 @@ import MasterSchedule from "../MasterSchedule/Master";
 
 export default function SupervisorEmployee(props) {
   return (
-    <SupervisorLayout title="Master Schedule">
+    <SupervisorLayout>
       <MasterSchedule />
     </SupervisorLayout>
   );

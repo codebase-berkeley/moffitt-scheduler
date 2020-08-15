@@ -15,6 +15,8 @@ import {
   timeToString
 } from "../../utils";
 
+import sheets from "./sheets.png";
+
 class Builder extends React.Component {
   constructor(props) {
     super(props);
@@ -46,6 +48,7 @@ class Builder extends React.Component {
     this.setSchedule = this.setSchedule.bind(this);
 
     this.applyClick = this.applyClick.bind(this);
+    this.spreadsheetClick = this.spreadsheetClick.bind(this);
   }
 
   componentDidMount() {
@@ -63,8 +66,6 @@ class Builder extends React.Component {
   }
 
   setSchedule() {
-    console.log("WEEK:", this.state.week);
-
     fetch("/api/getmaster", {
       credentials: "include",
       method: "POST",
@@ -249,8 +250,29 @@ class Builder extends React.Component {
         return response.json();
       })
       .then(json => {
-        console.log("Json:", json);
         this.setState({ schedule: json.schedule });
+      });
+  }
+
+  spreadsheetClick() {
+    console.log("In here");
+
+    fetch("/api/spreadsheet/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        week: this.state.week,
+        schedule: this.state.schedule
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        console.log("jSoN:", json);
       });
   }
 
@@ -260,6 +282,15 @@ class Builder extends React.Component {
     endDate.setDate(endDate.getDate() + 6);
     return (
       <div className="master">
+        <div className="header">
+          <h1>Master Schedule</h1>
+          <img
+            className="click-image"
+            src={sheets}
+            onClick={this.spreadsheetClick}
+            width="20"
+          />
+        </div>
         {this.getModal()}
         <div className="master-options-bar">
           <div className="apply-schedule">

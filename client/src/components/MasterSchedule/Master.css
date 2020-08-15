@@ -61,3 +61,19 @@
   font-size: 1.3em;
   font-weight: bold;
 }
+
+.master .header {
+  text-align: left;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.master .header h1 {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 1.6em;
+}
+
+.click-image:hover {
+  cursor: pointer;
+}
