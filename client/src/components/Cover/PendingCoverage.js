@@ -1,5 +1,6 @@
 import React from "react";
-import { CoverHeader, CoverRequest } from "./CoverUtils";
+import { CoverHeader } from "./CoverUtils";
+import { longDate, timeToString, locToString } from "../../utils";
 
 import "./Cover.css";
 
@@ -33,6 +34,7 @@ class PendingCoverage extends React.Component {
           location={r.location}
           employee={r.employee}
           reason={r.reason}
+          key={i}
         />
       );
     }
@@ -40,10 +42,28 @@ class PendingCoverage extends React.Component {
     return (
       <div>
         <CoverHeader tab="pendingcoverage" />
-        {requests}
+        <div className="requests">{requests}</div>
       </div>
     );
   }
+}
+
+// Date
+// Time
+// Location
+// Employee
+// Reason
+function CoverRequest(props) {
+  return (
+    <div className="cover-request">
+      <h1>
+        {longDate(new Date(props.date))} @ {timeToString(props.time)}
+      </h1>
+      <h2>Location: {locToString(props.location)}</h2>
+      <h3>Scheduled Employee: {props.employee}</h3>
+      <p>Reason: {props.reason}</p>
+    </div>
+  );
 }
 
 export default PendingCoverage;

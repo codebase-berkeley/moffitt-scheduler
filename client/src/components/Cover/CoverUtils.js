@@ -31,22 +31,4 @@ function CoverHeader(props) {
   );
 }
 
-// Date
-// Time
-// Location
-// Employee
-// Reason
-function CoverRequest(props) {
-  return (
-    <div className="cover-request">
-      <h1>
-        {props.date} @ {props.time}
-      </h1>
-      <h2>Location: {props.location}</h2>
-      <h3>Scheduled Employee: {props.employee}</h3>
-      <p>Reason: {props.reason}</p>
-    </div>
-  );
-}
-
-export { CoverHeader, CoverRequest };
+export { CoverHeader };

@@ -1,16 +1,73 @@
 import React from "react";
 import { CoverHeader } from "./CoverUtils";
+import { longDate, timeToString, locToString } from "../../utils";
 
 import "./Cover.css";
 
-class PendingCoverage extends React.Component {
+class RequestHistory extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = { requests: [] };
+  }
+
+  componentDidMount() {
+    fetch("/api/requesthistory")
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        this.setState({ requests: json.requests });
+      });
   }
 
   render() {
-    return <CoverHeader tab="requesthistory" />;
+    var requests = [];
+    for (let i = 0; i < this.state.requests.length; i++) {
+      let r = this.state.requests[i];
+      requests.push(
+        <CoverRequest
+          date={r.date}
+          time={r.time}
+          location={r.location}
+          coverer={r.coverer}
+          coveree={r.coveree}
+          reason={r.reason}
+          sup_status={r.sup_status}
+          key={i}
+        />
+      );
+    }
+
+    return (
+      <div>
+        <CoverHeader tab="requesthistory" />
+        <div className="requests">{requests}</div>
+      </div>
+    );
   }
 }
 
-export default PendingCoverage;
+function CoverRequest(props) {
+  var status = <div className="approved status">Approved</div>;
+  if (props.sup_status === "denied") {
+    status = <div className="denied status">Denied</div>;
+  }
+
+  return (
+    <div className="cover-request pending-approval">
+      <div className="info">
+        <h1>
+          {longDate(new Date(props.date))} @ {timeToString(props.time)}
+        </h1>
+        <h2>Location: {locToString(props.location)}</h2>
+        <h3>Covering Employee: {props.coverer}</h3>
+        <h3>Scheduled Employee: {props.coveree}</h3>
+        <p>Reason: {props.reason}</p>
+      </div>
+      <div className="status-cont">{status}</div>
+    </div>
+  );
+}
+
+export default RequestHistory;

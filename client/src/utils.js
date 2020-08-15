@@ -180,6 +180,24 @@ function shortDate(date) {
   return date.getMonth() + 1 + "/" + date.getDate();
 }
 
+function longDate(date) {
+  if (date == null) {
+    return "";
+  }
+
+  return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+}
+
+function locToString(location) {
+  if (location === "moffitt3") {
+    return "Moffitt 3rd";
+  } else if (location === "moffitt4") {
+    return "Moffitt 4th";
+  } else if (location === "main") {
+    return "Main Stacks";
+  }
+}
+
 export {
   abbrevs,
   revAbbrevs,
@@ -193,5 +211,7 @@ export {
   getStartOfWeek,
   timeToString,
   getDatePlusX,
-  shortDate
+  shortDate,
+  longDate,
+  locToString
 };
