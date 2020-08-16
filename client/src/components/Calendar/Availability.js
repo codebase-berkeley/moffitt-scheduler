@@ -54,7 +54,7 @@ export default class Calendar extends React.Component {
         return response.json();
       })
       .then(jsonResponse => {
-        if (jsonResponse.schedule === null) {
+        if (jsonResponse.noAuth) {
           this.setState({ redirect: <Redirect push to="/login" /> });
         } else {
           this.setState({ schedule: jsonResponse.schedule });

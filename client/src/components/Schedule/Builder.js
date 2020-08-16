@@ -3,6 +3,8 @@ import Modal from "react-modal";
 
 import "./Builder.css";
 
+import { Redirect } from "react-router-dom";
+
 import {
   getBlankSchedule,
   revAbbrevs,
@@ -24,7 +26,8 @@ class Builder extends React.Component {
       modalAssigned: [],
       modalIsOpen: false,
       employees: {},
-      schedules: []
+      schedules: [],
+      redirect: null
     };
 
     this.getModal = this.getModal.bind(this);
@@ -49,6 +52,11 @@ class Builder extends React.Component {
     fetch("/api/employees", { credentials: "include" })
       .then(response => response.json())
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+
         var employees = {};
         for (var i = 0; i < json.employees.length; i++) {
           employees[json.employees[i].name] = json.employees[i].id;
@@ -59,6 +67,10 @@ class Builder extends React.Component {
     fetch("/api/schedules", { credentials: "include" })
       .then(response => response.json())
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
         this.setState({ schedules: json.schedules });
       });
   }
@@ -112,7 +124,12 @@ class Builder extends React.Component {
       .then(response => {
         return response.json();
       })
-      .then(json => {});
+      .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+      });
   }
 
   closeModal() {
@@ -155,6 +172,11 @@ class Builder extends React.Component {
         return response.json();
       })
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+
         if (json.successful) {
           var newSchedules = [];
           for (let i = 0; i < this.state.schedules.length; i++) {
@@ -244,6 +266,7 @@ class Builder extends React.Component {
     return (
       <div>
         {this.getModal()}
+        {this.state.redirect}
         <div className="options-bar">
           <LoadAndSave
             lc={this.loadClick}

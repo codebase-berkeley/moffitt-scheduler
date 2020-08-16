@@ -18,6 +18,7 @@ import {
 import spreadsheetGen from "./excel";
 
 import sheets from "./sheets.png";
+import { Redirect } from "react-router-dom";
 
 class Builder extends React.Component {
   constructor(props) {
@@ -32,7 +33,8 @@ class Builder extends React.Component {
       modalIsOpen: false,
       employees: {},
       week: getStartOfWeek(),
-      schedules: []
+      schedules: [],
+      redirect: null
     };
 
     this.getModal = this.getModal.bind(this);
@@ -59,18 +61,27 @@ class Builder extends React.Component {
     fetch("/api/employees", { credentials: "include" })
       .then(response => response.json())
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+
         var employees = {};
         for (var i = 0; i < json.employees.length; i++) {
           employees[json.employees[i].name] = json.employees[i].id;
         }
         this.setState({ employees: employees });
-        this.setSchedule();
-      });
+        fetch("/api/schedules", { credentials: "include" })
+          .then(response => response.json())
+          .then(json => {
+            if (json.noAuth) {
+              this.setState({ redirect: <Redirect to="/login" /> });
+              return;
+            }
 
-    fetch("/api/schedules", { credentials: "include" })
-      .then(response => response.json())
-      .then(json => {
-        this.setState({ schedules: json.schedules });
+            this.setState({ schedules: json.schedules });
+            this.setSchedule();
+          });
       });
   }
 
@@ -86,6 +97,11 @@ class Builder extends React.Component {
     })
       .then(response => response.json())
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+
         this.setState({ schedule: json.schedule });
       });
   }
@@ -259,6 +275,11 @@ class Builder extends React.Component {
         return response.json();
       })
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+
         this.setState({ schedule: json.schedule });
       });
   }
@@ -273,6 +294,8 @@ class Builder extends React.Component {
     endDate.setDate(endDate.getDate() + 6);
     return (
       <div className="master">
+        {this.state.redirect}
+        {this.getModal()}
         <div className="header">
           <h1>Master Schedule</h1>
           <img
@@ -283,7 +306,6 @@ class Builder extends React.Component {
             alt="excel"
           />
         </div>
-        {this.getModal()}
         <div className="master-options-bar">
           <ApplySchedule
             ac={this.applyClick}

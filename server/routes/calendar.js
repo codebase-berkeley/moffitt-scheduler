@@ -6,6 +6,10 @@ var utils = require("./utils");
 var pool = require("../db/db");
 
 router.post("/yourshifts", (req, res) => {
+  if (!req.user || req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   var userId = req.user.id;
   var firstDay = req.body.week;
   var lastDay = new Date(firstDay);
@@ -50,6 +54,10 @@ router.post("/yourshifts", (req, res) => {
 });
 
 router.post("/requestcover", (req, res) => {
+  if (!req.user || req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   var reason = req.body.reason;
   var userId = req.user.id;
   var date = req.body.date;
@@ -65,6 +73,10 @@ router.post("/requestcover", (req, res) => {
 });
 
 router.post("/openshifts", (req, res) => {
+  if (!req.user || req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   var userId = req.user.id;
   var firstDay = req.body.week;
   var lastDay = new Date(firstDay);
@@ -94,6 +106,10 @@ router.post("/openshifts", (req, res) => {
 });
 
 router.post("/covershift", (req, res) => {
+  if (!req.user || req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   var userId = req.user.id;
   var shiftId = req.body.shiftId;
 
@@ -107,8 +123,8 @@ router.post("/covershift", (req, res) => {
 });
 
 router.post("/save", (req, res) => {
-  if (!req.user) {
-    return res.json({ schedule: null });
+  if (!req.user || req.user.is_sup) {
+    return res.json({ noAuth: true });
   }
 
   items = req.body.items;
@@ -164,6 +180,10 @@ function initialShifts() {
 }
 
 router.get("/availability", (req, res) => {
+  if (!req.user || req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   if (!req.user) {
     return res.json({ schedule: null });
   }

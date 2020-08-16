@@ -15,6 +15,8 @@ import {
   shortDate
 } from "../../utils";
 
+import { Redirect } from "react-router-dom";
+
 class YourShifts extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,8 @@ class YourShifts extends React.Component {
       week: getStartOfWeek(),
       modalOpen: false,
       modalDate: null,
-      modalTime: null
+      modalTime: null,
+      redirect: null
     };
 
     this.leftScrollClick = this.leftScrollClick.bind(this);
@@ -70,7 +73,10 @@ class YourShifts extends React.Component {
         return response.json();
       })
       .then(json => {
-        console.log("json.schedule", json.schedule);
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
         this.setState({ schedule: json.schedule });
       });
   }
@@ -102,6 +108,11 @@ class YourShifts extends React.Component {
         return response.json();
       })
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+
         if (json.successful) {
           var schedule = JSON.parse(JSON.stringify(this.state.schedule));
 
@@ -152,6 +163,7 @@ class YourShifts extends React.Component {
   render() {
     return (
       <div>
+        {this.state.redirect}
         {this.getModal()}
         <WeekLabel
           week={this.state.week}

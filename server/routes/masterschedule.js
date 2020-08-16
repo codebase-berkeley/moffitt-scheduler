@@ -3,13 +3,11 @@ var router = express.Router();
 var pool = require("../db/db");
 var utils = require("./utils");
 
-const { google } = require("googleapis");
-const sheets = google.sheets("v4");
-
-const fs = require("fs");
-const readline = require("readline");
-
 router.post("/getmaster", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   var firstDay = req.body.week;
 
   getSchedule(firstDay).then(schedule => res.json({ schedule: schedule }));
@@ -53,6 +51,10 @@ async function getSchedule(firstDay) {
 }
 
 router.post("/applysched/:schedule", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   var week = req.body.week;
   var schedule = req.params.schedule;
 
@@ -94,6 +96,10 @@ async function applySchedule(scheduleName, firstDay) {
 }
 
 router.post("/updatemaster", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   updateSchedule(
     req.body.date,
     req.body.time,

@@ -5,6 +5,10 @@ var pool = require("../db/db");
 var utils = require("./utils");
 
 router.get("/loadschedule/:schedule", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   var schedule = utils.getBlankSchedule();
 
   pool.query(
@@ -28,6 +32,10 @@ router.get("/loadschedule/:schedule", (req, res) => {
 });
 
 router.post("/saveschedule/:schedule", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   saveSchedule(req.params.schedule, req.body.schedule).then(
     res.json({ successful: true })
   );
@@ -66,6 +74,10 @@ async function saveSchedule(scheduleName, schedule) {
 }
 
 router.get("/schedules", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   pool.query("SELECT DISTINCT name FROM schedules", (err, result) => {
     if (err) {
       console.error(err.stack);
@@ -81,6 +93,10 @@ router.get("/schedules", (req, res) => {
 });
 
 router.get("/deleteschedule/:schedule", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
   pool.query(
     "DELETE FROM schedules WHERE name=$1",
     [req.params.schedule],

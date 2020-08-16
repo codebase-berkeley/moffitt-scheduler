@@ -2,13 +2,15 @@ import React from "react";
 import { CoverHeader } from "./CoverUtils";
 import { longDate, timeToString, locToString } from "../../utils";
 
+import { Redirect } from "react-router-dom";
+
 import "./Cover.css";
 
 class RequestHistory extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { requests: [] };
+    this.state = { requests: [], redirect: null };
   }
 
   componentDidMount() {
@@ -17,6 +19,10 @@ class RequestHistory extends React.Component {
         return response.json();
       })
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+        }
+
         this.setState({ requests: json.requests });
       });
   }
@@ -41,6 +47,7 @@ class RequestHistory extends React.Component {
 
     return (
       <div>
+        {this.state.redirect}
         <CoverHeader tab="requesthistory" />
         <div className="requests">{requests}</div>
       </div>

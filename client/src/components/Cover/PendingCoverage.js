@@ -2,6 +2,8 @@ import React from "react";
 import { CoverHeader } from "./CoverUtils";
 import { longDate, timeToString, locToString } from "../../utils";
 
+import { Redirect } from "react-router-dom";
+
 import "./Cover.css";
 
 class PendingCoverage extends React.Component {
@@ -9,7 +11,8 @@ class PendingCoverage extends React.Component {
     super(props);
 
     this.state = {
-      requests: []
+      requests: [],
+      redirect: null
     };
   }
 
@@ -19,6 +22,9 @@ class PendingCoverage extends React.Component {
         return response.json();
       })
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+        }
         this.setState({ requests: json.requests });
       });
   }
@@ -41,6 +47,7 @@ class PendingCoverage extends React.Component {
 
     return (
       <div>
+        {this.state.redirect}
         <CoverHeader tab="pendingcoverage" />
         <div className="requests">{requests}</div>
       </div>
