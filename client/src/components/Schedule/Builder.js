@@ -40,6 +40,8 @@ class Builder extends React.Component {
 
     this.loadClick = this.loadClick.bind(this);
     this.saveClick = this.saveClick.bind(this);
+
+    this.deleteScheduleClick = this.deleteScheduleClick.bind(this);
   }
 
   componentDidMount() {
@@ -145,6 +147,27 @@ class Builder extends React.Component {
     this.setState({ schedule: sched, modalIsOpen: false });
   }
 
+  deleteScheduleClick() {
+    var schedule = document.getElementById("delete-schedule-box").value;
+
+    fetch("/api/deleteschedule/" + schedule)
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        if (json.successful) {
+          var newSchedules = [];
+          for (let i = 0; i < this.state.schedules.length; i++) {
+            if (this.state.schedules[i] !== schedule) {
+              newSchedules.push(this.state.schedules[i]);
+            }
+          }
+
+          this.setState({ schedules: newSchedules });
+        }
+      });
+  }
+
   inModalAssigned(name) {
     for (var i = 0; i < this.state.modalAssigned.length; i++) {
       if (this.state.modalAssigned[i].name === name) {
@@ -237,6 +260,10 @@ class Builder extends React.Component {
         <Calendar
           schedule={this.state.schedule[this.state.library]}
           sc={this.slotClick}
+        />
+        <DeleteSchedule
+          schedules={this.state.schedules}
+          dc={this.deleteScheduleClick}
         />
       </div>
     );
@@ -405,6 +432,30 @@ function Libraries(props) {
         onClick={props.mac}
       >
         Main Stacks
+      </button>
+    </div>
+  );
+}
+
+function DeleteSchedule(props) {
+  var options = [];
+  for (let i = 0; i < props.schedules.length; i++) {
+    options.push(
+      <option value={props.schedules[i]} key={i}>
+        {props.schedules[i]}
+      </option>
+    );
+  }
+
+  return (
+    <div className="delete-schedule">
+      <p>Delete schedule: </p>
+      <select name="delete-schedule" id="delete-schedule-box">
+        {options}
+      </select>
+      <br />
+      <button className="builder-button" onClick={props.dc}>
+        Delete
       </button>
     </div>
   );

@@ -68,7 +68,7 @@ async function saveSchedule(scheduleName, schedule) {
 router.get("/schedules", (req, res) => {
   pool.query("SELECT DISTINCT name FROM schedules", (err, result) => {
     if (err) {
-      console.error(err);
+      console.error(err.stack);
     }
 
     var schedules = [];
@@ -78,6 +78,20 @@ router.get("/schedules", (req, res) => {
 
     return res.json({ schedules: schedules });
   });
+});
+
+router.get("/deleteschedule/:schedule", (req, res) => {
+  pool.query(
+    "DELETE FROM schedules WHERE name=$1",
+    [req.params.schedule],
+    (err, result) => {
+      if (err) {
+        console.error(err.stack);
+      }
+
+      return res.json({ successful: true });
+    }
+  );
 });
 
 module.exports = router;

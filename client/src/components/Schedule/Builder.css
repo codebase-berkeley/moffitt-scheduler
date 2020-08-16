@@ -141,3 +141,29 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.delete-schedule {
+  margin-right: 30px;
+  margin-top: 15px;
+  text-align: right;
+}
+
+.delete-schedule p {
+  display: inline-block;
+}
+
+.delete-schedule select {
+  margin-left: 5px;
+  width: 100px;
+}
+
+.delete-schedule button {
+  margin-top: 3px;
+  width: 225px;
+  background-color: red;
+  margin-bottom: 20px;
+}
+
+.delete-schedule button:hover {
+  background-color: maroon;
+}
