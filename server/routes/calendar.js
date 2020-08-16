@@ -82,7 +82,7 @@ router.post("/openshifts", (req, res) => {
   var lastDay = new Date(firstDay);
   lastDay.setDate(lastDay.getDate() + 6);
 
-  var schedule = utils.getBlankSleSchedule("none");
+  var schedule = utils.getBlankSleSchedule({ location: "none", shift: null });
 
   pool.query(
     "SELECT * FROM shifts WHERE sle_id != $1 AND date >= $2 and date <= $3 AND cover_requested=true AND coverer_id is null",

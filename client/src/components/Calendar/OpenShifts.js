@@ -3,6 +3,8 @@ import "./StaticCalendar.css";
 
 import Modal from "react-modal";
 
+import { Redirect } from "react-router-dom";
+
 import {
   getBlankSleSchedule,
   days,
@@ -25,7 +27,8 @@ class OpenShifts extends React.Component {
       modalOpen: false,
       modalDate: null,
       modalTime: null,
-      modalShift: null
+      modalShift: null,
+      redirect: null
     };
 
     this.leftScrollClick = this.leftScrollClick.bind(this);
@@ -76,6 +79,13 @@ class OpenShifts extends React.Component {
         return response.json();
       })
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+
+        console.log("Schedule: ", json.schedule);
+
         this.setState({ schedule: json.schedule });
       });
   }
@@ -89,7 +99,6 @@ class OpenShifts extends React.Component {
   }
 
   submitModal() {
-    console.log("Modal Shift:", this.state.modalShift);
     fetch("/api/covershift", {
       method: "POST",
       headers: {
@@ -104,6 +113,11 @@ class OpenShifts extends React.Component {
         return response.json();
       })
       .then(json => {
+        if (json.noAuth) {
+          this.setState({ redirect: <Redirect to="/login" /> });
+          return;
+        }
+
         if (json.successful) {
           var schedule = JSON.parse(JSON.stringify(this.state.schedule));
 
@@ -154,6 +168,7 @@ class OpenShifts extends React.Component {
   render() {
     return (
       <div>
+        {this.state.redirect}
         {this.getModal()}
         <WeekLabel
           week={this.state.week}
