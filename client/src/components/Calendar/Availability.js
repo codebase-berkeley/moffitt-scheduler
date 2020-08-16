@@ -72,20 +72,20 @@ export default class Calendar extends React.Component {
         saved.push(this.state.schedule[i]);
       }
     }
-    this.setState({ saved: saved });
-
-    fetch("/api/save", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        userId: this.props.userId,
-        items: this.state.saved
-      })
-    }).then(response => {
-      return response.json();
+    this.setState({ saved: saved }, () => {
+      fetch("/api/save", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userId: this.props.userId,
+          items: this.state.saved
+        })
+      }).then(response => {
+        return response.json();
+      });
     });
   }
 
