@@ -3,7 +3,6 @@
 #schedule-container {
   position: relative;
   display: inline-block;
-  width: 66%;
   font-family: "Open Sans";
   background-color: white;
   border-radius: 20px;
@@ -12,9 +11,8 @@
   padding-right: 2%;
   padding-top: 1%;
   margin-bottom: 2%;
-  height: 116%;
   width: 65%;
-  resize: auto;
+  height: 100%;
 }
 
 #avails {
@@ -34,7 +32,6 @@
 #inner-schedule {
   background-color: white;
   width: 100%;
-  height: 800px;
   display: inline-grid;
   grid-column-gap: 10px;
   grid-row-gap: 6px;
@@ -148,95 +145,6 @@
 .emptySpace {
   padding-left: 30px;
 }
-
-.startText,
-.endText {
-  font-size: 10px;
-  width: 10%;
-}
-
-.weekdayText1 {
-  font-size: 10px;
-}
-
-.startEnd {
-  margin-left: 15.5%;
-  display: flex;
-  align-items: center;
-  align-content: space-between;
-}
-
-.weekdayStuff {
-  margin-top: 1%;
-  margin-left: 15.3%;
-  display: flex;
-  align-items: center;
-  align-content: space-between;
-}
-
-.startStuff {
-  margin-top: 18px;
-  margin-left: 15.3%;
-  display: flex;
-  align-items: center;
-  align-content: space-between;
-}
-
-.separator {
-  padding-top: 1%;
-}
-
-.selectButton {
-  float: right;
-  position: center;
-  margin-left: 5%;
-  width: 75px;
-  height: 25px;
-  font-family: "Open Sans";
-  font-size: 13px;
-  border-radius: 20px;
-  border: 1px solid grey;
-  cursor: pointer;
-  margin-right: 2%;
-}
-
-.selectButton:hover {
-  font-weight: bold;
-}
-
-.selectButton:active {
-  background-color: rgb(182, 181, 181);
-}
-
-.selectButton:focus {
-  outline: none;
-}
-
-.clearButton {
-  float: right;
-  position: center;
-  width: 75px;
-  height: 25px;
-  font-family: "Open Sans";
-  font-size: 13px;
-  border-radius: 20px;
-  border: 1px solid grey;
-  cursor: pointer;
-  margin-right: 27%;
-}
-
-.clearButton:hover {
-  font-weight: bold;
-}
-
-.clearButton:active {
-  background-color: rgb(182, 181, 181);
-}
-
-.clearButton:focus {
-  outline: none;
-}
-
 .emptySpace1 {
   margin-left: 1%;
 }
@@ -265,11 +173,35 @@
   cursor: pointer;
 }
 
-.endInput {
-  margin-left: 22px;
-  width: 175px;
-  padding-right: 0;
+.header-cont {
+  display: flex;
 }
-/* .availabilityHeader {
-  margin-left: 27.2%;
-} */
+
+.helper-cont {
+  text-align: left;
+  margin-left: 10px;
+}
+
+.helper-cont select,
+.helper-cont input {
+  width: 115px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.save-cont {
+  float: right;
+}
+
+.avail-button {
+  width: 100px;
+}
+
+.helper-cont {
+  flex: 5;
+}
+
+.save-cont {
+  flex: 1;
+}

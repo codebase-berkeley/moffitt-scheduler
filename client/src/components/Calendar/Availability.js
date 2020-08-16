@@ -218,58 +218,74 @@ export default class Calendar extends React.Component {
     }
 
     return (
-      <div id="overall-container">
-        <div id="schedule-container">
-          <div className="weekdayStuff">
-            <div className="weekdayText1">Weekday</div>
-            <div className="emptySpace"></div>
-            <select id="weekdayText">
-              <option value="Sun">Sun</option>
-              <option value="Mon">Mon</option>
-              <option value="Tue">Tue</option>
-              <option value="Wed">Wed</option>
-              <option value="Thu">Thu</option>
-              <option value="Fri">Fri</option>
-              <option value="Sat">Sat</option>
-            </select>{" "}
-          </div>
-          <div className="emptySpace"></div>
-          <div className="startStuff">
-            <div className="startText">Start Time</div>
-            <input
-              className="startInput"
-              id="startText"
-              type="time"
-              step="1800"
-              defaultValue="08:00"
-            ></input>
-          </div>
-          <div className="emptySpace"></div>
-          <div className="startEnd">
-            <div className="endText">End Time</div>
-            <input
-              className="endInput"
-              id="endText"
-              type="time"
-              step="1800"
-              defaultValue="10:00"
-            ></input>
-            <button className="selectButton" onClick={this.selectClick}>
+      <div id="schedule-container">
+        <div className="header-cont">
+          <div className="helper-cont">
+            <table>
+              <tbody>
+                <tr>
+                  <td>Weekday:</td>
+                  <td>
+                    <select id="weekdayText">
+                      <option value="Sun">Sun</option>
+                      <option value="Mon">Mon</option>
+                      <option value="Tue">Tue</option>
+                      <option value="Wed">Wed</option>
+                      <option value="Thu">Thu</option>
+                      <option value="Fri">Fri</option>
+                      <option value="Sat">Sat</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Start Time:</td>
+                  <td>
+                    <input
+                      className="startInput"
+                      id="startText"
+                      type="time"
+                      step="1800"
+                      defaultValue="08:00"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>End Time:</td>
+                  <td>
+                    <input
+                      className="endInput"
+                      id="endText"
+                      type="time"
+                      step="1800"
+                      defaultValue="10:00"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button
+              className="basic-button avail-button"
+              onClick={this.selectClick}
+            >
               Select
             </button>
-            <button className="clearButton" onClick={this.selectClear}>
+            <button
+              className="basic-button avail-button second-button"
+              onClick={this.selectClear}
+            >
               Clear
             </button>
-            <div className="saveChanges">
-              <SaveChanges save={this.save} />
-            </div>
           </div>
-          <div className="separator"></div>
-          <div id="inner-schedule">
-            <div></div>
-            {wkdays}
-            {timeslots}
+
+          <div className="save-cont">
+            <SaveChanges save={this.save} />
           </div>
+        </div>
+
+        <div id="inner-schedule">
+          <div></div>
+          {wkdays}
+          {timeslots}
         </div>
       </div>
     );
