@@ -45,7 +45,7 @@ var months = [
 
 var pAbbrevs = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-var libraries = ["moffitt3", "moffitt4", "main"];
+var libraries = ["main", "moffitt3", "moffitt4"];
 
 var modalStyles = {
   content: {
@@ -200,6 +200,17 @@ function locToString(location) {
   }
 }
 
+function columnToLetter(column) {
+  var temp,
+    letter = "";
+  while (column > 0) {
+    temp = (column - 1) % 26;
+    letter = String.fromCharCode(temp + 65) + letter;
+    column = (column - temp - 1) / 26;
+  }
+  return letter;
+}
+
 export {
   abbrevs,
   revAbbrevs,
@@ -216,5 +227,6 @@ export {
   shortDate,
   longDate,
   locToString,
-  pAbbrevs
+  pAbbrevs,
+  columnToLetter
 };

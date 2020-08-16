@@ -39,7 +39,7 @@ class PendingApproval extends React.Component {
         if (json.successful) {
           var newRequests = [];
           for (let i = 0; i < this.state.requests.length; i++) {
-            if (this.state.requests[i].shift_id != shift_id) {
+            if (this.state.requests[i].shift_id !== shift_id) {
               newRequests.push(this.state.requests[i]);
             }
           }
