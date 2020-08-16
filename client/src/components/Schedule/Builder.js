@@ -23,7 +23,8 @@ class Builder extends React.Component {
       modalTime: null,
       modalAssigned: [],
       modalIsOpen: false,
-      employees: {}
+      employees: {},
+      schedules: []
     };
 
     this.getModal = this.getModal.bind(this);
@@ -51,6 +52,12 @@ class Builder extends React.Component {
           employees[json.employees[i].name] = json.employees[i].id;
         }
         this.setState({ employees: employees });
+      });
+
+    fetch("/api/schedules", { credentials: "include" })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({ schedules: json.schedules });
       });
   }
 
@@ -215,7 +222,11 @@ class Builder extends React.Component {
       <div>
         {this.getModal()}
         <div className="options-bar">
-          <LoadAndSave lc={this.loadClick} sc={this.saveClick} />
+          <LoadAndSave
+            lc={this.loadClick}
+            sc={this.saveClick}
+            schedules={this.state.schedules}
+          />
           <Libraries
             selected={this.state.library}
             m3c={this.moffitt3Click}
@@ -324,6 +335,15 @@ function TimeLabel(props) {
 }
 
 function LoadAndSave(props) {
+  var options = [];
+  for (let i = 0; i < props.schedules.length; i++) {
+    options.push(
+      <option value={props.schedules[i]} key={i}>
+        {props.schedules[i]}
+      </option>
+    );
+  }
+
   return (
     <div className="load-save">
       <table>
@@ -331,7 +351,9 @@ function LoadAndSave(props) {
           <tr>
             <td>Load Schedule:</td>
             <td>
-              <input type="text" name="load-schedule" id="load-box" />
+              <select className="load-save-input" name="apply" id="load-box">
+                {options}
+              </select>
             </td>
             <td>
               <button className="builder-button" onClick={props.lc}>
@@ -344,7 +366,12 @@ function LoadAndSave(props) {
               <label>Save As: </label>
             </td>
             <td>
-              <input type="text" name="save-schedule" id="save-box" />
+              <input
+                type="text"
+                className="load-save-input"
+                name="save-schedule"
+                id="save-box"
+              />
             </td>
             <td>
               <button className="builder-button" onClick={props.sc}>
