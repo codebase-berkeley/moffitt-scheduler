@@ -31,7 +31,8 @@ class Builder extends React.Component {
       modalAssigned: [],
       modalIsOpen: false,
       employees: {},
-      week: getStartOfWeek()
+      week: getStartOfWeek(),
+      schedules: []
     };
 
     this.getModal = this.getModal.bind(this);
@@ -64,6 +65,12 @@ class Builder extends React.Component {
         }
         this.setState({ employees: employees });
         this.setSchedule();
+      });
+
+    fetch("/api/schedules", { credentials: "include" })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({ schedules: json.schedules });
       });
   }
 
@@ -278,12 +285,10 @@ class Builder extends React.Component {
         </div>
         {this.getModal()}
         <div className="master-options-bar">
-          <div className="apply-schedule">
-            <p>Apply Schedule:</p> <input type="text" id="apply-box" /> <br />
-            <button className="basic-button" onClick={this.applyClick}>
-              Apply
-            </button>
-          </div>
+          <ApplySchedule
+            ac={this.applyClick}
+            schedules={this.state.schedules}
+          />
           <div className="date-scroll">
             <button
               className="scroll basic-button"
@@ -316,6 +321,30 @@ class Builder extends React.Component {
       </div>
     );
   }
+}
+
+function ApplySchedule(props) {
+  var options = [];
+  for (let i = 0; i < props.schedules.length; i++) {
+    options.push(
+      <option value={props.schedules[i]} key={i}>
+        {props.schedules[i]}
+      </option>
+    );
+  }
+
+  return (
+    <div className="apply-schedule">
+      <p>Apply Schedule: </p>
+      <select name="apply" id="apply-box">
+        {options}
+      </select>
+      <br />
+      <button className="basic-button" onClick={props.ac}>
+        Apply
+      </button>
+    </div>
+  );
 }
 
 function Calendar(props) {

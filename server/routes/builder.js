@@ -65,4 +65,19 @@ async function saveSchedule(scheduleName, schedule) {
   }
 }
 
+router.get("/schedules", (req, res) => {
+  pool.query("SELECT DISTINCT name FROM schedules", (err, result) => {
+    if (err) {
+      console.error(err);
+    }
+
+    var schedules = [];
+    for (let i = 0; i < result.rows.length; i++) {
+      schedules.push(result.rows[i].name);
+    }
+
+    return res.json({ schedules: schedules });
+  });
+});
+
 module.exports = router;

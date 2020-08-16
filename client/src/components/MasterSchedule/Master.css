@@ -11,12 +11,12 @@
   flex: 4;
 }
 
-.apply-schedule input,
+.apply-schedule select,
 .apply-schedule p {
   display: inline;
 }
 
-.apply-schedule input {
+.apply-schedule select {
   width: 150px;
 }
 
