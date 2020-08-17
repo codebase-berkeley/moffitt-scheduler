@@ -22,6 +22,7 @@ async function spreadsheetGen(date, schedule) {
   addLocationLabels(ws);
   addDayLabels(ws, date);
   addData(ws, schedule);
+  fixWidths(ws);
 
   ws.columns.forEach(function(column) {
     //column.width = 20;
@@ -142,4 +143,47 @@ function addData(ws, schedule) {
   }
 }
 
+function fixWidths(ws) {
+  //1-7, 9-15, 17-23
+  for (let c = 1; c <= 7; c++) {
+    var maxWidth = 10;
+    for (let r = 4; r <= 51; r++) {
+      let names = ws.getCell(columnToLetter(c) + r).value.split("\n");
+      for (let i = 0; i < names.length; i++) {
+        maxWidth = max(maxWidth, names[i].length);
+      }
+    }
+    ws.getColumn(columnToLetter(c)).width = maxWidth + 2;
+  }
+
+  for (let c = 9; c <= 15; c++) {
+    var maxWidth = 10;
+    for (let r = 4; r <= 51; r++) {
+      let names = ws.getCell(columnToLetter(c) + r).value.split("\n");
+      for (let i = 0; i < names.length; i++) {
+        maxWidth = max(maxWidth, names[i].length);
+      }
+    }
+    ws.getColumn(columnToLetter(c)).width = maxWidth + 2;
+  }
+
+  for (let c = 17; c <= 23; c++) {
+    var maxWidth = 10;
+    for (let r = 4; r <= 51; r++) {
+      let names = ws.getCell(columnToLetter(c) + r).value.split("\n");
+      for (let i = 0; i < names.length; i++) {
+        maxWidth = max(maxWidth, names[i].length);
+      }
+    }
+    ws.getColumn(columnToLetter(c)).width = maxWidth + 2;
+  }
+}
+
+function max(a, b) {
+  if (a > b) {
+    return a;
+  }
+
+  return b;
+}
 export default spreadsheetGen;

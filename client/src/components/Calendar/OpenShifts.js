@@ -84,8 +84,6 @@ class OpenShifts extends React.Component {
           return;
         }
 
-        console.log("Schedule: ", json.schedule);
-
         this.setState({ schedule: json.schedule });
       });
   }
