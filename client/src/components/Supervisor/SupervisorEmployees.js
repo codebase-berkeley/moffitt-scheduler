@@ -5,9 +5,7 @@ import Employees from "../Employees/Employees";
 export default function SupervisorEmployee(props) {
   return (
     <SupervisorLayout title="Employees">
-      <div class="employees">
-        <Employees />
-      </div>
+      <Employees />
     </SupervisorLayout>
   );
 }

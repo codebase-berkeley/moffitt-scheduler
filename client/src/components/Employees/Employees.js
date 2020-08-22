@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom";
 function Training(props) {
   var className = props.name.replace(" ", "").toLowerCase() + "-badge";
   return (
-    <div class={"badge " + className}>
+    <div className={"badge " + className}>
       <p>{props.name}</p>
     </div>
   );
@@ -17,21 +17,21 @@ function Employee(props) {
 
   var trainings = [];
   for (var i = 0; i < props.trainings.length; i++) {
-    trainings.push(<Training name={props.trainings[i]} />);
+    trainings.push(<Training key={i} name={props.trainings[i]} />);
   }
 
   return (
-    <a class="employee-link" href={"/supsleprofile/" + props.id}>
-      <div class="employee">
-        <div class="identity">
+    <a className="employee-link" href={"/supsleprofile/" + props.id}>
+      <div className="employee">
+        <div className="identity">
           <h2>
             {props.name}
             {workleader}
           </h2>
-          <h3 class="email">{props.email}</h3>
+          <h3 className="email">{props.email}</h3>
         </div>
 
-        <div class="badges">{trainings}</div>
+        <div className="badges">{trainings}</div>
       </div>
     </a>
   );
@@ -100,6 +100,7 @@ class Employees extends React.Component {
     return (
       <Employee
         id={e.id}
+        key={e.id}
         name={e.name}
         email={e.email}
         workleader={e.workleader}
@@ -204,10 +205,10 @@ class Employees extends React.Component {
               </tr>
             </tbody>
           </table>
-          <div class="workleader-buttons">
+          <div className="workleader-buttons">
             <h4>Workleader:</h4>
             <input type="radio" name="add-workleader" value="yes" />
-            <label class="workleader-yes-label">Yes</label>
+            <label className="workleader-yes-label">Yes</label>
             <input
               type="radio"
               name="add-workleader"
@@ -230,16 +231,16 @@ class Employees extends React.Component {
               P-SERT <input type="checkbox" id="add-psert" />
             </div>
           </div>
-          <div class="notes">
+          <div className="notes">
             <h4>Notes:</h4>
             <textarea id="add-notes" />
           </div>
 
-          <div class="add-employee-buttons">
-            <button class="profile-button" onClick={this.addEmployeeClick}>
+          <div className="add-employee-buttons">
+            <button className="profile-button" onClick={this.addEmployeeClick}>
               Add Employee
             </button>
-            <button onClick={this.closeModal} class="profile-button">
+            <button onClick={this.closeModal} className="profile-button">
               Cancel
             </button>
           </div>
@@ -289,11 +290,14 @@ class Employees extends React.Component {
               </tr>
             </tbody>
           </table>
-          <div class="add-sup-buttons">
-            <button class="profile-button" onClick={this.addSupervisorClick}>
+          <div className="add-sup-buttons">
+            <button
+              className="profile-button"
+              onClick={this.addSupervisorClick}
+            >
               Add Supervisor
             </button>
-            <button onClick={this.closeSupModal} class="profile-button">
+            <button onClick={this.closeSupModal} className="profile-button">
               Cancel
             </button>
           </div>
@@ -311,7 +315,7 @@ class Employees extends React.Component {
       <div className="employees-page">
         {this.state.redirect}
         <div className="employee-top-bar">
-          <h4 class="star">* indicates the employee is a workleader</h4>
+          <h4 className="star">* indicates the employee is a workleader</h4>
           <button
             className="add-button profile-button"
             onClick={this.openModal}

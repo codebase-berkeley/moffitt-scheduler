@@ -146,7 +146,7 @@ function addData(ws, schedule) {
 function fixWidths(ws) {
   //1-7, 9-15, 17-23
   for (let c = 1; c <= 7; c++) {
-    var maxWidth = 10;
+    let maxWidth = 10;
     for (let r = 4; r <= 51; r++) {
       let names = ws.getCell(columnToLetter(c) + r).value.split("\n");
       for (let i = 0; i < names.length; i++) {
@@ -168,7 +168,7 @@ function fixWidths(ws) {
   }
 
   for (let c = 17; c <= 23; c++) {
-    var maxWidth = 10;
+    let maxWidth = 10;
     for (let r = 4; r <= 51; r++) {
       let names = ws.getCell(columnToLetter(c) + r).value.split("\n");
       for (let i = 0; i < names.length; i++) {
