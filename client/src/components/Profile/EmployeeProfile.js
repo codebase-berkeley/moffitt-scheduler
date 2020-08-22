@@ -6,6 +6,7 @@ import Modal from "react-modal";
 
 import { Calendar, ColorKey, WeekLabel } from "../Calendar/YourShifts";
 import { getStartOfWeek, getBlankSleSchedule } from "../../utils";
+import { format, startOfWeek, addDays } from "date-fns";
 
 var modalStyles = {
   content: {
@@ -262,8 +263,10 @@ class Profile extends React.Component {
     }
 
     var empShifts = null;
+    var empAvail = null;
     if (this.state.sup_view) {
       empShifts = <EmployeeShifts userId={this.props.userId} />;
+      empAvail = <Availability userId={this.props.userId} />;
     }
 
     return (
@@ -309,6 +312,8 @@ class Profile extends React.Component {
           ) /* Only the employee can change their password */}
         </div>
         {empShifts}
+        <h2 className="avail-label">Availability:</h2>
+        {empAvail}
       </div>
     );
   }
@@ -634,8 +639,6 @@ class EmployeeShifts extends React.Component {
         return response.json();
       })
       .then(json => {
-        console.log("JsOn:", json);
-
         this.setState({ schedule: json.schedule });
       });
   }
@@ -656,6 +659,104 @@ class EmployeeShifts extends React.Component {
           week={this.state.week}
           sc={() => null}
         />
+      </div>
+    );
+  }
+}
+
+function Timeslot(props) {
+  return (
+    <button style={{ backgroundColor: props.color }} id={props.id}></button>
+  );
+}
+
+class Availability extends React.Component {
+  constructor(props) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate());
+    super(props);
+    this.state = {
+      schedule: [],
+      currentDate: currentDate,
+      saved: []
+    };
+  }
+
+  componentDidMount() {
+    fetch("/api/empavail/" + this.props.userId, { credentials: "include" })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonResponse => {
+        if (jsonResponse.noAuth) {
+          this.setState({ redirect: <Redirect push to="/login" /> });
+        } else {
+          this.setState({ schedule: jsonResponse.schedule });
+        }
+      });
+  }
+
+  render() {
+    if (this.state.redirect) {
+      return this.state.redirect;
+    }
+
+    const hours = [];
+    for (let i = 0, hr = 12; i < 48; i += 1) {
+      i % 2 === 1 ? hours.push(hr + ":30") : hours.push(hr + ":00");
+      if (hr === 12 && i % 2 === 1) {
+        hr = 0;
+      }
+      if (i % 2 === 1) {
+        hr += 1;
+      }
+    }
+    for (let i = 0; i < hours.length; i += 1) {
+      if (i < hours.length / 2) {
+        hours[i] += "am";
+      } else {
+        hours[i] += "pm";
+      }
+    }
+
+    /* Displays the wkdays header.
+     */
+    var wkdays = [];
+    for (let i = 0; i < 7; i += 1) {
+      wkdays.push(
+        <div key={i} className="item-wday">
+          {format(addDays(startOfWeek(this.state.currentDate), i), "ddd")}
+        </div>
+      );
+    }
+
+    /*Every 8th element should be an "item-hours" header,
+      while every 1-7th element should be a shift cell.
+      The valid prop tracks if the Timeslot is a clickable, colored cell belonging to a shift or not.
+    */
+    var timeslots = [];
+    for (let i = 0, ti = 0; i < 384; i += 1) {
+      if (i % 8 === 0) {
+        timeslots.push(
+          <div key={i} className="item-hours">
+            {hours[i / 8]}
+          </div>
+        );
+      } else if (this.state.schedule.length > 0) {
+        timeslots.push(
+          <Timeslot key={i} color={this.state.schedule[ti].color} id={ti} />
+        );
+        ti += 1;
+      }
+    }
+
+    return (
+      <div className="emp-avail" id="schedule-container">
+        <div id="inner-schedule">
+          <div></div>
+          {wkdays}
+          {timeslots}
+        </div>
       </div>
     );
   }

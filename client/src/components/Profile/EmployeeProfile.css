@@ -213,3 +213,25 @@ input[type="checkbox"] {
 .employee-shifts .sle-time-cont {
   width: 85px;
 }
+
+.emp-avail {
+  margin: 0 auto;
+}
+
+.emp-avail .item-wday {
+  text-align: center;
+}
+
+.emp-avail {
+  display: block !important;
+  padding-left: -50px !important; /* Offsets 50px padding for profile page */
+  padding-right: 0 !important;
+}
+
+.avail-label {
+  margin-top: 20px;
+}
+
+.avail-label {
+  margin-bottom: -10px; /* Offsets availability default margin */
+}

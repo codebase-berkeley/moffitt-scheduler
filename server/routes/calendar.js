@@ -1,8 +1,6 @@
 var express = require("express");
 var router = express.Router();
-
 var utils = require("./utils");
-
 var pool = require("../db/db");
 
 router.post("/yourshifts", (req, res) => {
@@ -204,12 +202,26 @@ router.get("/availability", (req, res) => {
     return res.json({ noAuth: true });
   }
 
-  if (!req.user) {
-    return res.json({ schedule: null });
-  }
-
   var userId = req.user.id;
 
+  getAvailability(userId, schedule => {
+    res.json({ schedule: schedule });
+  });
+});
+
+router.get("/empavail/:userid", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
+  var userId = req.params.userid;
+
+  getAvailability(userId, schedule => {
+    res.json({ schedule: schedule });
+  });
+});
+
+async function getAvailability(userId, cb) {
   var selected = initialShifts();
 
   pool.query(
@@ -231,9 +243,9 @@ router.get("/availability", (req, res) => {
           }
         }
       }
-      return res.json({ schedule: selected });
+      cb(selected);
     }
   );
-});
+}
 
 module.exports = router;
