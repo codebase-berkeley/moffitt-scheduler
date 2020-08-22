@@ -12,6 +12,26 @@ router.post("/yourshifts", (req, res) => {
 
   var userId = req.user.id;
   var firstDay = req.body.week;
+
+  getShifts(userId, firstDay, schedule => {
+    res.json({ schedule: schedule });
+  });
+});
+
+router.post("/empshifts/:userid", (req, res) => {
+  if (!req.user || !req.user.is_sup) {
+    return res.json({ noAuth: true });
+  }
+
+  var userId = req.params.userid;
+  var firstDay = req.body.week;
+
+  getShifts(userId, firstDay, schedule => {
+    return res.json({ schedule: schedule });
+  });
+});
+
+async function getShifts(userId, firstDay, cb) {
   var lastDay = new Date(firstDay);
   lastDay.setDate(lastDay.getDate() + 6);
 
@@ -46,12 +66,12 @@ router.post("/yourshifts", (req, res) => {
             schedule[utils.abbrevs[r.date.getDay()]][r.time] = r.location;
           }
 
-          return res.json({ schedule: schedule });
+          cb(schedule);
         }
       );
     }
   );
-});
+}
 
 router.post("/requestcover", (req, res) => {
   if (!req.user || req.user.is_sup) {

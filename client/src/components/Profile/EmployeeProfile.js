@@ -4,6 +4,9 @@ import "./EmployeeProfile.css";
 import { Redirect } from "react-router-dom";
 import Modal from "react-modal";
 
+import { Calendar, ColorKey, WeekLabel } from "../Calendar/YourShifts";
+import { getStartOfWeek, getBlankSleSchedule } from "../../utils";
+
 var modalStyles = {
   content: {
     position: "absolute",
@@ -258,6 +261,11 @@ class Profile extends React.Component {
       workleader = <h3>Not a workleader</h3>;
     }
 
+    var empShifts = null;
+    if (this.state.sup_view) {
+      empShifts = <EmployeeShifts userId={this.props.userId} />;
+    }
+
     return (
       <div className="sle-profile-page">
         <div className="info">
@@ -300,6 +308,7 @@ class Profile extends React.Component {
             </button>
           ) /* Only the employee can change their password */}
         </div>
+        {empShifts}
       </div>
     );
   }
@@ -579,6 +588,76 @@ class Profile extends React.Component {
     }
 
     return this.normalView();
+  }
+}
+
+class EmployeeShifts extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      week: getStartOfWeek(),
+      schedule: getBlankSleSchedule("none")
+    };
+
+    this.leftScrollClick = this.leftScrollClick.bind(this);
+    this.rightScrollClick = this.rightScrollClick.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+  }
+
+  leftScrollClick() {
+    var newWeek = new Date(this.state.week);
+    newWeek.setDate(newWeek.getDate() - 7);
+    this.setState({ week: newWeek }, this.fetchData);
+  }
+
+  rightScrollClick() {
+    var newWeek = new Date(this.state.week);
+    newWeek.setDate(newWeek.getDate() + 7);
+    this.setState({ week: newWeek }, this.fetchData);
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetch("/api/empshifts/" + this.props.userId, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ week: this.state.week })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        console.log("JsOn:", json);
+
+        this.setState({ schedule: json.schedule });
+      });
+  }
+
+  render() {
+    return (
+      <div className="employee-shifts">
+        <h2>Scheduled Shifts:</h2>
+        <WeekLabel
+          week={this.state.week}
+          lc={this.leftScrollClick}
+          rc={this.rightScrollClick}
+        />
+        <ColorKey />
+
+        <Calendar
+          schedule={this.state.schedule}
+          week={this.state.week}
+          sc={() => null}
+        />
+      </div>
+    );
   }
 }
 

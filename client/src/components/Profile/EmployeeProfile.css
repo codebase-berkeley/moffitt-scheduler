@@ -188,3 +188,28 @@ input[type="checkbox"] {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+.employee-shifts {
+  margin-top: 20px;
+}
+
+.employee-shifts .week-label {
+  margin-top: 0px;
+  text-align: center;
+}
+
+.employee-shifts .color-key {
+  text-align: center;
+}
+
+.employee-shifts .week-label .left-scroll {
+  margin-left: 0px;
+}
+
+.employee-shifts .sle-day-label {
+  text-align: center !important;
+}
+
+.employee-shifts .sle-time-cont {
+  width: 85px;
+}

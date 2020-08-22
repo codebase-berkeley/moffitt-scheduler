@@ -291,4 +291,4 @@ function ColorKey(props) {
   );
 }
 
-export default YourShifts;
+export { YourShifts, Calendar, WeekLabel, ColorKey };
