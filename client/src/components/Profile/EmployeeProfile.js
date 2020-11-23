@@ -312,7 +312,6 @@ class Profile extends React.Component {
           ) /* Only the employee can change their password */}
         </div>
         {empShifts}
-        <h2 className="avail-label">Availability:</h2>
         {empAvail}
       </div>
     );
@@ -752,6 +751,7 @@ class Availability extends React.Component {
 
     return (
       <div className="emp-avail" id="schedule-container">
+        <h2 className="avail-label">Availability:</h2>
         <div id="inner-schedule">
           <div></div>
           {wkdays}
