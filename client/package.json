@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^7.1.2",
     "exceljs": "^4.1.1",
     "file-saver": "^2.0.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "proptypes": "^1.1.0",
     "rc-dialog": "^8.1.0",
